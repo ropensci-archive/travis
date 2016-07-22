@@ -81,12 +81,12 @@ auth_github_travis <- function() {
 
 #' Use travis vignettes
 #'
-#' @param author_email Email that will be used for commits on your behalf.
 #' @param pkg package description, can be path or package name. See
 #'   \code{\link{as.package}} for more information.
+#' @param author_email Email that will be used for commits on your behalf.
 #'
 #' @export
-use_travis_vignettes <- function(author_email, pkg = ".") {
+use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
   pkg <- devtools::as.package(pkg)
   travis_path <- file.path(pkg$path, ".travis.yml")
   key_file <- ".deploy_key"
@@ -95,6 +95,19 @@ use_travis_vignettes <- function(author_email, pkg = ".") {
   enc_key_path <- file.path(pkg$path, enc_key_file)
   script_file <- ".push_gh_pages.sh"
   script_path <- file.path(pkg$path, script_file)
+
+  if (is.null(author_email)) {
+    authors <- eval(parse(text = pkg$`authors@r`))
+    cre <- authors[sapply(authors$role, function(roles) "cre" %in% roles)]
+    use_email <- utils::menu(c("Yes", "No"),
+                             title = sprintf("Use %s as author email?",
+                                             cre$email))
+    if (use_email == 1) {
+      author_email <- cre$email
+    } else {
+      author_email <- readline(prompt = "Please enter an author email: ")
+    }
+  }
 
   if (!file.exists(travis_path)) devtools::use_travis(pkg)
   travis_yml <- yaml::yaml.load_file(travis_path)
