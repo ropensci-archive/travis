@@ -16,6 +16,17 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, token) {
   return(NULL)
 }
 
+rand_char <- function() {
+  num <- openssl::rand_num()
+  chars <- c(0:9, letters, LETTERS)
+  ranges <- cut(c(num, 0, 1), length(chars))
+  chars[which(levels(ranges) == ranges[1])]
+}
+
+rand_string <- function(length) {
+  paste(replicate(length, rand_char()), collapse = "")
+}
+
 setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key_path) {
 
   # generate deploy key pair
@@ -34,7 +45,7 @@ setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key
   #assertthat::assert_that(create_key$ok)
 
   # generate random variables for encryption
-  enc_id <- stringi::stri_rand_strings(1, 12)
+  enc_id <- rand_string(12)
   tempkey <- openssl::rand_bytes(32)
   iv <- openssl::rand_bytes(16)
 
@@ -98,7 +109,8 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
 
   if (is.null(author_email)) {
     authors <- eval(parse(text = pkg$`authors@r`))
-    cre <- authors[sapply(authors$role, function(roles) "cre" %in% roles)]
+    roles <- if (!is.list(authors$role)) list(authors$role) else authors$role
+    cre <- authors[sapply(roles, function(roles) "cre" %in% roles)]
     use_email <- utils::menu(c("Yes", "No"),
                              title = sprintf("Use %s as author email?",
                                              cre$email))
