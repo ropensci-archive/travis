@@ -1,4 +1,7 @@
-set_travis_var <- function(repo_id, name, value, public = FALSE, token) {
+TRAVIS_API <- "https://api.travis-ci.org"
+GITHUB_API <- "https://api.github.com"
+
+set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -6,13 +9,13 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, token) {
       "public" = public
     )
   )
-  env_vars_url <- sprintf(
-    "https://api.travis-ci.org/settings/env_vars?repository_id=%s", repo_id
+  req <- httr::POST(
+    url = paste0(TRAVIS_API, "/settings/env_vars"),
+    query = list(repository_id = repo_id),
+    httr::add_headers(Authorization = paste("token", travis_token)),
+    body = var_data, encode = "json"
   )
-  req <- httr::POST(env_vars_url,
-                    httr::add_headers(Authorization = paste("token", token)),
-                    body = jsonlite::toJSON(var_data, auto_unbox = TRUE))
-  #assertthat::assert_that(req$status_code == 200)
+  httr::stop_for_status(req)
   return(NULL)
 }
 
@@ -27,7 +30,8 @@ rand_string <- function(length) {
   paste(replicate(length, rand_char()), collapse = "")
 }
 
-setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key_path) {
+setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
+                       enc_key_path) {
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
@@ -39,10 +43,11 @@ setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key
     "key" = as.list(public_key)$ssh,
     "read_only" = FALSE
   )
-  create_key <- github::create.repository.key(
-    username, repo, jsonlite::toJSON(key_data, auto_unbox = TRUE)
+  add_key <- httr::POST(
+    url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)), gtoken,
+    body = key_data, encode = "json"
   )
-  #assertthat::assert_that(create_key$ok)
+  httr::stop_for_status(add_key)
 
   # generate random variables for encryption
   enc_id <- rand_string(12)
@@ -57,12 +62,13 @@ setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key
   invisible(file.remove(key_path))
 
   # add tempkey and iv as secure environment variables on travis
-  repo <- httr::GET(
-    sprintf("https://api.travis-ci.org/repos/%s", fullname),
+  travis_repo <- httr::GET(
+    url = paste0(TRAVIS_API, sprintf("/repos/%s/%s", owner, repo)),
     httr::add_headers(Authorization = paste("token", travis_token))
   )
+  httr::stop_for_status(travis_repo)
+  repo_id <- httr::content(travis_repo)$id
 
-  repo_id <- httr::content(repo)$id
   set_travis_var(repo_id, sprintf("encrypted_%s_key", enc_id),
                  paste(tempkey, collapse = ""), FALSE, travis_token)
   set_travis_var(repo_id, sprintf("encrypted_%s_iv", enc_id),
@@ -72,21 +78,33 @@ setup_keys <- function(username, repo, fullname, travis_token, key_path, enc_key
 
 }
 
-auth_github_travis <- function() {
+auth_github <- function() {
   scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
-  ctx <- github::interactive.login(scopes = scopes)
-  github_token <- ctx$token$credentials$access_token
+  app <- httr::oauth_app("github",
+                         key = "4bca480fa14e7fb785a1",
+                         secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
+  github_token <- httr::oauth2.0_token(httr::oauth_endpoints("github"), app,
+                                       scope = scopes)
+  gtoken <- httr::config(token = github_token)
+  return(gtoken)
+}
+
+auth_travis <- function(gtoken) {
   # TODO: 403
+  # auth_travis_data <- list(
+  #   "github_token" = gtoken$auth_token$credentials$access_token
+  # )
   # auth_travis <- httr::POST(
-  #   "https://api.travis-ci.org/auth/github",
+  #   url = paste0(TRAVIS_API, "/auth/github"),
   #   httr::content_type_json(), httr::user_agent("Travis/1.0"),
   #   httr::accept("application/vnd.travis-ci.2+json"),
-  #   data = jsonlite::toJSON(list("github_token" = github_token),
-  #                           auto_unbox = TRUE)
+  #   body = auth_travis_data, encode = "json"
   # )
-  #
+  # httr::stop_for_status(auth_travis)
   # travis_token <- httr::content(auth_travis)$access_token
-  travis_token <- readline(prompt = "What is your travis access token? (can be found in ~/.travis/config) ")
+  travis_token <- readline(
+    "What is your travis access token? (can be found in ~/.travis/config) "
+  )
   return(travis_token)
 }
 
@@ -126,9 +144,10 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
 
   # authenticate on github and travis and set up keys/vars
   gh <- devtools:::github_info(pkg$path)
-  travis_token <- auth_github_travis()
-  enc_id <- setup_keys(gh$username, gh$repo, gh$fullname, travis_token,
-                       key_path, enc_key_path)
+  gtoken <- auth_github()
+  travis_token <- auth_travis(gtoken)
+  enc_id <- setup_keys(gh$username, gh$repo, gtoken, travis_token, key_path,
+                       enc_key_path)
 
   # add vars to .travis.yml
   travis_yml$env$global <- c(travis_yml$env$global,
