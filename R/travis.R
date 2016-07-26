@@ -119,21 +119,17 @@ auth_github <- function() {
 }
 
 auth_travis <- function(gtoken) {
-  # TODO: 403
-  # auth_travis_data <- list(
-  #   "github_token" = gtoken$auth_token$credentials$access_token
-  # )
-  # auth_travis <- httr::POST(
-  #   url = paste0(TRAVIS_API, "/auth/github"),
-  #   httr::content_type_json(), httr::user_agent("Travis/1.0"),
-  #   httr::accept("application/vnd.travis-ci.2+json"),
-  #   body = auth_travis_data, encode = "json"
-  # )
-  # httr::stop_for_status(auth_travis)
-  # travis_token <- httr::content(auth_travis)$access_token
-  travis_token <- readline(
-    "What is your travis access token? (can be found in ~/.travis/config) "
+  auth_travis_data <- list(
+    "github_token" = gtoken$auth_token$credentials$access_token
   )
+  auth_travis <- httr::POST(
+    url = paste0(TRAVIS_API, "/auth/github"),
+    httr::content_type_json(), httr::user_agent("Travis/1.0"),
+    httr::accept("application/vnd.travis-ci.2+json"),
+    body = auth_travis_data, encode = "json"
+  )
+  httr::stop_for_status(auth_travis)
+  travis_token <- httr::content(auth_travis)$access_token
   return(travis_token)
 }
 
