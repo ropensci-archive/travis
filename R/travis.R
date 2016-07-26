@@ -1,6 +1,35 @@
 TRAVIS_API <- "https://api.travis-ci.org"
 GITHUB_API <- "https://api.github.com"
 
+# adapted from devtools
+github_info <- function(path = ".") {
+
+  r <- git2r::repository(path, discover = TRUE)
+  remotes <- git2r::remotes(r)
+  remote_urls <- stats::setNames(git2r::remote_url(r, remotes), remotes)
+  r_remote_urls <- grep("github", remote_urls, value = TRUE)
+
+  remote_name <- c("origin", names(r_remote_urls))
+  x <- r_remote_urls[remote_name]
+  x <- x[!is.na(x)][1]
+
+  if (grepl("^(https|git)", x)) {
+    # https://github.com/hadley/devtools.git
+    # git@github.com:hadley/devtools.git
+    re <- "github[^/:]*[/:](.*?)/(.*)\\.git"
+  } else {
+    stop("Unknown GitHub repo format", call. = FALSE)
+  }
+
+  m <- regexec(re, x)
+  match <- regmatches(x, m)[[1]]
+  list(
+    username = match[2],
+    repo = match[3]
+  )
+
+}
+
 set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
   var_data <- list(
     "env_var" = list(
@@ -175,7 +204,7 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
   travis_yml <- yaml::yaml.load_file(travis_path)
 
   # authenticate on github and travis and set up keys/vars
-  gh <- devtools:::github_info(pkg$path)
+  gh <- github_info(pkg$path)
   gtoken <- auth_github()
   travis_token <- auth_travis(gtoken)
   enc_id <- setup_keys(gh$username, gh$repo, gtoken, travis_token, key_path,
