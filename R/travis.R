@@ -108,6 +108,38 @@ auth_travis <- function(gtoken) {
   return(travis_token)
 }
 
+add_travis_yml_var <- function(travis_yml, label, value) {
+  var_index <- sapply(travis_yml$env$global,
+                      function(var) is.character(var) && startsWith(var, label))
+  if (any(var_index)) {
+    travis_yml$env$global[[which(var_index)]] <- sprintf("%s=%s", label, value)
+  } else {
+    if (!is.null(names(travis_yml$env$global))) {
+      travis_yml$env$global <- list(travis_yml$env$global)
+    }
+    travis_yml$env$global <- c(travis_yml$env$global,
+                               sprintf("%s=%s", label, value))
+  }
+  return(travis_yml)
+}
+
+edit_travis_yml <- function(travis_yml, author_email, enc_id, script_file) {
+  if (!is.null(travis_yml$env) && !("global" %in% names(travis_yml$env))) {
+    if (length(travis_yml$env) > 1) {
+      travis_yml$env <- list("matrix" = travis_yml$env)
+    } else {
+      travis_yml$env <- list("global" = travis_yml$env)
+    }
+  }
+  travis_yml <- add_travis_yml_var(travis_yml, "AUTHOR_EMAIL", author_email)
+  travis_yml <- add_travis_yml_var(travis_yml, "ENCRYPTION_LABEL", enc_id)
+
+  travis_yml$after_success <- c(travis_yml$after_success,
+                                paste("chmod 755", script_file),
+                                file.path(".", script_file))
+  return(travis_yml)
+}
+
 #' Use travis vignettes
 #'
 #' @param pkg package description, can be path or package name. See
@@ -149,21 +181,18 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
   enc_id <- setup_keys(gh$username, gh$repo, gtoken, travis_token, key_path,
                        enc_key_path)
 
-  # add vars to .travis.yml
-  travis_yml$env$global <- c(travis_yml$env$global,
-                             paste0("AUTHOR_EMAIL=", author_email),
-                             paste0("ENCRYPTION_LABEL=", enc_id))
-  travis_yml$after_success <- c(travis_yml$before_install,
-                                paste("chmod 755", script_file),
-                                file.path(".", script_file))
-  writeLines(yaml::as.yaml(travis_yml), travis_path)
-
   # get push script to be run on travis
   script_src <- system.file("script", "push_gh_pages.sh",
                             package = "travis", mustWork = TRUE)
   file.copy(script_src, script_path)
-  devtools::use_build_ignore(script_file, pkg = pkg)
+
+  # add new files to .Rbuildignore
   devtools::use_build_ignore(enc_key_file, pkg = pkg)
+  devtools::use_build_ignore(script_file, pkg = pkg)
+
+  # update .travis.yml
+  new_travis_yml <- edit_travis_yml(travis_yml, author_email, enc_id, script_file)
+  writeLines(yaml::as.yaml(new_travis_yml), travis_path)
 
   # commit changes to git
   r <- git2r::repository(pkg$path)
