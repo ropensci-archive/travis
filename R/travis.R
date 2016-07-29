@@ -44,7 +44,7 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
     httr::add_headers(Authorization = paste("token", travis_token)),
     body = var_data, encode = "json"
   )
-  httr::stop_for_status(req)
+  httr::stop_for_status(req, "add environment variable on travis")
   return(NULL)
 }
 
@@ -76,7 +76,7 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
     url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)), gtoken,
     body = key_data, encode = "json"
   )
-  httr::stop_for_status(add_key)
+  httr::stop_for_status(add_key, "add deploy keys on GitHub")
 
   # generate random variables for encryption
   enc_id <- rand_string(12)
@@ -93,9 +93,9 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
   # add tempkey and iv as secure environment variables on travis
   travis_repo <- httr::GET(
     url = paste0(TRAVIS_API, sprintf("/repos/%s/%s", owner, repo)),
-    httr::add_headers(Authorization = paste("token", travis_token))
+    httr::add_headers(Authorization = paste("token", travis_token)),
   )
-  httr::stop_for_status(travis_repo)
+  httr::stop_for_status(travis_repo, "get repo info from travis")
   repo_id <- httr::content(travis_repo)$id
 
   set_travis_var(repo_id, sprintf("encrypted_%s_key", enc_id),
@@ -159,9 +159,11 @@ edit_travis_yml <- function(travis_yml, author_email, enc_id, script_file) {
   travis_yml <- add_travis_yml_var(travis_yml, "AUTHOR_EMAIL", author_email)
   travis_yml <- add_travis_yml_var(travis_yml, "ENCRYPTION_LABEL", enc_id)
 
-  travis_yml$after_success <- c(travis_yml$after_success,
-                                paste("chmod 755", script_file),
-                                file.path(".", script_file))
+  script_command <- sprintf("chmod +x %s && %s", script_file,
+                            file.path(".", script_file))
+  if (!(script_command %in% travis_yml$after_success)) {
+    travis_yml$after_success <- c(travis_yml$after_success, script_command)
+  }
   return(travis_yml)
 }
 
@@ -183,17 +185,7 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
   script_path <- file.path(pkg$path, script_file)
 
   if (is.null(author_email)) {
-    authors <- eval(parse(text = pkg$`authors@r`))
-    roles <- if (!is.list(authors$role)) list(authors$role) else authors$role
-    cre <- authors[sapply(roles, function(roles) "cre" %in% roles)]
-    use_email <- utils::menu(c("Yes", "No"),
-                             title = sprintf("Use %s as author email?",
-                                             cre$email))
-    if (use_email == 1) {
-      author_email <- cre$email
-    } else {
-      author_email <- readline(prompt = "Please enter an author email: ")
-    }
+    author_email <- devtools:::maintainer(pkg)$email
   }
 
   if (!file.exists(travis_path)) devtools::use_travis(pkg)
