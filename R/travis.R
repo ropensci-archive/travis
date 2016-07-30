@@ -14,15 +14,18 @@ github_info <- function(path = ".") {
   x <- x[!is.na(x)][1]
 
   if (grepl("^(https|git)", x)) {
+    # https://github.com/hadley/devtools
     # https://github.com/hadley/devtools.git
     # git@github.com:hadley/devtools.git
-    re <- "github[^/:]*[/:](.*?)/(.*)\\.git"
+    re <- "github[^/:]*[/:](.*?)/(.*)(\\.git)?"
   } else {
     stop("Unknown GitHub repo format", call. = FALSE)
   }
 
   m <- regexec(re, x)
   match <- regmatches(x, m)[[1]]
+  if(!length(match))
+    stop("Failed to find github remote user/repository")
   list(
     username = match[2],
     repo = match[3]
@@ -44,7 +47,7 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
     httr::add_headers(Authorization = paste("token", travis_token)),
     body = var_data, encode = "json"
   )
-  httr::stop_for_status(req, "add environment variable on travis")
+  httr::stop_for_status(req, sprintf("add environment variable to %s on travis", repo_id))
   return(NULL)
 }
 
@@ -76,7 +79,7 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
     url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)), gtoken,
     body = key_data, encode = "json"
   )
-  httr::stop_for_status(add_key, "add deploy keys on GitHub")
+  httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s/%s", owner, repo))
 
   # generate random variables for encryption
   enc_id <- rand_string(12)
@@ -93,9 +96,9 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
   # add tempkey and iv as secure environment variables on travis
   travis_repo <- httr::GET(
     url = paste0(TRAVIS_API, sprintf("/repos/%s/%s", owner, repo)),
-    httr::add_headers(Authorization = paste("token", travis_token)),
+    httr::add_headers(Authorization = paste("token", travis_token))
   )
-  httr::stop_for_status(travis_repo, "get repo info from travis")
+  httr::stop_for_status(travis_repo, sprintf("get repo info on %s/%s from travis", owner, repo))
   repo_id <- httr::content(travis_repo)$id
 
   set_travis_var(repo_id, sprintf("encrypted_%s_key", enc_id),
