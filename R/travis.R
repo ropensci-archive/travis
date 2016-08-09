@@ -22,7 +22,7 @@ github_info <- function(path = ".") {
     stop("Unknown GitHub repo format", call. = FALSE)
   }
 
-  m <- regexec(re, x)
+  m <- regexec(re, sub(".git$", "", x))
   match <- regmatches(x, m)[[1]]
   if(!length(match))
     stop("Failed to find github remote user/repository")
@@ -131,7 +131,7 @@ auth_travis <- function(gtoken) {
     httr::accept("application/vnd.travis-ci.2+json"),
     body = auth_travis_data, encode = "json"
   )
-  httr::stop_for_status(auth_travis)
+  httr::stop_for_status(auth_travis, "authenticate with travis")
   travis_token <- httr::content(auth_travis)$access_token
   return(travis_token)
 }
