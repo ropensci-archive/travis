@@ -52,10 +52,8 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
 }
 
 rand_char <- function() {
-  num <- openssl::rand_num()
   chars <- c(0:9, letters, LETTERS)
-  ranges <- cut(c(num, 0, 1), length(chars))
-  chars[which(levels(ranges) == ranges[1])]
+  sample(chars, 1)
 }
 
 rand_string <- function(length) {
