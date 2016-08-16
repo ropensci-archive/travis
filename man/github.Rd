@@ -2,12 +2,20 @@
 % Please edit documentation in R/github.R
 \name{github_info}
 \alias{github_info}
+\alias{github_repo}
+\alias{github_add_key}
 \title{Github Information}
 \usage{
 github_info(path = ".")
+
+github_repo(path = ".")
+
+github_add_key(pubkey, repo = github_repo())
 }
 \arguments{
 \item{path}{directory of the git repository}
+
+\item{pubkey}{openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.}
 }
 \description{
 Retrieves metadata about a git repository from github.
