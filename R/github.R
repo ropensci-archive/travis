@@ -6,6 +6,7 @@ GITHUB_API <- "https://api.github.com"
 #'
 #' @export
 #' @param path directory of the git repository
+#' @rdname github
 github_info <- function(path = ".") {
 
   r <- git2r::repository(path, discover = TRUE)
@@ -20,6 +21,36 @@ github_info <- function(path = ".") {
   remote_url <- git2r::remote_url(r, remote_name)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
+}
+
+#' @export
+#' @rdname github
+github_repo <- function(path = "."){
+  info <- github_info(path)
+  paste(info$owner$login, info$name, sep = "/")
+}
+
+#' @rdname github
+#' @export
+#' @param pubkey openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.
+github_add_key <- function(pubkey, repo = github_repo()){
+  gtoken <- auth_github()
+  if(inherits(pubkey, "key"))
+    pubkey <- as.list(key)$pubkey
+  if(!inherits(pubkey, "pubkey"))
+    stop("Argumnet 'pubkey' is not an RSA/EC public key")
+
+  # add public key to repo deploy keys on GitHub
+  key_data <- list(
+    "title" = paste("travis", Sys.time()),
+    "key" = openssl::write_ssh(pubkey),
+    "read_only" = FALSE
+  )
+  add_key <- httr::POST(
+    url = paste0(GITHUB_API, sprintf("/repos/%s/keys", repo)),
+    httr::config(token = gtoken), body = key_data, encode = "json", httr::verbose()
+  )
+  httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s",  repo))
 }
 
 get_repo_data <- function(repo){
@@ -48,3 +79,5 @@ auth_github <- function() {
                          secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
   httr::oauth2.0_token(httr::oauth_endpoints("github"), app, scope = scopes)
 }
+
+

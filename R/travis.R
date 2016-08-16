@@ -113,19 +113,7 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
-  public_key <- as.list(key)$pubkey
-
-  # add public key to repo deploy keys on GitHub
-  key_data <- list(
-    "title" = paste("travis", Sys.time()),
-    "key" = write_ssh(public_key),
-    "read_only" = FALSE
-  )
-  add_key <- httr::POST(
-    url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)),
-    httr::config(token = gtoken), body = key_data, encode = "json"
-  )
-  httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s/%s", owner, repo))
+  github_add_key(key, paste(owner, repo, sep = "/"))
 
   # generate random variables for encryption
   enc_id <- rand_string(12)
