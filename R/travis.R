@@ -1,7 +1,30 @@
-TRAVIS_API <- "https://api.travis-ci.org"
+travis <- function(endpoint = ""){
+  paste0("https://api.travis-ci.org", endpoint)
+}
+
+TRAVIS_GET <- function(url, ...){
+  token <- travis_token()
+  httr::GET(travis(url),
+    httr::user_agent("ropenscilabs/travis"),
+    httr::accept('application/vnd.travis-ci.2+json'),
+    httr::add_headers(Authorization = paste("token", token)),
+    ...)
+}
+
+TRAVIS_POST <- function(url, ...){
+  token <- travis_token()
+  httr::POST(travis(url), encode = "json",
+    httr::user_agent("ropenscilabs/travis"),
+    httr::accept('application/vnd.travis-ci.2+json'),
+    httr::add_headers(Authorization = paste("token", token)),
+    ...)
+}
 
 TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
   init_credentials = function() {
+    self$credentials <- auth_travis()
+  },
+  refresh = function(){
     self$credentials <- auth_travis()
   }
 ))
@@ -10,11 +33,14 @@ TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
 #'
 #' Authenticate with Travis using your Github account. Returns an access token.
 #' @export
-travis_get_token <- function(){
+#' @rdname travis
+travis_token <- function(refresh = FALSE){
   gtoken <- travis:::auth_github()
   app <- httr::oauth_app("travis", key = "", secret = gtoken$credentials$access_token)
-  endpoint <- httr::oauth_endpoint(NULL, NULL, TRAVIS_API)
-  TravisToken$new(app, endpoint)$credentials
+  endpoint <- httr::oauth_endpoint(NULL, NULL, travis('/auth/github'))
+  token <- TravisToken$new(app, endpoint)
+  if(refresh) token$refresh()
+  token$credentials
 }
 
 auth_travis <- function(gtoken = auth_github()) {
@@ -22,17 +48,43 @@ auth_travis <- function(gtoken = auth_github()) {
     "github_token" = gtoken$credentials$access_token
   )
   auth_travis <- httr::POST(
-    url = paste0(TRAVIS_API, "/auth/github"),
+    url = travis('/auth/github'),
     httr::content_type_json(), httr::user_agent("Travis/1.0"),
     httr::accept("application/vnd.travis-ci.2+json"),
     body = auth_travis_data, encode = "json"
   )
   httr::stop_for_status(auth_travis, "authenticate with travis")
-  travis_token <- httr::content(auth_travis)$access_token
-  return(travis_token)
+  httr::content(auth_travis)$access_token
 }
 
-travis_set_var <- function(repo, name, value, public = FALSE, travis_token) {
+#' @export
+travis_accounts <- function(){
+  req <- TRAVIS_GET("/accounts", query = list(all = 'true'))
+  stop_for_status(req, paste("list accounts"))
+  jsonlite::fromJSON(httr::content(req, "text"))
+}
+
+#' @export
+travis_repositories <- function(filter = ""){
+  req <- TRAVIS_GET("/repos", query = list(search = filter))
+  stop_for_status(req, paste("list repositories"))
+  jsonlite::fromJSON(httr::content(req, "text"))$repos
+}
+
+#' @export
+travis_get_var <- function(repo_id){
+  if(!is.numeric(repo_id)) stop("repo_id must be a number")
+  token <- travis_token()
+  req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id))
+  stop_for_status(req, paste("get environment variable for", repo_id))
+  jsonlite::fromJSON(httr::content(req, "text"))
+}
+
+#' @export
+#' @rdname travis
+travis_set_var <- function(repo_id, name, value, public = FALSE) {
+  if(!is.numeric(repo_id)) stop("repo_id must be a number")
+  token <- travis_token()
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -40,11 +92,8 @@ travis_set_var <- function(repo, name, value, public = FALSE, travis_token) {
       "public" = public
     )
   )
-  req <- httr::POST(
-    url = paste0(TRAVIS_API, "/settings/env_vars"),
-    query = list(repository_id = repo),
-    httr::add_headers(Authorization = paste("token", travis_token)),
-    body = var_data, encode = "json"
+  req <- TRAVIS_POST("/settings/env_vars",
+    query = list(repository_id = repo_id), body = var_data
   )
   httr::stop_for_status(req, sprintf("add environment variable to %s on travis", repo_id))
   invisible()
@@ -92,7 +141,7 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
 
   # add tempkey and iv as secure environment variables on travis
   travis_repo <- httr::GET(
-    url = paste0(TRAVIS_API, sprintf("/repos/%s/%s", owner, repo)),
+    url = travis(sprintf("/repos/%s/%s", owner, repo)),
     httr::add_headers(Authorization = paste("token", travis_token))
   )
   httr::stop_for_status(travis_repo, sprintf("get repo info on %s/%s from travis", owner, repo))
