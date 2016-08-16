@@ -1,36 +1,40 @@
 TRAVIS_API <- "https://api.travis-ci.org"
 GITHUB_API <- "https://api.github.com"
 
+get_repo_data <- function(repo){
+  req <- httr::GET(paste0(GITHUB_API, "/repos/", repo))
+  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
+  jsonlite::fromJSON(httr::content(req, "text"))
+}
+
+extract_repo <- function(path){
+  if(grepl("^git@github.com", path)){
+    path <- sub("^git@github.com", "https://github.com", path)
+  } else if(grepl("^http://github.com", path)){
+    path <- sub("^http://github.com", "https://github.com", path)
+  }
+  if(!all(grepl("^https://github.com", path))){
+    stop("Unrecognized repo format: ", path)
+  }
+  path <- sub("\\.git", "", path)
+  sub("^https://github.com/", "", path)
+}
+
 # adapted from devtools
 github_info <- function(path = ".") {
 
   r <- git2r::repository(path, discover = TRUE)
-  remotes <- git2r::remotes(r)
-  remote_urls <- stats::setNames(git2r::remote_url(r, remotes), remotes)
-  r_remote_urls <- grep("github", remote_urls, value = TRUE)
-
-  remote_name <- c("origin", names(r_remote_urls))
-  x <- r_remote_urls[remote_name]
-  x <- x[!is.na(x)][1]
-
-  if (grepl("^(https|git)", x)) {
-    # https://github.com/hadley/devtools
-    # https://github.com/hadley/devtools.git
-    # git@github.com:hadley/devtools.git
-    re <- "github[^/:]*[/:](.*?)/(.*)(\\.git)?"
-  } else {
-    stop("Unknown GitHub repo format", call. = FALSE)
+  remote_names <- git2r::remotes(r)
+  if(!length(remote_names))
+    stop("Failed to lookup git remotes")
+  remote_name <- "origin"
+  if(!("origin" %in% remote_names)){
+    remote_name <- remote_names[1]
+    warning("No remote 'origin' found. Using: ", remote_name)
   }
-
-  m <- regexec(re, sub(".git$", "", x))
-  match <- regmatches(x, m)[[1]]
-  if(!length(match))
-    stop("Failed to find github remote user/repository")
-  list(
-    username = match[2],
-    repo = match[3]
-  )
-
+  remote_url <- git2r::remote_url(r, remote_name)
+  repo <- extract_repo(remote_url)
+  get_repo_data(repo)
 }
 
 set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
@@ -194,9 +198,12 @@ use_travis_vignettes <- function(pkg = ".", author_email = NULL) {
 
   # authenticate on github and travis and set up keys/vars
   gh <- github_info(pkg$path)
+  username <- gh$owner$login
+  repo <- gh$name
   gtoken <- auth_github()
   travis_token <- auth_travis(gtoken)
-  enc_id <- setup_keys(gh$username, gh$repo, gtoken, travis_token, key_path,
+
+  enc_id <- setup_keys(username, repo, gtoken, travis_token, key_path,
                        enc_key_path)
 
   # get push script to be run on travis
