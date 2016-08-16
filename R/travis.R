@@ -1,13 +1,20 @@
 TRAVIS_API <- "https://api.travis-ci.org"
 
+TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
+  init_credentials = function() {
+    self$credentials <- auth_travis()
+  }
+))
+
 #' Authenticate with Travis
 #'
-#' Authenticate with Travis using your Github account. Returns an access
-#' token
+#' Authenticate with Travis using your Github account. Returns an access token.
 #' @export
-auth <- function(){
-  # TODO: add token caching
-  auth_travis()
+travis_get_token <- function(){
+  gtoken <- travis:::auth_github()
+  app <- httr::oauth_app("travis", key = "", secret = gtoken$credentials$access_token)
+  endpoint <- httr::oauth_endpoint(NULL, NULL, TRAVIS_API)
+  TravisToken$new(app, endpoint)$credentials
 }
 
 auth_travis <- function(gtoken = auth_github()) {
@@ -25,7 +32,7 @@ auth_travis <- function(gtoken = auth_github()) {
   return(travis_token)
 }
 
-set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
+travis_set_var <- function(repo, name, value, public = FALSE, travis_token) {
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -35,12 +42,12 @@ set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
   )
   req <- httr::POST(
     url = paste0(TRAVIS_API, "/settings/env_vars"),
-    query = list(repository_id = repo_id),
+    query = list(repository_id = repo),
     httr::add_headers(Authorization = paste("token", travis_token)),
     body = var_data, encode = "json"
   )
   httr::stop_for_status(req, sprintf("add environment variable to %s on travis", repo_id))
-  return(NULL)
+  invisible()
 }
 
 rand_char <- function() {
