@@ -1,40 +1,28 @@
 TRAVIS_API <- "https://api.travis-ci.org"
-GITHUB_API <- "https://api.github.com"
 
-get_repo_data <- function(repo){
-  req <- httr::GET(paste0(GITHUB_API, "/repos/", repo))
-  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
-  jsonlite::fromJSON(httr::content(req, "text"))
+#' Authenticate with Travis
+#'
+#' Authenticate with Travis using your Github account. Returns an access
+#' token
+#' @export
+auth <- function(){
+  # TODO: add token caching
+  auth_travis()
 }
 
-extract_repo <- function(path){
-  if(grepl("^git@github.com", path)){
-    path <- sub("^git@github.com", "https://github.com", path)
-  } else if(grepl("^http://github.com", path)){
-    path <- sub("^http://github.com", "https://github.com", path)
-  }
-  if(!all(grepl("^https://github.com", path))){
-    stop("Unrecognized repo format: ", path)
-  }
-  path <- sub("\\.git", "", path)
-  sub("^https://github.com/", "", path)
-}
-
-# adapted from devtools
-github_info <- function(path = ".") {
-
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
-  if(!length(remote_names))
-    stop("Failed to lookup git remotes")
-  remote_name <- "origin"
-  if(!("origin" %in% remote_names)){
-    remote_name <- remote_names[1]
-    warning("No remote 'origin' found. Using: ", remote_name)
-  }
-  remote_url <- git2r::remote_url(r, remote_name)
-  repo <- extract_repo(remote_url)
-  get_repo_data(repo)
+auth_travis <- function(gtoken = auth_github()) {
+  auth_travis_data <- list(
+    "github_token" = gtoken$credentials$access_token
+  )
+  auth_travis <- httr::POST(
+    url = paste0(TRAVIS_API, "/auth/github"),
+    httr::content_type_json(), httr::user_agent("Travis/1.0"),
+    httr::accept("application/vnd.travis-ci.2+json"),
+    body = auth_travis_data, encode = "json"
+  )
+  httr::stop_for_status(auth_travis, "authenticate with travis")
+  travis_token <- httr::content(auth_travis)$access_token
+  return(travis_token)
 }
 
 set_travis_var <- function(repo_id, name, value, public = FALSE, travis_token) {
@@ -74,12 +62,12 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
   # add public key to repo deploy keys on GitHub
   key_data <- list(
     "title" = paste("travis", Sys.time()),
-    "key" = as.list(public_key)$ssh,
+    "key" = write_ssh(public_key),
     "read_only" = FALSE
   )
   add_key <- httr::POST(
-    url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)), gtoken,
-    body = key_data, encode = "json"
+    url = paste0(GITHUB_API, sprintf("/repos/%s/%s/keys", owner, repo)),
+    httr::config(token = gtoken), body = key_data, encode = "json"
   )
   httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s/%s", owner, repo))
 
@@ -112,31 +100,8 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
 
 }
 
-auth_github <- function() {
-  scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
-  app <- httr::oauth_app("github",
-                         key = "4bca480fa14e7fb785a1",
-                         secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
-  github_token <- httr::oauth2.0_token(httr::oauth_endpoints("github"), app,
-                                       scope = scopes)
-  gtoken <- httr::config(token = github_token)
-  return(gtoken)
-}
 
-auth_travis <- function(gtoken) {
-  auth_travis_data <- list(
-    "github_token" = gtoken$auth_token$credentials$access_token
-  )
-  auth_travis <- httr::POST(
-    url = paste0(TRAVIS_API, "/auth/github"),
-    httr::content_type_json(), httr::user_agent("Travis/1.0"),
-    httr::accept("application/vnd.travis-ci.2+json"),
-    body = auth_travis_data, encode = "json"
-  )
-  httr::stop_for_status(auth_travis, "authenticate with travis")
-  travis_token <- httr::content(auth_travis)$access_token
-  return(travis_token)
-}
+
 
 add_travis_yml_var <- function(travis_yml, label, value) {
   var_index <- sapply(travis_yml$env$global,
