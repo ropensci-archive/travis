@@ -115,6 +115,8 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
   key <- openssl::rsa_keygen()  # TOOD: num bits?
   github_add_key(key, paste(owner, repo, sep = "/"))
 
+  #NOTE: it might be easier to encrypt with travis_pubkey()
+
   # generate random variables for encryption
   enc_id <- rand_string(12)
   tempkey <- openssl::rand_bytes(32)
