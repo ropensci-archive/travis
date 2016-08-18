@@ -99,6 +99,15 @@ travis_set_var <- function(repo_id, name, value, public = FALSE) {
   invisible()
 }
 
+#' @export
+#' @rdname travis
+travis_repo_info <- function(owner, repo){
+  # add tempkey and iv as secure environment variables on travis
+  req <- TRAVIS_GET(sprintf("/repos/%s/%s", owner, repo))
+  httr::stop_for_status(req, sprintf("get repo info on %s/%s from travis", owner, repo))
+  jsonlite::fromJSON(httr::content(req, "text"))$repo
+}
+
 rand_char <- function() {
   chars <- c(0:9, letters, LETTERS)
   sample(chars, 1)
@@ -108,8 +117,7 @@ rand_string <- function(length) {
   paste(replicate(length, rand_char()), collapse = "")
 }
 
-setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
-                       enc_key_path) {
+setup_keys <- function(owner, repo, key_path, enc_key_path) {
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
@@ -129,18 +137,13 @@ setup_keys <- function(owner, repo, gtoken, travis_token, key_path,
   writeBin(blob, enc_key_path)
   invisible(file.remove(key_path))
 
-  # add tempkey and iv as secure environment variables on travis
-  travis_repo <- httr::GET(
-    url = travis(sprintf("/repos/%s/%s", owner, repo)),
-    httr::add_headers(Authorization = paste("token", travis_token))
-  )
-  httr::stop_for_status(travis_repo, sprintf("get repo info on %s/%s from travis", owner, repo))
-  repo_id <- httr::content(travis_repo)$id
+  # Get the ID number
+  repo_id <- travis_repo_info(owner, repo)$id;
 
-  set_travis_var(repo_id, sprintf("encrypted_%s_key", enc_id),
-                 paste(tempkey, collapse = ""), FALSE, travis_token)
-  set_travis_var(repo_id, sprintf("encrypted_%s_iv", enc_id),
-                 paste(iv, collapse = ""), FALSE, travis_token)
+  travis_set_var(repo_id, sprintf("encrypted_%s_key", enc_id),
+                 paste(tempkey, collapse = ""), FALSE)
+  travis_set_var(repo_id, sprintf("encrypted_%s_iv", enc_id),
+                 paste(iv, collapse = ""), FALSE)
 
   return(enc_id)
 
