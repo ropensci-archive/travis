@@ -60,14 +60,14 @@ auth_travis <- function(gtoken = auth_github()) {
 #' @export
 travis_accounts <- function(){
   req <- TRAVIS_GET("/accounts", query = list(all = 'true'))
-  stop_for_status(req, paste("list accounts"))
+  httr::stop_for_status(req, paste("list accounts"))
   jsonlite::fromJSON(httr::content(req, "text"))
 }
 
 #' @export
 travis_repositories <- function(filter = ""){
   req <- TRAVIS_GET("/repos", query = list(search = filter))
-  stop_for_status(req, paste("list repositories"))
+  httr::stop_for_status(req, paste("list repositories"))
   jsonlite::fromJSON(httr::content(req, "text"))$repos
 }
 
@@ -76,7 +76,7 @@ travis_get_var <- function(repo_id){
   if(!is.numeric(repo_id)) stop("repo_id must be a number")
   token <- travis_token()
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id))
-  stop_for_status(req, paste("get environment variable for", repo_id))
+  httr::stop_for_status(req, paste("get environment variable for", repo_id))
   jsonlite::fromJSON(httr::content(req, "text"))
 }
 
