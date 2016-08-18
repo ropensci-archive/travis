@@ -3,11 +3,14 @@
 \name{travis_token}
 \alias{travis_token}
 \alias{travis_set_var}
+\alias{travis_repo_info}
 \title{Authenticate with Travis}
 \usage{
 travis_token(refresh = FALSE)
 
 travis_set_var(repo_id, name, value, public = FALSE)
+
+travis_repo_info(owner, repo)
 }
 \description{
 Authenticate with Travis using your Github account. Returns an access token.
