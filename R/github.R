@@ -26,7 +26,7 @@ github_repo <- function(path = "."){
 github_add_key <- function(pubkey, repo = github_repo()){
   gtoken <- auth_github()
   if(inherits(pubkey, "key"))
-    pubkey <- as.list(key)$pubkey
+    pubkey <- as.list(pubkey)$pubkey
   if(!inherits(pubkey, "pubkey"))
     stop("Argumnet 'pubkey' is not an RSA/EC public key")
 
