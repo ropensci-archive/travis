@@ -1,23 +1,23 @@
-travis <- function(endpoint = ""){
+travis <- function(endpoint = "") {
   paste0("https://api.travis-ci.org", endpoint)
 }
 
-TRAVIS_GET <- function(url, ...){
+TRAVIS_GET <- function(url, ...) {
   token <- travis_token()
   httr::GET(travis(url),
-    httr::user_agent("ropenscilabs/travis"),
-    httr::accept('application/vnd.travis-ci.2+json'),
-    httr::add_headers(Authorization = paste("token", token)),
-    ...)
+            httr::user_agent("ropenscilabs/travis"),
+            httr::accept('application/vnd.travis-ci.2+json'),
+            httr::add_headers(Authorization = paste("token", token)),
+            ...)
 }
 
-TRAVIS_POST <- function(url, ...){
+TRAVIS_POST <- function(url, ...) {
   token <- travis_token()
   httr::POST(travis(url), encode = "json",
-    httr::user_agent("ropenscilabs/travis"),
-    httr::accept('application/vnd.travis-ci.2+json'),
-    httr::add_headers(Authorization = paste("token", token)),
-    ...)
+             httr::user_agent("ropenscilabs/travis"),
+             httr::accept('application/vnd.travis-ci.2+json'),
+             httr::add_headers(Authorization = paste("token", token)),
+             ...)
 }
 
 TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
@@ -34,12 +34,13 @@ TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
 #' Authenticate with Travis using your Github account. Returns an access token.
 #' @export
 #' @rdname travis
-travis_token <- function(refresh = FALSE){
+travis_token <- function(refresh = FALSE) {
   gtoken <- travis:::auth_github()
-  app <- httr::oauth_app("travis", key = "", secret = gtoken$credentials$access_token)
+  app <- httr::oauth_app("travis", key = "",
+                         secret = gtoken$credentials$access_token)
   endpoint <- httr::oauth_endpoint(NULL, NULL, travis('/auth/github'))
   token <- TravisToken$new(app, endpoint)
-  if(refresh) token$refresh()
+  if (refresh) token$refresh()
   token$credentials
 }
 
@@ -58,22 +59,22 @@ auth_travis <- function(gtoken = auth_github()) {
 }
 
 #' @export
-travis_accounts <- function(){
+travis_accounts <- function() {
   req <- TRAVIS_GET("/accounts", query = list(all = 'true'))
   httr::stop_for_status(req, paste("list accounts"))
   jsonlite::fromJSON(httr::content(req, "text"))
 }
 
 #' @export
-travis_repositories <- function(filter = ""){
+travis_repositories <- function(filter = "") {
   req <- TRAVIS_GET("/repos", query = list(search = filter))
   httr::stop_for_status(req, paste("list repositories"))
   jsonlite::fromJSON(httr::content(req, "text"))$repos
 }
 
 #' @export
-travis_get_var <- function(repo_id){
-  if(!is.numeric(repo_id)) stop("repo_id must be a number")
+travis_get_var <- function(repo_id) {
+  if (!is.numeric(repo_id)) stop("repo_id must be a number")
   token <- travis_token()
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id))
   httr::stop_for_status(req, paste("get environment variable for", repo_id))
@@ -83,7 +84,7 @@ travis_get_var <- function(repo_id){
 #' @export
 #' @rdname travis
 travis_set_var <- function(repo_id, name, value, public = FALSE) {
-  if(!is.numeric(repo_id)) stop("repo_id must be a number")
+  if (!is.numeric(repo_id)) stop("repo_id must be a number")
   token <- travis_token()
   var_data <- list(
     "env_var" = list(
@@ -93,40 +94,31 @@ travis_set_var <- function(repo_id, name, value, public = FALSE) {
     )
   )
   req <- TRAVIS_POST("/settings/env_vars",
-    query = list(repository_id = repo_id), body = var_data
+                     query = list(repository_id = repo_id), body = var_data
   )
-  httr::stop_for_status(req, sprintf("add environment variable to %s on travis", repo_id))
+  httr::stop_for_status(req, sprintf("add environment variable to %s on travis",
+                                     repo_id))
   invisible()
 }
 
 #' @export
 #' @rdname travis
-travis_repo_info <- function(owner, repo){
-  # add tempkey and iv as secure environment variables on travis
+travis_repo_info <- function(owner, repo) {
   req <- TRAVIS_GET(sprintf("/repos/%s/%s", owner, repo))
-  httr::stop_for_status(req, sprintf("get repo info on %s/%s from travis", owner, repo))
+  httr::stop_for_status(req, sprintf("get repo info on %s/%s from travis",
+                                     owner, repo))
   jsonlite::fromJSON(httr::content(req, "text"))$repo
 }
 
-rand_char <- function() {
-  chars <- c(0:9, letters, LETTERS)
-  sample(chars, 1)
-}
-
-rand_string <- function(length) {
-  paste(replicate(length, rand_char()), collapse = "")
-}
-
-setup_keys <- function(owner, repo, key_path, enc_key_path) {
+setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
+  pub_key <- as.list(key)$pubkey
+  openssl::write_pem(pub_key, pub_key_path)
   github_add_key(key, paste(owner, repo, sep = "/"))
 
-  #NOTE: it might be easier to encrypt with travis_pubkey()
-
   # generate random variables for encryption
-  enc_id <- rand_string(12)
   tempkey <- openssl::rand_bytes(32)
   iv <- openssl::rand_bytes(16)
 
@@ -137,14 +129,11 @@ setup_keys <- function(owner, repo, key_path, enc_key_path) {
   writeBin(blob, enc_key_path)
   invisible(file.remove(key_path))
 
-  # Get the ID number
-  repo_id <- travis_repo_info(owner, repo)$id;
+  # get the repo id
+  repo_id <- travis_repo_info(owner, repo)$id
 
-  travis_set_var(repo_id, sprintf("encrypted_%s_key", enc_id),
-                 paste(tempkey, collapse = ""), FALSE)
-  travis_set_var(repo_id, sprintf("encrypted_%s_iv", enc_id),
-                 paste(iv, collapse = ""), FALSE)
-
-  return(enc_id)
+  # add tempkey and iv as secure environment variables on travis
+  travis_set_var(repo_id, "encryption_key", paste(tempkey, collapse = ""), FALSE)
+  travis_set_var(repo_id, "encryption_iv", paste(iv, collapse = ""), FALSE)
 
 }
