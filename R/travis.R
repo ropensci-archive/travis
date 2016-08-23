@@ -133,9 +133,13 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
   repo_id <- travis_repo_info(owner, repo)$id
 
   # add tempkey and iv as secure environment variables on travis
+  # TODO: overwrite if already exists
   travis_set_var(repo_id, "encryption_key", openssl::base64_encode(tempkey),
                  public = FALSE)
   travis_set_var(repo_id, "encryption_iv", openssl::base64_encode(iv),
                  public = FALSE)
+
+  #print(sprintf("tempkey: %s", openssl::base64_encode(tempkey)))
+  #print(sprintf("iv: %s", openssl::base64_encode(iv)))
 
 }
