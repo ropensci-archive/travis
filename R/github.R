@@ -74,7 +74,8 @@ extract_repo <- function(path) {
 }
 
 auth_github <- function() {
-  scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
+  scopes <- c("read:org", "user:email", "repo_deployment",
+              "repo:status", "write:repo_hook")
   app <- httr::oauth_app("github",
                          key = "4bca480fa14e7fb785a1",
                          secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
