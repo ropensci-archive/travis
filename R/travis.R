@@ -44,8 +44,11 @@ travis_token <- function(refresh = FALSE) {
   token$credentials
 }
 
-auth_travis <- function(gtoken = auth_github(cache = FALSE)) {
+auth_travis_ <- function(gtoken = NULL) {
   message("Authenticating with Travis")
+  if (is.null(gtoken)) {
+    gtoken <- auth_github_(cache = FALSE)
+  }
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token
   )
@@ -58,6 +61,8 @@ auth_travis <- function(gtoken = auth_github(cache = FALSE)) {
   httr::stop_for_status(auth_travis, "authenticate with travis")
   httr::content(auth_travis)$access_token
 }
+
+auth_travis <- memoise::memoise(auth_travis_)
 
 #' @export
 travis_accounts <- function() {
