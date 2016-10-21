@@ -45,6 +45,7 @@ travis_token <- function(refresh = FALSE) {
 }
 
 auth_travis <- function(gtoken = auth_github()) {
+  message("Authenticating with Travis")
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token
   )
