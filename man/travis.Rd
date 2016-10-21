@@ -8,7 +8,7 @@
 \usage{
 travis_token()
 
-travis_set_var(repo_id, name, value, public = FALSE)
+travis_set_var(name, value, public = FALSE, repo_id = travis_repo_id())
 
 travis_repo_info(owner, repo)
 }

@@ -5,9 +5,9 @@
 \alias{travis_pubkey}
 \title{Encrypt for Travis}
 \usage{
-travis_pubkey(repo)
+travis_pubkey(repo = github_repo())
 
-travis_encrypt(data, pubkey)
+travis_encrypt(data, pubkey = travis_pubkey())
 }
 \arguments{
 \item{repo}{travis repository in "user/repo" format (similar to
