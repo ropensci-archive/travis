@@ -107,6 +107,12 @@ travis_repo_info <- function(repo = github_repo()) {
   jsonlite::fromJSON(httr::content(req, "text"))$repo
 }
 
+#' @export
+#' @rdname travis
+travis_repo_id <- function(repo = github_repo()) {
+  travis_repo_info(repo)$id
+}
+
 setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
 
   # generate deploy key pair
@@ -128,7 +134,7 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
   invisible(file.remove(key_path))
 
   # get the repo id
-  repo_id <- travis_repo_info(slug)$id
+  repo_id <- travis_repo_id(slug)
 
   # add tempkey and iv as secure environment variables on travis
   # TODO: overwrite if already exists
