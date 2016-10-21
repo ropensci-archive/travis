@@ -73,7 +73,8 @@ extract_repo <- function(path) {
   sub("^https://github.com/", "", path)
 }
 
-auth_github <- function() {
+auth_github_ <- function() {
+  message("Authenticating with GitHub")
   scopes <- c("read:org", "user:email", "repo_deployment",
               "repo:status", "write:repo_hook")
   app <- httr::oauth_app("github",
@@ -81,3 +82,5 @@ auth_github <- function() {
                          secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
   httr::oauth2.0_token(httr::oauth_endpoints("github"), app, scope = scopes)
 }
+
+auth_github <- memoise::memoise(auth_github_)
