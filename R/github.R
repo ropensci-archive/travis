@@ -59,8 +59,10 @@ get_repo_data <- function(repo) {
 }
 
 extract_repo <- function(path) {
-  if (grepl("^git@github.com", path)) {
-    path <- sub("^git@github.com", "https://github.com", path)
+  if (grepl("^git@github.com:", path)) {
+    path <- sub("^git@github.com:", "https://github.com/", path)
+  } else if (grepl("^git://github.com", path)) {
+    path <- sub("^git://github.com", "https://github.com", path)
   } else if (grepl("^http://github.com", path)) {
     path <- sub("^http://github.com", "https://github.com", path)
   }
