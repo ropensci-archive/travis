@@ -20,6 +20,15 @@ TRAVIS_POST <- function(url, ...) {
              ...)
 }
 
+TRAVIS_DELETE <- function(url, ...) {
+  token <- travis_token()
+  httr::DELETE(travis(url), encode = "json",
+               httr::user_agent("ropenscilabs/travis"),
+               httr::accept('application/vnd.travis-ci.2+json'),
+               httr::add_headers(Authorization = paste("token", token)),
+               ...)
+}
+
 TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
   init_credentials = function() {
     self$credentials <- auth_travis()
@@ -95,6 +104,18 @@ travis_set_var <- function(name, value, public = FALSE, repo_id = travis_repo_id
                      query = list(repository_id = repo_id), body = var_data
   )
   httr::stop_for_status(req, sprintf("add environment variable to %s on travis",
+                                     repo_id))
+  invisible()
+}
+
+#' @export
+#' @rdname travis
+travis_delete_var <- function(id, repo_id = travis_repo_id()) {
+  if (!is.numeric(repo_id)) stop("repo_id must be a number")
+  req <- TRAVIS_DELETE(paste0("/settings/env_vars/", id),
+                       query = list(repository_id = repo_id)
+  )
+  httr::stop_for_status(req, sprintf("delete environment variable id=%s on travis",
                                      repo_id))
   invisible()
 }
