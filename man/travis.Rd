@@ -6,7 +6,7 @@
 \alias{travis_repo_info}
 \title{Authenticate with Travis}
 \usage{
-travis_token(refresh = FALSE)
+travis_token()
 
 travis_set_var(repo_id, name, value, public = FALSE)
 
