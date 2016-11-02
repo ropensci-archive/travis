@@ -73,9 +73,8 @@ travis_repositories <- function(filter = "") {
 }
 
 #' @export
-travis_get_var <- function(repo_id) {
+travis_get_vars <- function(repo_id = travis_repo_id()) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
-  token <- travis_token()
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id))
   httr::stop_for_status(req, paste("get environment variable for", repo_id))
   jsonlite::fromJSON(httr::content(req, "text"))
@@ -83,9 +82,8 @@ travis_get_var <- function(repo_id) {
 
 #' @export
 #' @rdname travis
-travis_set_var <- function(repo_id, name, value, public = FALSE) {
+travis_set_var <- function(name, value, public = FALSE, repo_id = travis_repo_id()) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
-  token <- travis_token()
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -134,10 +132,10 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
 
   # add tempkey and iv as secure environment variables on travis
   # TODO: overwrite if already exists
-  travis_set_var(repo_id, "encryption_key", openssl::base64_encode(tempkey),
-                 public = FALSE)
-  travis_set_var(repo_id, "encryption_iv", openssl::base64_encode(iv),
-                 public = FALSE)
+  travis_set_var("encryption_key", openssl::base64_encode(tempkey),
+                 public = FALSE, repo_id = repo_id)
+  travis_set_var("encryption_iv", openssl::base64_encode(iv),
+                 public = FALSE, repo_id = repo_id)
 
   #print(sprintf("tempkey: %s", openssl::base64_encode(tempkey)))
   #print(sprintf("iv: %s", openssl::base64_encode(iv)))
