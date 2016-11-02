@@ -41,7 +41,7 @@ use_travis_deploy <- function(pkg = ".", tasks = NULL) {
     git2r::add(r, ".travis.yml")
     git2r::add(r, pub_key_file)
     git2r::add(r, enc_key_file)
-    git2r::commit(r, "set up travis pushing vignettes to gh-pages")
+    git2r::commit(r, "set up deploy keys in travis")
   }
 
 }
