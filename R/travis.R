@@ -101,11 +101,16 @@ travis_set_var <- function(name, value, public = FALSE, repo_id = travis_repo_id
 
 #' @export
 #' @rdname travis
-travis_repo_info <- function(owner, repo) {
-  req <- TRAVIS_GET(sprintf("/repos/%s/%s", owner, repo))
-  httr::stop_for_status(req, sprintf("get repo info on %s/%s from travis",
-                                     owner, repo))
+travis_repo_info <- function(repo = github_repo()) {
+  req <- TRAVIS_GET(sprintf("/repos/%s", repo))
+  httr::stop_for_status(req, sprintf("get repo info on %s from travis", repo))
   jsonlite::fromJSON(httr::content(req, "text"))$repo
+}
+
+#' @export
+#' @rdname travis
+travis_repo_id <- function(repo = github_repo()) {
+  travis_repo_info(repo)$id
 }
 
 setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
@@ -114,7 +119,8 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
   key <- openssl::rsa_keygen()  # TOOD: num bits?
   pub_key <- as.list(key)$pubkey
   openssl::write_pem(pub_key, pub_key_path)
-  github_add_key(key, paste(owner, repo, sep = "/"))
+  slug <- paste(owner, repo, sep = "/")
+  github_add_key(key, slug)
 
   # generate random variables for encryption
   tempkey <- openssl::rand_bytes(32)
@@ -128,7 +134,7 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
   invisible(file.remove(key_path))
 
   # get the repo id
-  repo_id <- travis_repo_info(owner, repo)$id
+  repo_id <- travis_repo_id(slug)
 
   # add tempkey and iv as secure environment variables on travis
   # TODO: overwrite if already exists
