@@ -13,7 +13,7 @@
 #' @references \url{http://docs.travis-ci.com/user/encryption-keys/}
 #' @param repo travis repository in "user/repo" format (similar to
 #' \link[devtools:install_github]{install_github})
-travis_pubkey <- function(repo){
+travis_pubkey <- function(repo = github_repo()){
   url <- sprintf("https://api.travis-ci.org/repos/%s/key", repo)
   con <- curl::curl(url)
   keystr <- gsub("RSA PUBLIC", "PUBLIC", jsonlite::fromJSON(con)$key)
@@ -29,7 +29,7 @@ travis_pubkey <- function(repo){
 #' pubkey <- travis_pubkey("jeroenooms/jsonlite")
 #' travis_encrypt("TOKEN=12345", pubkey)
 #' travis_encrypt("TOKEN=12345", "jeroenooms/jsonlite")
-travis_encrypt <- function(data, pubkey){
+travis_encrypt <- function(data, pubkey = travis_pubkey()){
   if(is.character(data)){
     data <- charToRaw(paste(data, collapse = "\n"))
   }
