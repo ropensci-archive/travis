@@ -8,16 +8,7 @@ GITHUB_API <- "https://api.github.com"
 #' @param path directory of the git repository
 #' @rdname github
 github_info <- function(path = ".") {
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
-  if (!length(remote_names))
-    stop("Failed to lookup git remotes")
-  remote_name <- "origin"
-  if (!("origin" %in% remote_names)) {
-    remote_name <- remote_names[1]
-    warning("No remote 'origin' found. Using: ", remote_name)
-  }
-  remote_url <- git2r::remote_url(r, remote_name)
+  remote_url <- get_github_url(path)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
 }
@@ -56,6 +47,19 @@ get_repo_data <- function(repo) {
   req <- httr::GET(paste0(GITHUB_API, "/repos/", repo))
   httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
   jsonlite::fromJSON(httr::content(req, "text"))
+}
+
+get_github_url <- function(path) {
+  r <- git2r::repository(path, discover = TRUE)
+  remote_names <- git2r::remotes(r)
+  if (!length(remote_names))
+    stop("Failed to lookup git remotes")
+  remote_name <- "origin"
+  if (!("origin" %in% remote_names)) {
+    remote_name <- remote_names[1]
+    warning("No remote 'origin' found. Using: ", remote_name)
+  }
+  git2r::remote_url(r, remote_name)
 }
 
 extract_repo <- function(path) {
