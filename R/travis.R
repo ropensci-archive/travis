@@ -34,17 +34,15 @@ TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
 #' Authenticate with Travis using your Github account. Returns an access token.
 #' @export
 #' @rdname travis
-travis_token <- function(refresh = FALSE) {
-  gtoken <- travis:::auth_github()
-  app <- httr::oauth_app("travis", key = "",
-                         secret = gtoken$credentials$access_token)
-  endpoint <- httr::oauth_endpoint(NULL, NULL, travis('/auth/github'))
-  token <- TravisToken$new(app, endpoint)
-  if (refresh) token$refresh()
-  token$credentials
+travis_token <- function() {
+  auth_travis()
 }
 
-auth_travis <- function(gtoken = auth_github()) {
+auth_travis_ <- function(gtoken = NULL) {
+  message("Authenticating with Travis")
+  if (is.null(gtoken)) {
+    gtoken <- auth_github_(cache = FALSE)
+  }
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token
   )
@@ -57,6 +55,8 @@ auth_travis <- function(gtoken = auth_github()) {
   httr::stop_for_status(auth_travis, "authenticate with travis")
   httr::content(auth_travis)$access_token
 }
+
+auth_travis <- memoise::memoise(auth_travis_)
 
 #' @export
 travis_accounts <- function() {
