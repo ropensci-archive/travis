@@ -20,6 +20,27 @@ github_repo <- function(path = ".") {
   paste(info$owner$login, info$name, sep = "/")
 }
 
+#' @export
+github_create_repo <- function(path = ".", name = NULL, private = FALSE, gh_token = auth_github(scopes = "public_repo")) {
+  if (private) {
+    stop("Creating private repositories not supported.", call. = FALSE)
+  }
+
+  if (is.null(name)) {
+    name <- basename(normalizePath(path))
+  }
+
+  data <- list(
+    "name" = name
+  )
+
+  req <- httr::POST(
+    url = paste0(GITHUB_API, "/user/repos"),
+    httr::config(token = gh_token), body = data, encode = "json"
+  )
+  httr::stop_for_status(req, sprintf("create repo %s", name))
+}
+
 #' @rdname github
 #' @export
 #' @param pubkey openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.
