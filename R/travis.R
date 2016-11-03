@@ -11,6 +11,15 @@ TRAVIS_GET <- function(url, ...) {
             ...)
 }
 
+TRAVIS_PUT <- function(url, ...) {
+  token <- travis_token()
+  httr::PUT(travis(url), encode = "json",
+            httr::user_agent("ropenscilabs/travis"),
+            httr::accept('application/vnd.travis-ci.2+json'),
+            httr::add_headers(Authorization = paste("token", token)),
+            ...)
+}
+
 TRAVIS_POST <- function(url, ...) {
   token <- travis_token()
   httr::POST(travis(url), encode = "json",
@@ -155,16 +164,39 @@ travis_delete_var <- function(id, repo_id = travis_repo_id()) {
 
 #' @export
 #' @rdname travis
-travis_repo_info <- function(repo = github_repo()) {
+travis_repo_info <- function(repo = github_repo(), sync = FALSE) {
   req <- TRAVIS_GET(sprintf("/repos/%s", repo))
-  httr::stop_for_status(req, sprintf("get repo info on %s from travis", repo))
+  if (sync) {
+    httr::message_for_status(req, sprintf("try get repo info on %s from travis", repo))
+    if (is.null(req$contents$active)) {
+      travis_sync()
+      httr::stop_for_status(req, sprintf("get repo info on %s from travis after sync", repo))
+    }
+  } else {
+    httr::stop_for_status(req, sprintf("get repo info on %s from travis", repo))
+  }
   jsonlite::fromJSON(httr::content(req, "text"))$repo
 }
 
 #' @export
 #' @rdname travis
-travis_repo_id <- function(repo = github_repo()) {
-  travis_repo_info(repo)$id
+travis_repo_id <- function(repo = github_repo(), ...) {
+  travis_repo_info(repo, ...)$id
+}
+
+#' @export
+#' @rdname travis
+travis_enable <- function(active = TRUE, repo_id = travis_repo_id(sync = TRUE)) {
+  req <- TRAVIS_PUT(sprintf("/hooks"), body = list(hook = list(id = repo_id, active = active)))
+  httr::stop_for_status(
+    req, sprintf(
+      "%s repo %s on travis",
+      ifelse(active, "activate", "deactivate"), repo_id))
+}
+
+#' @export
+travis_browse <- function(repo = github_repo()) {
+  utils::browseURL(paste0("https://travis-ci.org/", repo))
 }
 
 setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {

@@ -6,6 +6,7 @@
 \alias{travis_delete_var}
 \alias{travis_repo_info}
 \alias{travis_repo_id}
+\alias{travis_enable}
 \title{Authenticate with Travis}
 \usage{
 travis_token()
@@ -14,9 +15,11 @@ travis_set_var(name, value, public = FALSE, repo_id = travis_repo_id())
 
 travis_delete_var(id, repo_id = travis_repo_id())
 
-travis_repo_info(repo = github_repo())
+travis_repo_info(repo = github_repo(), sync = FALSE)
 
-travis_repo_id(repo = github_repo())
+travis_repo_id(repo = github_repo(), ...)
+
+travis_enable(active = TRUE, repo_id = travis_repo_id(sync = TRUE))
 }
 \description{
 Authenticate with Travis using your Github account. Returns an access token.
