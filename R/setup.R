@@ -7,16 +7,12 @@
 use_travis_deploy <- function(pkg = ".") {
 
   pkg <- devtools::as.package(pkg)
-  travis_path <- file.path(pkg$path, ".travis.yml")
   key_file <- ".deploy_key"
   key_path <- file.path(pkg$path, key_file)
   pub_key_file <- paste0(key_file, ".pub")
   pub_key_path <- file.path(pkg$path, pub_key_file)
   enc_key_file <- paste0(key_file, ".enc")
   enc_key_path <- file.path(pkg$path, enc_key_file)
-
-  if (!file.exists(travis_path)) devtools::use_travis(pkg)
-  travis_yml <- yaml::yaml.load_file(travis_path)
 
   # authenticate on github and travis and set up keys/vars
   gh <- github_info(pkg$path)
