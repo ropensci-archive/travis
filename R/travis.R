@@ -59,7 +59,9 @@ travis_token <- function() {
 auth_travis_ <- function(gtoken = NULL) {
   message("Authenticating with Travis")
   if (is.null(gtoken)) {
-    gtoken <- auth_github_(cache = FALSE)
+    gtoken <- auth_github_(
+      cache = FALSE,
+      scopes = c("read:org", "user:email", "repo_deployment", "repo:status", "read:repo_hook", "write:repo_hook"))
   }
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token
