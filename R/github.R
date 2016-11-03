@@ -96,8 +96,10 @@ extract_repo <- function(path) {
     path <- sub("^git@github.com:", "https://github.com/", path)
   } else if (grepl("^git://github.com", path)) {
     path <- sub("^git://github.com", "https://github.com", path)
-  } else if (grepl("^http://github.com", path)) {
-    path <- sub("^http://github.com", "https://github.com", path)
+  } else if (grepl("^http://(.+@)?github.com", path)) {
+    path <- sub("^http://(.+@)?github.com", "https://github.com", path)
+  } else if (grepl("^https://(.+@)github.com", path)) {
+    path <- sub("^https://(.+@)github.com", "https://github.com", path)
   }
   if (!all(grepl("^https://github.com", path))) {
     stop("Unrecognized repo format: ", path)
