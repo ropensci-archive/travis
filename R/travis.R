@@ -82,6 +82,25 @@ travis_repositories <- function(filter = "") {
 }
 
 #' @export
+travis_user <- function() {
+  req <- TRAVIS_GET("/users/")
+  httr::stop_for_status(req, paste("get current user information"))
+  jsonlite::fromJSON(httr::content(req, "text"))[[1L]]
+}
+
+#' @export
+travis_sync <- function() {
+  url <- "/users/sync"
+  token <- travis_token()
+  req <- httr::POST(travis(url),
+             httr::user_agent("ropenscilabs/travis"),
+             httr::accept('application/vnd.travis-ci.2+json'),
+             httr::add_headers(Authorization = paste("token", token)))
+
+  httr::stop_for_status(req, paste("synching user"))
+}
+
+#' @export
 travis_get_vars <- function(repo_id = travis_repo_id()) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id))
