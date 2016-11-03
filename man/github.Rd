@@ -10,12 +10,15 @@ github_info(path = ".")
 
 github_repo(path = ".")
 
-github_add_key(pubkey, repo = github_repo())
+github_add_key(pubkey, repo = github_repo(), gh_token = auth_github(scopes =
+  "public_repo"))
 }
 \arguments{
 \item{path}{directory of the git repository}
 
-\item{pubkey}{openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.}
+\item{pubkey}{openssl public key, see \link\link{openssl:read_pubkey}{openssl::read_pubkey}.}
+
+\item{gh_token}{GitHub token, as returned from \code{\link[=auth_github]{auth_github()}}}
 }
 \description{
 Retrieves metadata about a git repository from github.
