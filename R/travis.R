@@ -109,7 +109,7 @@ travis_sync <- function(block = TRUE) {
              httr::accept('application/vnd.travis-ci.2+json'),
              httr::add_headers(Authorization = paste("token", token)))
 
-  if (!(req$status %in% c(200, 409))) {
+  if (!(httr::status_code(req) %in% c(200, 409))) {
     httr::stop_for_status(req, "synch user")
   }
 
