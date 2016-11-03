@@ -28,3 +28,27 @@ targets:
 
   keys_repo1:
     command: setup_keys_for_repo(repo1)
+
+  org1:
+    command: create_id(I("priceless-longhornbeetle"))
+
+  github_org1:
+    command: create_github_org(org1)
+
+  repo2_path:
+    command: identity(I("tmp/repo2"))
+
+  repo2:
+    command: create_git_repo(repo2_path)
+
+  gh_repo2:
+    command: create_gh_repo(user1, password, repo2, org1)
+
+  travis_org1:
+    command: create_travis_token(org1)
+
+  travis_repo2:
+    command: enable_travis_for_repo(repo2, travis_org1)
+
+  keys_repo2:
+    command: setup_keys_for_repo(repo2)

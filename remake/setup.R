@@ -13,6 +13,13 @@ create_github_user <- function(user, password) {
   user
 }
 
+create_github_org <- function(org) {
+  clipr::write_clip(org)
+  menu(c("OK"), title = paste0("Please create GitHub organization ", org))
+
+  org
+}
+
 create_git_repo <- function(repo_path) {
   unlink(repo_path, recursive = TRUE, force = TRUE)
   dir.create(repo_path, recursive = TRUE, showWarnings = FALSE)
@@ -31,10 +38,15 @@ create_git_repo <- function(repo_path) {
   repo
 }
 
-create_gh_repo <- function(user, password, repo) {
+create_gh_repo <- function(user, password, repo, org = NULL) {
+  tryCatch(travis::github_repo(repo@path),
+           error = function(e) do_create_gh_repo(user, password, repo, org))
+}
+
+do_create_gh_repo <- function(user, password, repo, org = NULL) {
   message("Current user: ", user)
   clipr::write_clip(user)
-  r <- travis::github_create_repo(repo@path)
+  r <- travis::github_create_repo(repo@path, org = org)
   res <- httr::content(r)
 
   remote_name <- "origin"
