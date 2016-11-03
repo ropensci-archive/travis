@@ -40,6 +40,14 @@ github_add_key <- function(pubkey, repo = github_repo()) {
     url = paste0(GITHUB_API, sprintf("/repos/%s/keys", repo)),
     httr::config(token = gtoken), body = key_data, encode = "json"
   )
+  if (httr::status_code(add_key) %in% 404) {
+    org_perm_url <- paste0("https://github.com/orgs/",
+                           strsplit(repo, "/")[[1]][[1]],
+                           "/policies/applications/390126")
+    on.exit(
+      message("You may need to allow access for the rtravis GitHub app to your organization at: \n  ",
+              org_perm_url))
+  }
   httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s",  repo))
 }
 
