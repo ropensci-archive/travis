@@ -6,7 +6,10 @@ targets:
     command: identity(I("123abba"))
 
   user1:
-    command: create_id(I("plucky-bear"))
+    command: create_id()
+
+  org1:
+    command: create_id()
 
   github_user1:
     command: create_github_user(user1, password)
@@ -28,9 +31,6 @@ targets:
 
   keys_repo1:
     command: setup_keys_for_repo(repo1)
-
-  org1:
-    command: create_id(I("priceless-longhornbeetle"))
 
   github_org1:
     command: create_github_org(org1)
