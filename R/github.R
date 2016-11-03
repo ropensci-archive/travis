@@ -62,14 +62,19 @@ github_add_key <- function(pubkey, repo = github_repo(), gh_token = auth_github(
     httr::config(token = gh_token), body = key_data, encode = "json"
   )
   if (httr::status_code(add_key) %in% 404) {
-    org_perm_url <- paste0("https://github.com/orgs/",
-                           strsplit(repo, "/")[[1]][[1]],
-                           "/policies/applications/390126")
-    on.exit(
-      message("You may need to allow access for the rtravis GitHub app to your organization at: \n  ",
-              org_perm_url))
+    org <- strsplit(repo, "/")[[1]][[1]]
+    on.exit(review_org_permission(org))
   }
   httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s",  repo))
+}
+
+review_org_permission <- function(org) {
+  org_perm_url <- paste0("https://github.com/orgs/",
+                         org,
+                         "/policies/applications/390126")
+  message("You may need to allow access for the rtravis GitHub app to your organization at: \n  ",
+          org_perm_url, "\nA browser windows has been opened.")
+  utils::browseURL(org_perm_url)
 }
 
 get_repo_data <- function(repo) {
