@@ -4,13 +4,11 @@
 \alias{use_travis_deploy}
 \title{Use travis deploy}
 \usage{
-use_travis_deploy(pkg = ".", tasks = NULL)
+use_travis_deploy(pkg = ".")
 }
 \arguments{
 \item{pkg}{Package description, can be path or package name. See
 \code{\link{as.package}} for more information.}
-
-\item{tasks}{Vector of functions to call on travis}
 }
 \description{
 Use travis deploy
