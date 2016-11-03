@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Tools for travis push stuff
-Version: 0.2
+Version: 0.2-1
 Authors@R: c(
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")),
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
@@ -11,11 +11,16 @@ Description: More about what it does (maybe more than one line). Stuff!
 License: GPL (>= 2)
 LazyData: TRUE
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 Imports:
-    httr,
-    yaml,
-    openssl,
+    devtools,
     git2r,
-    devtools
+    httr,
+    memoise,
+    openssl,
+    R6,
+    yaml
+Suggests:
+    roxygen2,
+    testthat
 RoxygenNote: 5.0.1.9000
