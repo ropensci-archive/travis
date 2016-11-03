@@ -200,14 +200,13 @@ travis_browse <- function(repo = github_repo()) {
   utils::browseURL(paste0("https://travis-ci.org/", repo))
 }
 
-setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
+setup_keys <- function(repo, key_path, pub_key_path, enc_key_path) {
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
   pub_key <- as.list(key)$pubkey
+  github_add_key(pub_key, repo)
   openssl::write_pem(pub_key, pub_key_path)
-  slug <- paste(owner, repo, sep = "/")
-  github_add_key(key, slug)
 
   # generate random variables for encryption
   tempkey <- openssl::rand_bytes(32)
@@ -221,7 +220,7 @@ setup_keys <- function(owner, repo, key_path, pub_key_path, enc_key_path) {
   invisible(file.remove(key_path))
 
   # get the repo id
-  repo_id <- travis_repo_id(slug)
+  repo_id <- travis_repo_id(repo)
 
   # add tempkey and iv as secure environment variables on travis
   # TODO: overwrite if already exists
