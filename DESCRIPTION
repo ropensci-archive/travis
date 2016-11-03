@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Tools for travis push stuff
-Version: 0.1.0
+Version: 0.2
 Authors@R: c(
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")),
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
@@ -16,9 +16,6 @@ Imports:
     httr,
     yaml,
     openssl,
-    github,
-    stringi,
-    jsonlite,
     git2r,
     devtools
 RoxygenNote: 5.0.1.9000
