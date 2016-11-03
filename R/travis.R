@@ -74,6 +74,7 @@ auth_travis_ <- function(gtoken = NULL) {
   httr::content(auth_travis)$access_token
 }
 
+#' @export
 auth_travis <- memoise::memoise(auth_travis_)
 
 #' @export

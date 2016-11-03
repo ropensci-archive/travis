@@ -98,4 +98,5 @@ auth_github_ <- function(cache = NULL) {
   httr::oauth2.0_token(httr::oauth_endpoints("github"), app, scope = scopes, cache = cache)
 }
 
+#' @export
 auth_github <- memoise::memoise(auth_github_)
