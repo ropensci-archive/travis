@@ -1,0 +1,30 @@
+sources:
+  - remake/
+
+targets:
+  password:
+    command: identity(I("123abba"))
+
+  user1:
+    command: create_id(I("plucky-bear"))
+
+  github_user1:
+    command: create_github_user(user1, password)
+
+  repo1_path:
+    command: identity(I("tmp/repo1"))
+
+  repo1:
+    command: create_git_repo(repo1_path)
+
+  gh_repo1:
+    command: create_gh_repo(user1, password, repo1)
+
+  travis_user1:
+    command: create_travis_token(user1)
+
+  travis_repo1:
+    command: enable_travis_for_repo(repo1, travis_user1)
+
+  keys_repo1:
+    command: setup_keys_for_repo(repo1)
