@@ -21,7 +21,8 @@ github_repo <- function(path = ".") {
 }
 
 #' @export
-github_create_repo <- function(path = ".", name = NULL, private = FALSE, gh_token = auth_github(scopes = "public_repo")) {
+github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FALSE,
+                               gh_token = auth_github(scopes = c("public_repo", if (!is.null(org)) "write:org"))) {
   if (private) {
     stop("Creating private repositories not supported.", call. = FALSE)
   }
@@ -34,10 +35,19 @@ github_create_repo <- function(path = ".", name = NULL, private = FALSE, gh_toke
     "name" = name
   )
 
+  if (is.null(org)) {
+    url <- "/user/repos"
+  } else {
+    url <- paste0("/orgs/", org, "/repos")
+  }
+
   req <- httr::POST(
-    url = paste0(GITHUB_API, "/user/repos"),
+    url = paste0(GITHUB_API, url),
     httr::config(token = gh_token), body = data, encode = "json"
   )
+  if (httr::status_code(req) %in% 403) {
+    on.exit(review_org_permission(org))
+  }
   httr::stop_for_status(req, sprintf("create repo %s", name))
 }
 
