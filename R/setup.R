@@ -2,14 +2,9 @@
 #'
 #' @param pkg Package description, can be path or package name. See
 #'   \code{\link{as.package}} for more information.
-#' @param tasks Vector of functions to call on travis
 #'
 #' @export
-use_travis_deploy <- function(pkg = ".", tasks = NULL) {
-
-  if (!length(tasks)) {
-    stop("Please supply at least one task.")
-  }
+use_travis_deploy <- function(pkg = ".") {
 
   pkg <- devtools::as.package(pkg)
   travis_path <- file.path(pkg$path, ".travis.yml")
@@ -28,10 +23,6 @@ use_travis_deploy <- function(pkg = ".", tasks = NULL) {
   setup_keys(gh$owner$login, gh$name, key_path, pub_key_path, enc_key_path)
   devtools::use_build_ignore(pub_key_file, pkg = pkg)
   devtools::use_build_ignore(enc_key_file, pkg = pkg)
-
-  # update .travis.yml
-  new_travis_yml <- edit_travis_yml(travis_yml, tasks)
-  writeLines(yaml::as.yaml(new_travis_yml), travis_path)
 
   # commit changes to git
   r <- git2r::repository(pkg$path)
