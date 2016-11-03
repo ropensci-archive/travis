@@ -89,7 +89,7 @@ travis_user <- function() {
 }
 
 #' @export
-travis_sync <- function() {
+travis_sync <- function(block = TRUE) {
   url <- "/users/sync"
   token <- travis_token()
   req <- httr::POST(travis(url),
@@ -97,7 +97,21 @@ travis_sync <- function() {
              httr::accept('application/vnd.travis-ci.2+json'),
              httr::add_headers(Authorization = paste("token", token)))
 
-  httr::stop_for_status(req, paste("synching user"))
+  if (!(req$status %in% c(200, 409))) {
+    httr::stop_for_status(req, "synch user")
+  }
+
+  if (block) {
+    write_lf <- FALSE
+    while(travis_user()$is_syncing) {
+      message(".", appendLF = FALSE)
+      write_lf <- TRUE
+      Sys.sleep(1)
+    }
+    if (write_lf) {
+      message()
+    }
+  }
 }
 
 #' @export
