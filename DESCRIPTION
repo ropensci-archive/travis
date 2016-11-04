@@ -18,7 +18,6 @@ Imports:
     httr,
     memoise,
     openssl,
-    R6,
     yaml
 Suggests:
     roxygen2,
