@@ -50,16 +50,23 @@ travis_token_from_login_ <- function(account_login) {
              url = "https://travis-ci.org")
   }
   if (!is.null(account_login)) {
-    accounts <- travis_accounts(token)
-    account_logins <- vapply(accounts, "[[", "login", FUN.VALUE = character(1L))
-    if (!(account_login %in% account_logins)) {
-      review_travis_app_permission(account_login)
+    if (!has_account(account_login, token)) {
+      travis_sync(token = token)
+      if (!has_account(account_login, token)) {
+        review_travis_app_permission(account_login)
+      }
     }
   }
   token
 }
 
 travis_token_from_login <- memoise::memoise(travis_token_from_login_)
+
+has_account <- function(account_login, token) {
+  accounts <- travis_accounts(token)
+  account_logins <- vapply(accounts, "[[", "login", FUN.VALUE = character(1L))
+  account_login %in% account_logins
+}
 
 review_travis_app_permission <- function(org) {
   url_stop("You may need to allow Travis access to your organization ", org,
@@ -138,15 +145,13 @@ travis_sync <- function(block = TRUE, token = travis_token()) {
   }
 
   if (block) {
-    write_lf <- FALSE
+    message("Waiting for sync with GitHub", appendLF = FALSE)
     while(travis_user()$is_syncing) {
       message(".", appendLF = FALSE)
       write_lf <- TRUE
       Sys.sleep(1)
     }
-    if (write_lf) {
-      message()
-    }
+    message()
   }
 }
 
