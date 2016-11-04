@@ -15,8 +15,7 @@ github_info <- function(path = ".") {
 
 #' @export
 #' @rdname github
-github_repo <- function(path = ".") {
-  info <- github_info(path)
+github_repo <- function(path = ".", info = github_info(path)) {
   paste(info$owner$login, info$name, sep = "/")
 }
 
