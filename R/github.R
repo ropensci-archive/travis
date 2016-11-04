@@ -42,7 +42,7 @@ GITHUB_DELETE <- function(url, ..., token) {
 #' @param path directory of the git repository
 #' @rdname github
 github_info <- function(path = ".") {
-  remote_url <- get_github_url(path)
+  remote_url <- get_remote_url(path)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
 }
@@ -135,19 +135,6 @@ get_repo_data <- function(repo) {
   req <- GITHUB_GET(paste0("/repos/", repo), token = NULL)
   httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
   httr::content(req)
-}
-
-get_github_url <- function(path) {
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
-  if (!length(remote_names))
-    stop("Failed to lookup git remotes")
-  remote_name <- "origin"
-  if (!("origin" %in% remote_names)) {
-    remote_name <- remote_names[1]
-    warning("No remote 'origin' found. Using: ", remote_name)
-  }
-  git2r::remote_url(r, remote_name)
 }
 
 auth_github_ <- function(cache = NULL, scopes = NULL) {
