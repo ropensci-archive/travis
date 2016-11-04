@@ -43,13 +43,42 @@ TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
   }
 ))
 
+travis_token_from_login_ <- function(account_login) {
+  token <- auth_travis()
+  if (!identical(travis_user(token)$correct_scopes, TRUE)) {
+    url_stop("Please sign up with Travis using your GitHub credentials",
+             url = "https://travis-ci.org")
+  }
+  if (!is.null(account_login)) {
+    accounts <- travis_accounts(token)
+    account_logins <- vapply(accounts, "[[", "login", FUN.VALUE = character(1L))
+    if (!(account_login %in% account_logins)) {
+      review_travis_app_permission(account_login)
+    }
+  }
+  token
+}
+
+travis_token_from_login <- memoise::memoise(travis_token_from_login_)
+
+review_travis_app_permission <- function(org) {
+  url_stop("You may need to allow Travis access to your organization ", org,
+           url = "https://github.com/settings/connections/applications/f244293c729d5066cf27")
+}
+
 #' Authenticate with Travis
 #'
 #' Authenticate with Travis using your Github account. Returns an access token.
+#'
 #' @export
 #' @rdname travis
-travis_token <- function() {
-  auth_travis()
+travis_token <- function(repo = NULL) {
+  if (is.null(repo))
+    account_login <- NULL
+  else
+    account_login <- strsplit(repo, "/")[[1]][[1]]
+
+  travis_token_from_login(account_login)
 }
 
 auth_travis_ <- function(gtoken = NULL) {
