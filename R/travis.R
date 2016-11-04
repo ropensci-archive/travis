@@ -250,7 +250,7 @@ setup_keys <- function(repo, key_path, pub_key_path, enc_key_path) {
   invisible(file.remove(key_path))
 
   # get the repo id
-  repo_id <- travis_repo_id(repo)
+  repo_id <- travis_repo_id(repo, sync = TRUE)
 
   # add tempkey and iv as secure environment variables on travis
   # TODO: overwrite if already exists
