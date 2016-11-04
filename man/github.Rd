@@ -8,10 +8,10 @@
 \usage{
 github_info(path = ".")
 
-github_repo(path = ".")
+github_repo(path = ".", info = github_info(path))
 
-github_add_key(pubkey, repo = github_repo(), gh_token = auth_github(scopes =
-  "public_repo"))
+github_add_key(pubkey, path = ".", info = github_info(path),
+  repo = github_repo(info = info), gh_token = NULL)
 }
 \arguments{
 \item{path}{directory of the git repository}
