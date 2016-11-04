@@ -1,5 +1,4 @@
 # travis [![Travis-CI Build Status](https://travis-ci.org/ropenscilabs/travis.svg?branch=master)](https://travis-ci.org/ropenscilabs/travis)
- * Turn on travis for your repo at https://travis-ci.org/ropenscilabs/travis
 
 
 The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
