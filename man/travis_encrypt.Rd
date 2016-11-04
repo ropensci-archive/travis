@@ -7,7 +7,7 @@
 \usage{
 travis_pubkey(repo = github_repo())
 
-travis_encrypt(data, pubkey = travis_pubkey())
+travis_encrypt(data, repo = github_repo(), pubkey = travis_pubkey(repo))
 }
 \arguments{
 \item{repo}{travis repository in "user/repo" format (similar to
@@ -15,8 +15,7 @@ travis_encrypt(data, pubkey = travis_pubkey())
 
 \item{data}{raw or character vector to encrypt}
 
-\item{pubkey}{a key returned by \code{\link{travis_pubkey}}, or a \code{repo}
-to be passed to \code{\link{travis_pubkey}}}
+\item{pubkey}{a key returned by \code{\link[=travis_pubkey]{travis_pubkey()}}}
 }
 \description{
 Travis-CI allows for including small pieces of encrypted data with the
