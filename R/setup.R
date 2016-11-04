@@ -7,27 +7,29 @@
 use_travis_deploy <- function(pkg = ".") {
 
   pkg <- devtools::as.package(pkg)
-  key_file <- ".deploy_key"
-  key_path <- file.path(pkg$path, key_file)
-  pub_key_file <- paste0(key_file, ".pub")
-  pub_key_path <- file.path(pkg$path, pub_key_file)
-  enc_key_file <- paste0(key_file, ".enc")
-  enc_key_path <- file.path(pkg$path, enc_key_file)
 
   # authenticate on github and travis and set up keys/vars
-  setup_keys(pkg$path, key_path, pub_key_path, enc_key_path)
-  devtools::use_build_ignore(pub_key_file, pkg = pkg)
-  devtools::use_build_ignore(enc_key_file, pkg = pkg)
+  setup_keys(pkg$path)
 
-  # commit changes to git
-  r <- git2r::repository(pkg$path)
-  st <- vapply(git2r::status(r), length, integer(1))
-  if (any(st != 0)) {
-    git2r::add(r, ".Rbuildignore")
-    git2r::add(r, ".travis.yml")
-    git2r::add(r, pub_key_file)
-    git2r::add(r, enc_key_file)
-    git2r::commit(r, "set up deploy keys in travis")
-  }
+}
 
+setup_keys <- function(path) {
+
+  # generate deploy key pair
+  key <- openssl::rsa_keygen()  # TOOD: num bits?
+  pub_key <- as.list(key)$pubkey
+
+  private_key <- character()
+  conn <- textConnection("private_key", "w")
+
+  openssl::write_pem(key, conn, password = NULL)
+  close(conn)
+
+  # encrypt private key using tempkey and iv
+  repo <- github_repo(path)
+
+  travis_set_var("id_rsa", paste(private_key, collapse = "\n"),
+                 public = FALSE, repo = repo)
+
+  github_add_key(pub_key, path)
 }
