@@ -60,7 +60,8 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
 #' @export
 #' @param pubkey openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.
 #' @param gh_token GitHub token, as returned from [auth_github()]
-github_add_key <- function(pubkey, repo = github_repo(), gh_token = auth_github(scopes = "public_repo")) {
+github_add_key <- function(pubkey, path = ".", info = github_info(path),
+                           repo = github_repo(info = info), gh_token = NULL) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
@@ -72,6 +73,15 @@ github_add_key <- function(pubkey, repo = github_repo(), gh_token = auth_github(
     "key" = openssl::write_ssh(pubkey),
     "read_only" = FALSE
   )
+
+  if (is.null(gh_token)) {
+    if (info$owner$type == "Organization") {
+      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+    } else {
+      gh_token <- auth_github(scopes = "public_repo")
+    }
+  }
+
   add_key <- httr::POST(
     url = paste0(GITHUB_API, sprintf("/repos/%s/keys", repo)),
     httr::config(token = gh_token), body = key_data, encode = "json"
