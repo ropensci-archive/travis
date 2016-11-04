@@ -34,15 +34,6 @@ TRAVIS_DELETE <- function(url, ..., token) {
                ...)
 }
 
-TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
-  init_credentials = function() {
-    self$credentials <- auth_travis()
-  },
-  refresh = function(){
-    self$credentials <- auth_travis()
-  }
-))
-
 travis_token_ <- function(repo = NULL) {
   token <- auth_travis()
   if (!identical(travis_user(token)$correct_scopes, TRUE)) {
