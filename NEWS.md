@@ -1,3 +1,11 @@
+## travis 0.2-3 (2016-11-04)
+
+- Code cleanup.
+- `travis_encrypt()` gains repo argument.
+- `use_travis_deploy()` creates an encrypted environment variable that contains the private key; the public key is pushed to GitHub and not stored anywhere (#45). The deploy key is encoded in the base64 encoding, because Travis doesn't handle environment variables with newlines very well.
+
+
+
 ## travis 0.2-2 (2016-11-04)
 
 - Semi-automated test using `remake`. Run `remake::make(remake::list_targets())` in the package directory, installation is currently required. Tests creating a repository for a new user and installing a SSH key there, the same with a new organization owned by this user.
