@@ -167,11 +167,12 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
       "public" = public
     )
   )
+
   req <- TRAVIS_POST("/settings/env_vars",
                      query = list(repository_id = repo_id), body = var_data,
                      token = token)
-  httr::stop_for_status(req, sprintf("add environment variable to %s on travis",
-                                     repo_id))
+  httr::stop_for_status(req, sprintf("add %s environment variable %s to %s on travis",
+                                     if (public) "public" else "private", name, repo_id))
 }
 
 #' @export
