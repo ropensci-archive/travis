@@ -43,29 +43,26 @@ TravisToken <- R6::R6Class("TravisToken", inherit = httr::Token, list(
   }
 ))
 
-travis_token_from_login_ <- function(account_login) {
+travis_token_ <- function(repo = NULL) {
   token <- auth_travis()
   if (!identical(travis_user(token)$correct_scopes, TRUE)) {
     url_stop("Please sign up with Travis using your GitHub credentials",
              url = "https://travis-ci.org")
   }
-  if (!is.null(account_login)) {
-    if (!has_account(account_login, token)) {
+  if (!is.null(repo)) {
+    if (!has_repo(repo, token)) {
       travis_sync(token = token)
-      if (!has_account(account_login, token)) {
-        review_travis_app_permission(account_login)
+      if (!has_repo(repo, token)) {
+        review_travis_app_permission(repo)
       }
     }
   }
   token
 }
 
-travis_token_from_login <- memoise::memoise(travis_token_from_login_)
-
-has_account <- function(account_login, token) {
-  accounts <- travis_accounts(token)
-  account_logins <- vapply(accounts, "[[", "login", FUN.VALUE = character(1L))
-  account_login %in% account_logins
+has_repo <- function(repo, token) {
+  repos <- travis_repositories(slug = repo, token = token)
+  length(repos) > 0
 }
 
 review_travis_app_permission <- function(org) {
@@ -79,14 +76,7 @@ review_travis_app_permission <- function(org) {
 #'
 #' @export
 #' @rdname travis
-travis_token <- function(repo = NULL) {
-  if (is.null(repo))
-    account_login <- NULL
-  else
-    account_login <- strsplit(repo, "/")[[1]][[1]]
-
-  travis_token_from_login(account_login)
-}
+travis_token <- memoise::memoise(travis_token_)
 
 auth_travis_ <- function(gtoken = NULL) {
   message("Authenticating with Travis")
@@ -119,8 +109,8 @@ travis_accounts <- function(token = travis_token()) {
 }
 
 #' @export
-travis_repositories <- function(filter = "", token = travis_token()) {
-  req <- TRAVIS_GET("/repos", query = list(search = filter), token = token)
+travis_repositories <- function(slug = NULL, search = NULL, token = travis_token()) {
+  req <- TRAVIS_GET("/repos", query = list(slug = slug, search = search), token = token)
   httr::stop_for_status(req, paste("list repositories"))
   httr::content(req)[[1L]]
 }
