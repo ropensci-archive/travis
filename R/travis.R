@@ -108,21 +108,21 @@ auth_travis <- memoise::memoise(auth_travis_)
 travis_accounts <- function(token = travis_token()) {
   req <- TRAVIS_GET("/accounts", query = list(all = 'true'), token = token)
   httr::stop_for_status(req, paste("list accounts"))
-  jsonlite::fromJSON(httr::content(req, "text"))
+  httr::content(req)[[1L]]
 }
 
 #' @export
 travis_repositories <- function(filter = "", token = travis_token()) {
   req <- TRAVIS_GET("/repos", query = list(search = filter), token = token)
   httr::stop_for_status(req, paste("list repositories"))
-  jsonlite::fromJSON(httr::content(req, "text"))$repos
+  httr::content(req)[[1L]]
 }
 
 #' @export
 travis_user <- function(token = travis_token()) {
   req <- TRAVIS_GET("/users/", token = token)
   httr::stop_for_status(req, paste("get current user information"))
-  jsonlite::fromJSON(httr::content(req, "text"))[[1L]]
+  httr::content(req)[[1L]]
 }
 
 #' @export
@@ -157,7 +157,7 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id),
                     token = token)
   httr::stop_for_status(req, paste("get environment variable for", repo_id))
-  jsonlite::fromJSON(httr::content(req, "text"))
+  httr::content(req)[[1L]]
 }
 
 #' @export
