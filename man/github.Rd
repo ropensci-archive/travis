@@ -16,7 +16,7 @@ github_add_key(pubkey, path = ".", info = github_info(path),
 \arguments{
 \item{path}{directory of the git repository}
 
-\item{pubkey}{openssl public key, see \link\link{openssl:read_pubkey}{openssl::read_pubkey}.}
+\item{pubkey}{openssl public key, see \code{\link[openssl:read_pubkey]{openssl::read_pubkey()}}.}
 
 \item{gh_token}{GitHub token, as returned from \code{\link[=auth_github]{auth_github()}}}
 }

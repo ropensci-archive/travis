@@ -58,7 +58,7 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
 
 #' @rdname github
 #' @export
-#' @param pubkey openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.
+#' @param pubkey openssl public key, see [openssl::read_pubkey()].
 #' @param gh_token GitHub token, as returned from [auth_github()]
 github_add_key <- function(pubkey, path = ".", info = github_info(path),
                            repo = github_repo(info = info), gh_token = NULL) {
