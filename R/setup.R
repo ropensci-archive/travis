@@ -15,8 +15,7 @@ use_travis_deploy <- function(pkg = ".") {
   enc_key_path <- file.path(pkg$path, enc_key_file)
 
   # authenticate on github and travis and set up keys/vars
-  gh <- github_info(pkg$path)
-  setup_keys(gh$owner$login, gh$name, key_path, pub_key_path, enc_key_path)
+  setup_keys(pkg$path, key_path, pub_key_path, enc_key_path)
   devtools::use_build_ignore(pub_key_file, pkg = pkg)
   devtools::use_build_ignore(enc_key_file, pkg = pkg)
 
