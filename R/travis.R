@@ -206,7 +206,9 @@ travis_repo_id <- function(repo = github_repo(), token = travis_token(repo), ...
 #' @rdname travis
 travis_enable <- function(active = TRUE, repo = github_repo(),
                           token = travis_token(repo), repo_id = travis_repo_id(repo, token = token)) {
-  req <- TRAVIS_PUT(sprintf("/hooks"), body = list(hook = list(id = repo_id, active = active)))
+  req <- TRAVIS_PUT(sprintf("/hooks"),
+                    body = list(hook = list(id = repo_id, active = active)),
+                    token = token)
   httr::stop_for_status(
     req, sprintf(
       "%s repo %s on travis",
