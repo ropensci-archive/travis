@@ -1,4 +1,38 @@
-GITHUB_API <- "https://api.github.com"
+github <- function(endpoint = "") {
+  paste0("https://api.github.com", endpoint)
+}
+
+GITHUB_GET <- function(url, ..., token) {
+  httr::GET(github(url),
+            httr::user_agent("ropenscilabs/travis"),
+            httr::accept("application/vnd.github.v3+json"),
+            httr::config(token = token),
+            ...)
+}
+
+GITHUB_PUT <- function(url, ..., token) {
+  httr::PUT(github(url), encode = "json",
+            httr::user_agent("ropenscilabs/travis"),
+            httr::accept("application/vnd.github.v3+json"),
+            httr::config(token = token),
+            ...)
+}
+
+GITHUB_POST <- function(url, ..., token) {
+  httr::POST(github(url), encode = "json",
+             httr::user_agent("ropenscilabs/travis"),
+             httr::accept("application/vnd.github.v3+json"),
+             httr::config(token = token),
+             ...)
+}
+
+GITHUB_DELETE <- function(url, ..., token) {
+  httr::DELETE(github(url), encode = "json",
+               httr::user_agent("ropenscilabs/travis"),
+               httr::accept("application/vnd.github.v3+json"),
+               httr::config(token = token),
+               ...)
+}
 
 #' Github Information
 #'
@@ -8,7 +42,7 @@ GITHUB_API <- "https://api.github.com"
 #' @param path directory of the git repository
 #' @rdname github
 github_info <- function(path = ".") {
-  remote_url <- get_github_url(path)
+  remote_url <- get_remote_url(path)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
 }
@@ -46,10 +80,7 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
     }
   }
 
-  req <- httr::POST(
-    url = paste0(GITHUB_API, url),
-    httr::config(token = gh_token), body = data, encode = "json"
-  )
+  req <- GITHUB_POST(url, body = data, token = gh_token)
   if (httr::status_code(req) %in% 403) {
     on.exit(review_org_permission(org))
   }
@@ -82,10 +113,9 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
     }
   }
 
-  add_key <- httr::POST(
-    url = paste0(GITHUB_API, sprintf("/repos/%s/keys", repo)),
-    httr::config(token = gh_token), body = key_data, encode = "json"
-  )
+  add_key <- GITHUB_POST(sprintf("/repos/%s/keys", repo),
+                         body = key_data,
+                         token = gh_token)
   if (httr::status_code(add_key) %in% 404) {
     org <- strsplit(repo, "/")[[1]][[1]]
     on.exit(review_org_permission(org))
@@ -102,55 +132,7 @@ review_org_permission <- function(org) {
 }
 
 get_repo_data <- function(repo) {
-  req <- httr::GET(paste0(GITHUB_API, "/repos/", repo))
+  req <- GITHUB_GET(paste0("/repos/", repo), token = NULL)
   httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
-  jsonlite::fromJSON(httr::content(req, "text"))
+  httr::content(req)
 }
-
-get_github_url <- function(path) {
-  r <- git2r::repository(path, discover = TRUE)
-  remote_names <- git2r::remotes(r)
-  if (!length(remote_names))
-    stop("Failed to lookup git remotes")
-  remote_name <- "origin"
-  if (!("origin" %in% remote_names)) {
-    remote_name <- remote_names[1]
-    warning("No remote 'origin' found. Using: ", remote_name)
-  }
-  git2r::remote_url(r, remote_name)
-}
-
-extract_repo <- function(path) {
-  if (grepl("^git@github.com:", path)) {
-    path <- sub("^git@github.com:", "https://github.com/", path)
-  } else if (grepl("^git://github.com", path)) {
-    path <- sub("^git://github.com", "https://github.com", path)
-  } else if (grepl("^http://(.+@)?github.com", path)) {
-    path <- sub("^http://(.+@)?github.com", "https://github.com", path)
-  } else if (grepl("^https://(.+@)github.com", path)) {
-    path <- sub("^https://(.+@)github.com", "https://github.com", path)
-  }
-  if (!all(grepl("^https://github.com", path))) {
-    stop("Unrecognized repo format: ", path)
-  }
-  path <- sub("\\.git", "", path)
-  sub("^https://github.com/", "", path)
-}
-
-auth_github_ <- function(cache = NULL, scopes = NULL) {
-  message("Authenticating with GitHub")
-  if (is.null(cache)) {
-    cache <- getOption("httr_oauth_cache")
-  }
-
-  if (is.null(scopes)) {
-    scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
-  }
-  app <- httr::oauth_app("github",
-                         key = "4bca480fa14e7fb785a1",
-                         secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
-  httr::oauth2.0_token(httr::oauth_endpoints("github"), app, scope = scopes, cache = cache)
-}
-
-#' @export
-auth_github <- memoise::memoise(auth_github_)

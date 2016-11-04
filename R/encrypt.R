@@ -23,18 +23,16 @@ travis_pubkey <- function(repo = github_repo()){
 #' @export
 #' @rdname travis_encrypt
 #' @param data raw or character vector to encrypt
-#' @param pubkey a key returned by \code{\link{travis_pubkey}}, or a \code{repo}
-#' to be passed to \code{\link{travis_pubkey}}
+#' @param pubkey a key returned by [travis_pubkey()]
 #' @examples # Encrypt environment variable
 #' pubkey <- travis_pubkey("jeroenooms/jsonlite")
 #' travis_encrypt("TOKEN=12345", pubkey)
 #' travis_encrypt("TOKEN=12345", "jeroenooms/jsonlite")
-travis_encrypt <- function(data, pubkey = travis_pubkey()){
+travis_encrypt <- function(data, repo = github_repo(),
+                           pubkey = travis_pubkey(repo)) {
   if(is.character(data)){
     data <- charToRaw(paste(data, collapse = "\n"))
   }
-  if(is.character(pubkey))
-    pubkey <- travis_pubkey(pubkey)
   buf <- openssl::rsa_encrypt(data, pubkey)
   openssl::base64_encode(buf)
 }
