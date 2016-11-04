@@ -82,9 +82,8 @@ review_org_permission <- function(org) {
   org_perm_url <- paste0("https://github.com/orgs/",
                          org,
                          "/policies/applications/390126")
-  message("You may need to allow access for the rtravis GitHub app to your organization at: \n  ",
-          org_perm_url, "\nA browser windows has been opened.")
-  utils::browseURL(org_perm_url)
+  url_message("You may need to allow access for the rtravis GitHub app to your organization ", org,
+              url = org_perm_url)
 }
 
 get_repo_data <- function(repo) {
