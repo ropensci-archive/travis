@@ -22,7 +22,7 @@ TRAVIS_POST <- function(url, ..., token) {
   httr::POST(travis(url), encode = "json",
              httr::user_agent("ropenscilabs/travis"),
              httr::accept('application/vnd.travis-ci.2+json'),
-             httr::add_headers(Authorization = paste("token", token)),
+             if (!is.null(token)) httr::add_headers(Authorization = paste("token", token)),
              ...)
 }
 
@@ -88,11 +88,11 @@ auth_travis_ <- function(gtoken = NULL) {
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token
   )
-  auth_travis <- httr::POST(
-    url = travis('/auth/github'),
-    httr::content_type_json(), httr::user_agent("Travis/1.0"),
-    httr::accept("application/vnd.travis-ci.2+json"),
-    body = auth_travis_data, encode = "json"
+  auth_travis <- TRAVIS_POST(
+    url = "/auth/github",
+    body = auth_travis_data,
+    httr::user_agent("Travis/1.0"),
+    token = NULL
   )
   httr::stop_for_status(auth_travis, "authenticate with travis")
   httr::content(auth_travis)$access_token
@@ -125,10 +125,7 @@ travis_user <- function(token = travis_token()) {
 #' @export
 travis_sync <- function(block = TRUE, token = travis_token()) {
   url <- "/users/sync"
-  req <- httr::POST(travis(url),
-             httr::user_agent("ropenscilabs/travis"),
-             httr::accept('application/vnd.travis-ci.2+json'),
-             httr::add_headers(Authorization = paste("token", token)))
+  req <- TRAVIS_POST(url, token = token)
 
   if (!(httr::status_code(req) %in% c(200, 409))) {
     httr::stop_for_status(req, "synch user")
