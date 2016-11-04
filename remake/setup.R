@@ -75,7 +75,6 @@ enable_travis_for_repo <- function(repo, travis_token) {
   )
 }
 
-setup_keys_for_repo <- function(repo) {
-  1
+setup_keys_for_repo <- function(repo, gh_repo, travis_user) {
   travis::use_travis_deploy(repo@path)
 }

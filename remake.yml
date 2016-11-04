@@ -24,16 +24,13 @@ targets:
     command: create_git_repo(repo1_path)
 
   gh_repo1:
-    command: create_gh_repo(user1, password, repo1)
+    command: create_gh_repo(github_user1, password, repo1)
 
   travis_user1:
-    command: create_travis_token(user1)
-
-  travis_repo1:
-    command: enable_travis_for_repo(repo1, travis_user1)
+    command: create_travis_token(github_user1)
 
   keys_repo1:
-    command: setup_keys_for_repo(repo1)
+    command: setup_keys_for_repo(repo1, gh_repo1, travis_user1)
 
   github_org1:
     command: create_github_org(org1)
@@ -50,8 +47,5 @@ targets:
   travis_org1:
     command: create_travis_token(org1)
 
-  travis_repo2:
-    command: enable_travis_for_repo(repo2, travis_org1)
-
   keys_repo2:
-    command: setup_keys_for_repo(repo2)
+    command: setup_keys_for_repo(repo2, travis_user1)
