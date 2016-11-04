@@ -1,3 +1,7 @@
+cleanup <- function() {
+  unlink("tmp", recursive = TRUE)
+}
+
 create_id <- function(value = NULL) {
   if (is.null(value)) {
     value <- gsub("_", "-", ids::adjective_animal())

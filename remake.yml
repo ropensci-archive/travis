@@ -2,6 +2,9 @@ sources:
   - remake/
 
 targets:
+  clean:
+    command: cleanup()
+
   password:
     command: identity(I("123abba"))
 
