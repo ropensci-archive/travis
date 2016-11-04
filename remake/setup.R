@@ -62,10 +62,7 @@ do_create_gh_repo <- function(user, password, repo, org = NULL) {
 }
 
 create_travis_token <- function(user) {
-  utils::browseURL("https://travis-ci.org")
-  menu("OK", title = paste0("Please authenticate user ", user, " for Travis"))
-  message("Please authenticate Travis user ", user)
-  travis::auth_travis()
+  travis::travis_user()
 }
 
 enable_travis_for_repo <- function(repo, travis_token) {
