@@ -15,16 +15,53 @@ github_info <- function(path = ".") {
 
 #' @export
 #' @rdname github
-github_repo <- function(path = ".") {
-  info <- github_info(path)
+github_repo <- function(path = ".", info = github_info(path)) {
   paste(info$owner$login, info$name, sep = "/")
+}
+
+#' @export
+github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FALSE,
+                               gh_token = NULL) {
+  if (private) {
+    stop("Creating private repositories not supported.", call. = FALSE)
+  }
+
+  if (is.null(name)) {
+    name <- basename(normalizePath(path))
+  }
+
+  data <- list(
+    "name" = name
+  )
+
+  if (is.null(org)) {
+    url <- "/user/repos"
+    if (is.null(gh_token)) {
+      gh_token <- auth_github(scopes = "public_repo")
+    }
+  } else {
+    url <- paste0("/orgs/", org, "/repos")
+    if (is.null(gh_token)) {
+      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+    }
+  }
+
+  req <- httr::POST(
+    url = paste0(GITHUB_API, url),
+    httr::config(token = gh_token), body = data, encode = "json"
+  )
+  if (httr::status_code(req) %in% 403) {
+    on.exit(review_org_permission(org))
+  }
+  httr::stop_for_status(req, sprintf("create repo %s", name))
 }
 
 #' @rdname github
 #' @export
-#' @param pubkey openssl public key, see \link[openssl:read_pubkey]{openssl::read_pubkey}.
-github_add_key <- function(pubkey, repo = github_repo()) {
-  gtoken <- auth_github()
+#' @param pubkey openssl public key, see [openssl::read_pubkey()].
+#' @param gh_token GitHub token, as returned from [auth_github()]
+github_add_key <- function(pubkey, path = ".", info = github_info(path),
+                           repo = github_repo(info = info), gh_token = NULL) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
@@ -36,19 +73,32 @@ github_add_key <- function(pubkey, repo = github_repo()) {
     "key" = openssl::write_ssh(pubkey),
     "read_only" = FALSE
   )
+
+  if (is.null(gh_token)) {
+    if (info$owner$type == "Organization") {
+      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+    } else {
+      gh_token <- auth_github(scopes = "public_repo")
+    }
+  }
+
   add_key <- httr::POST(
     url = paste0(GITHUB_API, sprintf("/repos/%s/keys", repo)),
-    httr::config(token = gtoken), body = key_data, encode = "json"
+    httr::config(token = gh_token), body = key_data, encode = "json"
   )
   if (httr::status_code(add_key) %in% 404) {
-    org_perm_url <- paste0("https://github.com/orgs/",
-                           strsplit(repo, "/")[[1]][[1]],
-                           "/policies/applications/390126")
-    on.exit(
-      message("You may need to allow access for the rtravis GitHub app to your organization at: \n  ",
-              org_perm_url))
+    org <- strsplit(repo, "/")[[1]][[1]]
+    on.exit(review_org_permission(org))
   }
   httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s",  repo))
+}
+
+review_org_permission <- function(org) {
+  org_perm_url <- paste0("https://github.com/orgs/",
+                         org,
+                         "/policies/applications/390126")
+  url_message("You may need to allow access for the rtravis GitHub app to your organization ", org,
+              url = org_perm_url)
 }
 
 get_repo_data <- function(repo) {
@@ -75,8 +125,10 @@ extract_repo <- function(path) {
     path <- sub("^git@github.com:", "https://github.com/", path)
   } else if (grepl("^git://github.com", path)) {
     path <- sub("^git://github.com", "https://github.com", path)
-  } else if (grepl("^http://github.com", path)) {
-    path <- sub("^http://github.com", "https://github.com", path)
+  } else if (grepl("^http://(.+@)?github.com", path)) {
+    path <- sub("^http://(.+@)?github.com", "https://github.com", path)
+  } else if (grepl("^https://(.+@)github.com", path)) {
+    path <- sub("^https://(.+@)github.com", "https://github.com", path)
   }
   if (!all(grepl("^https://github.com", path))) {
     stop("Unrecognized repo format: ", path)
@@ -85,17 +137,20 @@ extract_repo <- function(path) {
   sub("^https://github.com/", "", path)
 }
 
-auth_github_ <- function(cache = NULL) {
+auth_github_ <- function(cache = NULL, scopes = NULL) {
   message("Authenticating with GitHub")
   if (is.null(cache)) {
     cache <- getOption("httr_oauth_cache")
   }
 
-  scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
+  if (is.null(scopes)) {
+    scopes <- c("repo", "read:org", "user:email", "write:repo_hook")
+  }
   app <- httr::oauth_app("github",
                          key = "4bca480fa14e7fb785a1",
                          secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
   httr::oauth2.0_token(httr::oauth_endpoints("github"), app, scope = scopes, cache = cache)
 }
 
+#' @export
 auth_github <- memoise::memoise(auth_github_)

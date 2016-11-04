@@ -1,3 +1,17 @@
+## travis 0.2-2 (2016-11-04)
+
+- Semi-automated test using `remake`. Run `remake::make(remake::list_targets())` in the package directory, installation is currently required. Tests creating a repository for a new user and installing a SSH key there, the same with a new organization owned by this user.
+- If the user needs to manually configure an online service, a browser windows opens in addition to a textual message.
+- Support remote URLs with embedded passwords (HTTP/S only).
+- Economical request for GitHub scopes, in particular `write:org`.
+- Travis authentication can be bound to a repository, in this case a synchronization is attempted if the repository is not found. A token is only returned if the user is permitted to edit the Travis configuration.
+- Export `auth_github()` and `auth_travis()`.
+- New `github_create_repo()`.
+- New `info` arg to `github_repo().
+- New `gh_token` arg to `github_add_key()`.
+- `setup_keys()` works with paths
+
+
 ## travis 0.2-1 (2016-11-03)
 
 - Fix Travis authentication by using a fresh GitHub token for each authentication (#35, #36).

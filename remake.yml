@@ -1,0 +1,51 @@
+sources:
+  - remake/
+
+targets:
+  clean:
+    command: cleanup()
+
+  password:
+    command: identity(I("123abba"))
+
+  user1:
+    command: create_id()
+
+  org1:
+    command: create_id()
+
+  github_user1:
+    command: create_github_user(user1, password)
+
+  repo1_path:
+    command: identity(I("tmp/repo1"))
+
+  repo1:
+    command: create_git_repo(repo1_path)
+
+  gh_repo1:
+    command: create_gh_repo(github_user1, password, repo1)
+
+  travis_user1:
+    command: create_travis_token(github_user1)
+
+  keys_repo1:
+    command: setup_keys_for_repo(repo1, gh_repo1, travis_user1)
+
+  github_org1:
+    command: create_github_org(org1)
+
+  repo2_path:
+    command: identity(I("tmp/repo2"))
+
+  repo2:
+    command: create_git_repo(repo2_path)
+
+  gh_repo2:
+    command: create_gh_repo(user1, password, repo2, github_org1)
+
+  travis_org1:
+    command: create_travis_token(org1)
+
+  keys_repo2:
+    command: setup_keys_for_repo(repo2, gh_repo2, travis_user1)

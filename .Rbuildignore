@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 ^\.httr-oauth$
 ^\.travis\.yml$
+^remake$
+^tmp$
+^\.remake$
+^remake\.yml$

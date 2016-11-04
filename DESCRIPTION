@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Tools for travis push stuff
-Version: 0.2-1
+Version: 0.2-2
 Authors@R: c(
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")),
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
@@ -23,4 +23,5 @@ Imports:
 Suggests:
     roxygen2,
     testthat
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 5.0.1.9000
