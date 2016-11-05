@@ -25,7 +25,7 @@ matrix:
   include:
   - r: release
     env:
-    - RTRAVIS_TASKS="${RTRAVIS_TASKS} task_build_pkgdown(); task_install_ssh_keys()"
+    - RTRAVIS_TASKS="${RTRAVIS_TASKS} task_build_pkgdown(); task_install_ssh_keys(); task_test_ssh(); task_push_deploy(path = 'docs', branch = 'gh-pages', on_branch = c('f-doc', 'production'))"
   - r: oldrel
   - r: devel
   - os: osx
@@ -43,6 +43,7 @@ notifications:
 
 #r_github_packages
 r_github_packages:
+- krlmlr/tic
 
 #r_packages
 r_packages:
@@ -55,8 +56,14 @@ before_install:
 
 #before_script
 before_script:
-- R -e 'devtools::load_all(); prepare_deploy()'
+- R -e 'tic::prepare_deploy()'
 
 #after_success (deploy to gh-pages)
 after_success:
-- R -e 'devtools::load_all(); deploy()'
+
+#deploy // https://github.com/travis-ci/travis-build/blob/85ef7108/lib/travis/build/addons/deploy/script.rb#L100-L107
+deploy:
+  provider: script
+  script: R -e 'tic::deploy()'
+  on:
+    all_branches: true
