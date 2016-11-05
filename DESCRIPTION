@@ -1,13 +1,15 @@
 Package: travis
 Type: Package
-Title: Tools for travis push stuff
+Title: Set Up Travis for R package
 Version: 0.2-3
 Authors@R: c(
-    person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut", "cre")),
+    person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
+    person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
     person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut"))
   )
-Description: More about what it does (maybe more than one line). Stuff!
+Description: Tools for interacting with the Travis and 'GitHub' APIs for setting up
+    continuous integration for R packages.
 License: GPL (>= 2)
 LazyData: TRUE
 Depends:
@@ -17,10 +19,10 @@ Imports:
     git2r,
     httr,
     memoise,
-    openssl,
-    yaml
+    openssl
 Suggests:
     roxygen2,
     testthat
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 5.0.1.9000
+Encoding: UTF-8
