@@ -4,9 +4,10 @@
 \name{travis-package}
 \alias{travis}
 \alias{travis-package}
-\title{travis: Tools for travis push stuff}
+\title{travis: Set Up Travis for R package}
 \description{
-More about what it does (maybe more than one line). Stuff!
+Tools for interacting with the Travis and 'GitHub' APIs for setting up
+continuous integration for R packages.
 }
 \details{
 Use \code{\link{github_repo}} to get the name of the current repository
@@ -17,10 +18,11 @@ interact with the GitHub and Travis configuration of your repository,
 and ask for permission the first time you call them.
 }
 \author{
-\strong{Maintainer}: Mika Braginsky \email{mika.br@gmail.com}
+\strong{Maintainer}: Kirill Müller \email{krlmlr+r@mailbox.org}
 
 Authors:
 \itemize{
+  \item Mika Braginsky \email{mika.br@gmail.com}
   \item Karthik Ram \email{karthik.ram@gmail.com}
   \item Jeroen Ooms \email{jeroen.ooms@stat.ucla.edu}
 }

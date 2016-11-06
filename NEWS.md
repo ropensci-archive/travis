@@ -1,3 +1,8 @@
+## travis 0.2-4 (2016-11-06)
+
+- Documentation improvements.
+
+
 ## travis 0.2-3 (2016-11-04)
 
 - Code cleanup.
