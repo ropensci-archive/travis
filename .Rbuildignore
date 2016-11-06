@@ -6,3 +6,4 @@
 ^tmp$
 ^\.remake$
 ^remake\.yml$
+^tic\.R$

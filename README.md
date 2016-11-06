@@ -29,7 +29,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     github_create_repo()
     ```
 
-1. Show the repository name on GitHub
+1. Show the GitHub repository name
 
     ```r
     github_repo()

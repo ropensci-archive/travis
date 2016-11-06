@@ -29,9 +29,11 @@ servers can decipher.
 }
 \examples{
 # Encrypt environment variable
+\dontrun{
 pubkey <- travis_pubkey("jeroenooms/jsonlite")
 travis_encrypt("TOKEN=12345", pubkey)
 travis_encrypt("TOKEN=12345", "jeroenooms/jsonlite")
+}
 }
 \references{
 \url{http://docs.travis-ci.com/user/encryption-keys/}
