@@ -14,7 +14,7 @@ use_travis_deploy <- function(pkg = ".") {
   url_message("Next steps:\n",
               "* If needed, enable Travis CI with travis::travis_enable()\n",
               "* Configure Travis to use tic as described in the tic README",
-              url = "https://github.com/krlmlr/tic#ci-configurations")
+              url = "https://github.com/ropenscilabs/tic#example-travis-configuration")
 
 }
 
