@@ -3,6 +3,7 @@ cleanup <- function() {
 }
 
 create_id <- function(value = NULL) {
+  set.seed(Sys.time())
   if (is.null(value)) {
     value <- gsub("_", "-", ids::adjective_animal(max_len = 39))
     message(value)

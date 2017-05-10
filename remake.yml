@@ -2,6 +2,9 @@ sources:
   - remake/
 
 targets:
+  all:
+    depends: keys_repo1
+
   clean:
     command: cleanup()
 
