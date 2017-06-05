@@ -38,4 +38,3 @@ travis_encrypt("TOKEN=12345", "jeroenooms/jsonlite")
 \references{
 \url{http://docs.travis-ci.com/user/encryption-keys/}
 }
-

@@ -13,4 +13,3 @@ use_travis_deploy(pkg = ".")
 \description{
 Use travis deploy
 }
-
