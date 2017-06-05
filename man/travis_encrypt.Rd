@@ -11,7 +11,7 @@ travis_encrypt(data, repo = github_repo(), pubkey = travis_pubkey(repo))
 }
 \arguments{
 \item{repo}{travis repository in "user/repo" format (similar to
-\code{\link[=devtools:install_github]{devtools:install_github()}})}
+\code{\link[remotes:install_github]{remotes::install_github()}})}
 
 \item{data}{raw or character vector to encrypt}
 

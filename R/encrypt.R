@@ -12,7 +12,7 @@
 #' @rdname travis_encrypt
 #' @references \url{http://docs.travis-ci.com/user/encryption-keys/}
 #' @param repo travis repository in "user/repo" format (similar to
-#' [devtools:install_github()])
+#'   [remotes::install_github()])
 travis_pubkey <- function(repo = github_repo()){
   url <- sprintf("https://api.travis-ci.org/repos/%s/key", repo)
   con <- curl::curl(url)

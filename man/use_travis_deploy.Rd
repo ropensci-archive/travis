@@ -7,8 +7,7 @@
 use_travis_deploy(pkg = ".")
 }
 \arguments{
-\item{pkg}{Package description, can be path or package name. See
-\code{\link{as.package}} for more information.}
+\item{pkg}{Package description, must be path to root of source package.}
 }
 \description{
 Use travis deploy

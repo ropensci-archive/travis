@@ -1,15 +1,14 @@
 #' Use travis deploy
 #'
-#' @param pkg Package description, can be path or package name. See
-#'   \code{\link{as.package}} for more information.
+#' @param pkg Package description, must be path to root of source package.
 #'
 #' @export
 use_travis_deploy <- function(pkg = ".") {
 
-  pkg <- devtools::as.package(pkg)
+  pkg <- normalizePath(pkg, "/")
 
   # authenticate on github and travis and set up keys/vars
-  setup_keys(pkg$path)
+  setup_keys(pkg)
 
   url_message("Next steps:\n",
               "* If needed, enable Travis CI with travis::travis_enable()\n",
