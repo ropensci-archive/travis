@@ -82,7 +82,7 @@ travis_sync <- function(block = TRUE, token = travis_token()) {
 
 
 #' @export
-#' @rdname travis
+#' @rdname travis-package
 travis_repo_info <- function(repo = github_repo(),
                              token = travis_token(repo)) {
   req <- TRAVIS_GET(sprintf("/repos/%s", repo), token = token)
@@ -91,13 +91,13 @@ travis_repo_info <- function(repo = github_repo(),
 }
 
 #' @export
-#' @rdname travis
+#' @rdname travis-package
 travis_repo_id <- function(repo = github_repo(), token = travis_token(repo), ...) {
   travis_repo_info(repo = repo, ..., token = token)$id
 }
 
 #' @export
-#' @rdname travis
+#' @rdname travis-package
 travis_enable <- function(active = TRUE, repo = github_repo(),
                           token = travis_token(repo), repo_id = travis_repo_id(repo, token = token)) {
   req <- TRAVIS_PUT(sprintf("/hooks"),
@@ -123,7 +123,7 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
 }
 
 #' @export
-#' @rdname travis
+#' @rdname travis-package
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
@@ -143,7 +143,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 }
 
 #' @export
-#' @rdname travis
+#' @rdname travis-package
 travis_delete_var <- function(id, repo = github_repo(),
                               token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
