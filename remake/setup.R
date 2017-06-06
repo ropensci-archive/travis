@@ -73,6 +73,9 @@ enable_travis_for_repo <- function(repo, travis_token) {
   )
 }
 
-setup_keys_for_repo <- function(repo, gh_repo, travis_user) {
+setup_keys_for_repo <- function(repo, gh_repo, travis_user, again = NULL) {
   travis::use_travis_deploy(repo@path)
+  if (!missing(again)) {
+    message("Double-check that the id_rsa environment variable exists only once on Travis!")
+  }
 }
