@@ -6,6 +6,7 @@ sudo: false
 dist: trusty
 cache: packages
 warnings_are_errors: true
+latex: false
 
 #env
 env:
