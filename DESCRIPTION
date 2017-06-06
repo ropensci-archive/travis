@@ -15,14 +15,14 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.0)
 Imports:
-    devtools,
     git2r,
     httr,
     memoise,
     openssl
 Suggests:
+    remotes,
     roxygen2,
     testthat
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 6.0.1
 Encoding: UTF-8

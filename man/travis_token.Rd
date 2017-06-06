@@ -9,4 +9,3 @@ travis_token(repo = NULL)
 \description{
 Authenticate with Travis using your Github account. Returns an access token.
 }
-
