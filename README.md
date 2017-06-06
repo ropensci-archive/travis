@@ -11,8 +11,8 @@ You can install travis from github with:
 
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ropenscilabs/travis")
+# install.packages("remotes")
+remotes::install_github("ropenscilabs/travis")
 ```
 
 

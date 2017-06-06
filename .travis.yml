@@ -5,7 +5,8 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
-warnings_are_errors: true
+warnings_are_errors: false
+latex: false
 
 #env
 env:
@@ -41,7 +42,7 @@ notifications:
 
 #before_script
 before_script:
-- R -q -e 'devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+- R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
 
 #after_success
 after_success:

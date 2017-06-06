@@ -23,4 +23,3 @@ github_add_key(pubkey, path = ".", info = github_info(path),
 \description{
 Retrieves metadata about a git repository from github.
 }
-
