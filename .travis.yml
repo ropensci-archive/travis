@@ -5,7 +5,7 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
-warnings_are_errors: true
+warnings_are_errors: false
 latex: false
 
 #env
