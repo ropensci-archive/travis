@@ -26,6 +26,14 @@ TRAVIS_POST <- function(url, ..., token) {
              ...)
 }
 
+TRAVIS_PATCH <- function(url, ..., token) {
+  httr::PATCH(travis(url), encode = "json",
+              httr::user_agent("ropenscilabs/travis"),
+              httr::accept('application/vnd.travis-ci.2+json'),
+              if (!is.null(token)) httr::add_headers(Authorization = paste("token", token)),
+              ...)
+}
+
 TRAVIS_DELETE <- function(url, ..., token) {
   httr::DELETE(travis(url), encode = "json",
                httr::user_agent("ropenscilabs/travis"),
@@ -127,6 +135,34 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
   if (!is.numeric(repo_id)) stop("repo_id must be a number")
+
+  vars <- travis_get_vars(repo = repo, token = token, repo_id = repo_id)
+  var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
+  if (length(var_idx) > 0) {
+    # Travis seems to use the value of the last variable if multiple vars of the
+    # same name are defined; we update the last
+    if (length(var_idx) > 1) {
+      warning(
+        "Multiple entries found for ", name, ", updating the last entry.",
+        call = FALSE
+      )
+      var_idx <- var_idx[[length(var_idx)]]
+    }
+    var <- vars[[var_idx]]
+    travis_patch_var(
+      var$id, value, public = public,
+      repo = repo, token = token, repo_id = repo_id
+    )
+  } else {
+    travis_post_var(
+      name, value, public = public,
+      repo = repo, token = token, repo_id = repo_id
+    )
+  }
+}
+
+travis_post_var <- function(name, value, public = FALSE, repo = github_repo(),
+                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -139,6 +175,22 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                      query = list(repository_id = repo_id), body = var_data,
                      token = token)
   httr::stop_for_status(req, sprintf("add %s environment variable %s to %s on travis",
+                                     if (public) "public" else "private", name, repo_id))
+}
+
+travis_patch_var <- function(id, value, public = FALSE, repo = github_repo(),
+                             token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
+  var_data <- list(
+    "env_var" = list(
+      "value" = value,
+      "public" = public
+    )
+  )
+
+  req <- TRAVIS_PATCH(paste0("/settings/env_vars/", id),
+                      query = list(repository_id = repo_id), body = var_data,
+                      token = token)
+  httr::stop_for_status(req, sprintf("update %s environment variable %s to %s on travis",
                                      if (public) "public" else "private", name, repo_id))
 }
 
