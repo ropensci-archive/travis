@@ -78,13 +78,13 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
     if (is.null(gh_token)) {
       gh_token <- auth_github(scopes = c("public_repo", "write:org"))
     }
+
+    check_write_org(org, gh_token)
   }
 
   req <- GITHUB_POST(url, body = data, token = gh_token)
-  if (httr::status_code(req) %in% 403) {
-    on.exit(review_org_permission(org))
-  }
   httr::stop_for_status(req, sprintf("create repo %s", name))
+  invisible(httr::content(req))
 }
 
 #' @rdname github
@@ -96,7 +96,7 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
-    stop("Argumnet 'pubkey' is not an RSA/EC public key")
+    stop("Argument 'pubkey' is not an RSA/EC public key")
 
   # add public key to repo deploy keys on GitHub
   key_data <- list(
@@ -105,34 +105,59 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
     "read_only" = FALSE
   )
 
-  if (is.null(gh_token)) {
-    if (info$owner$type == "Organization") {
-      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
-    } else {
+  if (info$owner$type == "User") {
+    if (is.null(gh_token)) {
       gh_token <- auth_github(scopes = "public_repo")
     }
+  } else {
+    if (is.null(gh_token)) {
+      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+    }
+
+    check_write_org(info$owner$login, gh_token)
   }
 
-  add_key <- GITHUB_POST(sprintf("/repos/%s/keys", repo),
-                         body = key_data,
-                         token = gh_token)
-  if (httr::status_code(add_key) %in% 404) {
-    org <- strsplit(repo, "/")[[1]][[1]]
-    on.exit(review_org_permission(org))
-  }
-  httr::stop_for_status(add_key, sprintf("add deploy keys on GitHub for repo %s",  repo))
+  req <- GITHUB_POST(
+    sprintf("/repos/%s/keys", repo),
+    body = key_data,
+    token = gh_token
+  )
+
+  httr::stop_for_status(req, sprintf("add deploy keys on GitHub for repo %s", repo))
+  invisible(httr::content(req))
 }
 
-review_org_permission <- function(org) {
-  org_perm_url <- paste0("https://github.com/orgs/",
-                         org,
-                         "/policies/applications/390126")
-  url_message("You may need to allow access for the rtravis GitHub app to your organization ", org,
-              url = org_perm_url)
-}
-
-get_repo_data <- function(repo) {
-  req <- GITHUB_GET(paste0("/repos/", repo), token = NULL)
+get_repo_data <- function(repo, token = NULL) {
+  req <- GITHUB_GET(paste0("/repos/", repo), token = token)
   httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
   httr::content(req)
+}
+
+check_write_org <- function(org, gh_token) {
+  req <- GITHUB_GET(paste0("/user/memberships/orgs/", org), token = gh_token)
+  if (httr::status_code(req) %in% 403) {
+    org_perm_url <- paste0(
+      "https://github.com/orgs/", org,
+      "/policies/applications/390126")
+
+    url_stop(
+      "You may need to allow access for the rtravis GitHub app to your organization ", org,
+      url = org_perm_url
+    )
+  }
+
+  httr::stop_for_status(
+    req,
+    paste0(
+      "query membership for organization ", org, ". ",
+      "Check if you are a member of this organization"
+    )
+  )
+
+  membership <- httr::content(req)
+  role_in_org <- membership$role
+
+  if (role_in_org != "admin") {
+    stopc("Must have role admin to edit organization ", org, ", not ", role_in_org)
+  }
 }
