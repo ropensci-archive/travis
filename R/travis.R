@@ -106,6 +106,18 @@ travis_repo_id <- function(repo = github_repo(), token = travis_token(repo), ...
 
 #' @export
 #' @rdname travis-package
+uses_travis <- function(repo = github_repo(), token = travis_token(repo),
+                        repo_id = travis_repo_id(repo, token = token)) {
+  req <- TRAVIS_GET(sprintf("/repos/%s", repo_id), token = token)
+  httr::stop_for_status(
+    req, sprintf(
+      "%s repo %s on travis",
+      ifelse(active, "activate", "deactivate"), repo_id))
+  httr::content(req)$repo$active
+}
+
+#' @export
+#' @rdname travis-package
 travis_enable <- function(active = TRUE, repo = github_repo(),
                           token = travis_token(repo), repo_id = travis_repo_id(repo, token = token)) {
   req <- TRAVIS_PUT(sprintf("/hooks"),

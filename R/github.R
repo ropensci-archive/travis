@@ -34,6 +34,19 @@ GITHUB_DELETE <- function(url, ..., token) {
                ...)
 }
 
+#' @export
+uses_github <- function(path = ".") {
+  tryCatch(
+    {
+      info <- github_info(path)
+      structure(TRUE, info = info, repo = github_repo(info = info))
+    },
+    error = function(e) {
+      structure(FALSE, reason = conditionMessage(e))
+    }
+  )
+}
+
 #' Github Information
 #'
 #' Retrieves metadata about a git repository from github.

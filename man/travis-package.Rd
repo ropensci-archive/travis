@@ -6,6 +6,7 @@
 \alias{travis-package}
 \alias{travis_repo_info}
 \alias{travis_repo_id}
+\alias{uses_travis}
 \alias{travis_enable}
 \alias{travis_set_var}
 \alias{travis_delete_var}
@@ -14,6 +15,9 @@
 travis_repo_info(repo = github_repo(), token = travis_token(repo))
 
 travis_repo_id(repo = github_repo(), token = travis_token(repo), ...)
+
+uses_travis(repo = github_repo(), token = travis_token(repo),
+  repo_id = travis_repo_id(repo, token = token))
 
 travis_enable(active = TRUE, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token = token))
