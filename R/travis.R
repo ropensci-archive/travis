@@ -124,7 +124,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
 #' @export
 travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
                             repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stop("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id),
                     token = token)
   httr::stop_for_status(req, paste("get environment variable for", repo_id))
@@ -135,7 +135,7 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
 #' @rdname travis-package
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stop("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
 
   vars <- travis_get_vars(repo = repo, token = token, repo_id = repo_id)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
@@ -143,9 +143,8 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     # Travis seems to use the value of the last variable if multiple vars of the
     # same name are defined; we update the last
     if (length(var_idx) > 1) {
-      warning(
-        "Multiple entries found for ", name, ", updating the last entry.",
-        call = FALSE
+      warningc(
+        "Multiple entries found for ", name, ", updating the last entry."
       )
       var_idx <- var_idx[[length(var_idx)]]
     }
@@ -201,7 +200,7 @@ travis_patch_var <- function(id, value, public = FALSE, repo = github_repo(),
 #' @rdname travis-package
 travis_delete_var <- function(id, repo = github_repo(),
                               token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stop("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
   req <- TRAVIS_DELETE(paste0("/settings/env_vars/", id),
                        query = list(repository_id = repo_id),
                        token = token)

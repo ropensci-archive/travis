@@ -9,7 +9,7 @@ extract_repo <- function(path) {
     path <- sub("^https://(.+@)github.com", "https://github.com", path)
   }
   if (!all(grepl("^https://github.com", path))) {
-    stop("Unrecognized repo format: ", path)
+    stopc("Unrecognized repo format: ", path)
   }
   path <- sub("\\.git", "", path)
   sub("^https://github.com/", "", path)

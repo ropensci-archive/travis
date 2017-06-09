@@ -57,7 +57,7 @@ github_repo <- function(path = ".", info = github_info(path)) {
 github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FALSE,
                                gh_token = NULL) {
   if (private) {
-    stop("Creating private repositories not supported.", call. = FALSE)
+    stopc("Creating private repositories not supported.")
   }
 
   if (is.null(name)) {
@@ -96,7 +96,7 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
-    stop("Argument 'pubkey' is not an RSA/EC public key")
+    stopc("Argument 'pubkey' is not an RSA/EC public key")
 
   # add public key to repo deploy keys on GitHub
   key_data <- list(

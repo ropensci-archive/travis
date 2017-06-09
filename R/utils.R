@@ -16,6 +16,10 @@ stopc <- function(...) {
   stop(..., call. = FALSE, domain = NA)
 }
 
+warningc <- function(...) {
+  warning(..., call. = FALSE, domain = NA)
+}
+
 get_browser_window_text <- function() {
   if (will_open_browser_window()) {
     "\nA browser window will be opened."
