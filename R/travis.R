@@ -115,6 +115,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
     req, sprintf(
       "%s repo %s on travis",
       ifelse(active, "activate", "deactivate"), repo_id))
+  invisible(httr::content(req)[[1]])
 }
 
 # Vars --------------------------------------------------------------------
@@ -176,6 +177,7 @@ travis_post_var <- function(name, value, public = FALSE, repo = github_repo(),
                      token = token)
   httr::stop_for_status(req, sprintf("add %s environment variable %s to %s on travis",
                                      if (public) "public" else "private", name, repo_id))
+  invisible(httr::content(req)[[1]])
 }
 
 travis_patch_var <- function(id, value, public = FALSE, repo = github_repo(),
@@ -192,6 +194,7 @@ travis_patch_var <- function(id, value, public = FALSE, repo = github_repo(),
                       token = token)
   httr::stop_for_status(req, sprintf("update %s environment variable %s to %s on travis",
                                      if (public) "public" else "private", name, repo_id))
+  invisible(httr::content(req)[[1]])
 }
 
 #' @export
@@ -204,6 +207,7 @@ travis_delete_var <- function(id, repo = github_repo(),
                        token = token)
   httr::stop_for_status(req, sprintf("delete environment variable id=%s on travis",
                                      repo_id))
+  invisible(httr::content(req)[[1]])
 }
 
 # Interactive -------------------------------------------------------------
