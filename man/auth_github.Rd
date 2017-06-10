@@ -14,4 +14,5 @@ One or more OAuth scopes for GitHub.}
 Creates an OAuth token for the requested scopes.
 For each combination of scopes, the token will be obtained only once in each
 R session, but it will never be cached on the file system.
+In most scenarios, this function will be called implicitly by other functions.
 }
