@@ -13,11 +13,11 @@ github_add_key <- function(pubkey, title = "travis+tic",
 
   if (info$owner$type == "User") {
     if (is.null(gh_token)) {
-      gh_token <- auth_github(scopes = "public_repo")
+      gh_token <- auth_github("public_repo")
     }
   } else {
     if (is.null(gh_token)) {
-      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+      gh_token <- auth_github("public_repo", "write:org")
     }
 
     check_write_org(info$owner$login, gh_token)

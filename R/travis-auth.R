@@ -35,9 +35,11 @@ travis_token <- memoise::memoise(travis_token_)
 auth_travis_ <- function(gtoken = NULL) {
   message("Authenticating with Travis")
   if (is.null(gtoken)) {
+    # Do not allow caching this token, it needs to be fresh
     gtoken <- auth_github_(
-      cache = FALSE,
-      scopes = c("read:org", "user:email", "repo_deployment", "repo:status", "read:repo_hook", "write:repo_hook"))
+      "read:org", "user:email", "repo_deployment", "repo:status",
+      "read:repo_hook", "write:repo_hook"
+    )
   }
   auth_travis_data <- list(
     "github_token" = gtoken$credentials$access_token

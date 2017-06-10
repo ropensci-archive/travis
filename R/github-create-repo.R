@@ -16,12 +16,12 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
   if (is.null(org)) {
     url <- "/user/repos"
     if (is.null(gh_token)) {
-      gh_token <- auth_github(scopes = "public_repo")
+      gh_token <- auth_github("public_repo")
     }
   } else {
     url <- paste0("/orgs/", org, "/repos")
     if (is.null(gh_token)) {
-      gh_token <- auth_github(scopes = c("public_repo", "write:org"))
+      gh_token <- auth_github("public_repo", "write:org")
     }
 
     check_write_org(org, gh_token)
