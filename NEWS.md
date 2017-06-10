@@ -1,3 +1,14 @@
+## travis 0.2-6 (2017-06-10)
+
+- Document all functions, `R CMD check` passes without warnings or notes (#50).
+- Disabled caching of GitHub authentication, because functions from this package usually needs to be run only once per development package.
+- New `travis_get_var_id()`.
+- `travis_delete_var()` gains `name` argument, `id` is computed from `name` (#58).
+- All commands that are primarily called for side effects print a success message, unless the `quiet` argument is set to `FALSE` (#46).
+- Deploy keys now have the title "travis+tic" by default, existing keys by the same title are deleted and created anew (#33).
+- New `travis_set_pat()`, by default directs the user to the page where new tokens are created and waits for a token to appear on the clipboard (#21).
+
+
 ## travis 0.2-5 (2017-06-10)
 
 - The new `uses_github()` and `uses_travis()` functions allow
