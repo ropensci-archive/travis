@@ -184,7 +184,7 @@ github_create_pat <- function(path = ".", repo = github_repo(path), pat = NULL) 
     stopc("`pat` must be set in non-interactive mode")
   }
 
-  desc <- paste0("PAT for rtravis for ", repo)
+  desc <- paste0("travis+tic for ", repo)
   clipr::write_clip(desc)
   url_message(
     "Create a personal access token, make sure that you are signed in as the correct user. ",
