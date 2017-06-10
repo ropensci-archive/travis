@@ -60,6 +60,12 @@ github_info <- function(path = ".") {
   get_repo_data(repo)
 }
 
+get_repo_data <- function(repo, token = NULL) {
+  req <- GITHUB_GET(paste0("/repos/", repo), token = token)
+  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
+  httr::content(req)
+}
+
 #' @export
 #' @rdname github
 github_repo <- function(path = ".", info = github_info(path)) {
@@ -138,12 +144,6 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
 
   httr::stop_for_status(req, sprintf("add deploy keys on GitHub for repo %s", repo))
   invisible(httr::content(req))
-}
-
-get_repo_data <- function(repo, token = NULL) {
-  req <- GITHUB_GET(paste0("/repos/", repo), token = token)
-  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
-  httr::content(req)
 }
 
 check_write_org <- function(org, gh_token) {
