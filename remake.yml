@@ -2,6 +2,9 @@ sources:
   - remake/
 
 targets:
+  all:
+    depends: keys_repo1
+
   clean:
     command: cleanup()
 
@@ -31,6 +34,9 @@ targets:
 
   keys_repo1:
     command: setup_keys_for_repo(repo1, gh_repo1, travis_user1)
+
+  keys_repo1_again:
+    command: setup_keys_for_repo(repo1, gh_repo1, travis_user1, keys_repo1)
 
   github_org1:
     command: create_github_org(org1)

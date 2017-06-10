@@ -3,6 +3,7 @@ cleanup <- function() {
 }
 
 create_id <- function(value = NULL) {
+  set.seed(Sys.time())
   if (is.null(value)) {
     value <- gsub("_", "-", ids::adjective_animal(max_len = 39))
     message(value)
@@ -72,6 +73,9 @@ enable_travis_for_repo <- function(repo, travis_token) {
   )
 }
 
-setup_keys_for_repo <- function(repo, gh_repo, travis_user) {
+setup_keys_for_repo <- function(repo, gh_repo, travis_user, again = NULL) {
   travis::use_travis_deploy(repo@path)
+  if (!missing(again)) {
+    message("Double-check that the id_rsa environment variable exists only once on Travis!")
+  }
 }

@@ -1,3 +1,19 @@
+## travis 0.2-5 (2017-06-10)
+
+- The new `uses_github()` and `uses_travis()` functions allow
+  determining if GitHub or Travis is enabled for a repository. Note that
+  `uses_travis()` needs a repo slug, which is available from an
+  attribute of the value returned by `uses_github()` (#47).
+- Only interactive sessions will open a browser window to improve setup
+  experience. The `travis_browse()` function still opens a browser
+  window unconditionally (#52).
+- All API functions that provide a side effect return the result of the
+  request invisibly (#57).
+- For organization repos, adding deploy keys or creating new repos checks if the user and the app have permission to perform this action, and gives more accurate error messages (#51).
+- Environment variables on Travis are overwritten if they exist (#30).
+- Remove devtools dependency (#49).
+
+
 ## travis 0.2-4 (2016-11-06)
 
 - Documentation improvements.
