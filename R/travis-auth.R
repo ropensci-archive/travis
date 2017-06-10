@@ -1,3 +1,38 @@
+auth_travis_ <- function(gtoken = NULL) {
+  message("Authenticating with Travis")
+  if (is.null(gtoken)) {
+    # Do not allow persisting this token, it needs to be fresh
+    gtoken <- auth_github_(
+      "read:org", "user:email", "repo_deployment", "repo:status",
+      "read:repo_hook", "write:repo_hook"
+    )
+  }
+  auth_travis_data <- list(
+    "github_token" = gtoken$credentials$access_token
+  )
+  auth_travis <- TRAVIS_POST(
+    url = "/auth/github",
+    body = auth_travis_data,
+    httr::user_agent("Travis/1.0"),
+    token = NULL
+  )
+  httr::stop_for_status(auth_travis, "authenticate with travis")
+  httr::content(auth_travis)$access_token
+}
+
+#' Authenticate with Travis CI
+#'
+#' @description
+#' Authenticates with Travis using your Github account. Returns an access token.
+#' The token will be obtained only once in each
+#' R session, but it will never be cached on the file system.
+#' In most scenarios, these functions will be called implicitly by other functions.
+#'
+#' `auth_travis()` only performs the authentication with Travis CI.
+#'
+#' @export
+auth_travis <- memoise::memoise(auth_travis_)
+
 travis_token_ <- function(repo = NULL) {
   token <- auth_travis()
   if (!identical(travis_user(token)$correct_scopes, TRUE)) {
@@ -25,34 +60,13 @@ review_travis_app_permission <- function(org) {
            url = "https://github.com/settings/connections/applications/f244293c729d5066cf27")
 }
 
-#' Authenticate with Travis
+#' @description
+#' `travis_token()` authenticates and checks if the repository is known to
+#' Travis CI. If not, a GitHub sync via [travis_sync()] is performed.
 #'
-#' Authenticate with Travis using your Github account. Returns an access token.
+#' @param repo `[string]`\cr
+#'   The GitHub repo slug in the format "<user|org>/<repo>".
 #'
 #' @export
+#' @rdname auth_travis
 travis_token <- memoise::memoise(travis_token_)
-
-auth_travis_ <- function(gtoken = NULL) {
-  message("Authenticating with Travis")
-  if (is.null(gtoken)) {
-    # Do not allow caching this token, it needs to be fresh
-    gtoken <- auth_github_(
-      "read:org", "user:email", "repo_deployment", "repo:status",
-      "read:repo_hook", "write:repo_hook"
-    )
-  }
-  auth_travis_data <- list(
-    "github_token" = gtoken$credentials$access_token
-  )
-  auth_travis <- TRAVIS_POST(
-    url = "/auth/github",
-    body = auth_travis_data,
-    httr::user_agent("Travis/1.0"),
-    token = NULL
-  )
-  httr::stop_for_status(auth_travis, "authenticate with travis")
-  httr::content(auth_travis)$access_token
-}
-
-#' @export
-auth_travis <- memoise::memoise(auth_travis_)
