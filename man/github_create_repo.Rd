@@ -24,11 +24,14 @@ Must be \code{FALSE}, creation of private repositories not yet supported.}
 
 \item{gh_token}{\code{[logical(1)]}\cr
 GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
-the "public_repo" and (if org is not \code{NULL}) "write:org" scopes.}
+the "public_repo" and (if an organization repo) "write:org" scopes.}
 
 \item{quiet}{\code{[logical(1)]}\cr
 Set to \code{FALSE} to suppress success message.}
 }
 \description{
 Creates a GitHub repository for an existing Git repository.
+}
+\seealso{
+Other GitHub functions: \code{\link{github_add_key}}
 }

@@ -1,7 +1,25 @@
-#' @rdname github
+#' Add a deploy key to GitHub
+#'
+#' Adds a public deploy key to an existing GitHub repository.
+#' An existing key of the same name is dropped.
+#'
 #' @export
-#' @param pubkey openssl public key, see [openssl::read_pubkey()].
-#' @param gh_token GitHub token, as returned from [auth_github()]
+#' @param pubkey `[pubkey]`\cr
+#'   openssl public key, see [openssl::read_pubkey()].
+#' @param title `[string]`\cr
+#'   The title for the new key, default: "travis+tic".
+#' @param path `[string]`\cr
+#'   The path to a GitHub-enabled Git repository (or a subdirectory thereof).
+#' @param info `[list]`\cr
+#'   GitHub information for the repository, by default obtained through
+#'   [github_info()].
+#' @param repo `[string]`\cr
+#'   The GitHub repo slug, by default obtained through [github_repo()].
+#' @inheritParams github_create_repo
+#'
+#' @family GitHub functions
+#'
+#' @seealso [github_create_repo()]
 github_add_key <- function(pubkey, title = "travis+tic",
                            path = ".", info = github_info(path),
                            repo = github_repo(info = info), gh_token = NULL,

@@ -14,9 +14,11 @@
 #'   Must be `FALSE`, creation of private repositories not yet supported.
 #' @param gh_token `[logical(1)]`\cr
 #'   GitHub authentication token, by default obtained from [auth_github()] with
-#'   the "public_repo" and (if org is not `NULL`) "write:org" scopes.
+#'   the "public_repo" and (if an organization repo) "write:org" scopes.
 #' @param quiet `[logical(1)]`\cr
 #'   Set to `FALSE` to suppress success message.
+#'
+#' @family GitHub functions
 #'
 #' @export
 github_create_repo <- function(path = ".", name = NULL, org = NULL,
