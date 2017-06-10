@@ -60,6 +60,12 @@ github_info <- function(path = ".") {
   get_repo_data(repo)
 }
 
+get_repo_data <- function(repo, token = NULL) {
+  req <- GITHUB_GET(paste0("/repos/", repo), token = token)
+  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
+  httr::content(req)
+}
+
 #' @export
 #' @rdname github
 github_repo <- function(path = ".", info = github_info(path)) {
@@ -140,12 +146,6 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
   invisible(httr::content(req))
 }
 
-get_repo_data <- function(repo, token = NULL) {
-  req <- GITHUB_GET(paste0("/repos/", repo), token = token)
-  httr::stop_for_status(req, paste("retrieve repo information for: ", repo))
-  httr::content(req)
-}
-
 check_write_org <- function(org, gh_token) {
   req <- GITHUB_GET(paste0("/user/memberships/orgs/", org), token = gh_token)
   if (httr::status_code(req) %in% 403) {
@@ -173,4 +173,42 @@ check_write_org <- function(org, gh_token) {
   if (role_in_org != "admin") {
     stopc("Must have role admin to edit organization ", org, ", not ", role_in_org)
   }
+}
+
+#' @export
+github_create_pat <- function(path = ".", repo = github_repo(path), pat = NULL) {
+  if (!is.null(pat)) {
+    return(pat)
+  }
+  if (!interactive()) {
+    stopc("`pat` must be set in non-interactive mode")
+  }
+
+  desc <- paste0("PAT for rtravis for ", repo)
+  clipr::write_clip(desc)
+  url_message(
+    "Create a personal access token, make sure that you are signed in as the correct user. ",
+    "The suggested description '", desc, "' has been copied to the clipboard. ",
+    "If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked. ",
+    "Then, copy the new token to the clipboard, it will be detected and applied automatically.",
+    url = "https://github.com/settings/tokens/new"
+  )
+
+  wait_for_clipboard_pat()
+}
+
+wait_for_clipboard_pat <- function() {
+  message("Waiting for PAT to appear on the clipboard.")
+  repeat {
+    pat <- clipr::read_clip()
+    if (is_pat(pat)) break
+    Sys.sleep(0.1)
+  }
+  message("Detected PAT, clearing clipboard.")
+  clipr::write_clip("")
+  pat
+}
+
+is_pat <- function(pat) {
+  grepl("^[0-9a-f]{40}$", pat)
 }
