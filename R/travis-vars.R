@@ -4,8 +4,33 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
   if (!is.numeric(repo_id)) stopc("repo_id must be a number")
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id),
                     token = token)
-  httr::stop_for_status(req, paste("get environment variable for", repo_id))
+  httr::stop_for_status(
+    req,
+    sprintf("get environment variables for %s (id: %s) from Travis CI", repo, repo_id)
+  )
   httr::content(req)[[1L]]
+}
+
+#' @export
+travis_get_var_id <- function(name, repo = github_repo(),
+                              token = travis_token(repo),
+                              repo_id = travis_repo_id(repo, token)) {
+  vars <- travis_get_vars(repo = repo, token = token, repo_id = repo_id)
+  var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
+  if (length(var_idx) > 0) {
+    # Travis seems to use the value of the last variable if multiple vars of the
+    # same name are defined; we update the last
+    if (length(var_idx) > 1) {
+      warningc(
+        "Multiple entries found for variable ", name, ", updating the last entry."
+      )
+      var_idx <- var_idx[[length(var_idx)]]
+    }
+  } else if (length(var_idx) == 0) {
+    return(NULL)
+  }
+
+  vars[[var_idx]]$id
 }
 
 #' @export
@@ -16,19 +41,12 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("repo_id must be a number")
 
-  vars <- travis_get_vars(token = token, repo_id = repo_id)
-  var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
-  if (length(var_idx) > 0) {
-    # Travis seems to use the value of the last variable if multiple vars of the
-    # same name are defined; we update the last
-    if (length(var_idx) > 1) {
-      warningc(
-        "Multiple entries found for ", name, ", updating the last entry."
-      )
-      var_idx <- var_idx[[length(var_idx)]]
-    }
-    var <- vars[[var_idx]]
-    travis_patch_var(var$id, name, value, public, token, repo, repo_id, quiet)
+  var_id <- travis_get_var_id(
+    name = name, repo = repo, token = token, repo_id = repo_id
+  )
+
+  if (!is.null(var_id)) {
+    travis_patch_var(var_id, name, value, public, token, repo, repo_id, quiet)
   } else {
     travis_post_var(name, value, public, token, repo, repo_id, quiet)
   }
