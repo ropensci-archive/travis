@@ -15,6 +15,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.0)
 Imports:
+    clipr,
     git2r,
     httr,
     memoise,
