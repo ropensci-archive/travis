@@ -28,18 +28,19 @@ travis_set_var(name, value, public = FALSE, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token),
   quiet = FALSE)
 
-travis_delete_var(id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+travis_delete_var(name, repo = github_repo(), token = travis_token(repo),
+  repo_id = travis_repo_id(repo, token), id = travis_get_var_id(name, repo =
+  repo, token = token, repo_id = repo_id), quiet = FALSE)
 }
 \description{
 Tools for interacting with the Travis and 'GitHub' APIs for setting up
 continuous integration for R packages.
 }
 \details{
-Use \code{\link{github_repo}} to get the name of the current repository
-as determined from the \code{origin} remote. The \code{\link{github_info}}
+Use \code{\link[=github_repo]{github_repo()}} to get the name of the current repository
+as determined from the \code{origin} remote. The \code{\link[=github_info]{github_info()}}
 function queries basic information on your repository.
-The \code{\link{travis_set_var}} and \code{\link{github_add_key}} functions
+The \code{\link[=travis_set_var]{travis_set_var()}} and \code{\link[=github_add_key]{github_add_key()}} functions
 interact with the GitHub and Travis configuration of your repository,
 and ask for permission the first time you call them.
 }
