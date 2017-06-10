@@ -22,14 +22,15 @@ setup_keys <- function(path) {
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
 
-  # encrypt private key using tempkey and iv
-  repo <- github_repo(path)
+  info <- github_info(path)
+  repo <- github_repo(info = info)
 
+  # encrypt private key using tempkey and iv
   # add to GitHub first, because this can fail because of missing org permissions
   pub_key <- get_public_key(key)
   private_key <- encode_private_key(key)
 
-  add_key <- github_add_key(pub_key, path)
+  add_key <- github_add_key(pub_key, info = info, repo = repo)
 
   message(
     "Successfully added public deploy key '", add_key$title, "' to GitHub for ", repo, ". ",

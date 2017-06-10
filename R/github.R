@@ -110,19 +110,13 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
 #' @export
 #' @param pubkey openssl public key, see [openssl::read_pubkey()].
 #' @param gh_token GitHub token, as returned from [auth_github()]
-github_add_key <- function(pubkey, path = ".", info = github_info(path),
+github_add_key <- function(pubkey, title = "travis+tic",
+                           path = ".", info = github_info(path),
                            repo = github_repo(info = info), gh_token = NULL) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
     stopc("Argument 'pubkey' is not an RSA/EC public key")
-
-  # add public key to repo deploy keys on GitHub
-  key_data <- list(
-    "title" = paste("travis", Sys.time()),
-    "key" = openssl::write_ssh(pubkey),
-    "read_only" = FALSE
-  )
 
   if (info$owner$type == "User") {
     if (is.null(gh_token)) {
@@ -136,6 +130,45 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
     check_write_org(info$owner$login, gh_token)
   }
 
+  key_data <- create_key_data(pubkey, title)
+
+  # remove existing key
+  remove_key_if_exists(key_data, repo, gh_token)
+  # add public key to repo deploy keys on GitHub
+  add_key(key_data, repo, gh_token)
+}
+
+create_key_data <- function(pubkey, title) {
+  list(
+    "title" = title,
+    "key" = openssl::write_ssh(pubkey),
+    "read_only" = FALSE
+  )
+}
+
+remove_key_if_exists <- function(key_data, repo, gh_token) {
+  req <- GITHUB_GET(
+    sprintf("/repos/%s/keys", repo),
+    token = gh_token
+  )
+
+  httr::stop_for_status(req, sprintf("query deploy keys on GitHub for repo %s", repo))
+  keys <- httr::content(req)
+  titles <- vapply(keys, "[[", "title", FUN.VALUE = character(1))
+  our_title_idx <- which(titles == key_data$title)
+
+  if (length(our_title_idx) == 0) return()
+
+  our_title_idx <- our_title_idx[[1]]
+
+  req <- GITHUB_DELETE(
+    sprintf("/repos/%s/keys/%s", repo, keys[[our_title_idx]]$id),
+    token = gh_token
+  )
+  httr::stop_for_status(req, sprintf("delete existing deploy key on GitHub for repo %s", repo))
+}
+
+add_key <- function(key_data, repo, gh_token) {
   req <- GITHUB_POST(
     sprintf("/repos/%s/keys", repo),
     body = key_data,
@@ -184,7 +217,7 @@ github_create_pat <- function(path = ".", repo = github_repo(path), pat = NULL) 
     stopc("`pat` must be set in non-interactive mode")
   }
 
-  desc <- paste0("PAT for rtravis for ", repo)
+  desc <- paste0("travis+tic for ", repo)
   clipr::write_clip(desc)
   url_message(
     "Create a personal access token, make sure that you are signed in as the correct user. ",
