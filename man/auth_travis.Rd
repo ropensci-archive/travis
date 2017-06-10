@@ -16,7 +16,8 @@ A GitHub token, by default obtained from \code{\link[=auth_github]{auth_github()
 "read:repo_hook", and "write:repo_hook" scopes.}
 
 \item{repo}{\code{[string]}\cr
-The GitHub repo slug in the format "<user|org>/<repo>".}
+The GitHub repo slug in the format "<user|org>/<repo>", if \code{NULL} no sync
+is performed.}
 }
 \description{
 Authenticates with Travis using your Github account. Returns an access token.

@@ -11,7 +11,7 @@ travis_repo_id(repo = github_repo(), token = travis_token(repo))
 }
 \arguments{
 \item{repo}{\code{[string]}\cr
-The GitHub repo slug in the format "<user|org>/<repo>".}
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
 
 \item{token}{\code{[Token2.0]}\cr
 A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}

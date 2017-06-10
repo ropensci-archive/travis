@@ -70,7 +70,8 @@ review_travis_app_permission <- function(org) {
 #' Travis CI. If not, a GitHub sync via [travis_sync()] is performed.
 #'
 #' @param repo `[string]`\cr
-#'   The GitHub repo slug in the format "<user|org>/<repo>".
+#'   The GitHub repo slug in the format "<user|org>/<repo>", if `NULL` no sync
+#'   is performed.
 #'
 #' @export
 #' @rdname auth_travis

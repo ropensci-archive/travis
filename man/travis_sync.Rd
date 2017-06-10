@@ -20,7 +20,7 @@ A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \
 Set to \code{FALSE} to suppress success message.}
 
 \item{repo}{\code{[string]}\cr
-The GitHub repo slug in the format "<user|org>/<repo>".}
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
 }
 \description{
 Helper functions for Travis CI.

@@ -5,7 +5,8 @@
 #'
 #' `travis_repo_info()` queries the "/repos/:repo" API.
 #'
-#' @inheritParams travis_token
+#' @param repo `[string]`\cr
+#'   The GitHub repo slug, by default obtained through [github_repo()].
 #' @param token `[Token2.0]`\cr
 #'   A Travis CI token obtained from [travis_token()] or [auth_travis()].
 #'

@@ -8,8 +8,7 @@
 #'   openssl public key, see [openssl::read_pubkey()].
 #' @param title `[string]`\cr
 #'   The title for the new key, default: "travis+tic".
-#' @param repo `[string]`\cr
-#'   The GitHub repo slug, by default obtained through [github_repo()].
+#' @inheritParams travis_repo_info
 #' @inheritParams github_info
 #' @inheritParams github_repo
 #' @inheritParams github_create_repo
