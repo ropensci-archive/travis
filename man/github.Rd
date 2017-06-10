@@ -8,7 +8,7 @@
 \usage{
 github_add_key(pubkey, title = "travis+tic", path = ".",
   info = github_info(path), repo = github_repo(info = info),
-  gh_token = NULL)
+  gh_token = NULL, quiet = FALSE)
 
 github_info(path = ".")
 
