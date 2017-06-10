@@ -2,15 +2,20 @@
 % Please edit documentation in R/github-create-repo.R
 \name{github_create_repo}
 \alias{github_create_repo}
+\alias{use_github}
+\alias{new_github}
 \title{Create a repository on GitHub}
 \usage{
-github_create_repo(path = ".", name = NULL, org = NULL, private = FALSE,
-  gh_token = NULL, quiet = FALSE)
+github_create_repo(name, org = NULL, private = FALSE, gh_token = NULL,
+  quiet = FALSE)
+
+use_github(path = ".", push = NA, name = NULL, org = NULL,
+  private = FALSE, gh_token = NULL, quiet = FALSE)
+
+new_github(path, user = getOption("devtools.desc.author"), name = NULL,
+  org = NULL, private = FALSE, gh_token = NULL, quiet = FALSE)
 }
 \arguments{
-\item{path}{\code{[string]}\cr
-The path to the existing Git repository.}
-
 \item{name}{\code{[string]}\cr
 The name of the new repository on GitHub, default: basename of the
 repo directory.}
@@ -28,9 +33,25 @@ the "public_repo" and (if an organization repo) "write:org" scopes.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
+
+\item{path}{\code{[string]}\cr
+The path to the existing Git repository.}
+
+\item{push}{\code{[flag]}\cr
+Should the contents of the existing repository be pushed to GitHub?
+Defaults to \code{FALSE} for non-interactive sessions, and asks the user
+in interactive sessions.}
 }
 \description{
-Creates a GitHub repository for an existing Git repository.
+Creates a GitHub repository.
+
+\code{github_create_repo()} only creates the repository on GitHub.
+
+\code{use_github()} creates a GitHub repository for an existing Git repository,
+and connects both.
+
+\code{new_github()} creates an empty Git repository with a single commit and
+a corresponding GitHub repository, and always pushes to GitHub.
 }
 \seealso{
 Other GitHub functions: \code{\link{github_add_key}},
