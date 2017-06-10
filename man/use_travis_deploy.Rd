@@ -2,13 +2,19 @@
 % Please edit documentation in R/setup.R
 \name{use_travis_deploy}
 \alias{use_travis_deploy}
-\title{Use travis deploy}
+\title{Setup deployment for Travis CI}
 \usage{
-use_travis_deploy(pkg = ".")
+use_travis_deploy(path = ".")
 }
 \arguments{
-\item{pkg}{Package description, must be path to root of source package.}
+\item{path}{\code{[string]}\cr
+The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 }
 \description{
-Use travis deploy
+Creates a public-private key pair,
+adds the public key to the GitHub repository via \code{\link[=github_add_key]{github_add_key()}},
+and stores the private key as an encrypted environment variable in Travis CI
+via \code{\link[=travis_set_var]{travis_set_var()}}.
+The \pkg{tic} companion package contains facilities for installing such a key
+during a Travis CI build.
 }

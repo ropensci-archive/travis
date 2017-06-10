@@ -1,3 +1,12 @@
+#' Travis CI variables
+#'
+#' @description
+#' Functions around public and private variables available in Travis CI builds.
+#'
+#' `travis_get_vars()` calls the "/settings/env_vars" API.
+#'
+#' @inheritParams travis_set_pat
+#'
 #' @export
 travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
                             repo_id = travis_repo_id(repo, token)) {
@@ -11,7 +20,17 @@ travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
   httr::content(req)[[1L]]
 }
 
+#' @description
+#' `travis_get_var_id()` retrieves the ID for a variable name, or `NULL`.
+#' If multiple variables exist by that name, it returns the ID of the last
+#' (with a warning),
+#' because this is what seems to be used in Travis CI builds in such a case.
+#'
+#' @param name `[string]`\cr
+#'   The name of the variable.
+#'
 #' @export
+#' @rdname travis_get_vars
 travis_get_var_id <- function(name, repo = github_repo(),
                               token = travis_token(repo),
                               repo_id = travis_repo_id(repo, token)) {
@@ -33,8 +52,18 @@ travis_get_var_id <- function(name, repo = github_repo(),
   vars[[var_idx]]$id
 }
 
+#' @description
+#' `travis_set_var()` creates or updates a variable.
+#' If multiple variables exist by that name, it updates the last (with a warning),
+#' because this is what seems to be used in Travis CI builds in such a case.
+#'
+#' @param value `[string]`\cr
+#'   The value for the new or updated variable.
+#' @param public `[flag]`\cr
+#'   Should the variable be public or private?
+#'
 #' @export
-#' @rdname travis-package
+#' @rdname travis_get_vars
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo),
                            repo_id = travis_repo_id(repo, token),
@@ -52,8 +81,14 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
   }
 }
 
+#' @description
+#' `travis_delete_var()` deletes a variable.
+#'
+#' @param id `[string]`\cr
+#'   The ID of the variable, by default obtained from `travis_get_var_id()`.
+#'
 #' @export
-#' @rdname travis-package
+#' @rdname travis_get_vars
 travis_delete_var <- function(name, repo = github_repo(),
                               token = travis_token(repo),
                               repo_id = travis_repo_id(repo, token),
