@@ -1,7 +1,7 @@
 #' @export
 travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
                             repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
   req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id),
                     token = token)
   httr::stop_for_status(
@@ -39,7 +39,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo),
                            repo_id = travis_repo_id(repo, token),
                            quiet = FALSE) {
-  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
 
   var_id <- travis_get_var_id(
     name = name, repo = repo, token = token, repo_id = repo_id
@@ -59,7 +59,7 @@ travis_delete_var <- function(name, repo = github_repo(),
                               repo_id = travis_repo_id(repo, token),
                               id = travis_get_var_id(name, repo = repo, token = token, repo_id = repo_id),
                               quiet = FALSE) {
-  if (!is.numeric(repo_id)) stopc("repo_id must be a number")
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
 
   if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")
 

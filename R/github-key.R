@@ -9,7 +9,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
-    stopc("Argument 'pubkey' is not an RSA/EC public key")
+    stopc("`pubkey` must be an RSA/EC public key")
 
   if (info$owner$type == "User") {
     if (is.null(gh_token)) {
