@@ -117,13 +117,6 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
   if (!inherits(pubkey, "pubkey"))
     stopc("Argument 'pubkey' is not an RSA/EC public key")
 
-  # add public key to repo deploy keys on GitHub
-  key_data <- list(
-    "title" = paste("travis", Sys.time()),
-    "key" = openssl::write_ssh(pubkey),
-    "read_only" = FALSE
-  )
-
   if (info$owner$type == "User") {
     if (is.null(gh_token)) {
       gh_token <- auth_github(scopes = "public_repo")
@@ -135,6 +128,13 @@ github_add_key <- function(pubkey, path = ".", info = github_info(path),
 
     check_write_org(info$owner$login, gh_token)
   }
+
+  # add public key to repo deploy keys on GitHub
+  key_data <- list(
+    "title" = paste("travis", Sys.time()),
+    "key" = openssl::write_ssh(pubkey),
+    "read_only" = FALSE
+  )
 
   req <- GITHUB_POST(
     sprintf("/repos/%s/keys", repo),
