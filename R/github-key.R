@@ -8,13 +8,10 @@
 #'   openssl public key, see [openssl::read_pubkey()].
 #' @param title `[string]`\cr
 #'   The title for the new key, default: "travis+tic".
-#' @param path `[string]`\cr
-#'   The path to a GitHub-enabled Git repository (or a subdirectory thereof).
-#' @param info `[list]`\cr
-#'   GitHub information for the repository, by default obtained through
-#'   [github_info()].
 #' @param repo `[string]`\cr
 #'   The GitHub repo slug, by default obtained through [github_repo()].
+#' @inheritParams github_info
+#' @inheritParams github_repo
 #' @inheritParams github_create_repo
 #'
 #' @family GitHub functions

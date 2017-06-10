@@ -19,19 +19,20 @@ repo directory.}
 The organization of the new repository on GitHub, default: user namespace,
 no organization.}
 
-\item{private}{\code{[logical(1)]}\cr
+\item{private}{\code{[flag]}\cr
 Must be \code{FALSE}, creation of private repositories not yet supported.}
 
-\item{gh_token}{\code{[logical(1)]}\cr
+\item{gh_token}{\code{[Token2.0]}\cr
 GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
 the "public_repo" and (if an organization repo) "write:org" scopes.}
 
-\item{quiet}{\code{[logical(1)]}\cr
+\item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
 }
 \description{
 Creates a GitHub repository for an existing Git repository.
 }
 \seealso{
-Other GitHub functions: \code{\link{github_add_key}}
+Other GitHub functions: \code{\link{github_add_key}},
+  \code{\link{github_info}}
 }

@@ -25,11 +25,11 @@ GitHub information for the repository, by default obtained through
 \item{repo}{\code{[string]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
 
-\item{gh_token}{\code{[logical(1)]}\cr
+\item{gh_token}{\code{[Token2.0]}\cr
 GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
 the "public_repo" and (if an organization repo) "write:org" scopes.}
 
-\item{quiet}{\code{[logical(1)]}\cr
+\item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
 }
 \description{
@@ -39,5 +39,6 @@ An existing key of the same name is dropped.
 \seealso{
 \code{\link[=github_create_repo]{github_create_repo()}}
 
-Other GitHub functions: \code{\link{github_create_repo}}
+Other GitHub functions: \code{\link{github_create_repo}},
+  \code{\link{github_info}}
 }

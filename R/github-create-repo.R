@@ -10,12 +10,12 @@
 #' @param org `[string]`\cr
 #'   The organization of the new repository on GitHub, default: user namespace,
 #'   no organization.
-#' @param private `[logical(1)]`\cr
+#' @param private `[flag]`\cr
 #'   Must be `FALSE`, creation of private repositories not yet supported.
-#' @param gh_token `[logical(1)]`\cr
+#' @param gh_token `[Token2.0]`\cr
 #'   GitHub authentication token, by default obtained from [auth_github()] with
 #'   the "public_repo" and (if an organization repo) "write:org" scopes.
-#' @param quiet `[logical(1)]`\cr
+#' @param quiet `[flag]`\cr
 #'   Set to `FALSE` to suppress success message.
 #'
 #' @family GitHub functions
