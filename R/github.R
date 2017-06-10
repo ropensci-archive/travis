@@ -190,7 +190,7 @@ github_create_pat <- function(path = ".", repo = github_repo(path), pat = NULL) 
     "Create a personal access token, make sure that you are signed in as the correct user. ",
     "The suggested description '", desc, "' has been copied to the clipboard. ",
     "If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked. ",
-    "Then, copy the new token to the clipboard, it will be detected and applied automatically.",
+    "Then, copy the new token to the clipboard, it will be detected and applied automatically",
     url = "https://github.com/settings/tokens/new"
   )
 
