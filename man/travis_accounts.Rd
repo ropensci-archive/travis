@@ -30,4 +30,6 @@ Return account, repositories, and user information.
 }
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
+
+Other Travis CI functions: \code{\link{travis_repo_info}}
 }

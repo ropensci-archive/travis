@@ -5,8 +5,7 @@
 #'
 #' `travis_accounts()` queries the "/accounts" API.
 #'
-#' @param token `[Token2.0]`\cr
-#'   A Travis CI token obtained from [travis_token()] or [auth_travis()].
+#' @inheritParams travis_repo_info
 #'
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
