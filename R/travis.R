@@ -149,7 +149,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
   if (!is.numeric(repo_id)) stopc("repo_id must be a number")
 
-  vars <- travis_get_vars(repo = repo, token = token, repo_id = repo_id)
+  vars <- travis_get_vars(token = token, repo_id = repo_id)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the
@@ -163,18 +163,17 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     var <- vars[[var_idx]]
     travis_patch_var(
       var$id, value, public = public,
-      repo = repo, token = token, repo_id = repo_id
+      token = token, repo_id = repo_id
     )
   } else {
     travis_post_var(
       name, value, public = public,
-      repo = repo, token = token, repo_id = repo_id
+      token = token, repo_id = repo_id
     )
   }
 }
 
-travis_post_var <- function(name, value, public = FALSE, repo = github_repo(),
-                            token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
+travis_post_var <- function(name, value, public = FALSE, token, repo_id) {
   var_data <- list(
     "env_var" = list(
       "name" = name,
@@ -191,8 +190,7 @@ travis_post_var <- function(name, value, public = FALSE, repo = github_repo(),
   invisible(httr::content(req)[[1]])
 }
 
-travis_patch_var <- function(id, value, public = FALSE, repo = github_repo(),
-                             token = travis_token(repo), repo_id = travis_repo_id(repo, token)) {
+travis_patch_var <- function(id, value, public = FALSE, token, repo_id) {
   var_data <- list(
     "env_var" = list(
       "value" = value,
