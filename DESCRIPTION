@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
-Title: Set Up Travis for R package
-Version: 0.2-5
+Title: Set Up Travis for R Package Testing and Deployment
+Version: 0.2-6
 Authors@R: c(
     person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
@@ -15,6 +15,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.2.0)
 Imports:
+    clipr,
     git2r,
     httr,
     memoise,
