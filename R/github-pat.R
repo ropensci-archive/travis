@@ -1,10 +1,24 @@
+#' Create a GitHub PAT
+#'
+#' Prompts the user to create a personal access token for the GitHub API
+#' related to the current repository, e.g., to work around rate limitations.
+#' First, the user is directed to the website where a PAT can be created.
+#' A suggestion for the PAT's title is copied to the clipboard.
+#' Then, the function waits until the user copies a string that resembles a PAT
+#' (i.e., 40 lowercase hexadecimal digits) to the clipboard.
+#' The clipboard is cleared right after obtaining the PAT.
+#'
+#' The relatively cumbersome workflow is due to the fact that
+#' creating a PAT requires basic authentication (username + password).
+#'
+#' @inheritParams github_add_key
+#'
+#' @family GitHub functions
+#'
 #' @export
-github_create_pat <- function(path = ".", repo = github_repo(path), pat = NULL) {
-  if (!is.null(pat)) {
-    return(pat)
-  }
+github_create_pat <- function(path = ".", repo = github_repo(path)) {
   if (!interactive()) {
-    stopc("`pat` must be set in non-interactive mode")
+    stopc("Cannot use `github_create_pat()` in non-interactive mode")
   }
 
   desc <- paste0("travis+tic for ", repo)
@@ -28,7 +42,12 @@ wait_for_clipboard_pat <- function() {
     Sys.sleep(0.1)
   }
   message("Detected PAT, clearing clipboard.")
-  clipr::write_clip("")
+  tryCatch(
+    clipr::write_clip(""),
+    error = function(e) {
+      warningc("Error clearing clipboard: ", conditionMessage(e))
+    }
+  )
   pat
 }
 

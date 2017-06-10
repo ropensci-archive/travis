@@ -39,6 +39,7 @@ An existing key of the same name is dropped.
 \seealso{
 \code{\link[=github_create_repo]{github_create_repo()}}
 
-Other GitHub functions: \code{\link{github_create_repo}},
+Other GitHub functions: \code{\link{github_create_pat}},
+  \code{\link{github_create_repo}},
   \code{\link{github_info}}
 }

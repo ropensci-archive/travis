@@ -34,5 +34,6 @@ Creates a GitHub repository for an existing Git repository.
 }
 \seealso{
 Other GitHub functions: \code{\link{github_add_key}},
+  \code{\link{github_create_pat}},
   \code{\link{github_info}}
 }

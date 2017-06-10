@@ -34,5 +34,6 @@ happened during detection of GitHub status.
 }
 \seealso{
 Other GitHub functions: \code{\link{github_add_key}},
+  \code{\link{github_create_pat}},
   \code{\link{github_create_repo}}
 }
