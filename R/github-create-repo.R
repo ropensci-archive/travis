@@ -1,6 +1,26 @@
+#' Create a repository on GitHub
+#'
+#' Creates a GitHub repository for an existing Git repository.
+#'
+#' @param path `[string]`\cr
+#'   The path to the existing Git repository.
+#' @param name `[string]`\cr
+#'   The name of the new repository on GitHub, default: basename of the
+#'   repo directory.
+#' @param org `[string]`\cr
+#'   The organization of the new repository on GitHub, default: user namespace,
+#'   no organization.
+#' @param private `[logical(1)]`\cr
+#'   Must be `FALSE`, creation of private repositories not yet supported.
+#' @param gh_token `[logical(1)]`\cr
+#'   GitHub authentication token, by default obtained from [auth_github()] with
+#'   the "public_repo" and (if org is not `NULL`) "write:org" scopes.
+#' @param quiet `[logical(1)]`\cr
+#'   Set to `FALSE` to suppress success message.
+#'
 #' @export
-github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FALSE,
-                               gh_token = NULL, quiet = FALSE) {
+github_create_repo <- function(path = ".", name = NULL, org = NULL,
+                               private = FALSE, gh_token = NULL, quiet = FALSE) {
   if (private) {
     stopc("Creating private repositories not supported.")
   }
