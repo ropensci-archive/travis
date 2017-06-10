@@ -10,6 +10,7 @@
 #' @inheritParams travis_repo_info
 #' @param repo_id `[string]`\cr
 #'   The repo ID, obtained from [travis_repo_id()] by default.
+#' @inheritParams github_create_repo
 #'
 #' @family Travis CI functions
 #'
@@ -17,9 +18,12 @@
 travis_set_pat <- function(pat = NULL,
                            repo = github_repo(),
                            token = travis_token(repo),
-                           repo_id = travis_repo_id(repo, token)) {
+                           repo_id = travis_repo_id(repo, token),
+                           quiet = FALSE) {
   if (is.null(pat)) {
     pat <- github_create_pat(repo = repo)
   }
-  travis_set_var("GITHUB_PAT", pat, public = FALSE, token = token, repo_id = repo_id)
+  travis_set_var(
+    "GITHUB_PAT", pat, public = FALSE,
+    token = token, repo_id = repo_id, quiet = quiet)
 }

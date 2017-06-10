@@ -5,7 +5,8 @@
 \title{Set the GITHUB_PAT variable on Travis}
 \usage{
 travis_set_pat(pat = NULL, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token))
+  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
+  quiet = FALSE)
 }
 \arguments{
 \item{pat}{\code{[string]}\cr
@@ -19,6 +20,9 @@ A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \
 
 \item{repo_id}{\code{[string]}\cr
 The repo ID, obtained from \code{\link[=travis_repo_id]{travis_repo_id()}} by default.}
+
+\item{quiet}{\code{[flag]}\cr
+Set to \code{FALSE} to suppress success message.}
 }
 \description{
 Assigns a GitHub PAT to the \code{GITHUB_PAT} private variable on Travis CI
