@@ -4,7 +4,7 @@
 \name{travis-package}
 \alias{travis}
 \alias{travis-package}
-\title{travis: Set Up Travis for R package}
+\title{travis: Set Up Travis for R Package Testing and Deployment}
 \description{
 Tools for interacting with the Travis and 'GitHub' APIs for setting up
 continuous integration for R packages.
