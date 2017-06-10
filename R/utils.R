@@ -37,3 +37,28 @@ open_browser_window <- function(url) {
 will_open_browser_window <- function() {
   interactive()
 }
+
+check_status <- function(req, message, quiet = TRUE, accept_code = integer()) {
+  if (!(httr::status_code(req) %in% accept_code)) {
+    httr::stop_for_status(req, remove_brackets(message))
+  }
+  if (!quiet) message("Finished ", keep_brackets(message), ".")
+}
+
+remove_brackets <- function(message) {
+  # strip (, unless there is space in between
+  message <- gsub("\\{([^\\} ]+)\\}", "\\1", message, perl = TRUE)
+  # remove [ and its content, unless there is space in between
+  message <- gsub("\\[[^\\] ]+\\]\\s*", "", message, perl = TRUE)
+
+  message
+}
+
+keep_brackets <- function(message) {
+  # strip [, unless there is space in between
+  message <- gsub("\\[([^\\] ]+)\\]", "\\1", message, perl = TRUE)
+  # remove ( and its content, unless there is space in between
+  message <- gsub("\\{[^\\} ]+\\}", "", message, perl = TRUE)
+
+  message
+}

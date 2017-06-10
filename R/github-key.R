@@ -4,7 +4,8 @@
 #' @param gh_token GitHub token, as returned from [auth_github()]
 github_add_key <- function(pubkey, title = "travis+tic",
                            path = ".", info = github_info(path),
-                           repo = github_repo(info = info), gh_token = NULL) {
+                           repo = github_repo(info = info), gh_token = NULL,
+                           quiet = FALSE) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
@@ -25,9 +26,9 @@ github_add_key <- function(pubkey, title = "travis+tic",
   key_data <- create_key_data(pubkey, title)
 
   # remove existing key
-  remove_key_if_exists(key_data, repo, gh_token)
+  remove_key_if_exists(key_data, repo, gh_token, quiet)
   # add public key to repo deploy keys on GitHub
-  add_key(key_data, repo, gh_token)
+  add_key(key_data, repo, gh_token, quiet)
 }
 
 create_key_data <- function(pubkey, title) {
@@ -38,7 +39,7 @@ create_key_data <- function(pubkey, title) {
   )
 }
 
-remove_key_if_exists <- function(key_data, repo, gh_token) {
+remove_key_if_exists <- function(key_data, repo, gh_token, quiet) {
   req <- GITHUB_GET(
     sprintf("/repos/%s/keys", repo),
     token = gh_token
@@ -57,16 +58,16 @@ remove_key_if_exists <- function(key_data, repo, gh_token) {
     sprintf("/repos/%s/keys/%s", repo, keys[[our_title_idx]]$id),
     token = gh_token
   )
-  httr::stop_for_status(req, sprintf("delete existing deploy key on GitHub for repo %s", repo))
+  check_status(req, sprintf("delet[ing]{e} existing deploy key on GitHub for repo %s", repo), quiet)
 }
 
-add_key <- function(key_data, repo, gh_token) {
+add_key <- function(key_data, repo, gh_token, quiet) {
   req <- GITHUB_POST(
     sprintf("/repos/%s/keys", repo),
     body = key_data,
     token = gh_token
   )
 
-  httr::stop_for_status(req, sprintf("add deploy keys on GitHub for repo %s", repo))
+  check_status(req, sprintf("add[ing] deploy keys on GitHub for repo %s", repo), quiet)
   invisible(httr::content(req))
 }

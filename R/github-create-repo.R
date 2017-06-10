@@ -1,6 +1,6 @@
 #' @export
 github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FALSE,
-                               gh_token = NULL) {
+                               gh_token = NULL, quiet = FALSE) {
   if (private) {
     stopc("Creating private repositories not supported.")
   }
@@ -28,6 +28,6 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL, private = FA
   }
 
   req <- GITHUB_POST(url, body = data, token = gh_token)
-  httr::stop_for_status(req, sprintf("create repo %s", name))
+  check_status(req, sprintf("create[d] GitHub repository %s", name), quiet)
   invisible(httr::content(req))
 }
