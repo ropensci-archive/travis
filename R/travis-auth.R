@@ -1,14 +1,14 @@
-auth_travis_ <- function(gtoken = NULL) {
+auth_travis_ <- function(gh_token = NULL) {
   message("Authenticating with Travis")
-  if (is.null(gtoken)) {
-    # Do not allow persisting this token, it needs to be fresh
-    gtoken <- auth_github_(
+  if (is.null(gh_token)) {
+    # Do not allow caching this token, it needs to be fresh
+    gh_token <- auth_github_(
       "read:org", "user:email", "repo_deployment", "repo:status",
       "read:repo_hook", "write:repo_hook"
     )
   }
   auth_travis_data <- list(
-    "github_token" = gtoken$credentials$access_token
+    "github_token" = gh_token$credentials$access_token
   )
   auth_travis <- TRAVIS_POST(
     url = "/auth/github",
@@ -29,6 +29,11 @@ auth_travis_ <- function(gtoken = NULL) {
 #' In most scenarios, these functions will be called implicitly by other functions.
 #'
 #' `auth_travis()` only performs the authentication with Travis CI.
+#'
+#' @param gh_token `[Token2.0]`\cr
+#'   A GitHub token, by default obtained from [auth_github()] using the
+#'   "read:org", "user:email", "repo_deployment", "repo:status",
+#'   "read:repo_hook", and "write:repo_hook" scopes.
 #'
 #' @export
 auth_travis <- memoise::memoise(auth_travis_)

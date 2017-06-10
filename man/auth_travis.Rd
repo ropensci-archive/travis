@@ -5,11 +5,16 @@
 \alias{travis_token}
 \title{Authenticate with Travis CI}
 \usage{
-auth_travis(gtoken = NULL)
+auth_travis(gh_token = NULL)
 
 travis_token(repo = NULL)
 }
 \arguments{
+\item{gh_token}{\code{[Token2.0]}\cr
+A GitHub token, by default obtained from \code{\link[=auth_github]{auth_github()}} using the
+"read:org", "user:email", "repo_deployment", "repo:status",
+"read:repo_hook", and "write:repo_hook" scopes.}
+
 \item{repo}{\code{[string]}\cr
 The GitHub repo slug in the format "<user|org>/<repo>".}
 }
