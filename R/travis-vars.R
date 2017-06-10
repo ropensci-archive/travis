@@ -54,17 +54,24 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 
 #' @export
 #' @rdname travis-package
-travis_delete_var <- function(id, repo = github_repo(),
+travis_delete_var <- function(name, repo = github_repo(),
                               token = travis_token(repo),
                               repo_id = travis_repo_id(repo, token),
+                              id = travis_get_var_id(name, repo = repo, token = token, repo_id = repo_id),
                               quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("repo_id must be a number")
+
+  if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")
+
   req <- TRAVIS_DELETE(paste0("/settings/env_vars/", id),
                        query = list(repository_id = repo_id),
                        token = token)
-  check_for_status(
+  check_status(
     req,
-    sprintf("delet[ing]{e} environment variable id=%s on Travis CI", id),
+    sprintf(
+      "delet[ing]{e} environment variable %s (id: %s) from %s (id: %s) on Travis CI",
+      name, id, repo, repo_id
+    ),
     quiet
   )
   invisible(httr::content(req)[[1]])
