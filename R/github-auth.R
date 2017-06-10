@@ -12,5 +12,14 @@ auth_github_ <- function(...) {
   )
 }
 
+#' Authenticate with GitHub
+#'
+#' Creates an OAuth token for the requested scopes.
+#' For each combination of scopes, the token will be obtained only once in each
+#' R session, but it will never be cached on the file system.
+#'
+#' @param ... `[character]`\cr
+#'   One or more OAuth scopes for GitHub.
+#'
 #' @export
 auth_github <- memoise::memoise(auth_github_)
