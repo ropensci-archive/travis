@@ -1,14 +1,19 @@
-#' Use travis deploy
+#' Setup deployment for Travis CI
 #'
-#' @param pkg Package description, must be path to root of source package.
+#' Creates a public-private key pair,
+#' adds the public key to the GitHub repository via [github_add_key()],
+#' and stores the private key as an encrypted environment variable in Travis CI
+#' via [travis_set_var()].
+#' The \pkg{tic} companion package contains facilities for installing such a key
+#' during a Travis CI build.
+#'
+#' @inheritParams github_add_key
 #'
 #' @export
-use_travis_deploy <- function(pkg = ".") {
-
-  pkg <- normalizePath(pkg, "/")
+use_travis_deploy <- function(path = ".") {
 
   # authenticate on github and travis and set up keys/vars
-  setup_keys(pkg)
+  setup_keys(path)
 
   url_message("Next steps:\n",
               "* If needed, enable Travis CI with travis::travis_enable()\n",
