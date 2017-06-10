@@ -40,9 +40,18 @@ continuous integration for R packages.
 Use \code{\link[=github_repo]{github_repo()}} to get the name of the current repository
 as determined from the \code{origin} remote. The \code{\link[=github_info]{github_info()}}
 function queries basic information on your repository.
-The \code{\link[=travis_set_var]{travis_set_var()}} and \code{\link[=github_add_key]{github_add_key()}} functions
-interact with the GitHub and Travis configuration of your repository,
-and ask for permission the first time you call them.
+The following functions simplify integrating R package testing and deployment
+with GitHub and Travis CI:
+\itemize{
+\item \code{\link[=github_create_repo]{github_create_repo()}} creates a repository on GitHub,
+\item \code{\link[=travis_enable]{travis_enable()}} enables Travis CI for your repository,
+\item \code{\link[=travis_set_pat]{travis_set_pat()}} installs a \code{GITHUB_PAT} environment variable on Travis
+to work around rate limitations for installing packages from GitHub,
+\item \code{\link[=use_travis_deploy]{use_travis_deploy()}} installs a public deploy key on GitHub and the
+corresponding private key on Travis CI to simplify deployments to GitHub
+from Travis CI.
+All these functions ask for permission the first time you call them.
+}
 }
 \author{
 \strong{Maintainer}: Kirill Müller \email{krlmlr+r@mailbox.org}
