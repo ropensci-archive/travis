@@ -50,6 +50,6 @@ github_create_repo <- function(path = ".", name = NULL, org = NULL,
   }
 
   req <- GITHUB_POST(url, body = data, token = gh_token)
-  check_status(req, sprintf("create[d] GitHub repository %s", name), quiet)
+  check_status(req, sprintf("creat[ing]{e} GitHub repository %s", name), quiet)
   invisible(httr::content(req))
 }
