@@ -127,7 +127,7 @@ travis_post_var <- function(name, value, public, token, repo, repo_id, quiet) {
   check_status(
     req,
     sprintf(
-      "add[ing] %s environment variable %s to %s (id: %s) on Travis CI",
+      "ad[ding]{d} %s environment variable %s to %s (id: %s) on Travis CI",
       if (public) "public" else "private", name, repo, repo_id
     ),
     quiet

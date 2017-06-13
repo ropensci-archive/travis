@@ -82,6 +82,6 @@ add_key <- function(key_data, repo, gh_token, quiet) {
     token = gh_token
   )
 
-  check_status(req, sprintf("add[ing] deploy keys on GitHub for repo %s", repo), quiet)
+  check_status(req, sprintf("ad[ding]{d} deploy keys on GitHub for repo %s", repo), quiet)
   invisible(httr::content(req))
 }
