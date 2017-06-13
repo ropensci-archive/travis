@@ -1,3 +1,8 @@
+## travis 0.2-7 (2017-06-13)
+
+- New `new_github()` and `use_github()` (#59).
+
+
 ## travis 0.2-6 (2017-06-10)
 
 - Document all functions, `R CMD check` passes without warnings or notes (#50).
