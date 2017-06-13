@@ -126,6 +126,9 @@ ask_push <- function() {
 #' `new_github()` creates an empty Git repository with a single commit and
 #' a corresponding GitHub repository, and always pushes to GitHub.
 #'
+#' @param user `[person|string]`\cr
+#'   An object of class [person], or a string that returns such an object
+#'   when evaluated.
 #' @export
 #' @rdname github_create_repo
 new_github <- function(path, user = getOption("devtools.desc.author"),

@@ -41,6 +41,10 @@ The path to the existing Git repository.}
 Should the contents of the existing repository be pushed to GitHub?
 Defaults to \code{FALSE} for non-interactive sessions, and asks the user
 in interactive sessions.}
+
+\item{user}{\code{[person|string]}\cr
+An object of class \link{person}, or a string that returns such an object
+when evaluated.}
 }
 \description{
 Creates a GitHub repository.
