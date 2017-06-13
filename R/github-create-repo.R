@@ -108,14 +108,14 @@ ask_remote_url <- function(...) {
   urls <- c(...)
   if (!interactive()) return(urls[[1]])
 
-  res <- menu(urls, title = "Choose remote URL")
+  res <- utils::menu(urls, title = "Choose remote URL")
   urls[[res]]
 }
 
 ask_push <- function() {
   if (!interactive()) return(FALSE)
 
-  menu(c(
+  utils::menu(c(
     "Push to GitHub, contents of your repository will be made public",
     "Do not push to GitHub"
   )) == 1
