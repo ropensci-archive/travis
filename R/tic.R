@@ -95,5 +95,5 @@ detect_repo_type <- function() {
 }
 
 needs_deploy <- function(repo_type) {
-  TRUE
+  repo_type != "unknown"
 }
