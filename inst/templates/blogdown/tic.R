@@ -5,7 +5,7 @@ get_stage("install") %>%
   add_step(step_run_code(remotes::install_deps(dependencies = TRUE)))
 
 get_stage("deploy") %>%
-  add_step(step_run_code(bookdown::render_book('index.Rmd', 'bookdown::gitbook')))
+  add_step(step_run_code(blogdown::('index.Rmd', 'bookdown::gitbook')))
 
 if (Sys.getenv("id_rsa") != "") {
   # pkgdown documentation can be built optionally. Other example criteria:
@@ -19,5 +19,5 @@ if (Sys.getenv("id_rsa") != "") {
     add_step(step_test_ssh())
 
   get_stage("deploy") %>%
-    add_step(step_push_deploy(path = "_book", branch = "gh-pages"))
+    add_step(step_push_deploy(path = "blogdown_source/public", branch = "gh-pages"))
 }
