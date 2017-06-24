@@ -71,7 +71,7 @@ template_file <- function(...) {
 }
 
 safe_filecopy <- function(source, target = basename(source)) {
-  stopifnot(file.exists(source))
+  eval(bquote(stopifnot(file.exists(.(source)))))
   check_overwrite(target)
   file.copy(source, target, overwrite = TRUE)
 }
