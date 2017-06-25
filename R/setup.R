@@ -13,16 +13,6 @@
 use_travis_deploy <- function(path = ".") {
 
   # authenticate on github and travis and set up keys/vars
-  setup_keys(path)
-
-  url_message("Next steps:\n",
-              "* If needed, enable Travis CI with travis::travis_enable()\n",
-              "* Configure Travis to use tic as described in the tic README",
-              url = "https://github.com/ropenscilabs/tic#example-travis-configuration")
-
-}
-
-setup_keys <- function(path) {
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
