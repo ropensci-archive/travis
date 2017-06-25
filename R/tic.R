@@ -62,12 +62,13 @@ use_tic_r <- function(repo_type) {
 }
 
 use_template <- function(..., target = basename(file.path(...))) {
-  safe_filecopy(template_file(...), target)
+  source <- template_file(...)
+  safe_filecopy(source, target)
   usethis::use_build_ignore(target)
 }
 
 template_file <- function(...) {
-  system.file(..., package = utils::packageName())
+  system.file("templates", ..., package = utils::packageName(), mustWork = TRUE)
 }
 
 safe_filecopy <- function(source, target = basename(source)) {
