@@ -27,12 +27,6 @@ use_travis_deploy <- function(path = ".") {
 
   add_key <- github_add_key(pub_key, info = info, repo = repo)
 
-  message(
-    "Successfully added public deploy key '", add_key$title, "' to GitHub for ", repo, ". ",
-    "You should receive a confirmation e-mail from GitHub. ",
-    "Delete the key in the repository's settings when you no longer need it."
-  )
-
   travis_set_var("id_rsa", private_key, public = FALSE, repo = repo)
 
   message("Successfully added private deploy key to Travis CI for ", repo, ".")

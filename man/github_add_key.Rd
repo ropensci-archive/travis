@@ -5,8 +5,7 @@
 \title{Add a deploy key to GitHub}
 \usage{
 github_add_key(pubkey, title = "travis+tic", path = ".",
-  info = github_info(path), repo = github_repo(info = info),
-  gh_token = NULL, quiet = FALSE)
+  info = github_info(path), gh_token = NULL, quiet = FALSE)
 }
 \arguments{
 \item{pubkey}{\code{[pubkey]}\cr
@@ -21,9 +20,6 @@ The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 \item{info}{\code{[list]}\cr
 GitHub information for the repository, by default obtained through
 \code{\link[=github_info]{github_info()}}.}
-
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
 
 \item{gh_token}{\code{[Token2.0]}\cr
 GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with

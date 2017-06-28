@@ -18,8 +18,7 @@
 #' @seealso [github_create_repo()]
 github_add_key <- function(pubkey, title = "travis+tic",
                            path = ".", info = github_info(path),
-                           repo = github_repo(info = info), gh_token = NULL,
-                           quiet = FALSE) {
+                           gh_token = NULL, quiet = FALSE) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey
   if (!inherits(pubkey, "pubkey"))
@@ -42,7 +41,16 @@ github_add_key <- function(pubkey, title = "travis+tic",
   # remove existing key
   remove_key_if_exists(key_data, repo, gh_token, quiet)
   # add public key to repo deploy keys on GitHub
-  add_key(key_data, repo, gh_token, quiet)
+  ret <- add_key(key_data, repo, gh_token, quiet)
+
+  repo <- github_repo(info = info)
+  message(
+    "Successfully added public deploy key '", title, "' to GitHub for ", repo, ". ",
+    "You should receive a confirmation e-mail from GitHub. ",
+    "Delete the key in the repository's settings when you no longer need it."
+  )
+
+  invisible(ret)
 }
 
 create_key_data <- function(pubkey, title) {
