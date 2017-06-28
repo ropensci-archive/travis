@@ -3,33 +3,38 @@
 #' Creates a public-private key pair,
 #' adds the public key to the GitHub repository via [github_add_key()],
 #' and stores the private key as an encrypted environment variable in Travis CI
-#' via [travis_set_var()].
+#' via [travis_set_var()],
+#' possibly in a different repository.
 #' The \pkg{tic} companion package contains facilities for installing such a key
 #' during a Travis CI build.
 #'
 #' @inheritParams github_add_key
+#' @inheritParams travis_repo_info
+#' @param travis_repo `[string]`\cr
+#'   The Travis CI repository to add the private key to, default: `repo`
+#'   (the GitHub repo to which the public deploy key is added).
 #'
 #' @export
-use_travis_deploy <- function(path = ".") {
+use_travis_deploy <- function(path = ".", info = github_info(path),
+                              repo = github_repo(info), travis_repo = repo) {
 
   # authenticate on github and travis and set up keys/vars
 
   # generate deploy key pair
   key <- openssl::rsa_keygen()  # TOOD: num bits?
 
-  info <- github_info(path)
-  repo <- github_repo(info = info)
-
   # encrypt private key using tempkey and iv
-  # add to GitHub first, because this can fail because of missing org permissions
   pub_key <- get_public_key(key)
   private_key <- encode_private_key(key)
 
-  add_key <- github_add_key(pub_key, info = info, repo = repo)
+  # add to GitHub first, because this can fail because of missing org permissions
+  title <- paste0("travis+tic", if (repos == travis_repo) "" else (paste0(" for ", repo)))
+  github_add_key(pub_key, title = title, info = info)
 
-  travis_set_var("id_rsa", private_key, public = FALSE, repo = repo)
+  travis_set_var("id_rsa", private_key, public = FALSE, repo = travis_repo)
 
-  message("Successfully added private deploy key to Travis CI for ", repo, ".")
+  message("Successfully added private deploy key to ", travis_repo,
+          " as secure environment variable id_rsa to Travis CI.")
 
 }
 
