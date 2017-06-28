@@ -1,3 +1,13 @@
+## travis 0.2-8 (2017-06-29)
+
+- Blogdown projects with a `config.toml` file are detected.
+- `use_tic()` prints message when adding files from a template.
+- `use_tic()` creates an `appveyor.yml` only for package projects.
+- New `info`, `repo` and `travis_repo` arguments to `use_travis_deploy()` for creating keys for other repos, e.g., to auto-deploy a drat.
+- Remove `repos` argument from `github_add_key()`, which now returns the "httr" request object.
+- New `use_tic()` (#60).
+
+
 ## travis 0.2-7 (2017-06-13)
 
 - New `new_github()` and `use_github()` (#59).
