@@ -28,7 +28,7 @@ use_travis_deploy <- function(path = ".", info = github_info(path),
   private_key <- encode_private_key(key)
 
   # add to GitHub first, because this can fail because of missing org permissions
-  title <- paste0("travis+tic", if (repos == travis_repo) "" else (paste0(" for ", repo)))
+  title <- paste0("travis+tic", if (repo == travis_repo) "" else (paste0(" for ", repo)))
   github_add_key(pub_key, title = title, info = info)
 
   travis_set_var("id_rsa", private_key, public = FALSE, repo = travis_repo)
