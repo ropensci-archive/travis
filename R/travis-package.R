@@ -12,4 +12,5 @@
 #'   corresponding private key on Travis CI to simplify deployments to GitHub
 #'   from Travis CI.
 #' All these functions ask for permission the first time you call them.
+#' @importFrom memoise memoise
 "_PACKAGE"
