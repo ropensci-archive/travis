@@ -37,13 +37,13 @@ github_add_key <- function(pubkey, title = "travis+tic",
   }
 
   key_data <- create_key_data(pubkey, title)
+  repo <- github_repo(info = info)
 
   # remove existing key
   remove_key_if_exists(key_data, repo, gh_token, quiet)
   # add public key to repo deploy keys on GitHub
   ret <- add_key(key_data, repo, gh_token, quiet)
 
-  repo <- github_repo(info = info)
   message(
     "Successfully added public deploy key '", title, "' to GitHub for ", repo, ". ",
     "You should receive a confirmation e-mail from GitHub. ",

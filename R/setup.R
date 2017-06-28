@@ -16,7 +16,7 @@
 #'
 #' @export
 use_travis_deploy <- function(path = ".", info = github_info(path),
-                              repo = github_repo(info), travis_repo = repo) {
+                              repo = github_repo(info = info), travis_repo = repo) {
 
   # authenticate on github and travis and set up keys/vars
 
