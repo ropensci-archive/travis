@@ -2,7 +2,7 @@
 
 
 The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
-Apart from automating away a few button flips, it also provides an easy method to set up push access which can be then triggered (on Travis) by the companion package [tic](https://github.com/krlmlr/tic) (currently work in progress).
+Apart from automating away a few button flips, it also provides an easy method to set up push access which can be then triggered (on Travis) by the companion package [tic](https://github.com/krlmlr/tic).
 
 
 ## Installation
