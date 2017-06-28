@@ -20,7 +20,8 @@ Imports:
     httr,
     memoise,
     openssl,
-    usethis
+    usethis,
+    withr
 Suggests:
     remotes,
     roxygen2,
