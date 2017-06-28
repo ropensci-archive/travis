@@ -17,7 +17,8 @@ The preparation consists of the following steps:
 \item Create a default \code{.travis.yml} file
 (overwrite after confirmation in interactive mode only)
 \item Create a default \code{appveyor.yml} file
-(overwrite after confirmation in interactive mode only)
+(depending on repo type, overwrite after confirmation
+in interactive mode only)
 \item Create a default \code{tic.R} file depending on the repo type
 (package, website, bookdown, ...)
 \item Enable deployment (if necessary, depending on repo type)
