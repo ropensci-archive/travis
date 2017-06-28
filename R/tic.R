@@ -17,12 +17,13 @@ use_tic <- function(path = ".", quiet = FALSE) {
     #'    (overwrite after confirmation in interactive mode only)
     use_travis_yml()
     #' 1. Create a default `appveyor.yml` file
-    #'    (overwrite after confirmation in interactive mode only)
-    use_appveyor_yml()
+    #'    (depending on repo type, overwrite after confirmation
+    #'    in interactive mode only)
+    repo_type <- detect_repo_type()
+    if (needs_appveyor(repo_type)) use_appveyor_yml()
 
     #' 1. Create a default `tic.R` file depending on the repo type
     #'    (package, website, bookdown, ...)
-    repo_type <- detect_repo_type()
     use_tic_r(repo_type)
 
     #' 1. Enable deployment (if necessary, depending on repo type)
@@ -93,6 +94,10 @@ detect_repo_type <- function() {
   if (file.exists("_site.yml")) return("site")
   if (file.exists("DESCRIPTION")) return("package")
   "unknown"
+}
+
+needs_appveyor <- function(repo_type) {
+  repo_type == "package"
 }
 
 needs_deploy <- function(repo_type) {
