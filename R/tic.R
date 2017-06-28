@@ -92,7 +92,7 @@ check_overwrite <- function(path) {
 }
 
 yesno <- function(...) {
-  menu(c("Yes", "No"), title = paste0(...)) == 1
+  utils::menu(c("Yes", "No"), title = paste0(...)) == 1
 }
 
 detect_repo_type <- function() {
