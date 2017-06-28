@@ -10,7 +10,7 @@ get_stage("script") %>%
 get_stage("after_success") %>%
   add_step(step_run_code(covr::codecov(quiet = FALSE)))
 
-if (ci()$is_tag() && Sys.getenv("BUILD_PKGDOWN") != "") {
+if (Sys.getenv("id_rsa") != "") {
   # pkgdown documentation can be built optionally. Other example criteria:
   # - `inherits(ci(), "TravisCI")`: Only for Travis CI
   # - `ci()$is_tag()`: Only for tags, not for branches
@@ -22,6 +22,7 @@ if (ci()$is_tag() && Sys.getenv("BUILD_PKGDOWN") != "") {
     add_step(step_test_ssh())
 
   get_stage("deploy") %>%
+    add_step(step_run_code(options(error = expression({traceback(1); q(status = 1)})))) %>%
     add_step(step_build_pkgdown()) %>%
     add_step(step_push_deploy(path = "docs", branch = "gh-pages"))
 }

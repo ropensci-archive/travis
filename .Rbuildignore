@@ -7,3 +7,4 @@
 ^\.remake$
 ^remake\.yml$
 ^tic\.R$
+^_pkgdown\.yml$

@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Set Up Travis for R Package Testing and Deployment
-Version: 0.2-7
+Version: 0.2-8
 Authors@R: c(
     person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
@@ -19,7 +19,8 @@ Imports:
     git2r,
     httr,
     memoise,
-    openssl
+    openssl,
+    usethis
 Suggests:
     remotes,
     roxygen2,
@@ -27,3 +28,5 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Encoding: UTF-8
+Remotes:
+    r-lib/usethis

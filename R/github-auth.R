@@ -4,8 +4,8 @@ auth_github_ <- function(...) {
 
   scopes <- c(...)
   app <- httr::oauth_app("github",
-                         key = "4bca480fa14e7fb785a1",
-                         secret = "70bb4da7bab3be6828808dd6ba37d19370b042d5")
+                         key = "a8495eadc51e6c64d598",
+                         secret = "8de4a03c5f978b77c3bd021b7c9528b794301168")
   httr::oauth2.0_token(
     httr::oauth_endpoints("github"), app,
     scope = scopes, cache = cache

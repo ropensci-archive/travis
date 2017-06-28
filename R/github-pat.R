@@ -12,6 +12,7 @@
 #' creating a PAT requires basic authentication (username + password).
 #'
 #' @inheritParams github_add_key
+#' @inheritParams travis_repo_info
 #'
 #' @family GitHub functions
 #'

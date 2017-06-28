@@ -4,17 +4,30 @@
 \alias{use_travis_deploy}
 \title{Setup deployment for Travis CI}
 \usage{
-use_travis_deploy(path = ".")
+use_travis_deploy(path = ".", info = github_info(path),
+  repo = github_repo(info = info), travis_repo = repo)
 }
 \arguments{
 \item{path}{\code{[string]}\cr
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
+
+\item{info}{\code{[list]}\cr
+GitHub information for the repository, by default obtained through
+\code{\link[=github_info]{github_info()}}.}
+
+\item{repo}{\code{[string]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+
+\item{travis_repo}{\code{[string]}\cr
+The Travis CI repository to add the private key to, default: \code{repo}
+(the GitHub repo to which the public deploy key is added).}
 }
 \description{
 Creates a public-private key pair,
 adds the public key to the GitHub repository via \code{\link[=github_add_key]{github_add_key()}},
 and stores the private key as an encrypted environment variable in Travis CI
-via \code{\link[=travis_set_var]{travis_set_var()}}.
+via \code{\link[=travis_set_var]{travis_set_var()}},
+possibly in a different repository.
 The \pkg{tic} companion package contains facilities for installing such a key
 during a Travis CI build.
 }
