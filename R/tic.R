@@ -2,6 +2,11 @@
 #'
 #' Prepares a repo for building and deploying supported by \pkg{tic}.
 #'
+#' @param path `[string]`\cr
+#'   The path to the repo to prepare.
+#' @param quiet `[flag]`\cr
+#'   Less verbose output? Default: `FALSE`.
+#'
 #' @export
 use_tic <- function(path = ".", quiet = FALSE) {
   #' @details
