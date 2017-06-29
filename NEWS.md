@@ -1,3 +1,8 @@
+## travis 0.2-9 (2017-06-29)
+
+- Update `tic.R` templates.
+
+
 ## travis 0.2-8 (2017-06-29)
 
 - Blogdown projects with a `config.toml` file are detected.
