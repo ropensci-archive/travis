@@ -6,6 +6,13 @@
 \usage{
 use_tic(path = ".", quiet = FALSE)
 }
+\arguments{
+\item{path}{\code{[string]}\cr
+The path to the repo to prepare.}
+
+\item{quiet}{\code{[flag]}\cr
+Less verbose output? Default: \code{FALSE}.}
+}
 \description{
 Prepares a repo for building and deploying supported by \pkg{tic}.
 }

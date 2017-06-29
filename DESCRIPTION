@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Set Up Travis for R Package Testing and Deployment
-Version: 0.2-8
+Version: 0.2-9
 Authors@R: c(
     person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
@@ -20,7 +20,8 @@ Imports:
     httr,
     memoise,
     openssl,
-    usethis
+    usethis,
+    withr
 Suggests:
     remotes,
     roxygen2,

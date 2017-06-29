@@ -13,14 +13,14 @@ create_id <- function(value = NULL) {
 
 create_github_user <- function(user, password) {
   clipr::write_clip(user)
-  menu(c("OK"), title = paste0("Please create GitHub user ", user, " with password ", password))
+  utils::menu(c("OK"), title = paste0("Please create GitHub user ", user, " with password ", password))
 
   user
 }
 
 create_github_org <- function(org) {
   clipr::write_clip(org)
-  menu(c("OK"), title = paste0("Please create GitHub organization ", org))
+  utils::menu(c("OK"), title = paste0("Please create GitHub organization ", org))
 
   org
 }

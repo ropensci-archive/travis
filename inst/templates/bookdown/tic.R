@@ -14,9 +14,7 @@ if (Sys.getenv("id_rsa") != "") {
   # - `Sys.getenv("BUILD_PKGDOWN") != ""`: If the env var "BUILD_PKGDOWN" is set
   # - `Sys.getenv("TRAVIS_EVENT_TYPE") == "cron"`: Only for Travis cron jobs
   get_stage("before_deploy") %>%
-    add_step(step_install_ssh_keys()) %>%
-    add_step(step_add_to_known_hosts("github.com")) %>%
-    add_step(step_test_ssh())
+    add_step(step_setup_ssh())
 
   get_stage("deploy") %>%
     add_step(step_push_deploy(path = "_book", branch = "gh-pages"))
