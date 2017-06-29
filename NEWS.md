@@ -1,3 +1,8 @@
+## travis 0.2-10 (2017-06-29)
+
+- Patch AppVeyor template.
+
+
 ## travis 0.2-9 (2017-06-29)
 
 - Update `tic.R` templates.
