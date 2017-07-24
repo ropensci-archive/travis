@@ -1,3 +1,9 @@
+## travis 0.2-11 (2017-07-24)
+
+- Tests for internal formatting functions.
+- New functions `travis_get_builds()`, `travis_restart_build()`, `travis_cancel_build()`, `travis_restart_job()`, `travis_cancel_job()`, and `travis_debug_job()`. The latter is the only way to restart a job in debug mode, after this has been enabled by Travis CI: https://docs.travis-ci.com/user/running-build-in-debug-mode/.
+
+
 ## travis 0.2-10 (2017-06-29)
 
 - Patch AppVeyor template.

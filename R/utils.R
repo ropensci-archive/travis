@@ -46,19 +46,19 @@ check_status <- function(req, message, quiet = TRUE, accept_code = integer()) {
 }
 
 remove_brackets <- function(message) {
-  # strip (, unless there is space in between
-  message <- gsub("\\{([^\\} ]+)\\}", "\\1", message, perl = TRUE)
+  # strip {, unless there is space in between
+  message <- gsub("\\{([^\\} ]*)\\}", "\\1", message, perl = TRUE)
   # remove [ and its content, unless there is space in between
-  message <- gsub("\\[[^\\] ]+\\]\\s*", "", message, perl = TRUE)
+  message <- gsub("\\[[^\\] ]*\\]", "", message, perl = TRUE)
 
   message
 }
 
 keep_brackets <- function(message) {
   # strip [, unless there is space in between
-  message <- gsub("\\[([^\\] ]+)\\]", "\\1", message, perl = TRUE)
+  message <- gsub("\\[([^\\] ]*)\\]", "\\1", message, perl = TRUE)
   # remove ( and its content, unless there is space in between
-  message <- gsub("\\{[^\\} ]+\\}", "", message, perl = TRUE)
+  message <- gsub("\\{[^\\} ]*\\}", "", message, perl = TRUE)
 
   message
 }
