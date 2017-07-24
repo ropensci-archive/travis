@@ -26,9 +26,8 @@ travis_restart_job(job_id, repo = github_repo(), token = travis_token(repo),
 travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
   repo_id = travis_repo_id(repo, token), quiet = FALSE)
 
-travis_debug_job(job_id, show_build_log = FALSE, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
-  quiet = FALSE)
+travis_debug_job(job_id, repo = github_repo(), token = travis_token(repo),
+  repo_id = travis_repo_id(repo, token), quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string]}\cr
