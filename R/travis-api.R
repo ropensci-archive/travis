@@ -26,6 +26,15 @@ TRAVIS_POST <- function(url, ..., token) {
              ...)
 }
 
+TRAVIS_POST3 <- function(url, ..., token) {
+  httr::POST(travis(url), encode = "json",
+             httr::user_agent("ropenscilabs/travis"),
+             httr::accept('application/vnd.travis-ci.2+json'),
+             httr::add_headers("Travis-API-Version" = 3),
+             if (!is.null(token)) httr::add_headers(Authorization = paste("token", token)),
+             ...)
+}
+
 TRAVIS_PATCH <- function(url, ..., token) {
   httr::PATCH(travis(url), encode = "json",
               httr::user_agent("ropenscilabs/travis"),
