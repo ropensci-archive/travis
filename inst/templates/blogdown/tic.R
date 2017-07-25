@@ -1,9 +1,8 @@
 get_stage("before_install") %>%
-  add_step(step_run_code(update.packages(ask = FALSE)))
+  add_code_step(update.packages(ask = FALSE))
 
 get_stage("install") %>%
-  add_step(step_run_code(remotes::install_deps(dependencies = TRUE))) %>%
-  add_step(step_run_code(blogdown::install_hugo()))
+  add_code_step(blogdown::install_hugo(), prepare_call = remotes::install_github("rstudio/blogdown"))
 
 if (Sys.getenv("id_rsa") != "") {
   # pkgdown documentation can be built optionally. Other example criteria:
@@ -15,6 +14,6 @@ if (Sys.getenv("id_rsa") != "") {
     add_step(step_setup_ssh())
 
   get_stage("deploy") %>%
-    add_step(step_run_code({blogdown::build_site()})) %>%
+    add_code_step(blogdown::build_site()) %>%
     add_step(step_push_deploy())
 }
