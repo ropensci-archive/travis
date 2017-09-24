@@ -112,15 +112,19 @@ travis_cancel_job <- function(job_id, repo = github_repo(), token = travis_token
 #' See the \href{https://docs.travis-ci.com/user/running-build-in-debug-mode/}{Travis CI documentation}
 #' for more details.
 #'
+#' @param log_output Show the debugging output in the publicly visible log? When
+#'   set to `TRUE`, refrain from issuing commands that might expose secrets.
 #' @export
 #' @rdname travis_get_builds
-travis_debug_job <- function(job_id, repo = github_repo(),
+travis_debug_job <- function(job_id,
+                             log_output = FALSE,
+                             repo = github_repo(),
                              token = travis_token(repo),
                              repo_id = travis_repo_id(repo, token), quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
 
   req <- TRAVIS_POST3(paste0("/job/", job_id, "/debug"),
-                      query = list(quiet = TRUE),
+                      query = list(quiet = !log_output),
                       token = token)
   check_status(
     req,

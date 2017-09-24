@@ -26,8 +26,9 @@ travis_restart_job(job_id, repo = github_repo(), token = travis_token(repo),
 travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
   repo_id = travis_repo_id(repo, token), quiet = FALSE)
 
-travis_debug_job(job_id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
+  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
+  quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string]}\cr
@@ -47,6 +48,9 @@ Set to \code{FALSE} to suppress success message.}
 
 \item{job_id}{\code{[integer(1)]}\cr
 The job ID, as obtained from \code{travis_get_builds()}.}
+
+\item{log_output}{Show the debugging output in the publicly visible log? When
+set to \code{TRUE}, refrain from issuing commands that might expose secrets.}
 }
 \description{
 Functions around completed or pending Travis CI builds and jobs.
