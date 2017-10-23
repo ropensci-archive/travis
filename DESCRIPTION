@@ -13,7 +13,7 @@ Description: Tools for interacting with the Travis and 'GitHub' APIs for setting
 License: GPL (>= 2)
 LazyData: TRUE
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.1.0)
 Imports:
     clipr,
     git2r,
