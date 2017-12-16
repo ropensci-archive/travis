@@ -6,7 +6,7 @@
 \alias{uses_github}
 \title{Github information}
 \usage{
-github_info(path = ".")
+github_info(path = ".", gh_token = NULL)
 
 github_repo(path = ".", info = github_info(path))
 
@@ -15,6 +15,10 @@ uses_github(path = ".")
 \arguments{
 \item{path}{\code{[string]}\cr
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
+
+\item{gh_token}{\code{[Token2.0]}\cr
+GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
+empty scope.}
 
 \item{info}{\code{[list]}\cr
 GitHub information for the repository, by default obtained through
