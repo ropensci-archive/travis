@@ -51,8 +51,7 @@ create_gh_repo <- function(user, password, repo, org = NULL) {
 do_create_gh_repo <- function(user, password, repo, org = NULL) {
   message("Current user: ", user)
   clipr::write_clip(user)
-  r <- travis::github_create_repo(repo@path, org = org)
-  res <- httr::content(r)
+  res <- travis::github_create_repo(basename(repo@path), org = org)
 
   remote_name <- "origin"
   git2r::remote_add(repo, remote_name, gsub("//", paste0("//", user, ":", password, "@"), res$clone_url))
