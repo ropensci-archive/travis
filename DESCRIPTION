@@ -1,6 +1,6 @@
 Package: travis
 Type: Package
-Title: Set Up Travis for R Package Testing and Deployment
+Title: Set Up 'Travis' for Testing and Deployment
 Version: 0.2-11
 Authors@R: c(
     person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
@@ -8,8 +8,9 @@ Authors@R: c(
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
     person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut"))
   )
-Description: Tools for interacting with the Travis and 'GitHub' APIs for setting up
-    continuous integration for R packages.
+Description: 
+    Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
+    continuous integration for R packages and other R-based projects.
 License: GPL (>= 2)
 LazyData: TRUE
 Depends:
