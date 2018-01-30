@@ -20,12 +20,12 @@ Imports:
     httr,
     memoise,
     openssl,
-    usethis,
     withr
 Suggests:
     remotes,
     roxygen2,
-    testthat
+    testthat,
+    usethis
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Encoding: UTF-8

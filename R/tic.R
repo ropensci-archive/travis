@@ -71,7 +71,7 @@ use_template <- function(..., target = basename(file.path(...))) {
   source <- template_file(...)
   safe_filecopy(source, target)
   message("Added ", target, " from template.")
-  usethis::use_build_ignore(target)
+  use_build_ignore(target)
 }
 
 template_file <- function(...) {
@@ -109,4 +109,12 @@ needs_appveyor <- function(repo_type) {
 
 needs_deploy <- function(repo_type) {
   repo_type != "unknown"
+}
+
+use_build_ignore <- function(path) {
+  if (requireNamespace("usethis", quietly = TRUE)) {
+    usethis::use_build_ignore(path)
+  } else {
+    message("Please add ", path, " to your .Rbuildignore file. Install the usethis package to do this automatically.")
+  }
 }
