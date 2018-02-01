@@ -1,3 +1,27 @@
 template:
   params:
     bootswatch: flatly # https://bootswatch.com/flatly/
+
+reference:
+- title: Setup
+  contents:
+  - travis-package
+  - use_tic
+  - use_travis_deploy
+  - travis_enable
+  - travis_set_pat
+  - travis_set_var
+  - starts_with("github_create_")
+- title: Travis API
+  contents:
+  - starts_with("travis_")
+  - ends_with("_travis")
+  - -travis_enable
+  - -travis_set_pat
+  - -travis_set_var
+- title: GitHub API
+  contents:
+  - travis-package
+  - starts_with("github_")
+  - -starts_with("github_create_")
+  - ends_with("_github")
