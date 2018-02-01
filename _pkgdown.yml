@@ -11,6 +11,7 @@ reference:
   - travis_enable
   - travis_set_pat
   - travis_set_var
+  - github_add_key
   - starts_with("github_create_")
 - title: Travis API
   contents:
@@ -23,5 +24,6 @@ reference:
   contents:
   - travis-package
   - starts_with("github_")
+  - github_add_key
   - -starts_with("github_create_")
   - ends_with("_github")
