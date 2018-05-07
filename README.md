@@ -66,3 +66,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     ```r
     use_travis_deploy()
     ```
+
+---
+
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

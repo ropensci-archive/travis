@@ -3,10 +3,11 @@ Type: Package
 Title: Set Up 'Travis' for Testing and Deployment
 Version: 0.2-11
 Authors@R: c(
-    person("Kirill", "Müller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre")),
+    person("Kirill", "M\u00fcller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1416-3412")),
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
     person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
-    person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut"))
+    person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut")),
+    person("rOpenSci", role = c("fnd"))
   )
 Description: 
     Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
