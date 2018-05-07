@@ -18,13 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Authenticate with Travis CI — auth_travis" />
+
+<meta property="og:description" content="Authenticates with Travis using your Github account. Returns an access token.
+The token will be obtained only once in each
+R session, but it will never be cached on the file system.
+In most scenarios, these functions will be called implicitly by other functions.
+auth_travis() only performs the authentication with Travis CI.
+travis_token() authenticates and checks if the repository is known to
+Travis CI. If not, a GitHub sync via travis_sync() is performed." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">travis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">travis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,13 +80,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -75,41 +95,43 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Authenticate with Travis CI</h1>
+    
+    <div class="hidden name"><code>auth_travis.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Authenticates with Travis using your Github account. Returns an access token.
 The token will be obtained only once in each
 R session, but it will never be cached on the file system.
-In most scenarios, these functions will be called implicitly by other functions.
-
-    <code>auth_travis()</code> only performs the authentication with Travis CI.
-
-    <code>travis_token()</code> authenticates and checks if the repository is known to
+In most scenarios, these functions will be called implicitly by other functions.</p>
+<p><code>auth_travis()</code> only performs the authentication with Travis CI.</p>
+<p><code>travis_token()</code> authenticates and checks if the repository is known to
 Travis CI. If not, a GitHub sync via <code><a href='travis_sync.html'>travis_sync()</a></code> is performed.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>auth_travis</span>(<span class='kw'>gh_token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>travis_token</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gh_token</th>
-      <td><p><code>[Token2.0]</code>
+      <td><p><code>[Token2.0]</code><br />
 A GitHub token, by default obtained from <code><a href='auth_github.html'>auth_github()</a></code> using the
 "read:org", "user:email", "repo_deployment", "repo:status",
 "read:repo_hook", and "write:repo_hook" scopes.</p></td>
     </tr>
     <tr>
       <th>repo</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The GitHub repo slug in the format "&lt;user|org&gt;/&lt;repo&gt;", if <code>NULL</code> no sync
 is performed.</p></td>
     </tr>
@@ -128,7 +150,7 @@ is performed.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms.</p>
+  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
@@ -138,5 +160,8 @@ is performed.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

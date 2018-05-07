@@ -18,13 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Setup deployment for Travis CI — use_travis_deploy" />
+
+<meta property="og:description" content="Creates a public-private key pair,
+adds the public key to the GitHub repository via github_add_key(),
+and stores the private key as an encrypted environment variable in Travis CI
+via travis_set_var(),
+possibly in a different repository.
+The tic companion package contains facilities for installing such a key
+during a Travis CI build." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">travis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">travis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,13 +80,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -75,12 +95,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Setup deployment for Travis CI</h1>
+    
+    <div class="hidden name"><code>use_travis_deploy.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Creates a public-private key pair,
 adds the public key to the GitHub repository via <code><a href='github_add_key.html'>github_add_key()</a></code>,
@@ -90,32 +113,33 @@ possibly in a different repository.
 The <span class="pkg">tic</span> companion package contains facilities for installing such a key
 during a Travis CI build.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>use_travis_deploy</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_info</a></span>(<span class='no'>path</span>),
   <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>), <span class='kw'>travis_repo</span> <span class='kw'>=</span> <span class='no'>repo</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).</p></td>
     </tr>
     <tr>
       <th>info</th>
-      <td><p><code>[list]</code>
+      <td><p><code>[list]</code><br />
 GitHub information for the repository, by default obtained through
 <code><a href='github_info.html'>github_info()</a></code>.</p></td>
     </tr>
     <tr>
       <th>repo</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
     </tr>
     <tr>
       <th>travis_repo</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The Travis CI repository to add the private key to, default: <code>repo</code>
 (the GitHub repo to which the public deploy key is added).</p></td>
     </tr>
@@ -134,7 +158,7 @@ The Travis CI repository to add the private key to, default: <code>repo</code>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms.</p>
+  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
@@ -144,5 +168,8 @@ The Travis CI repository to add the private key to, default: <code>repo</code>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

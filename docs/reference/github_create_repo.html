@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Create a repository on GitHub — github_create_repo" />
+
+<meta property="og:description" content="Creates a GitHub repository.
+github_create_repo() only creates the repository on GitHub.
+use_github() creates a GitHub repository for an existing Git repository,
+and connects both.
+new_github() creates an empty Git repository with a single commit and
+a corresponding GitHub repository, and always pushes to GitHub." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">travis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">travis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,13 +79,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -75,23 +94,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a repository on GitHub</h1>
+    
+    <div class="hidden name"><code>github_create_repo.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Creates a GitHub repository.
-
-    <code>github_create_repo()</code> only creates the repository on GitHub.
-
-    <code>use_github()</code> creates a GitHub repository for an existing Git repository,
-and connects both.
-
-    <code>new_github()</code> creates an empty Git repository with a single commit and
+    <p>Creates a GitHub repository.</p>
+<p><code>github_create_repo()</code> only creates the repository on GitHub.</p>
+<p><code>use_github()</code> creates a GitHub repository for an existing Git repository,
+and connects both.</p>
+<p><code>new_github()</code> creates an empty Git repository with a single commit and
 a corresponding GitHub repository, and always pushes to GitHub.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>github_create_repo</span>(<span class='no'>name</span>, <span class='kw'>org</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>private</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>gh_token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -102,52 +122,52 @@ a corresponding GitHub repository, and always pushes to GitHub.</p>
 <span class='fu'>new_github</span>(<span class='no'>path</span>, <span class='kw'>user</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"devtools.desc.author"</span>), <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>org</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>private</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>gh_token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The name of the new repository on GitHub, default: basename of the
 repo directory.</p></td>
     </tr>
     <tr>
       <th>org</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The organization of the new repository on GitHub, default: user namespace,
 no organization.</p></td>
     </tr>
     <tr>
       <th>private</th>
-      <td><p><code>[flag]</code>
+      <td><p><code>[flag]</code><br />
 Must be <code>FALSE</code>, creation of private repositories not yet supported.</p></td>
     </tr>
     <tr>
       <th>gh_token</th>
-      <td><p><code>[Token2.0]</code>
+      <td><p><code>[Token2.0]</code><br />
 GitHub authentication token, by default obtained from <code><a href='auth_github.html'>auth_github()</a></code> with
 the "public_repo" and (if an organization repo) "write:org" scopes.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p><code>[flag]</code>
+      <td><p><code>[flag]</code><br />
 Set to <code>FALSE</code> to suppress success message.</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The path to the existing Git repository.</p></td>
     </tr>
     <tr>
       <th>push</th>
-      <td><p><code>[flag]</code>
+      <td><p><code>[flag]</code><br />
 Should the contents of the existing repository be pushed to GitHub?
 Defaults to <code>FALSE</code> for non-interactive sessions, and asks the user
 in interactive sessions.</p></td>
     </tr>
     <tr>
       <th>user</th>
-      <td><p><code>[person|string]</code>
+      <td><p><code>[person|string]</code><br />
 An object of class person, or a string that returns such an object
 when evaluated.</p></td>
     </tr>
@@ -155,9 +175,9 @@ when evaluated.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
+    <div class='dont-index'><p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
   <code><a href='github_create_pat.html'>github_create_pat</a></code>,
-  <code><a href='github_info.html'>github_info</a></code></p>
+  <code><a href='github_info.html'>github_info</a></code></p></div>
     
 
   </div>
@@ -174,7 +194,7 @@ when evaluated.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms.</p>
+  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
@@ -184,5 +204,8 @@ when evaluated.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

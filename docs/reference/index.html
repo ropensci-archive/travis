@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">travis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">travis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,13 +71,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -75,164 +86,159 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.2-11</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-setup" class="hasAnchor"><a href="#section-setup" class="anchor"></a>Setup</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis-package.html">travis-package</a></code> </p>
-          </td>
-          <td><p>travis: Set Up Travis for R Package Testing and Deployment</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="use_tic.html">use_tic</a></code> </p>
-          </td>
-          <td><p>Getting tic testing up and running</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="use_travis_deploy.html">use_travis_deploy</a></code> </p>
-          </td>
-          <td><p>Setup deployment for Travis CI</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_enable.html">travis_enable</a></code> <code><a href="travis_enable.html">uses_travis</a></code> </p>
-          </td>
-          <td><p>Activate Travis CI</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_set_pat.html">travis_set_pat</a></code> </p>
-          </td>
-          <td><p>Set the GITHUB_PAT variable on Travis</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_get_vars.html">travis_get_vars</a></code> <code><a href="travis_get_vars.html">travis_get_var_id</a></code> <code><a href="travis_get_vars.html">travis_set_var</a></code> <code><a href="travis_get_vars.html">travis_delete_var</a></code> </p>
-          </td>
-          <td><p>Travis CI variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_add_key.html">github_add_key</a></code> </p>
-          </td>
-          <td><p>Add a deploy key to GitHub</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_create_pat.html">github_create_pat</a></code> </p>
-          </td>
-          <td><p>Create a GitHub PAT</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_create_repo.html">github_create_repo</a></code> <code><a href="github_create_repo.html">use_github</a></code> <code><a href="github_create_repo.html">new_github</a></code> </p>
-          </td>
-          <td><p>Create a repository on GitHub</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-travis-api" class="hasAnchor"><a href="#section-travis-api" class="anchor"></a>Travis API</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="auth_travis.html">auth_travis</a></code> <code><a href="auth_travis.html">travis_token</a></code> </p>
-          </td>
-          <td><p>Authenticate with Travis CI</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_accounts.html">travis_accounts</a></code> <code><a href="travis_accounts.html">travis_repositories</a></code> <code><a href="travis_accounts.html">travis_user</a></code> </p>
-          </td>
-          <td><p>Retrieve meta information from Travis CI</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_get_builds.html">travis_get_builds</a></code> <code><a href="travis_get_builds.html">travis_restart_build</a></code> <code><a href="travis_get_builds.html">travis_cancel_build</a></code> <code><a href="travis_get_builds.html">travis_restart_job</a></code> <code><a href="travis_get_builds.html">travis_cancel_job</a></code> <code><a href="travis_get_builds.html">travis_debug_job</a></code> </p>
-          </td>
-          <td><p>Travis CI builds</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_repo_info.html">travis_repo_info</a></code> <code><a href="travis_repo_info.html">travis_repo_id</a></code> </p>
-          </td>
-          <td><p>Get repository information from Travis CI</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis_sync.html">travis_sync</a></code> <code><a href="travis_sync.html">travis_browse</a></code> </p>
-          </td>
-          <td><p>Travis CI utilities</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-github-api" class="hasAnchor"><a href="#section-github-api" class="anchor"></a>GitHub API</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="travis-package.html">travis-package</a></code> </p>
-          </td>
-          <td><p>travis: Set Up Travis for R Package Testing and Deployment</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_add_key.html">github_add_key</a></code> </p>
-          </td>
-          <td><p>Add a deploy key to GitHub</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_info.html">github_info</a></code> <code><a href="github_info.html">github_repo</a></code> <code><a href="github_info.html">uses_github</a></code> </p>
-          </td>
-          <td><p>Github information</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="auth_github.html">auth_github</a></code> </p>
-          </td>
-          <td><p>Authenticate with GitHub</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="github_create_repo.html">github_create_repo</a></code> <code><a href="github_create_repo.html">use_github</a></code> <code><a href="github_create_repo.html">new_github</a></code> </p>
-          </td>
-          <td><p>Create a repository on GitHub</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-setup" class="hasAnchor"><a href="#section-setup" class="anchor"></a>Setup</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis-package.html">travis-package</a></code> </p>
+        </td>
+        <td><p>travis: Set Up Travis for R Package Testing and Deployment</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="use_tic.html">use_tic()</a></code> </p>
+        </td>
+        <td><p>Getting tic testing up and running</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="use_travis_deploy.html">use_travis_deploy()</a></code> </p>
+        </td>
+        <td><p>Setup deployment for Travis CI</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_enable.html">travis_enable()</a></code> <code><a href="travis_enable.html">uses_travis()</a></code> </p>
+        </td>
+        <td><p>Activate Travis CI</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_set_pat.html">travis_set_pat()</a></code> </p>
+        </td>
+        <td><p>Set the GITHUB_PAT variable on Travis</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_get_vars.html">travis_get_vars()</a></code> <code><a href="travis_get_vars.html">travis_get_var_id()</a></code> <code><a href="travis_get_vars.html">travis_set_var()</a></code> <code><a href="travis_get_vars.html">travis_delete_var()</a></code> </p>
+        </td>
+        <td><p>Travis CI variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_add_key.html">github_add_key()</a></code> </p>
+        </td>
+        <td><p>Add a deploy key to GitHub</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_create_pat.html">github_create_pat()</a></code> </p>
+        </td>
+        <td><p>Create a GitHub PAT</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_create_repo.html">github_create_repo()</a></code> <code><a href="github_create_repo.html">use_github()</a></code> <code><a href="github_create_repo.html">new_github()</a></code> </p>
+        </td>
+        <td><p>Create a repository on GitHub</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-travis-api" class="hasAnchor"><a href="#section-travis-api" class="anchor"></a>Travis API</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="auth_travis.html">auth_travis()</a></code> <code><a href="auth_travis.html">travis_token()</a></code> </p>
+        </td>
+        <td><p>Authenticate with Travis CI</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_accounts.html">travis_accounts()</a></code> <code><a href="travis_accounts.html">travis_repositories()</a></code> <code><a href="travis_accounts.html">travis_user()</a></code> </p>
+        </td>
+        <td><p>Retrieve meta information from Travis CI</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_get_builds.html">travis_get_builds()</a></code> <code><a href="travis_get_builds.html">travis_restart_build()</a></code> <code><a href="travis_get_builds.html">travis_cancel_build()</a></code> <code><a href="travis_get_builds.html">travis_restart_job()</a></code> <code><a href="travis_get_builds.html">travis_cancel_job()</a></code> <code><a href="travis_get_builds.html">travis_debug_job()</a></code> </p>
+        </td>
+        <td><p>Travis CI builds</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_repo_info.html">travis_repo_info()</a></code> <code><a href="travis_repo_info.html">travis_repo_id()</a></code> </p>
+        </td>
+        <td><p>Get repository information from Travis CI</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis_sync.html">travis_sync()</a></code> <code><a href="travis_sync.html">travis_browse()</a></code> </p>
+        </td>
+        <td><p>Travis CI utilities</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-github-api" class="hasAnchor"><a href="#section-github-api" class="anchor"></a>GitHub API</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="travis-package.html">travis-package</a></code> </p>
+        </td>
+        <td><p>travis: Set Up Travis for R Package Testing and Deployment</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_add_key.html">github_add_key()</a></code> </p>
+        </td>
+        <td><p>Add a deploy key to GitHub</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_info.html">github_info()</a></code> <code><a href="github_info.html">github_repo()</a></code> <code><a href="github_info.html">uses_github()</a></code> </p>
+        </td>
+        <td><p>Github information</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="auth_github.html">auth_github()</a></code> </p>
+        </td>
+        <td><p>Authenticate with GitHub</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="github_create_repo.html">github_create_repo()</a></code> <code><a href="github_create_repo.html">use_github()</a></code> <code><a href="github_create_repo.html">new_github()</a></code> </p>
+        </td>
+        <td><p>Create a repository on GitHub</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -247,7 +253,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms.</p>
+  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
@@ -257,5 +263,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

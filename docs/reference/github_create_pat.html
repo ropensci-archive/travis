@@ -18,13 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Create a GitHub PAT — github_create_pat" />
+
+<meta property="og:description" content="Prompts the user to create a personal access token for the GitHub API
+related to the current repository, e.g., to work around rate limitations.
+First, the user is directed to the website where a PAT can be created.
+A suggestion for the PAT's title is copied to the clipboard.
+Then, the function waits until the user copies a string that resembles a PAT
+(i.e., 40 lowercase hexadecimal digits) to the clipboard.
+The clipboard is cleared right after obtaining the PAT." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">travis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">travis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,13 +80,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -75,12 +95,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a GitHub PAT</h1>
+    
+    <div class="hidden name"><code>github_create_pat.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Prompts the user to create a personal access token for the GitHub API
 related to the current repository, e.g., to work around rate limitations.
@@ -90,20 +113,21 @@ Then, the function waits until the user copies a string that resembles a PAT
 (i.e., 40 lowercase hexadecimal digits) to the clipboard.
 The clipboard is cleared right after obtaining the PAT.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>github_create_pat</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(<span class='no'>path</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).</p></td>
     </tr>
     <tr>
       <th>repo</th>
-      <td><p><code>[string]</code>
+      <td><p><code>[string]</code><br />
 The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
     </tr>
     </table>
@@ -115,9 +139,9 @@ creating a PAT requires basic authentication (username + password).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
+    <div class='dont-index'><p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
   <code><a href='github_create_repo.html'>github_create_repo</a></code>,
-  <code><a href='github_info.html'>github_info</a></code></p>
+  <code><a href='github_info.html'>github_info</a></code></p></div>
     
 
   </div>
@@ -136,7 +160,7 @@ creating a PAT requires basic authentication (username + password).</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms.</p>
+  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
@@ -146,5 +170,8 @@ creating a PAT requires basic authentication (username + password).</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
