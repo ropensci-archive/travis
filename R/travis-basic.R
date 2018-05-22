@@ -30,3 +30,14 @@ travis_repo_info <- function(repo = github_repo(),
 travis_repo_id <- function(repo = github_repo(), token = travis_token(repo)) {
   travis_repo_info(repo = repo, token = token)$id
 }
+
+#' @description
+#' `travis_repo_settings()` returns build settings
+#'
+#' @export
+#' @rdname travis_repo_info
+travis_repo_settings <- function(repo = github_repo(), token = travis_token(repo)) {
+  req <- TRAVIS_GET(sprintf("/repos/%s/settings", repo), token = token)
+  httr::stop_for_status(req, sprintf("get repo settings on %s from Travis", repo))
+  httr::content(req)[[1L]]
+}
