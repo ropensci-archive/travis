@@ -4,10 +4,10 @@
 \name{travis-package}
 \alias{travis}
 \alias{travis-package}
-\title{travis: Set Up Travis for R Package Testing and Deployment}
+\title{travis: Set Up 'Travis' for Testing and Deployment}
 \description{
-Tools for interacting with the Travis and 'GitHub' APIs for setting up
-continuous integration for R packages.
+Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
+continuous integration for R packages and other R-based projects.
 }
 \details{
 Use \code{\link[=github_repo]{github_repo()}} to get the name of the current repository
@@ -27,13 +27,18 @@ All these functions ask for permission the first time you call them.
 }
 }
 \author{
-\strong{Maintainer}: Kirill Müller \email{krlmlr+r@mailbox.org}
+\strong{Maintainer}: Kirill Müller \email{krlmlr+r@mailbox.org} (0000-0002-1416-3412)
 
 Authors:
 \itemize{
   \item Mika Braginsky \email{mika.br@gmail.com}
   \item Karthik Ram \email{karthik.ram@gmail.com}
   \item Jeroen Ooms \email{jeroen.ooms@stat.ucla.edu}
+}
+
+Other contributors:
+\itemize{
+  \item rOpenSci [funder]
 }
 
 }
