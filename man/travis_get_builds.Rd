@@ -8,6 +8,8 @@
 \alias{travis_restart_job}
 \alias{travis_cancel_job}
 \alias{travis_debug_job}
+\alias{travis_get_log}
+\alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
 travis_get_builds(repo = github_repo(), token = travis_token(repo),
@@ -31,6 +33,14 @@ travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
   repo_id = travis_repo_id(repo, token), quiet = FALSE)
 
 travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
+  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
+  quiet = FALSE)
+
+travis_get_log(job_id, log_output = FALSE, repo = github_repo(),
+  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
+  quiet = FALSE)
+
+travis_delete_log(job_id, log_output = FALSE, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token),
   quiet = FALSE)
 }
@@ -74,4 +84,8 @@ Functions around completed or pending Travis CI builds and jobs.
 \code{travis_debug_job()} restarts, in debug mode, a job with a given job ID.
 See the \href{https://docs.travis-ci.com/user/running-build-in-debug-mode/}{Travis CI documentation}
 for more details.
+
+\code{travis_job_log()} returns a build job log
+
+\code{travis_delete_log()} deletes a build job log
 }
