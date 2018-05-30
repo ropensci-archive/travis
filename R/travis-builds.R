@@ -136,3 +136,25 @@ travis_debug_job <- function(job_id,
   )
   invisible(httr::content(req)[[1]])
 }
+
+
+#' `travis_log()` returns the log of a job with a given job ID.
+#' See the
+#' \href{https://developer.travis-ci.com/resource/log#Log}{Travis CI documentation}
+#' for more details.
+#'
+#' @export
+#' @rdname travis_get_builds
+travis_log <- function(job_id,
+                       repo = github_repo(),
+                       token = travis_token(repo),
+                       repo_id = travis_repo_id(repo, token),
+                       quiet = FALSE) {
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
+
+  req <- TRAVIS_GET(paste0("/job/", job_id, "/log"),
+                    token = token,
+                    httr::add_headers("Travis-API-Version" = 3)
+  )
+  invisible(httr::content(req))
+}
