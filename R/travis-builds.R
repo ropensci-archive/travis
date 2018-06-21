@@ -182,7 +182,7 @@ travis_delete_log <- function(job_id,
                               repo_id = travis_repo_id(repo, token), quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
   if (!is.numeric(job_id)) stopc("`job_id` must be a number")
-  
+
   req <- TRAVIS_DELETE(paste0("/job/", job_id, "/log"),
                        token = token)
   check_status(
