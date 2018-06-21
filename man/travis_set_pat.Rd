@@ -32,5 +32,6 @@ By default, the PAT is obtained from \code{\link[=github_create_pat]{github_crea
 }
 \seealso{
 Other Travis CI functions: \code{\link{travis_accounts}},
+  \code{\link{travis_get_caches}},
   \code{\link{travis_repo_info}}
 }

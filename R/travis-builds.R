@@ -45,6 +45,26 @@ travis_restart_build <- function(build_id, repo = github_repo(), token = travis_
   invisible(httr::content(req)[[1]])
 }
 
+#' `travis_restart_last_build()` restarts the *last* build.
+#'
+#' @export
+#' @rdname travis_get_builds
+travis_restart_last_build <- function(repo = github_repo(), token = travis_token(repo),
+                                 repo_id = travis_repo_id(repo, token), quiet = FALSE) {
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
+  last_build_id <- travis_get_builds(repo)$builds[[1]]$id
+  req <- TRAVIS_POST(paste0("/builds/", last_build_id, "/restart"), token = token)
+  check_status(
+    req,
+    sprintf(
+      "restar[ting]{t} build %s for %s (id: %s) from Travis CI",
+      build_id, repo, repo_id
+    ),
+    quiet
+  )
+  invisible(httr::content(req)[[1]])
+}
+
 #' `travis_cancel_build()` cancels a build with a given build ID.
 #'
 #' @export
@@ -130,6 +150,45 @@ travis_debug_job <- function(job_id,
     req,
     sprintf(
       "restar[ting]{t} debug job %s for %s (id: %s) from Travis CI",
+      job_id, repo, repo_id
+    ),
+    quiet
+  )
+  invisible(httr::content(req)[[1]])
+}
+
+#' `travis_job_log()` returns a build job log
+#' @export
+#' @rdname travis_get_builds
+travis_get_log <- function(job_id,
+                           log_output = FALSE,
+                           repo = github_repo(),
+                           token = travis_token(repo),
+                           repo_id = travis_repo_id(repo, token), quiet = FALSE) {
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
+
+  req <- TRAVIS_GET(paste0("/job/", job_id, "/log"),
+                    token = token)
+  httr::content(req)[[1]]
+}
+
+#' `travis_delete_log()` deletes a build job log
+#' @export
+#' @rdname travis_get_builds
+travis_delete_log <- function(job_id,
+                              log_output = FALSE,
+                              repo = github_repo(),
+                              token = travis_token(repo),
+                              repo_id = travis_repo_id(repo, token), quiet = FALSE) {
+  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
+  if (!is.numeric(job_id)) stopc("`job_id` must be a number")
+  
+  req <- TRAVIS_DELETE(paste0("/job/", job_id, "/log"),
+                       token = token)
+  check_status(
+    req,
+    sprintf(
+      "delet[ing]{e} log from job (id: %s) for %s (id: %s) on Travis CI",
       job_id, repo, repo_id
     ),
     quiet

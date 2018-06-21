@@ -3,11 +3,14 @@
 \name{travis_repo_info}
 \alias{travis_repo_info}
 \alias{travis_repo_id}
+\alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
 travis_repo_info(repo = github_repo(), token = travis_token(repo))
 
 travis_repo_id(repo = github_repo(), token = travis_token(repo))
+
+travis_repo_settings(repo = github_repo(), token = travis_token(repo))
 }
 \arguments{
 \item{repo}{\code{[string]}\cr
@@ -22,10 +25,13 @@ Return repository information, in particular the repository ID.
 \code{travis_repo_info()} queries the "/repos/:repo" API.
 
 \code{travis_repo_id()} returns the repo ID obtained from \code{travis_repo_info()}.
+
+\code{travis_repo_settings()} returns build settings
 }
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
 Other Travis CI functions: \code{\link{travis_accounts}},
+  \code{\link{travis_get_caches}},
   \code{\link{travis_set_pat}}
 }
