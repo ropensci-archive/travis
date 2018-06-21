@@ -50,19 +50,13 @@ travis_restart_build <- function(build_id, repo = github_repo(), token = travis_
 #' @export
 #' @rdname travis_get_builds
 travis_restart_last_build <- function(repo = github_repo(), token = travis_token(repo),
-                                 repo_id = travis_repo_id(repo, token), quiet = FALSE) {
-  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
-  last_build_id <- travis_get_builds(repo)$builds[[1]]$id
-  req <- TRAVIS_POST(paste0("/builds/", last_build_id, "/restart"), token = token)
-  check_status(
-    req,
-    sprintf(
-      "restar[ting]{t} build %s for %s (id: %s) from Travis CI",
-      build_id, repo, repo_id
-    ),
-    quiet
+                                      repo_id = travis_repo_id(repo, token), quiet = FALSE) {
+  builds <- travis_get_builds(repo = repo, token = token, repo_id = repo_id)
+  last_build_id <- builds[[1]]$id
+  travis_restart_build(last_build_id,
+    repo = repo, token = token,
+    repo_id = repo_id, quiet = quiet
   )
-  invisible(httr::content(req)[[1]])
 }
 
 #' `travis_cancel_build()` cancels a build with a given build ID.
