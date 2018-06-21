@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -31,7 +33,7 @@
 <meta property="og:title" content="Travis CI variables — travis_get_vars" />
 
 <meta property="og:description" content="Functions around public and private variables available in Travis CI builds.
-travis_get_vars() calls the "/settings/env_vars" API.
+travis_get_vars() calls the &quot;/settings/env_vars&quot; API.
 travis_get_var_id() retrieves the ID for a variable name, or NULL.
 If multiple variables exist by that name, it returns the ID of the last
 (with a warning),
@@ -41,6 +43,7 @@ If multiple variables exist by that name, it updates the last (with a warning),
 because this is what seems to be used in Travis CI builds in such a case.
 travis_delete_var() deletes a variable." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->

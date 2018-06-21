@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -31,15 +33,19 @@
 <meta property="og:title" content="Travis CI builds — travis_get_builds" />
 
 <meta property="og:description" content="Functions around completed or pending Travis CI builds and jobs.
-travis_get_builds() calls the "/builds" API for the current repository.
+travis_get_builds() calls the &quot;/builds&quot; API for the current repository.
 travis_restart_build() restarts a build with a given build ID.
+travis_restart_last_build() restarts the last build.
 travis_cancel_build() cancels a build with a given build ID.
 travis_restart_job() restarts a job with a given job ID.
 travis_cancel_job() cancels a job with a given job ID.
 travis_debug_job() restarts, in debug mode, a job with a given job ID.
 See the Travis CI documentation
-for more details." />
+for more details.
+travis_job_log() returns a build job log
+travis_delete_log() deletes a build job log" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -110,12 +116,15 @@ for more details." />
     <p>Functions around completed or pending Travis CI builds and jobs.</p>
 <p><code>travis_get_builds()</code> calls the "/builds" API for the current repository.</p>
 <p><code>travis_restart_build()</code> restarts a build with a given build ID.</p>
+<p><code>travis_restart_last_build()</code> restarts the <em>last</em> build.</p>
 <p><code>travis_cancel_build()</code> cancels a build with a given build ID.</p>
 <p><code>travis_restart_job()</code> restarts a job with a given job ID.</p>
 <p><code>travis_cancel_job()</code> cancels a job with a given job ID.</p>
 <p><code>travis_debug_job()</code> restarts, in debug mode, a job with a given job ID.
 See the <a href='https://docs.travis-ci.com/user/running-build-in-debug-mode/'>Travis CI documentation</a>
 for more details.</p>
+<p><code>travis_job_log()</code> returns a build job log</p>
+<p><code>travis_delete_log()</code> deletes a build job log</p>
     
     </div>
 
@@ -125,6 +134,9 @@ for more details.</p>
 <span class='fu'>travis_restart_build</span>(<span class='no'>build_id</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
   <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>travis_restart_last_build</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
+  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>travis_cancel_build</span>(<span class='no'>build_id</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
   <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
@@ -137,6 +149,14 @@ for more details.</p>
   <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>travis_debug_job</span>(<span class='no'>job_id</span>, <span class='kw'>log_output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>travis_get_log</span>(<span class='no'>job_id</span>, <span class='kw'>log_output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>travis_delete_log</span>(<span class='no'>job_id</span>, <span class='kw'>log_output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
   <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     

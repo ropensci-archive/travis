@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Travis CI utilities — travis_sync • travis</title>
+<title>Get/delete repository cache(s) from Travis CI — travis_get_caches • travis</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,11 @@
 
 
 
-<meta property="og:title" content="Travis CI utilities — travis_sync" />
+<meta property="og:title" content="Get/delete repository cache(s) from Travis CI — travis_get_caches" />
 
-<meta property="og:description" content="Helper functions for Travis CI.
-travis_sync() initiates synchronization with GitHub and waits for completion
-by default.
-travis_browse() opens a browser pointing to the current repo on  Travis CI." />
+<meta property="og:description" content="Return cache information
+travis_get_caches() queries the &quot;/repos/:repo/caches&quot; API.
+travis_delete_caches() returns the repo ID obtained from travis_repo_info()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -98,31 +97,31 @@ travis_browse() opens a browser pointing to the current repo on  Travis CI." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Travis CI utilities</h1>
+    <h1>Get/delete repository cache(s) from Travis CI</h1>
     
-    <div class="hidden name"><code>travis_sync.Rd</code></div>
+    <div class="hidden name"><code>travis_get_caches.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Helper functions for Travis CI.</p>
-<p><code>travis_sync()</code> initiates synchronization with GitHub and waits for completion
-by default.</p>
-<p><code>travis_browse()</code> opens a browser pointing to the current repo on  Travis CI.</p>
+    <p>Return cache information</p>
+<p><code>travis_get_caches()</code> queries the "/repos/:repo/caches" API.</p>
+<p><code>travis_delete_caches()</code> returns the repo ID obtained from <code><a href='travis_repo_info.html'>travis_repo_info()</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>travis_sync</span>(<span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>travis_get_caches</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
 
-<span class='fu'>travis_browse</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>())</pre>
+<span class='fu'>travis_delete_caches</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
+  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>block</th>
-      <td><p><code>[flag]</code><br />
-Set to <code>FALSE</code> to return immediately instead of waiting.</p></td>
+      <th>repo</th>
+      <td><p><code>[string]</code><br />
+The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
     </tr>
     <tr>
       <th>token</th>
@@ -130,16 +129,22 @@ Set to <code>FALSE</code> to return immediately instead of waiting.</p></td>
 A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
     </tr>
     <tr>
+      <th>repo_id</th>
+      <td><p><code>[string]</code><br />
+The repo ID, obtained from <code><a href='travis_repo_info.html'>travis_repo_id()</a></code> by default.</p></td>
+    </tr>
+    <tr>
       <th>quiet</th>
       <td><p><code>[flag]</code><br />
 Set to <code>FALSE</code> to suppress success message.</p></td>
     </tr>
-    <tr>
-      <th>repo</th>
-      <td><p><code>[string]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
-    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Travis CI functions: <code><a href='travis_accounts.html'>travis_accounts</a></code>,
+  <code><a href='travis_repo_info.html'>travis_repo_info</a></code>,
+  <code><a href='travis_set_pat.html'>travis_set_pat</a></code></p></div>
     
 
   </div>
@@ -147,7 +152,9 @@ The GitHub repo slug, by default obtained through <code><a href='github_info.htm
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>
