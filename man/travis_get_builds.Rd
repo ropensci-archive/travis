@@ -36,13 +36,11 @@ travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token),
   quiet = FALSE)
 
-travis_get_log(job_id, log_output = FALSE, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
-  quiet = FALSE)
+travis_get_log(job_id, repo = github_repo(), token = travis_token(repo),
+  repo_id = travis_repo_id(repo, token), quiet = FALSE)
 
-travis_delete_log(job_id, log_output = FALSE, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
-  quiet = FALSE)
+travis_delete_log(job_id, repo = github_repo(), token = travis_token(repo),
+  repo_id = travis_repo_id(repo, token), quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string]}\cr

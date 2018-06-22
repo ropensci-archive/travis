@@ -151,34 +151,41 @@ travis_debug_job <- function(job_id,
   invisible(httr::content(req)[[1]])
 }
 
-#' `travis_job_log()` returns a build job log
+#' `travis_job_log()` returns a build job log.
 #' @export
 #' @rdname travis_get_builds
 travis_get_log <- function(job_id,
-                           log_output = FALSE,
                            repo = github_repo(),
                            token = travis_token(repo),
                            repo_id = travis_repo_id(repo, token), quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
 
-  req <- TRAVIS_GET(paste0("/job/", job_id, "/log"),
-                    token = token)
-  httr::content(req)[[1]]
+  req <- TRAVIS_GET_TEXT3(paste0("/job/", job_id, "/log"),
+                          token = token)
+  check_status(
+    req,
+    sprintf(
+      "get[ting] log from job (id: %s) for %s (id: %s) on Travis CI",
+      job_id, repo, repo_id
+    ),
+    quiet
+  )
+  glue::as_glue(httr::content(req))
 }
 
-#' `travis_delete_log()` deletes a build job log
+#' `travis_delete_log()` deletes a build job log.
 #' @export
 #' @rdname travis_get_builds
 travis_delete_log <- function(job_id,
-                              log_output = FALSE,
                               repo = github_repo(),
                               token = travis_token(repo),
-                              repo_id = travis_repo_id(repo, token), quiet = FALSE) {
+                              repo_id = travis_repo_id(repo, token),
+                              quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
   if (!is.numeric(job_id)) stopc("`job_id` must be a number")
 
-  req <- TRAVIS_DELETE(paste0("/job/", job_id, "/log"),
-                       token = token)
+  req <- TRAVIS_DELETE3(paste0("/job/", job_id, "/log"),
+                        token = token)
   check_status(
     req,
     sprintf(

@@ -11,10 +11,19 @@
 #'
 #' @export
 travis_get_caches <- function(repo = github_repo(),
-                              token = travis_token(repo)) {
-  req <- TRAVIS_GET(sprintf("/repos/%s/caches", repo), token = token)
-  httr::stop_for_status(req, sprintf("get repo caches on %s from Travis", repo))
-  httr::content(req)[[1L]]
+                              token = travis_token(repo),
+                              repo_id = travis_repo_id(repo, token),
+                              quiet = FALSE) {
+  req <- TRAVIS_GET3(sprintf("/repo/%s/caches", repo_id), token = token)
+  check_status(
+    req,
+    sprintf(
+      "get[ting] caches for %s (id: %s) on Travis CI",
+      repo, repo_id
+    ),
+    quiet
+  )
+  httr::content(req)[["caches"]]
 }
 
 #' @description
@@ -27,8 +36,8 @@ travis_delete_caches <- function(repo = github_repo(),
                                  repo_id = travis_repo_id(repo, token),
                                  quiet = FALSE) {
   if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
-  
-  req <- TRAVIS_DELETE(sprintf("/repos/%s/caches", repo), token = token)
+
+  req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", repo_id), token = token)
   check_status(
     req,
     sprintf(
