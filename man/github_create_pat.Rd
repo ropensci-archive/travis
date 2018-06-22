@@ -31,3 +31,4 @@ Other GitHub functions: \code{\link{github_add_key}},
   \code{\link{github_create_repo}},
   \code{\link{github_info}}
 }
+\concept{GitHub functions}
