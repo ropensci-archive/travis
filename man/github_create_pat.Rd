@@ -10,8 +10,9 @@ github_create_pat(path = ".", repo = github_repo(path))
 \item{path}{\code{[string]}\cr
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 }
 \description{
 Prompts the user to create a personal access token for the GitHub API

@@ -2,28 +2,25 @@
 % Please edit documentation in R/travis-enable.R
 \name{travis_enable}
 \alias{travis_enable}
-\alias{uses_travis}
+\alias{travis_is_enabled}
 \title{Activate Travis CI}
 \usage{
 travis_enable(active = TRUE, repo = github_repo(),
   token = travis_token(repo = repo), repo_id = travis_repo_id(repo = repo,
   token = token), quiet = FALSE)
 
-uses_travis(repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo = repo, token = token))
+travis_is_enabled(repo = github_repo(), token = travis_token(repo))
 }
 \arguments{
 \item{active}{\code{[flag]}\cr
 Set to \code{FALSE} to deactivate instead of activating.}
 
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 
 \item{token}{\code{[Token2.0]}\cr
 A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
-
-\item{repo_id}{\code{[string]}\cr
-The repo ID, obtained from \code{\link[=travis_repo_id]{travis_repo_id()}} by default.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}

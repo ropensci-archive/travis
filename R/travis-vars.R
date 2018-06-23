@@ -8,16 +8,28 @@
 #' @inheritParams travis_set_pat
 #'
 #' @export
-travis_get_vars <- function(repo = github_repo(), token = travis_token(repo),
-                            repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
-  req <- TRAVIS_GET("/settings/env_vars", query = list(repository_id = repo_id),
-                    token = token)
+travis_get_vars <- function(repo = github_repo(), token = travis_token(repo)) {
+  req <- TRAVIS_GET3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
+                     token = token)
   httr::stop_for_status(
     req,
-    sprintf("get environment variables for %s (id: %s) from Travis CI", repo, repo_id)
+    sprintf("get environment variables for %s from Travis CI", repo)
   )
-  httr::content(req)[[1L]]
+  new_travis_env_vars(httr::content(req))
+}
+
+new_travis_env_vars <- function(x) {
+  stopifnot(x[["@type"]] == "env_vars")
+  new_travis_collection(
+    lapply(x[["env_vars"]], new_travis_env_var),
+    travis_attr(x),
+    "env_vars"
+  )
+}
+
+new_travis_env_var <- function(x) {
+  stopifnot(x[["@type"]] == "env_var")
+  new_travis_object(x, "env_var")
 }
 
 #' @description

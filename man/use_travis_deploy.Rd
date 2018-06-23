@@ -15,8 +15,9 @@ The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 GitHub information for the repository, by default obtained through
 \code{\link[=github_info]{github_info()}}.}
 
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 
 \item{travis_repo}{\code{[string]}\cr
 The Travis CI repository to add the private key to, default: \code{repo}

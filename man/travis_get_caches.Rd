@@ -12,14 +12,12 @@ travis_delete_caches(repo = github_repo(), token = travis_token(repo),
   repo_id = travis_repo_id(repo, token), quiet = FALSE)
 }
 \arguments{
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 
 \item{token}{\code{[Token2.0]}\cr
 A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
-
-\item{repo_id}{\code{[string]}\cr
-The repo ID, obtained from \code{\link[=travis_repo_id]{travis_repo_id()}} by default.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
@@ -32,8 +30,7 @@ Return cache information
 \code{travis_delete_caches()} returns the repo ID obtained from \code{travis_repo_info()}.
 }
 \seealso{
-Other Travis CI functions: \code{\link{travis_accounts}},
-  \code{\link{travis_repo_info}},
-  \code{\link{travis_set_pat}}
+Other Travis CI functions: \code{\link{travis_repo_info}},
+  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
 }
 \concept{Travis CI functions}

@@ -71,3 +71,7 @@ TRAVIS_DELETE3 <- function(url, ..., token) {
                httr::add_headers(Authorization = paste("token", token)),
                ...)
 }
+
+encode_slug <- function(repo) {
+  utils::URLencode(as.character(repo), reserved = TRUE)
+}

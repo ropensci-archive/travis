@@ -3,23 +3,32 @@
 #' @description
 #' Functions around completed or pending Travis CI builds and jobs.
 #'
-#' `travis_get_builds()` calls the "/builds" API for the current repository.
+#' `travis_get_builds()` calls the "builds" API for the current repository.
 #'
 #' @inheritParams travis_set_pat
 #'
 #' @export
-travis_get_builds <- function(repo = github_repo(), token = travis_token(repo),
-                              repo_id = travis_repo_id(repo, token)) {
-  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
-
-  # I couldn't understand the semantics of the after_number parameter of this API
-  req <- TRAVIS_GET("/builds", query = list(repository_id = repo_id),
-                    token = token)
+travis_get_builds <- function(repo = github_repo(), token = travis_token(repo)) {
+  req <- TRAVIS_GET3(sprintf("/repo/%s/builds", encode_slug(repo)), token = token)
   httr::stop_for_status(
     req,
-    sprintf("get builds for %s (id: %s) from Travis CI", repo, repo_id)
+    sprintf("get builds for %s from Travis CI", repo)
   )
-  httr::content(req)[[1L]]
+  new_travis_builds(httr::content(req))
+}
+
+new_travis_builds <- function(x) {
+  stopifnot(x[["@type"]] == "builds")
+  new_travis_collection(
+    lapply(x[["builds"]], new_travis_build),
+    travis_attr(x),
+    "builds"
+  )
+}
+
+new_travis_build <- function(x) {
+  stopifnot(x[["@type"]] == "build")
+  new_travis_object(x, "build")
 }
 
 #' `travis_restart_build()` restarts a build with a given build ID.

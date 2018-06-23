@@ -40,24 +40,15 @@ auth_travis <- memoise::memoise(auth_travis_)
 
 travis_token_ <- function(repo = NULL) {
   token <- auth_travis()
-  if (!identical(travis_user(token)$correct_scopes, TRUE)) {
-    url_stop("Please sign up with Travis using your GitHub credentials",
-             url = "https://travis-ci.org")
-  }
   if (!is.null(repo)) {
-    if (!has_repo(repo, token)) {
+    if (!travis_has_repo(repo, token)) {
       travis_sync(token = token)
-      if (!has_repo(repo, token)) {
+      if (!travis_has_repo(repo, token)) {
         review_travis_app_permission(repo)
       }
     }
   }
   token
-}
-
-has_repo <- function(repo, token) {
-  repos <- travis_repositories(slug = repo, token = token)
-  length(repos) > 0
 }
 
 review_travis_app_permission <- function(org) {

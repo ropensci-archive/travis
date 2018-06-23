@@ -19,8 +19,9 @@ A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
 
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 }
 \description{
 Helper functions for Travis CI.

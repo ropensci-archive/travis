@@ -2,19 +2,23 @@
 % Please edit documentation in R/travis-basic.R
 \name{travis_repo_info}
 \alias{travis_repo_info}
+\alias{travis_has_repo}
 \alias{travis_repo_id}
 \alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
 travis_repo_info(repo = github_repo(), token = travis_token(repo))
 
+travis_has_repo(repo = github_repo(), token = travis_token())
+
 travis_repo_id(repo = github_repo(), token = travis_token(repo))
 
 travis_repo_settings(repo = github_repo(), token = travis_token(repo))
 }
 \arguments{
-\item{repo}{\code{[string]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.}
+\item{repo}{\code{[string|numeric]}\cr
+The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
+Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 
 \item{token}{\code{[Token2.0]}\cr
 A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
@@ -31,8 +35,7 @@ Return repository information, in particular the repository ID.
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
-Other Travis CI functions: \code{\link{travis_accounts}},
-  \code{\link{travis_get_caches}},
-  \code{\link{travis_set_pat}}
+Other Travis CI functions: \code{\link{travis_get_caches}},
+  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
 }
 \concept{Travis CI functions}

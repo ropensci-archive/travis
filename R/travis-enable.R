@@ -32,10 +32,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
 #' `uses_travis()` returns if Travis CI is active for a repo.
 #' @export
 #' @rdname travis_enable
-uses_travis <- function(repo = github_repo(), token = travis_token(repo),
-                        repo_id = travis_repo_id(repo = repo, token = token)) {
-  req <- TRAVIS_GET(sprintf("/repos/%s", repo_id), token = token)
-  httr::stop_for_status(
-    req, sprintf("check status for repo %s (id: %s) on Travis CI", repo, repo_id))
-  httr::content(req)$repo$active
+travis_is_enabled <- function(repo = github_repo(), token = travis_token(repo)) {
+  info <- travis_repo_info(repo = repo, token = token)
+  info[["active"]]
 }
