@@ -59,12 +59,12 @@ travis_restart_build <- function(build_id, repo = github_repo(), token = travis_
 #' @export
 #' @rdname travis_get_builds
 travis_restart_last_build <- function(repo = github_repo(), token = travis_token(repo),
-                                      repo_id = travis_repo_id(repo, token), quiet = FALSE) {
-  builds <- travis_get_builds(repo = repo, token = token, repo_id = repo_id)
+                                      quiet = FALSE) {
+  builds <- travis_get_builds(repo = repo, token = token)
   last_build_id <- builds[[1]]$id
   travis_restart_build(last_build_id,
     repo = repo, token = token,
-    repo_id = repo_id, quiet = quiet
+    quiet = quiet
   )
 }
 

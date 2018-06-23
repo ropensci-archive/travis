@@ -12,18 +12,32 @@
 #' @export
 travis_get_caches <- function(repo = github_repo(),
                               token = travis_token(repo),
-                              repo_id = travis_repo_id(repo, token),
                               quiet = FALSE) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/caches", repo_id), token = token)
+  req <- TRAVIS_GET3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
   check_status(
     req,
     sprintf(
-      "get[ting] caches for %s (id: %s) on Travis CI",
-      repo, repo_id
+      "get[ting] caches for %s on Travis CI",
+      repo
     ),
     quiet
   )
-  httr::content(req)[["caches"]]
+  new_travis_caches(httr::content(req))
+}
+
+
+new_travis_caches <- function(x) {
+  stopifnot(x[["@type"]] == "caches")
+  new_travis_collection(
+    lapply(x[["caches"]], new_travis_cache),
+    travis_attr(x),
+    "caches"
+  )
+}
+
+new_travis_cache <- function(x) {
+  stopifnot(x[["@type"]] == "cache")
+  new_travis_object(x, "cache")
 }
 
 #' @description

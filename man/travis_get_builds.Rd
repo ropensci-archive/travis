@@ -19,7 +19,7 @@ travis_restart_build(build_id, repo = github_repo(),
   quiet = FALSE)
 
 travis_restart_last_build(repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+  quiet = FALSE)
 
 travis_cancel_build(build_id, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token),

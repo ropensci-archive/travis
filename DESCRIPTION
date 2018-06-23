@@ -19,6 +19,7 @@ Depends:
 Imports:
     clipr,
     git2r,
+    glue (>= 1.2.0),
     httr,
     memoise,
     openssl,

@@ -9,8 +9,7 @@
 \usage{
 travis_get_vars(repo = github_repo(), token = travis_token(repo))
 
-travis_get_var_id(name, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token))
+travis_get_var_id(name, repo = github_repo(), token = travis_token(repo))
 
 travis_set_var(name, value, public = FALSE, repo = github_repo(),
   token = travis_token(repo), repo_id = travis_repo_id(repo, token),

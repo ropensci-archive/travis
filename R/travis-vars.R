@@ -44,9 +44,8 @@ new_travis_env_var <- function(x) {
 #' @export
 #' @rdname travis_get_vars
 travis_get_var_id <- function(name, repo = github_repo(),
-                              token = travis_token(repo),
-                              repo_id = travis_repo_id(repo, token)) {
-  vars <- travis_get_vars(repo = repo, token = token, repo_id = repo_id)
+                              token = travis_token(repo)) {
+  vars <- travis_get_vars(repo = repo, token = token)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the

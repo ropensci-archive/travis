@@ -40,6 +40,7 @@ format.travis_collection <- function(x, ...) {
 }
 
 bullets <- function(x) {
+  if (length(x) == 0) return(character())
   paste0("- ", x, collapse = "\n")
 }
 

@@ -6,7 +6,7 @@
 \title{Get/delete repository cache(s) from Travis CI}
 \usage{
 travis_get_caches(repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+  quiet = FALSE)
 
 travis_delete_caches(repo = github_repo(), token = travis_token(repo),
   repo_id = travis_repo_id(repo, token), quiet = FALSE)
