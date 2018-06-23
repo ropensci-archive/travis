@@ -22,14 +22,6 @@ TRAVIS_GET_TEXT3 <- function(url, ..., token) {
   TRAVIS_GET3(url, ..., accept = httr::accept('text/plain'), token = token)
 }
 
-TRAVIS_PUT <- function(url, ..., token) {
-  httr::PUT(travis(url), encode = "json",
-            httr::user_agent("ropenscilabs/travis"),
-            httr::accept('application/vnd.travis-ci.2+json'),
-            httr::add_headers(Authorization = paste("token", token)),
-            ...)
-}
-
 TRAVIS_POST <- function(url, ..., token) {
   httr::POST(travis(url), encode = "json",
              httr::user_agent("ropenscilabs/travis"),

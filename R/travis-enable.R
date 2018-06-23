@@ -12,20 +12,24 @@
 #' @export
 travis_enable <- function(active = TRUE, repo = github_repo(),
                           token = travis_token(repo = repo),
-                          repo_id = travis_repo_id(repo = repo, token = token),
                           quiet = FALSE) {
-  req <- TRAVIS_PUT(sprintf("/hooks"),
-                    body = list(hook = list(id = repo_id, active = active)),
-                    token = token)
+  if (active) {
+    activate <- "activate"
+  } else {
+    activate <- "deactivate"
+  }
+
+  req <- TRAVIS_POST3(sprintf("/repo/%s/%s", encode_slug(repo), activate),
+                      token = token)
   check_status(
     req,
     sprintf(
-      "%s repo %s (id: %s) on Travis CI",
-      ifelse(active, "activat[ing]{e}", "deactivat[ing]{e}"), repo, repo_id
+      "%s repo %s on Travis CI",
+      ifelse(active, "activat[ing]{e}", "deactivat[ing]{e}"), repo
     ),
     quiet
   )
-  invisible(httr::content(req)[[1]])
+  invisible(new_travis_repo(httr::content(req)))
 }
 
 #' @description

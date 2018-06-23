@@ -6,8 +6,7 @@
 \title{Activate Travis CI}
 \usage{
 travis_enable(active = TRUE, repo = github_repo(),
-  token = travis_token(repo = repo), repo_id = travis_repo_id(repo = repo,
-  token = token), quiet = FALSE)
+  token = travis_token(repo = repo), quiet = FALSE)
 
 travis_is_enabled(repo = github_repo(), token = travis_token(repo))
 }
