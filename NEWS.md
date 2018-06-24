@@ -1,20 +1,36 @@
-## travis 0.2-11 (2017-07-24)
+# travis 0.2.11.9000
+
+- New `travis_get_jobs()`.
+- Remove distinction between `repo` and `repo_id`, don't need `repo_id` argument anymore.
+- Using Travis CI API v3 (#63).
+- Remove `travis_accounts()`.
+- New `travis_has_repo()`.
+- Rename `uses_travis()` to `travis_is_enabled()`.
+- Rename `travis_repositories()` to `travis_repos()`.
+- New `format()` and `print()` methods for collections and objects, new S3 classes `"travis"`, `"travis_collection"` and `"travis_xxx"` (one for each collection and item type).
+- Merge functionality from cloudyr/travisci (#65, @leeper).
+- `github_info()` now always passes a token, and supports the `gh_token` argument.
+- Tests for internal formatting functions.
+- New functions `travis_get_builds()`, `travis_restart_build()`, `travis_cancel_build()`, `travis_restart_job()`, `travis_cancel_job()`, and `travis_debug_job()`. The latter is the only way to restart a job in debug mode, after this has been enabled by Travis CI: https://docs.travis-ci.com/user/running-build-in-debug-mode/.
+
+
+# travis 0.2-11 (2017-07-24)
 
 - Tests for internal formatting functions.
 - New functions `travis_get_builds()`, `travis_restart_build()`, `travis_cancel_build()`, `travis_restart_job()`, `travis_cancel_job()`, and `travis_debug_job()`. The latter is the only way to restart a job in debug mode, after this has been enabled by Travis CI: https://docs.travis-ci.com/user/running-build-in-debug-mode/.
 
 
-## travis 0.2-10 (2017-06-29)
+# travis 0.2-10 (2017-06-29)
 
 - Patch AppVeyor template.
 
 
-## travis 0.2-9 (2017-06-29)
+# travis 0.2-9 (2017-06-29)
 
 - Update `tic.R` templates.
 
 
-## travis 0.2-8 (2017-06-29)
+# travis 0.2-8 (2017-06-29)
 
 - Blogdown projects with a `config.toml` file are detected.
 - `use_tic()` prints message when adding files from a template.
@@ -24,12 +40,12 @@
 - New `use_tic()` (#60).
 
 
-## travis 0.2-7 (2017-06-13)
+# travis 0.2-7 (2017-06-13)
 
 - New `new_github()` and `use_github()` (#59).
 
 
-## travis 0.2-6 (2017-06-10)
+# travis 0.2-6 (2017-06-10)
 
 - Document all functions, `R CMD check` passes without warnings or notes (#50).
 - Disabled caching of GitHub authentication, because functions from this package usually needs to be run only once per development package.
@@ -40,7 +56,7 @@
 - New `travis_set_pat()`, by default directs the user to the page where new tokens are created and waits for a token to appear on the clipboard (#21).
 
 
-## travis 0.2-5 (2017-06-10)
+# travis 0.2-5 (2017-06-10)
 
 - The new `uses_github()` and `uses_travis()` functions allow
   determining if GitHub or Travis is enabled for a repository. Note that
@@ -56,12 +72,12 @@
 - Remove devtools dependency (#49).
 
 
-## travis 0.2-4 (2016-11-06)
+# travis 0.2-4 (2016-11-06)
 
 - Documentation improvements.
 
 
-## travis 0.2-3 (2016-11-04)
+# travis 0.2-3 (2016-11-04)
 
 - Code cleanup.
 - `travis_encrypt()` gains repo argument.
@@ -69,7 +85,7 @@
 
 
 
-## travis 0.2-2 (2016-11-04)
+# travis 0.2-2 (2016-11-04)
 
 - Semi-automated test using `remake`. Run `remake::make(remake::list_targets())` in the package directory, installation is currently required. Tests creating a repository for a new user and installing a SSH key there, the same with a new organization owned by this user.
 - If the user needs to manually configure an online service, a browser windows opens in addition to a textual message.
@@ -83,7 +99,7 @@
 - `setup_keys()` works with paths
 
 
-## travis 0.2-1 (2016-11-03)
+# travis 0.2-1 (2016-11-03)
 
 - Fix Travis authentication by using a fresh GitHub token for each authentication (#35, #36).
 - Cache Travis and GitHub token during the current R session using `memoise` (#29).
@@ -101,7 +117,7 @@
 - Add basic package documentation (#20).
 
 
-## travis 0.2 (2016-09-11)
+# travis 0.2 (2016-09-11)
 
 Initial release.
 

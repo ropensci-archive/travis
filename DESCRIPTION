@@ -1,7 +1,7 @@
 Package: travis
 Type: Package
 Title: Set Up 'Travis' for Testing and Deployment
-Version: 0.2-11
+Version: 0.2.11.9000
 Authors@R: c(
     person("Kirill", "M\u00fcller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1416-3412")),
     person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
