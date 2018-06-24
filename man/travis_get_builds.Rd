@@ -5,6 +5,7 @@
 \alias{travis_restart_build}
 \alias{travis_restart_last_build}
 \alias{travis_cancel_build}
+\alias{travis_get_jobs}
 \alias{travis_restart_job}
 \alias{travis_cancel_job}
 \alias{travis_debug_job}
@@ -15,31 +16,30 @@
 travis_get_builds(repo = github_repo(), token = travis_token(repo))
 
 travis_restart_build(build_id, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
-  quiet = FALSE)
+  token = travis_token(repo), quiet = FALSE)
 
 travis_restart_last_build(repo = github_repo(), token = travis_token(repo),
   quiet = FALSE)
 
 travis_cancel_build(build_id, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
-  quiet = FALSE)
+  token = travis_token(repo), quiet = FALSE)
+
+travis_get_jobs(build_id, repo = github_repo(), token = travis_token(repo))
 
 travis_restart_job(job_id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
-
-travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
-
-travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
-  token = travis_token(repo), repo_id = travis_repo_id(repo, token),
   quiet = FALSE)
 
+travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
+  quiet = FALSE)
+
+travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
+
 travis_get_log(job_id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+  quiet = FALSE)
 
 travis_delete_log(job_id, repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+  quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr

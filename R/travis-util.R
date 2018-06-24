@@ -12,14 +12,16 @@
 #'
 #' @export
 travis_sync <- function(block = TRUE, token = travis_token(), quiet = FALSE) {
-  url <- "/users/sync"
-  req <- TRAVIS_POST(url, token = token)
+  user_id <- travis_user(token = token)[["id"]]
+
+  req <- TRAVIS_POST3(sprintf("/user/%s/sync", user_id),
+                      token = token)
 
   check_status(req, "initiat[ing]{e} sync with GitHub", quiet, 409)
 
   if (block) {
     message("Waiting for sync with GitHub", appendLF = FALSE)
-    while (travis_user()$is_syncing) {
+    while (travis_user(token = token)[["is_syncing"]]) {
       if (!quiet) message(".", appendLF = FALSE)
       Sys.sleep(1)
     }
