@@ -124,37 +124,29 @@ because this is what seems to be used in Travis CI builds in such a case.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>travis_get_vars</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
-  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>))
+    <pre class="usage"><span class='fu'>travis_get_vars</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
 
-<span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
-  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>))
+<span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
 
 <span class='fu'>travis_set_var</span>(<span class='no'>name</span>, <span class='no'>value</span>, <span class='kw'>public</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>),
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>travis_delete_var</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
-  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='no'>repo</span>, <span class='no'>token</span>), <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span>
-  <span class='no'>repo</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>, <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='no'>repo_id</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>repo</th>
-      <td><p><code>[string]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
+      <td><p><code>[string|numeric]</code><br />
+The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
+Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
     </tr>
     <tr>
       <th>token</th>
       <td><p><code>[Token2.0]</code><br />
 A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>repo_id</th>
-      <td><p><code>[string]</code><br />
-The repo ID, obtained from <code><a href='travis_repo_info.html'>travis_repo_id()</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>name</th>

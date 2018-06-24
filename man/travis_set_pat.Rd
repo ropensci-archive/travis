@@ -32,4 +32,3 @@ Other Travis CI functions: \code{\link{travis_get_caches}},
   \code{\link{travis_repo_info}},
   \code{\link{travis_repos}}
 }
-\concept{Travis CI functions}

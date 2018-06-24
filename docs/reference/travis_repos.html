@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get repository information from Travis CI — travis_repo_info • travis</title>
+<title>Retrieve meta information from Travis CI — travis_repos • travis</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,11 @@
 
 
 
-<meta property="og:title" content="Get repository information from Travis CI — travis_repo_info" />
+<meta property="og:title" content="Retrieve meta information from Travis CI — travis_repos" />
 
-<meta property="og:description" content="Return repository information, in particular the repository ID.
-travis_repo_info() queries the &quot;/repos/:repo&quot; API.
-travis_repo_id() returns the repo ID obtained from travis_repo_info().
-travis_repo_settings() returns build settings" />
+<meta property="og:description" content="Return repositories and user information.
+travis_repositories() queries the &quot;/repos&quot; API.
+travis_user() queries the &quot;/users&quot; API." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -98,37 +97,26 @@ travis_repo_settings() returns build settings" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get repository information from Travis CI</h1>
+    <h1>Retrieve meta information from Travis CI</h1>
     
-    <div class="hidden name"><code>travis_repo_info.Rd</code></div>
+    <div class="hidden name"><code>travis_repos.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Return repository information, in particular the repository ID.</p>
-<p><code>travis_repo_info()</code> queries the "/repos/:repo" API.</p>
-<p><code>travis_repo_id()</code> returns the repo ID obtained from <code>travis_repo_info()</code>.</p>
-<p><code>travis_repo_settings()</code> returns build settings</p>
+    <p>Return repositories and user information.</p>
+<p><code>travis_repositories()</code> queries the "/repos" API.</p>
+<p><code>travis_user()</code> queries the "/users" API.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>travis_repo_info</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
+    <pre class="usage"><span class='fu'>travis_repos</span>(<span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>())
 
-<span class='fu'>travis_has_repo</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>())
-
-<span class='fu'>travis_repo_id</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
-
-<span class='fu'>travis_repo_settings</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))</pre>
+<span class='fu'>travis_user</span>(<span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>repo</th>
-      <td><p><code>[string|numeric]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
-Alternatively, the Travis CI repo ID, e.g. obtained through <code>travis_repo_id()</code>.</p></td>
-    </tr>
     <tr>
       <th>token</th>
       <td><p><code>[Token2.0]</code><br />
@@ -140,7 +128,8 @@ A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()<
 
     <div class='dont-index'><p><a href='https://docs.travis-ci.com/api'>Travis CI API documentation</a></p>
 <p>Other Travis CI functions: <code><a href='travis_get_caches.html'>travis_get_caches</a></code>,
-  <code><a href='travis_repos.html'>travis_repos</a></code>, <code><a href='travis_set_pat.html'>travis_set_pat</a></code></p></div>
+  <code><a href='travis_repo_info.html'>travis_repo_info</a></code>,
+  <code><a href='travis_set_pat.html'>travis_set_pat</a></code></p></div>
     
 
   </div>

@@ -157,7 +157,7 @@
 <h2 class="hasAnchor">
 <a href="#travis-0-2-5-2017-06-10" class="anchor"></a>travis 0.2-5 (2017-06-10)</h2>
 <ul>
-<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code><a href="../reference/travis_enable.html">uses_travis()</a></code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code><a href="../reference/travis_enable.html">uses_travis()</a></code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (#47).</li>
+<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travis()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travis()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (#47).</li>
 <li>Only interactive sessions will open a browser window to improve setup experience. The <code><a href="../reference/travis_sync.html">travis_browse()</a></code> function still opens a browser window unconditionally (#52).</li>
 <li>All API functions that provide a side effect return the result of the request invisibly (#57).</li>
 <li>For organization repos, adding deploy keys or creating new repos checks if the user and the app have permission to perform this action, and gives more accurate error messages (#51).</li>

@@ -38,4 +38,3 @@ Return repository information, in particular the repository ID.
 Other Travis CI functions: \code{\link{travis_get_caches}},
   \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
 }
-\concept{Travis CI functions}

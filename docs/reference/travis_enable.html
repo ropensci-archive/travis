@@ -111,11 +111,9 @@ uses_travis() returns if Travis CI is active for a repo." />
     </div>
 
     <pre class="usage"><span class='fu'>travis_enable</span>(<span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>), <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>,
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>uses_travis</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
-  <span class='kw'>repo_id</span> <span class='kw'>=</span> <span class='fu'><a href='travis_repo_info.html'>travis_repo_id</a></span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>))</pre>
+<span class='fu'>travis_is_enabled</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,18 +125,14 @@ Set to <code>FALSE</code> to deactivate instead of activating.</p></td>
     </tr>
     <tr>
       <th>repo</th>
-      <td><p><code>[string]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.</p></td>
+      <td><p><code>[string|numeric]</code><br />
+The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
+Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
     </tr>
     <tr>
       <th>token</th>
       <td><p><code>[Token2.0]</code><br />
 A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>repo_id</th>
-      <td><p><code>[string]</code><br />
-The repo ID, obtained from <code><a href='travis_repo_info.html'>travis_repo_id()</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>quiet</th>

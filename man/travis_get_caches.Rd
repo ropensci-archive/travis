@@ -33,4 +33,3 @@ Return cache information
 Other Travis CI functions: \code{\link{travis_repo_info}},
   \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
 }
-\concept{Travis CI functions}
