@@ -47,18 +47,16 @@ new_travis_cache <- function(x) {
 #' @rdname travis_get_caches
 travis_delete_caches <- function(repo = github_repo(),
                                  token = travis_token(repo),
-                                 repo_id = travis_repo_id(repo, token),
                                  quiet = FALSE) {
-  if (!is.numeric(repo_id)) stopc("`repo_id` must be a number")
 
-  req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", repo_id), token = token)
+  req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
   check_status(
     req,
     sprintf(
-      "delet[ing]{e} caches for %s (id: %s) on Travis CI",
-      repo, repo_id
+      "delet[ing]{e} caches for %s on Travis CI",
+      repo
     ),
     quiet
   )
-  invisible(httr::content(req)[[1]])
+  invisible(new_travis_caches(httr::content(req)))
 }

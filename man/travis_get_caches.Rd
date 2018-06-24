@@ -9,7 +9,7 @@ travis_get_caches(repo = github_repo(), token = travis_token(repo),
   quiet = FALSE)
 
 travis_delete_caches(repo = github_repo(), token = travis_token(repo),
-  repo_id = travis_repo_id(repo, token), quiet = FALSE)
+  quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
