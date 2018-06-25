@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">travis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11.9000</span>
       </span>
     </div>
 
@@ -96,31 +96,50 @@
       
     </div>
 
-    <div id="travis-0-2-11-2017-07-24" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-11-2017-07-24" class="anchor"></a>travis 0.2-11 (2017-07-24)</h2>
+    <div id="travis-0-2-11-9000" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-11-9000" class="anchor"></a>travis 0.2.11.9000</h1>
+<ul>
+<li>New <code><a href="../reference/travis_get_builds.html">travis_get_jobs()</a></code>.</li>
+<li>Remove distinction between <code>repo</code> and <code>repo_id</code>, don’t need <code>repo_id</code> argument anymore.</li>
+<li>Using Travis CI API v3 (#63).</li>
+<li>Remove <code>travis_accounts()</code>.</li>
+<li>New <code><a href="../reference/travis_repo_info.html">travis_has_repo()</a></code>.</li>
+<li>Rename <code>uses_travis()</code> to <code><a href="../reference/travis_enable.html">travis_is_enabled()</a></code>.</li>
+<li>Rename <code>travis_repositories()</code> to <code><a href="../reference/travis_repos.html">travis_repos()</a></code>.</li>
+<li>New <code>format()</code> and <code>print()</code> methods for collections and objects, new S3 classes <code>"travis"</code>, <code>"travis_collection"</code> and <code>"travis_xxx"</code> (one for each collection and item type).</li>
+<li>Merge functionality from cloudyr/travisci (#65, <a href='http://github.com/leeper'>@leeper</a>).</li>
+<li>
+<code><a href="../reference/github_info.html">github_info()</a></code> now always passes a token, and supports the <code>gh_token</code> argument.</li>
+<li>Tests for internal formatting functions.</li>
+<li>New functions <code><a href="../reference/travis_get_builds.html">travis_get_builds()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_restart_build()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_cancel_build()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_restart_job()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_cancel_job()</a></code>, and <code><a href="../reference/travis_get_builds.html">travis_debug_job()</a></code>. The latter is the only way to restart a job in debug mode, after this has been enabled by Travis CI: <a href="https://docs.travis-ci.com/user/running-build-in-debug-mode/" class="uri">https://docs.travis-ci.com/user/running-build-in-debug-mode/</a>.</li>
+</ul>
+</div>
+    <div id="travis-0-2-11-2017-07-24" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-11-2017-07-24" class="anchor"></a>travis 0.2-11 (2017-07-24)</h1>
 <ul>
 <li>Tests for internal formatting functions.</li>
 <li>New functions <code><a href="../reference/travis_get_builds.html">travis_get_builds()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_restart_build()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_cancel_build()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_restart_job()</a></code>, <code><a href="../reference/travis_get_builds.html">travis_cancel_job()</a></code>, and <code><a href="../reference/travis_get_builds.html">travis_debug_job()</a></code>. The latter is the only way to restart a job in debug mode, after this has been enabled by Travis CI: <a href="https://docs.travis-ci.com/user/running-build-in-debug-mode/" class="uri">https://docs.travis-ci.com/user/running-build-in-debug-mode/</a>.</li>
 </ul>
 </div>
-    <div id="travis-0-2-10-2017-06-29" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-10-2017-06-29" class="anchor"></a>travis 0.2-10 (2017-06-29)</h2>
+    <div id="travis-0-2-10-2017-06-29" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-10-2017-06-29" class="anchor"></a>travis 0.2-10 (2017-06-29)</h1>
 <ul>
 <li>Patch AppVeyor template.</li>
 </ul>
 </div>
-    <div id="travis-0-2-9-2017-06-29" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-9-2017-06-29" class="anchor"></a>travis 0.2-9 (2017-06-29)</h2>
+    <div id="travis-0-2-9-2017-06-29" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-9-2017-06-29" class="anchor"></a>travis 0.2-9 (2017-06-29)</h1>
 <ul>
 <li>Update <code>tic.R</code> templates.</li>
 </ul>
 </div>
-    <div id="travis-0-2-8-2017-06-29" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-8-2017-06-29" class="anchor"></a>travis 0.2-8 (2017-06-29)</h2>
+    <div id="travis-0-2-8-2017-06-29" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-8-2017-06-29" class="anchor"></a>travis 0.2-8 (2017-06-29)</h1>
 <ul>
 <li>Blogdown projects with a <code>config.toml</code> file are detected.</li>
 <li>
@@ -132,16 +151,16 @@
 <li>New <code><a href="../reference/use_tic.html">use_tic()</a></code> (#60).</li>
 </ul>
 </div>
-    <div id="travis-0-2-7-2017-06-13" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-7-2017-06-13" class="anchor"></a>travis 0.2-7 (2017-06-13)</h2>
+    <div id="travis-0-2-7-2017-06-13" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-7-2017-06-13" class="anchor"></a>travis 0.2-7 (2017-06-13)</h1>
 <ul>
 <li>New <code><a href="../reference/github_create_repo.html">new_github()</a></code> and <code><a href="../reference/github_create_repo.html">use_github()</a></code> (#59).</li>
 </ul>
 </div>
-    <div id="travis-0-2-6-2017-06-10" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-6-2017-06-10" class="anchor"></a>travis 0.2-6 (2017-06-10)</h2>
+    <div id="travis-0-2-6-2017-06-10" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-6-2017-06-10" class="anchor"></a>travis 0.2-6 (2017-06-10)</h1>
 <ul>
 <li>Document all functions, <code>R CMD check</code> passes without warnings or notes (#50).</li>
 <li>Disabled caching of GitHub authentication, because functions from this package usually needs to be run only once per development package.</li>
@@ -153,9 +172,9 @@
 <li>New <code><a href="../reference/travis_set_pat.html">travis_set_pat()</a></code>, by default directs the user to the page where new tokens are created and waits for a token to appear on the clipboard (#21).</li>
 </ul>
 </div>
-    <div id="travis-0-2-5-2017-06-10" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-5-2017-06-10" class="anchor"></a>travis 0.2-5 (2017-06-10)</h2>
+    <div id="travis-0-2-5-2017-06-10" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-5-2017-06-10" class="anchor"></a>travis 0.2-5 (2017-06-10)</h1>
 <ul>
 <li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travis()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travis()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (#47).</li>
 <li>Only interactive sessions will open a browser window to improve setup experience. The <code><a href="../reference/travis_sync.html">travis_browse()</a></code> function still opens a browser window unconditionally (#52).</li>
@@ -165,16 +184,16 @@
 <li>Remove devtools dependency (#49).</li>
 </ul>
 </div>
-    <div id="travis-0-2-4-2016-11-06" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-4-2016-11-06" class="anchor"></a>travis 0.2-4 (2016-11-06)</h2>
+    <div id="travis-0-2-4-2016-11-06" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-4-2016-11-06" class="anchor"></a>travis 0.2-4 (2016-11-06)</h1>
 <ul>
 <li>Documentation improvements.</li>
 </ul>
 </div>
-    <div id="travis-0-2-3-2016-11-04" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-3-2016-11-04" class="anchor"></a>travis 0.2-3 (2016-11-04)</h2>
+    <div id="travis-0-2-3-2016-11-04" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-3-2016-11-04" class="anchor"></a>travis 0.2-3 (2016-11-04)</h1>
 <ul>
 <li>Code cleanup.</li>
 <li>
@@ -183,9 +202,9 @@
 <code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> creates an encrypted environment variable that contains the private key; the public key is pushed to GitHub and not stored anywhere (#45). The deploy key is encoded in the base64 encoding, because Travis doesn’t handle environment variables with newlines very well.</li>
 </ul>
 </div>
-    <div id="travis-0-2-2-2016-11-04" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-2-2016-11-04" class="anchor"></a>travis 0.2-2 (2016-11-04)</h2>
+    <div id="travis-0-2-2-2016-11-04" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-2-2016-11-04" class="anchor"></a>travis 0.2-2 (2016-11-04)</h1>
 <ul>
 <li>Semi-automated test using <code>remake</code>. Run <code>remake::make(remake::list_targets())</code> in the package directory, installation is currently required. Tests creating a repository for a new user and installing a SSH key there, the same with a new organization owned by this user.</li>
 <li>If the user needs to manually configure an online service, a browser windows opens in addition to a textual message.</li>
@@ -200,9 +219,9 @@
 <code>setup_keys()</code> works with paths</li>
 </ul>
 </div>
-    <div id="travis-0-2-1-2016-11-03" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-1-2016-11-03" class="anchor"></a>travis 0.2-1 (2016-11-03)</h2>
+    <div id="travis-0-2-1-2016-11-03" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-1-2016-11-03" class="anchor"></a>travis 0.2-1 (2016-11-03)</h1>
 <ul>
 <li>Fix Travis authentication by using a fresh GitHub token for each authentication (#35, #36).</li>
 <li>Cache Travis and GitHub token during the current R session using <code>memoise</code> (#29).</li>
@@ -221,9 +240,9 @@
 <li>Add basic package documentation (#20).</li>
 </ul>
 </div>
-    <div id="travis-0-2-2016-09-11" class="section level2">
-<h2 class="hasAnchor">
-<a href="#travis-0-2-2016-09-11" class="anchor"></a>travis 0.2 (2016-09-11)</h2>
+    <div id="travis-0-2-2016-09-11" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-2016-09-11" class="anchor"></a>travis 0.2 (2016-09-11)</h1>
 <p>Initial release.</p>
 <ul>
 <li>Access to Travis API via <code>travis_...()</code> functions.</li>
@@ -237,6 +256,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#travis-0-2-11-9000">0.2.11.9000</a></li>
         <li><a href="#travis-0-2-11-2017-07-24">0.2-11</a></li>
         <li><a href="#travis-0-2-10-2017-06-29">0.2-10</a></li>
         <li><a href="#travis-0-2-9-2017-06-29">0.2-9</a></li>

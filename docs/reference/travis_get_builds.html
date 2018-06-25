@@ -33,7 +33,18 @@
 <meta property="og:title" content="Travis CI builds — travis_get_builds" />
 
 <meta property="og:description" content="Functions around completed or pending Travis CI builds and jobs.
-travis_get_builds() calls the &quot;builds&quot; API for the current repository." />
+travis_get_builds() calls the &quot;builds&quot; API for the current repository.
+travis_restart_build() restarts a build with a given build ID.
+travis_restart_last_build() restarts the last build.
+travis_cancel_build() cancels a build with a given build ID.
+travis_get_jobs() calls the &quot;jobs&quot; API for the current repository.
+travis_restart_job() restarts a job with a given job ID.
+travis_cancel_job() cancels a job with a given job ID.
+travis_debug_job() restarts, in debug mode, a job with a given job ID.
+See the Travis CI documentation
+for more details.
+travis_job_log() returns a build job log.
+travis_delete_log() deletes a build job log." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +73,7 @@ travis_get_builds() calls the &quot;builds&quot; API for the current repository.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">travis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.11.9000</span>
       </span>
     </div>
 
@@ -105,6 +116,17 @@ travis_get_builds() calls the &quot;builds&quot; API for the current repository.
     
     <p>Functions around completed or pending Travis CI builds and jobs.</p>
 <p><code>travis_get_builds()</code> calls the "builds" API for the current repository.</p>
+<p><code>travis_restart_build()</code> restarts a build with a given build ID.</p>
+<p><code>travis_restart_last_build()</code> restarts the <em>last</em> build.</p>
+<p><code>travis_cancel_build()</code> cancels a build with a given build ID.</p>
+<p><code>travis_get_jobs()</code> calls the "jobs" API for the current repository.</p>
+<p><code>travis_restart_job()</code> restarts a job with a given job ID.</p>
+<p><code>travis_cancel_job()</code> cancels a job with a given job ID.</p>
+<p><code>travis_debug_job()</code> restarts, in debug mode, a job with a given job ID.
+See the <a href='https://docs.travis-ci.com/user/running-build-in-debug-mode/'>Travis CI documentation</a>
+for more details.</p>
+<p><code>travis_job_log()</code> returns a build job log.</p>
+<p><code>travis_delete_log()</code> deletes a build job log.</p>
     
     </div>
 
