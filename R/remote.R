@@ -24,6 +24,6 @@ extract_repo <- function(url) {
   if (!all(grepl("^https://github.com", url))) {
     stopc("Unrecognized repo format: ", url)
   }
-  url <- sub("\\.git", "", url)
+  url <- sub("\\.git$", "", url)
   sub("^https://github.com/", "", url)
 }
