@@ -34,3 +34,4 @@ RoxygenNote: 6.0.1.9000
 Encoding: UTF-8
 Remotes:
     r-lib/usethis
+    ropenscilabs/tic

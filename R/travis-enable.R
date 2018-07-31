@@ -33,7 +33,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
 }
 
 #' @description
-#' `uses_travis()` returns if Travis CI is active for a repo.
+#' `travis_is_enabled()` returns if Travis CI is active for a repo.
 #' @export
 #' @rdname travis_enable
 travis_is_enabled <- function(repo = github_repo(), token = travis_token(repo)) {

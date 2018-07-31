@@ -3,6 +3,7 @@
 #' Adds a public deploy key to an existing GitHub repository.
 #' An existing key of the same name is dropped.
 #'
+#' @importFrom openssl write_ssh
 #' @export
 #' @param pubkey `[pubkey]`\cr
 #'   openssl public key, see [openssl::read_pubkey()].
@@ -58,7 +59,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
 create_key_data <- function(pubkey, title) {
   list(
     "title" = title,
-    "key" = openssl::write_ssh(pubkey),
+    "key" = write_ssh(pubkey),
     "read_only" = FALSE
   )
 }

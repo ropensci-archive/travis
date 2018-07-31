@@ -29,5 +29,5 @@ Activating Travis CI, and querying activity status.
 
 \code{travis_enable()} activates or deactivates Travis CI for a repo.
 
-\code{uses_travis()} returns if Travis CI is active for a repo.
+\code{travis_is_enabled()} returns if Travis CI is active for a repo.
 }

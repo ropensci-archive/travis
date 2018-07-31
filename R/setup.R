@@ -8,6 +8,8 @@
 #' The \pkg{tic} companion package contains facilities for installing such a key
 #' during a Travis CI build.
 #'
+#' @importFrom tic get_public_key encode_private_key
+#' @importFrom openssl rsa_keygen
 #' @inheritParams github_add_key
 #' @inheritParams travis_repo_info
 #' @param travis_repo `[string]`\cr
@@ -21,7 +23,7 @@ use_travis_deploy <- function(path = ".", info = github_info(path),
   # authenticate on github and travis and set up keys/vars
 
   # generate deploy key pair
-  key <- openssl::rsa_keygen()  # TOOD: num bits?
+  key <- rsa_keygen()  # TOOD: num bits?
 
   # encrypt private key using tempkey and iv
   pub_key <- get_public_key(key)
@@ -38,17 +40,3 @@ use_travis_deploy <- function(path = ".", info = github_info(path),
 
 }
 
-get_public_key <- function(key) {
-  as.list(key)$pubkey
-}
-
-encode_private_key <- function(key) {
-  conn <- textConnection(NULL, "w")
-  openssl::write_pem(key, conn, password = NULL)
-  private_key <- textConnectionValue(conn)
-  close(conn)
-
-  private_key <- paste(private_key, collapse = "\n")
-
-  openssl::base64_encode(charToRaw(private_key))
-}
