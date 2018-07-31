@@ -7,7 +7,7 @@
 \title{travis: Set Up 'Travis' for Testing and Deployment}
 \description{
 Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
-continuous integration for R packages and other R-based projects.
+    continuous integration for R packages and other R-based projects.
 }
 \details{
 Use \code{\link[=github_repo]{github_repo()}} to get the name of the current repository

@@ -18,28 +18,29 @@ travis_get_builds(repo = github_repo(), token = travis_token(repo))
 travis_restart_build(build_id, repo = github_repo(),
   token = travis_token(repo), quiet = FALSE)
 
-travis_restart_last_build(repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_restart_last_build(repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
 
 travis_cancel_build(build_id, repo = github_repo(),
   token = travis_token(repo), quiet = FALSE)
 
-travis_get_jobs(build_id, repo = github_repo(), token = travis_token(repo))
+travis_get_jobs(build_id, repo = github_repo(),
+  token = travis_token(repo))
 
-travis_restart_job(job_id, repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_restart_job(job_id, repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
 
-travis_cancel_job(job_id, repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_cancel_job(job_id, repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
 
 travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
   token = travis_token(repo), quiet = FALSE)
 
-travis_get_log(job_id, repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_get_log(job_id, repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
 
-travis_delete_log(job_id, repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_delete_log(job_id, repo = github_repo(),
+  token = travis_token(repo), quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
@@ -65,24 +66,4 @@ set to \code{TRUE}, refrain from issuing commands that might expose secrets.}
 Functions around completed or pending Travis CI builds and jobs.
 
 \code{travis_get_builds()} calls the "builds" API for the current repository.
-
-\code{travis_restart_build()} restarts a build with a given build ID.
-
-\code{travis_restart_last_build()} restarts the \emph{last} build.
-
-\code{travis_cancel_build()} cancels a build with a given build ID.
-
-\code{travis_get_jobs()} calls the "jobs" API for the current repository.
-
-\code{travis_restart_job()} restarts a job with a given job ID.
-
-\code{travis_cancel_job()} cancels a job with a given job ID.
-
-\code{travis_debug_job()} restarts, in debug mode, a job with a given job ID.
-See the \href{https://docs.travis-ci.com/user/running-build-in-debug-mode/}{Travis CI documentation}
-for more details.
-
-\code{travis_job_log()} returns a build job log.
-
-\code{travis_delete_log()} deletes a build job log.
 }

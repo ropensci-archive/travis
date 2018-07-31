@@ -6,8 +6,8 @@
 \alias{new_github}
 \title{Create a repository on GitHub}
 \usage{
-github_create_repo(name, org = NULL, private = FALSE, gh_token = NULL,
-  quiet = FALSE)
+github_create_repo(name, org = NULL, private = FALSE,
+  gh_token = NULL, quiet = FALSE)
 
 use_github(path = ".", push = NA, name = NULL, org = NULL,
   private = FALSE, gh_token = NULL, quiet = FALSE)
@@ -62,3 +62,4 @@ Other GitHub functions: \code{\link{github_add_key}},
   \code{\link{github_create_pat}},
   \code{\link{github_info}}
 }
+\concept{GitHub functions}

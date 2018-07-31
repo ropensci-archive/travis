@@ -9,13 +9,15 @@
 \usage{
 travis_get_vars(repo = github_repo(), token = travis_token(repo))
 
-travis_get_var_id(name, repo = github_repo(), token = travis_token(repo))
+travis_get_var_id(name, repo = github_repo(),
+  token = travis_token(repo))
 
 travis_set_var(name, value, public = FALSE, repo = github_repo(),
   token = travis_token(repo), quiet = FALSE)
 
-travis_delete_var(name, repo = github_repo(), token = travis_token(repo),
-  id = travis_get_var_id(name, repo = repo, token = token), quiet = FALSE)
+travis_delete_var(name, repo = github_repo(),
+  token = travis_token(repo), id = travis_get_var_id(name, repo = repo,
+  token = token), quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
