@@ -6,8 +6,9 @@
 \alias{travis-package}
 \title{travis: Set Up 'Travis' for Testing and Deployment}
 \description{
-Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
-    continuous integration for R packages and other R-based projects.
+Tools for interacting with the 'Travis' and
+    'GitHub' APIs for setting up continuous integration for R packages and
+    other R-based projects.
 }
 \details{
 Use \code{\link[=github_repo]{github_repo()}} to get the name of the current repository
@@ -25,6 +26,14 @@ corresponding private key on Travis CI to simplify deployments to GitHub
 from Travis CI.
 All these functions ask for permission the first time you call them.
 }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ropenscilabs/travis}
+  \item Report bugs at \url{https://github.com/ropenscilabs/travis/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Kirill Müller \email{krlmlr+r@mailbox.org} (0000-0002-1416-3412)

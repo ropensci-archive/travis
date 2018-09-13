@@ -79,7 +79,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropenscilabs/travis">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -93,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/ropenscilabs/travis/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="travis-0-2-11-9000" class="section level1">
@@ -102,13 +107,13 @@
 <ul>
 <li>New <code><a href="../reference/travis_get_builds.html">travis_get_jobs()</a></code>.</li>
 <li>Remove distinction between <code>repo</code> and <code>repo_id</code>, don’t need <code>repo_id</code> argument anymore.</li>
-<li>Using Travis CI API v3 (#63).</li>
+<li>Using Travis CI API v3 (<a href='https://github.com/ropenscilabs/travis/issues/63'>#63</a>).</li>
 <li>Remove <code>travis_accounts()</code>.</li>
 <li>New <code><a href="../reference/travis_repo_info.html">travis_has_repo()</a></code>.</li>
 <li>Rename <code>uses_travis()</code> to <code><a href="../reference/travis_enable.html">travis_is_enabled()</a></code>.</li>
 <li>Rename <code>travis_repositories()</code> to <code><a href="../reference/travis_repos.html">travis_repos()</a></code>.</li>
 <li>New <code>format()</code> and <code>print()</code> methods for collections and objects, new S3 classes <code>"travis"</code>, <code>"travis_collection"</code> and <code>"travis_xxx"</code> (one for each collection and item type).</li>
-<li>Merge functionality from cloudyr/travisci (#65, <a href='http://github.com/leeper'>@leeper</a>).</li>
+<li>Merge functionality from cloudyr/travisci (<a href='https://github.com/ropenscilabs/travis/issues/65'>#65</a>, <a href='http://github.com/leeper'>@leeper</a>).</li>
 <li>
 <code><a href="../reference/github_info.html">github_info()</a></code> now always passes a token, and supports the <code>gh_token</code> argument.</li>
 <li>Tests for internal formatting functions.</li>
@@ -146,42 +151,42 @@
 <code><a href="../reference/use_tic.html">use_tic()</a></code> prints message when adding files from a template.</li>
 <li>
 <code><a href="../reference/use_tic.html">use_tic()</a></code> creates an <code>appveyor.yml</code> only for package projects.</li>
-<li>New <code>info</code>, <code>repo</code> and <code>travis_repo</code> arguments to <code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> for creating keys for other repos, e.g., to auto-deploy a drat (#61).</li>
+<li>New <code>info</code>, <code>repo</code> and <code>travis_repo</code> arguments to <code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> for creating keys for other repos, e.g., to auto-deploy a drat (<a href='https://github.com/ropenscilabs/travis/issues/61'>#61</a>).</li>
 <li>Remove <code>repos</code> argument from <code><a href="../reference/github_add_key.html">github_add_key()</a></code>, which now returns the “httr” request object.</li>
-<li>New <code><a href="../reference/use_tic.html">use_tic()</a></code> (#60).</li>
+<li>New <code><a href="../reference/use_tic.html">use_tic()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/60'>#60</a>).</li>
 </ul>
 </div>
     <div id="travis-0-2-7-2017-06-13" class="section level1">
 <h1 class="page-header">
 <a href="#travis-0-2-7-2017-06-13" class="anchor"></a>travis 0.2-7 (2017-06-13)</h1>
 <ul>
-<li>New <code><a href="../reference/github_create_repo.html">new_github()</a></code> and <code><a href="../reference/github_create_repo.html">use_github()</a></code> (#59).</li>
+<li>New <code><a href="../reference/github_create_repo.html">new_github()</a></code> and <code><a href="../reference/github_create_repo.html">use_github()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/59'>#59</a>).</li>
 </ul>
 </div>
     <div id="travis-0-2-6-2017-06-10" class="section level1">
 <h1 class="page-header">
 <a href="#travis-0-2-6-2017-06-10" class="anchor"></a>travis 0.2-6 (2017-06-10)</h1>
 <ul>
-<li>Document all functions, <code>R CMD check</code> passes without warnings or notes (#50).</li>
+<li>Document all functions, <code>R CMD check</code> passes without warnings or notes (<a href='https://github.com/ropenscilabs/travis/issues/50'>#50</a>).</li>
 <li>Disabled caching of GitHub authentication, because functions from this package usually needs to be run only once per development package.</li>
 <li>New <code><a href="../reference/travis_get_vars.html">travis_get_var_id()</a></code>.</li>
 <li>
-<code><a href="../reference/travis_get_vars.html">travis_delete_var()</a></code> gains <code>name</code> argument, <code>id</code> is computed from <code>name</code> (#58).</li>
-<li>All commands that are primarily called for side effects print a success message, unless the <code>quiet</code> argument is set to <code>FALSE</code> (#46).</li>
-<li>Deploy keys now have the title “travis+tic” by default, existing keys by the same title are deleted and created anew (#33).</li>
-<li>New <code><a href="../reference/travis_set_pat.html">travis_set_pat()</a></code>, by default directs the user to the page where new tokens are created and waits for a token to appear on the clipboard (#21).</li>
+<code><a href="../reference/travis_get_vars.html">travis_delete_var()</a></code> gains <code>name</code> argument, <code>id</code> is computed from <code>name</code> (<a href='https://github.com/ropenscilabs/travis/issues/58'>#58</a>).</li>
+<li>All commands that are primarily called for side effects print a success message, unless the <code>quiet</code> argument is set to <code>FALSE</code> (<a href='https://github.com/ropenscilabs/travis/issues/46'>#46</a>).</li>
+<li>Deploy keys now have the title “travis+tic” by default, existing keys by the same title are deleted and created anew (<a href='https://github.com/ropenscilabs/travis/issues/33'>#33</a>).</li>
+<li>New <code><a href="../reference/travis_set_pat.html">travis_set_pat()</a></code>, by default directs the user to the page where new tokens are created and waits for a token to appear on the clipboard (<a href='https://github.com/ropenscilabs/travis/issues/21'>#21</a>).</li>
 </ul>
 </div>
     <div id="travis-0-2-5-2017-06-10" class="section level1">
 <h1 class="page-header">
 <a href="#travis-0-2-5-2017-06-10" class="anchor"></a>travis 0.2-5 (2017-06-10)</h1>
 <ul>
-<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travis()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travis()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (#47).</li>
-<li>Only interactive sessions will open a browser window to improve setup experience. The <code><a href="../reference/travis_sync.html">travis_browse()</a></code> function still opens a browser window unconditionally (#52).</li>
-<li>All API functions that provide a side effect return the result of the request invisibly (#57).</li>
-<li>For organization repos, adding deploy keys or creating new repos checks if the user and the app have permission to perform this action, and gives more accurate error messages (#51).</li>
-<li>Environment variables on Travis are overwritten if they exist (#30).</li>
-<li>Remove devtools dependency (#49).</li>
+<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travis()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travis()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/47'>#47</a>).</li>
+<li>Only interactive sessions will open a browser window to improve setup experience. The <code><a href="../reference/travis_sync.html">travis_browse()</a></code> function still opens a browser window unconditionally (<a href='https://github.com/ropenscilabs/travis/issues/52'>#52</a>).</li>
+<li>All API functions that provide a side effect return the result of the request invisibly (<a href='https://github.com/ropenscilabs/travis/issues/57'>#57</a>).</li>
+<li>For organization repos, adding deploy keys or creating new repos checks if the user and the app have permission to perform this action, and gives more accurate error messages (<a href='https://github.com/ropenscilabs/travis/issues/51'>#51</a>).</li>
+<li>Environment variables on Travis are overwritten if they exist (<a href='https://github.com/ropenscilabs/travis/issues/30'>#30</a>).</li>
+<li>Remove devtools dependency (<a href='https://github.com/ropenscilabs/travis/issues/49'>#49</a>).</li>
 </ul>
 </div>
     <div id="travis-0-2-4-2016-11-06" class="section level1">
@@ -199,7 +204,7 @@
 <li>
 <code>travis_encrypt()</code> gains repo argument.</li>
 <li>
-<code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> creates an encrypted environment variable that contains the private key; the public key is pushed to GitHub and not stored anywhere (#45). The deploy key is encoded in the base64 encoding, because Travis doesn’t handle environment variables with newlines very well.</li>
+<code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> creates an encrypted environment variable that contains the private key; the public key is pushed to GitHub and not stored anywhere (<a href='https://github.com/ropenscilabs/travis/issues/45'>#45</a>). The deploy key is encoded in the base64 encoding, because Travis doesn’t handle environment variables with newlines very well.</li>
 </ul>
 </div>
     <div id="travis-0-2-2-2016-11-04" class="section level1">
@@ -223,9 +228,9 @@
 <h1 class="page-header">
 <a href="#travis-0-2-1-2016-11-03" class="anchor"></a>travis 0.2-1 (2016-11-03)</h1>
 <ul>
-<li>Fix Travis authentication by using a fresh GitHub token for each authentication (#35, #36).</li>
-<li>Cache Travis and GitHub token during the current R session using <code>memoise</code> (#29).</li>
-<li>Support URLs of the form <code>git://github.com</code>, with tests (#19).</li>
+<li>Fix Travis authentication by using a fresh GitHub token for each authentication (<a href='https://github.com/ropenscilabs/travis/issues/35'>#35</a>, <a href='https://github.com/ropenscilabs/travis/issues/36'>#36</a>).</li>
+<li>Cache Travis and GitHub token during the current R session using <code>memoise</code> (<a href='https://github.com/ropenscilabs/travis/issues/29'>#29</a>).</li>
+<li>Support URLs of the form <code>git://github.com</code>, with tests (<a href='https://github.com/ropenscilabs/travis/issues/19'>#19</a>).</li>
 <li>All functions have sensible default values.</li>
 <li>New <code><a href="../reference/travis_sync.html">travis_sync(block = TRUE)</a></code>.</li>
 <li>New <code><a href="../reference/travis_enable.html">travis_enable(active = TRUE)</a></code>, will sync by default if repo not found.</li>
@@ -234,10 +239,10 @@
 <li>New <code><a href="../reference/travis_repo_info.html">travis_repo_id()</a></code>.</li>
 <li>
 <code><a href="../reference/travis_repo_info.html">travis_repo_info()</a></code> now only has a repo argument.</li>
-<li>Don’t update <code>.travis.yml</code> in <code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> (#41).</li>
+<li>Don’t update <code>.travis.yml</code> in <code><a href="../reference/use_travis_deploy.html">use_travis_deploy()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/41'>#41</a>).</li>
 <li>Relax R dependency to &gt;= 3.2.0.</li>
 <li>More precise commit message when initializing repo.</li>
-<li>Add basic package documentation (#20).</li>
+<li>Add basic package documentation (<a href='https://github.com/ropenscilabs/travis/issues/20'>#20</a>).</li>
 </ul>
 </div>
     <div id="travis-0-2-2016-09-11" class="section level1">

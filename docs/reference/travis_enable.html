@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="Activating Travis CI, and querying activity status.
 travis_enable() activates or deactivates Travis CI for a repo.
-uses_travis() returns if Travis CI is active for a repo." />
+travis_is_enabled() returns if Travis CI is active for a repo." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +84,12 @@ uses_travis() returns if Travis CI is active for a repo." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropenscilabs/travis">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -98,7 +103,7 @@ uses_travis() returns if Travis CI is active for a repo." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Activate Travis CI</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/travis-enable.R'><code>R/travis-enable.R</code></a></small>
     <div class="hidden name"><code>travis_enable.Rd</code></div>
     </div>
 
@@ -106,7 +111,7 @@ uses_travis() returns if Travis CI is active for a repo." />
     
     <p>Activating Travis CI, and querying activity status.</p>
 <p><code>travis_enable()</code> activates or deactivates Travis CI for a repo.</p>
-<p><code>uses_travis()</code> returns if Travis CI is active for a repo.</p>
+<p><code>travis_is_enabled()</code> returns if Travis CI is active for a repo.</p>
     
     </div>
 

@@ -91,7 +91,12 @@ travis_delete_var() deletes a variable." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ropenscilabs/travis">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -105,7 +110,7 @@ travis_delete_var() deletes a variable." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Travis CI variables</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/travis-vars.R'><code>R/travis-vars.R</code></a></small>
     <div class="hidden name"><code>travis_get_vars.Rd</code></div>
     </div>
 
@@ -126,13 +131,15 @@ because this is what seems to be used in Travis CI builds in such a case.</p>
 
     <pre class="usage"><span class='fu'>travis_get_vars</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
 
-<span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
+<span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))
 
 <span class='fu'>travis_set_var</span>(<span class='no'>name</span>, <span class='no'>value</span>, <span class='kw'>public</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
   <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>travis_delete_var</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>travis_delete_var</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'>travis_get_var_id</span>(<span class='no'>name</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='no'>token</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
