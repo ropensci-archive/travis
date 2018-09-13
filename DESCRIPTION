@@ -1,19 +1,33 @@
-Package: travis
 Type: Package
+Package: travis
 Title: Set Up 'Travis' for Testing and Deployment
 Version: 0.2.11.9000
-Authors@R: c(
-    person("Kirill", "M\u00fcller", email = "krlmlr+r@mailbox.org", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1416-3412")),
-    person("Mika", "Braginsky", email = "mika.br@gmail.com", role = c("aut")),
-    person("Karthik", "Ram", email = "karthik.ram@gmail.com", role = c("aut")),
-    person("Jeroen", "Ooms", email = "jeroen.ooms@stat.ucla.edu", role = c("aut")),
-    person("rOpenSci", role = c("fnd"))
-  )
-Description: 
-    Tools for interacting with the 'Travis' and 'GitHub' APIs for setting up
-    continuous integration for R packages and other R-based projects.
+Authors@R: 
+    c(person(given = "Kirill",
+             family = "Müller",
+             role = c("aut", "cre"),
+             email = "krlmlr+r@mailbox.org",
+             comment = c(ORCID = "0000-0002-1416-3412")),
+      person(given = "Mika",
+             family = "Braginsky",
+             role = "aut",
+             email = "mika.br@gmail.com"),
+      person(given = "Karthik",
+             family = "Ram",
+             role = "aut",
+             email = "karthik.ram@gmail.com"),
+      person(given = "Jeroen",
+             family = "Ooms",
+             role = "aut",
+             email = "jeroen.ooms@stat.ucla.edu"),
+      person(given = "rOpenSci",
+             role = "fnd"))
+Description:  Tools for interacting with the 'Travis' and
+    'GitHub' APIs for setting up continuous integration for R packages and
+    other R-based projects.
 License: GPL (>= 2)
-LazyData: TRUE
+URL: https://github.com/ropenscilabs/travis
+BugReports: https://github.com/ropenscilabs/travis/issues
 Depends:
     R (>= 3.1.0)
 Imports:
@@ -29,8 +43,9 @@ Suggests:
     roxygen2,
     testthat,
     usethis
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
-Encoding: UTF-8
 Remotes:
     r-lib/usethis
+Encoding: UTF-8
+LazyData: TRUE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.0
