@@ -35,7 +35,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
 
 ## Example
 
-0. Create a repository on GitHub (if it's not there yet)
+1. Create a repository on GitHub (if it's not there yet)
 
     ```r
     github_create_repo()
@@ -109,7 +109,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     Create a personal access token, make sure that you are signed in as the correct user. The suggested description 'travis+tic for <repo>' has been copied to the clipboard. If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked. Then, copy the new token to the clipboard, it will be detected and applied automatically. Please visit https://github.com/settings/tokens/new. A browser window will be opened. Waiting for PAT to appear on the clipboard. Detected PAT, clearing clipboard. Finished adding private environment variable GITHUB_PAT to <repo> on Travis CI.
     ```
     
-8. Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.
+1. Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.
 
     ```r
     travis_set_var()
