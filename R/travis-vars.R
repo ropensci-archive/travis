@@ -8,6 +8,11 @@
 #' @inheritParams travis_set_pat
 #'
 #' @export
+#' @examples
+#' \dontrun{
+#' # List all variables:
+#' travis_get_vars()
+#' }
 travis_get_vars <- function(repo = github_repo(), token = travis_token(repo)) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
                      token = token)
@@ -43,6 +48,11 @@ new_travis_env_var <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_vars
+#' @examples
+#' \dontrun{
+#' # Get the ID of a variable.
+#' travis_get_var_id("secret_var")
+#' }
 travis_get_var_id <- function(name, repo = github_repo(),
                               token = travis_token(repo)) {
   vars <- travis_get_vars(repo = repo, token = token)
@@ -68,6 +78,9 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' If multiple variables exist by that name, it updates the last (with a warning),
 #' because this is what seems to be used in Travis CI builds in such a case.
 #'
+#' @details
+#' Avoid using `travis_set_var()` with literal values
+#'
 #' @param value `[string]`\cr
 #'   The value for the new or updated variable.
 #' @param public `[flag]`\cr
@@ -75,6 +88,15 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #'
 #' @export
 #' @rdname travis_get_vars
+#' @examples
+#' \dontrun{
+#' # Avoid calling with literal values:
+#' travis_set_var("secret_var", "oh no - this will be recorded in .Rhistory!")
+#'
+#' # Set a Travis environment variable without recording it in history
+#' # by reading the value from the console:
+#' travis_set_var("secret_var", readLines(n = 1))
+#' }
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            token = travis_token(repo),
                            quiet = FALSE) {
@@ -97,6 +119,11 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #'
 #' @export
 #' @rdname travis_get_vars
+#' @examples
+#' \dontrun{
+#' # Delete a variable:
+#' travis_delete_var("secret_var")
+#' }
 travis_delete_var <- function(name, repo = github_repo(),
                               token = travis_token(repo),
                               id = travis_get_var_id(name, repo = repo, token = token),
