@@ -27,3 +27,7 @@ reference:
   - github_add_key
   - -starts_with("github_create_")
   - ends_with("_github")
+
+authors:
+  Kirill Müller:
+    href: http://krlmlr.info
