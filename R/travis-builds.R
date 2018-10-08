@@ -6,10 +6,11 @@
 #' `travis_get_builds()` calls the "builds" API for the current repository.
 #'
 #' @inheritParams travis_set_pat
+#' @param ... see [httr::GET()]
 #'
 #' @export
-travis_get_builds <- function(repo = github_repo(), token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/builds", encode_slug(repo)), token = token)
+travis_get_builds <- function(repo = github_repo(), token = travis_token(repo), ...) {
+  req <- TRAVIS_GET3(sprintf("/repo/%s/builds", encode_slug(repo)), token = token, ...)
   httr::stop_for_status(
     req,
     sprintf("get builds for %s from Travis CI", repo)
