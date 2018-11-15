@@ -22,7 +22,7 @@ Authors@R:
              email = "jeroen.ooms@stat.ucla.edu"),
       person(given = "rOpenSci",
              role = "fnd"))
-Description:  Tools for interacting with the 'Travis' and
+Description: Tools for interacting with the 'Travis' and
     'GitHub' APIs for setting up continuous integration for R packages and
     other R-based projects.
 License: GPL (>= 2)
@@ -48,4 +48,4 @@ Remotes:
 Encoding: UTF-8
 LazyData: TRUE
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
