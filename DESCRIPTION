@@ -39,6 +39,7 @@ Imports:
     openssl,
     withr
 Suggests:
+    knitr,
     remotes,
     roxygen2,
     testthat,
