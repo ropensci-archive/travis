@@ -43,6 +43,8 @@ Suggests:
     roxygen2,
     testthat,
     usethis
+VignetteBuilder: 
+    knitr
 Remotes:
     r-lib/usethis
 Encoding: UTF-8
