@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a GitHub PAT — github_create_pat • travis</title>
+<title>Linting — travis_lint • travis</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,15 +30,9 @@
 
 
 
-<meta property="og:title" content="Create a GitHub PAT — github_create_pat" />
+<meta property="og:title" content="Linting — travis_lint" />
 
-<meta property="og:description" content="Prompts the user to create a personal access token for the GitHub API
-related to the current repository, e.g., to work around rate limitations.
-First, the user is directed to the website where a PAT can be created.
-A suggestion for the PAT's title is copied to the clipboard.
-Then, the function waits until the user copies a string that resembles a PAT
-(i.e., 40 lowercase hexadecimal digits) to the clipboard.
-The clipboard is cleared right after obtaining the PAT." />
+<meta property="og:description" content="This checks if a .travis.yml file is valid, and identifies possible errors." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,32 +100,26 @@ The clipboard is cleared right after obtaining the PAT." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a GitHub PAT</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/github-pat.R'><code>R/github-pat.R</code></a></small>
-    <div class="hidden name"><code>github_create_pat.Rd</code></div>
+    <h1>Linting</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/travis-lint.R'><code>R/travis-lint.R</code></a></small>
+    <div class="hidden name"><code>travis_lint.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Prompts the user to create a personal access token for the GitHub API
-related to the current repository, e.g., to work around rate limitations.
-First, the user is directed to the website where a PAT can be created.
-A suggestion for the PAT's title is copied to the clipboard.
-Then, the function waits until the user copies a string that resembles a PAT
-(i.e., 40 lowercase hexadecimal digits) to the clipboard.
-The clipboard is cleared right after obtaining the PAT.</p>
+    <p>This checks if a <samp>.travis.yml</samp> file is valid, and identifies possible errors.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>github_create_pat</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(<span class='no'>path</span>))</pre>
+    <pre class="usage"><span class='fu'>travis_lint</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>".travis.yml"</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p><code>[string]</code><br />
-The path to a GitHub-enabled Git repository (or a subdirectory thereof).</p></td>
+      <th>file</th>
+      <td><p>A character string specifying a path to a <samp>.travis.yml</samp> file.</p></td>
     </tr>
     <tr>
       <th>repo</th>
@@ -139,30 +127,44 @@ The path to a GitHub-enabled Git repository (or a subdirectory thereof).</p></td
 The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
 Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>token</th>
+      <td><p><code>[Token2.0]</code><br />
+A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p><code>[flag]</code><br />
+Set to <code>FALSE</code> to suppress success message.</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The relatively cumbersome workflow is due to the fact that
-creating a PAT requires basic authentication (username + password).</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
-  <code><a href='github_create_repo.html'>github_create_repo</a></code>,
-  <code><a href='github_info.html'>github_info</a></code></p></div>
+    <p>This function may incorrectly report valid <code>.travis.yml</code> files as broken,
+in particular if <code>language: r</code> is used (which is the default for R projects).</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>travis_lint</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

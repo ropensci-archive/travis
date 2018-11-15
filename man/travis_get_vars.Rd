@@ -58,3 +58,28 @@ because this is what seems to be used in Travis CI builds in such a case.
 
 \code{travis_delete_var()} deletes a variable.
 }
+\details{
+Avoid using \code{travis_set_var()} with literal values
+}
+\examples{
+\dontrun{
+# List all variables:
+travis_get_vars()
+}
+\dontrun{
+# Get the ID of a variable.
+travis_get_var_id("secret_var")
+}
+\dontrun{
+# Avoid calling with literal values:
+travis_set_var("secret_var", "oh no - this will be recorded in .Rhistory!")
+
+# Set a Travis environment variable without recording it in history
+# by reading the value from the console:
+travis_set_var("secret_var", readLines(n = 1))
+}
+\dontrun{
+# Delete a variable:
+travis_delete_var("secret_var")
+}
+}

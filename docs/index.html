@@ -119,6 +119,46 @@
 <p>Set up push access for Travis: This creates an SSH key, stores it as encoded encrypted environment variable on Travis, and enables push access for the corresponding public key. GitHub notifies you via e-mail.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/use_travis_deploy.html">use_travis_deploy</a></span>()</a></code></pre></div>
 </li>
+<li>
+<p>Query current state of the repo on Travis.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_builds</a></span>()</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">A collection of <span class="dv">25</span> Travis CI builds<span class="op">:</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="op">-</span><span class="st"> </span>id<span class="op">:</span><span class="st"> </span><span class="dv">430482536</span>, number<span class="op">:</span><span class="st"> </span><span class="dv">415</span>, state<span class="op">:</span><span class="st"> </span>started, duration<span class="op">:</span><span class="st"> </span><span class="ot">NULL</span>, event_type<span class="op">:</span><span class="st"> </span>pull_request, ...</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="op">-</span><span class="st"> </span>id<span class="op">:</span><span class="st"> </span><span class="dv">430482493</span>, number<span class="op">:</span><span class="st"> </span><span class="dv">414</span>, state<span class="op">:</span><span class="st"> </span>failed, duration<span class="op">:</span><span class="st"> </span><span class="dv">2886</span>, event_type<span class="op">:</span><span class="st"> </span>push, ...</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="op">-</span><span class="st"> </span>id<span class="op">:</span><span class="st"> </span><span class="dv">430453895</span>, number<span class="op">:</span><span class="st"> </span><span class="dv">413</span>, state<span class="op">:</span><span class="st"> </span>failed, duration<span class="op">:</span><span class="st"> </span><span class="dv">3028</span>, event_type<span class="op">:</span><span class="st"> </span>pull_request, ...</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="op">-</span><span class="st"> </span>id<span class="op">:</span><span class="st"> </span><span class="dv">430453887</span>, number<span class="op">:</span><span class="st"> </span><span class="dv">412</span>, state<span class="op">:</span><span class="st"> </span>failed, duration<span class="op">:</span><span class="st"> </span><span class="dv">3251</span>, event_type<span class="op">:</span><span class="st"> </span>push, ...</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="op">-</span><span class="st"> </span>id<span class="op">:</span><span class="st"> </span><span class="dv">430442750</span>, number<span class="op">:</span><span class="st"> </span><span class="dv">411</span>, state<span class="op">:</span><span class="st"> </span>failed, duration<span class="op">:</span><span class="st"> </span><span class="dv">2716</span>, event_type<span class="op">:</span><span class="st"> </span>pull_request, ...</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="op">-</span><span class="st"> </span>...</a></code></pre></div>
+</li>
+<li>
+<p>Retrieve cache information</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_get_caches</a></span>()</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">A collection of <span class="dv">56</span> Travis CI caches<span class="op">:</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="op">-</span><span class="st"> </span>repository_id<span class="op">:</span><span class="st"> </span><span class="dv">10785882</span>, size<span class="op">:</span><span class="st"> </span><span class="dv">68080246</span>, name<span class="op">:</span><span class="st"> </span>cache<span class="op">-</span>linux<span class="op">-</span>trusty<span class="op">-</span>118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb<span class="op">--</span>R<span class="dv">-3</span>.<span class="dv">5</span>.<span class="fl">0.</span>tgz, branch<span class="op">:</span><span class="st"> </span>PR<span class="fl">.64</span>, last_modified<span class="op">:</span><span class="st"> </span><span class="dv">2018-09</span><span class="op">-</span>13T22<span class="op">:</span><span class="dv">29</span><span class="op">:</span>55Z, repo<span class="op">:</span><span class="st"> </span><span class="kw">list</span>(<span class="st">`</span><span class="dt">@type</span><span class="st">`</span> =<span class="st"> "repository"</span>, <span class="st">`</span><span class="dt">@href</span><span class="st">`</span> =<span class="st"> "/repo/10785882"</span>, <span class="st">`</span><span class="dt">@representation</span><span class="st">`</span> =<span class="st"> "minimal"</span>, <span class="dt">id =</span> <span class="dv">10785882</span>, <span class="dt">name =</span> <span class="st">"tic"</span>, <span class="dt">slug =</span> <span class="st">"ropenscilabs/tic"</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="op">-</span><span class="st"> </span>repository_id<span class="op">:</span><span class="st"> </span><span class="dv">10785882</span>, size<span class="op">:</span><span class="st"> </span><span class="dv">60603887</span>, name<span class="op">:</span><span class="st"> </span>cache<span class="op">-</span>linux<span class="op">-</span>trusty<span class="op">-</span>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855<span class="op">--</span>R<span class="dv">-3</span>.<span class="dv">1</span>.<span class="fl">3.</span>tgz, branch<span class="op">:</span><span class="st"> </span>PR<span class="fl">.64</span>, last_modified<span class="op">:</span><span class="st"> </span><span class="dv">2018-09</span><span class="op">-</span>13T22<span class="op">:</span><span class="dv">27</span><span class="op">:</span>07Z, repo<span class="op">:</span><span class="st"> </span><span class="kw">list</span>(<span class="st">`</span><span class="dt">@type</span><span class="st">`</span> =<span class="st"> "repository"</span>, <span class="st">`</span><span class="dt">@href</span><span class="st">`</span> =<span class="st"> "/repo/10785882"</span>, <span class="st">`</span><span class="dt">@representation</span><span class="st">`</span> =<span class="st"> "minimal"</span>, <span class="dt">id =</span> <span class="dv">10785882</span>, <span class="dt">name =</span> <span class="st">"tic"</span>, <span class="dt">slug =</span> <span class="st">"ropenscilabs/tic"</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">[...]</a></code></pre></div>
+</li>
+<li>
+<p>Clear all caches (caution, currently its only possible to delete all caches!):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_delete_caches</a></span>()</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">Finished deleting caches <span class="cf">for</span> <span class="op">&lt;</span>repo<span class="op">&gt;</span><span class="st"> </span>on Travis CI.</a></code></pre></div>
+</li>
+<li>
+<p>Create a Personal Access Token (PAT) to avoid Github’s rate limit</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/travis_set_pat.html">travis_set_pat</a></span>()</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">Create a personal access token, make sure that you are signed <span class="cf">in</span> as the correct user. The suggested description <span class="st">'travis+tic for &lt;repo&gt;'</span> has been copied to the clipboard. If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked. Then, copy the new token to the clipboard, it will be detected and applied automatically. Please visit https<span class="op">:</span><span class="er">//</span>github.com<span class="op">/</span>settings<span class="op">/</span>tokens<span class="op">/</span>new. A browser window will be opened. Waiting <span class="cf">for</span> PAT to appear on the clipboard. Detected PAT, clearing clipboard. Finished adding private environment variable GITHUB_PAT to <span class="op">&lt;</span>repo<span class="op">&gt;</span><span class="st"> </span>on Travis CI.</a></code></pre></div>
+</li>
+<li>
+<p>Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_vars.html">travis_set_var</a></span>()</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">Finished adding private environment variable variable to <span class="op">&lt;</span>repo<span class="op">&gt;</span><span class="st"> </span>on Travis CI.</a></code></pre></div>
+</li>
 </ol>
 <hr>
 <p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/ropensci_footer.png" alt="ropensci_footer"></a></p>
@@ -145,7 +185,8 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Kirill Müller <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
+<li>
+<a href="http://krlmlr.info">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
 <li>Mika Braginsky <br><small class="roles"> Author </small>  </li>
 <li>Karthik Ram <br><small class="roles"> Author </small>  </li>
 <li>Jeroen Ooms <br><small class="roles"> Author </small>  </li>
@@ -164,7 +205,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Kirill Müller, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
+  <p>Developed by <a href="http://krlmlr.info">Kirill Müller</a>, Mika Braginsky, Karthik Ram, Jeroen Ooms, rOpenSci.</p>
 </div>
 
 <div class="pkgdown">
