@@ -15,6 +15,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
+Its main purpose is to provide a command-line way in R for certain Travis tasks that are usually done in the browser (build checking, cache deletion, build restarts, etc.).
+
 ## Function examples
 
 1. Create a repository on GitHub (if it's not there yet)
@@ -101,7 +104,7 @@ knitr::opts_chunk$set(
 
 ## Relation to *tic* and *usethis* 
 
-Maybe we can link to the respective vignette in *tic*?
+See the ["tic, travis and usethis - an overview" vignette](https://ropenscilabs.github.io/tic/articles/tic-usethis-travis.html) from the _tic_ package for more information.
 
 ## Retrieving and examining logs
 
