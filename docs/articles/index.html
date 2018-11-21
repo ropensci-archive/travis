@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Activate Travis CI — travis_enable • travis</title>
+<title>Articles • travis</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,7 @@
 
 
 
-<meta property="og:title" content="Activate Travis CI — travis_enable" />
-
-<meta property="og:description" content="Activating Travis CI, and querying activity status.
-travis_enable() activates or deactivates Travis CI for a repo.
-travis_is_enabled() returns if Travis CI is active for a repo." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -52,7 +47,7 @@ travis_is_enabled() returns if Travis CI is active for a repo." />
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -107,58 +102,17 @@ travis_is_enabled() returns if Travis CI is active for a repo." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Activate Travis CI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/travis-enable.R'><code>R/travis-enable.R</code></a></small>
-    <div class="hidden name"><code>travis_enable.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Activating Travis CI, and querying activity status.</p>
-<p><code>travis_enable()</code> activates or deactivates Travis CI for a repo.</p>
-<p><code>travis_is_enabled()</code> returns if Travis CI is active for a repo.</p>
-    
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="travis.html">Working with Travis in R</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>travis_enable</span>(<span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>travis_is_enabled</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>))</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>active</th>
-      <td><p><code>[flag]</code><br />
-Set to <code>FALSE</code> to deactivate instead of activating.</p></td>
-    </tr>
-    <tr>
-      <th>repo</th>
-      <td><p><code>[string|numeric]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
-Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>token</th>
-      <td><p><code>[Token2.0]</code><br />
-A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p><code>[flag]</code><br />
-Set to <code>FALSE</code> to suppress success message.</p></td>
-    </tr>
-    </table>
-    
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
-
   </div>
 </div>
 
