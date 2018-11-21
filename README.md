@@ -69,7 +69,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
 
 1. Query current state of the repo on Travis.
 
-    ```r
+    ```
     travis_get_builds()
     
     A collection of 25 Travis CI builds:
@@ -83,27 +83,27 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     
 1. Retrieve cache information 
 
-    ```r
+    ```
     travis_get_caches()
     
     A collection of 56 Travis CI caches:
     - repository_id: 10785882, size: 68080246, name: cache-linux-trusty-
-    118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb--R-3.5.0.tgz, 
-    branch: PR.64, last_modified: 2018-09-13T22:29:55Z, 
-    repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
-    `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
+      118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb--R-3.5.0.tgz, 
+      branch: PR.64, last_modified: 2018-09-13T22:29:55Z, 
+      repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
+      `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
     
     - repository_id: 10785882, size: 60603887, name: cache-linux-trusty-
-    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--R-3.1.3.tgz, 
-    branch: PR.64, last_modified: 2018-09-13T22:27:07Z, 
-    repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
-    `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
-    [...]
+      e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--R-3.1.3.tgz, 
+      branch: PR.64, last_modified: 2018-09-13T22:27:07Z, 
+      repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
+      `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
+      [...]
     ```
     
 1. Clear all caches (caution, currently its only possible to delete all caches!):
     
-    ```r
+    ```
     travis_delete_caches()
     
     Finished deleting caches for <repo> on Travis CI.
@@ -111,7 +111,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     
 1. Create a Personal Access Token (PAT) to avoid Github's rate limit
 
-    ```r
+    ```
     travis_set_pat()
     
     Create a personal access token, make sure that you are signed in as the correct user. 
@@ -141,7 +141,7 @@ The package is linked to the "rtravis" application, and will request GitHub perm
     Setting up libgomp1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
     Setting up libasan0:amd64 (4.8.4-2ubuntu1~14.04.4) ...
     [...]
-    
+    ```
 ---
 
 [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
