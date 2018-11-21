@@ -3,7 +3,7 @@
 [![Travis-CI Build Status](https://travis-ci.org/ropenscilabs/travis.svg?branch=master)](https://travis-ci.org/ropenscilabs/travis)
 
 The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
-Apart from automating away a few button flips, it also provides an easy method to set up push access which can be then triggered (on Travis) by the companion package [tic](https://github.com/krlmlr/tic) via the `use_tic()` function, which performs the following steps:
+Apart from automating away a few button flips, it also provides an easy method to set up push access which can be then triggered (on Travis) by the companion package [tic](https://github.com/ropenscilabs/tic) via the `use_tic()` function, which performs the following steps:
 
 1. If necessary, creates a GitHub repository
 1. Enables Travis CI for this repository
