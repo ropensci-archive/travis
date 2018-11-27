@@ -2,8 +2,6 @@ add_package_checks()
 
 ### Create a pkgdown site ------------------------------------------------------
 ### Optionally build and deploy a pkgdown site via the CI service
-### This has the opportunity to not have to commit man/, DESCRIPTION and NAMESPACE
-### changes manually
 
 # if (isTRUE(Sys.getenv("BUILD_PKGDOWN"))) {
 #   # pkgdown documentation can be built optionally. Other example criteria:
@@ -19,9 +17,9 @@ add_package_checks()
 #     # add_step(step_push_deploy(commit_paths = "docs/")) # single commit to master/docs
 # }
 
-### Update documentation -------------------------------------------------------
-### Optionally build the documentation by the CI service
-### This has the opportunity to not have to commit man/, DESCRIPTION and NAMESPACE
+### Update .Rd files -------------------------------------------------------
+### Optionally build  and deploy the documentation by the CI service
+### This has the advantage to not have to commit man/, DESCRIPTION and NAMESPACE
 ### changes manually
 
 # if (ci()$get_branch() == "master") { # optionally only in the master branch
