@@ -10,7 +10,7 @@ get_stage("deploy") %>%
     prepare_call = remotes::install_github("rstudio/bookdown")
   )
 
-if (Sys.getenv("id_rsa") != "") {
+if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # pkgdown documentation can be built optionally. Other example criteria:
   # - `inherits(ci(), "TravisCI")`: Only for Travis CI
   # - `ci()$is_tag()`: Only for tags, not for branches
