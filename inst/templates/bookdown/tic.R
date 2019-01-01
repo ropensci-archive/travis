@@ -5,10 +5,7 @@ get_stage("install") %>%
   add_code_step(remotes::install_deps(dependencies = TRUE))
 
 get_stage("deploy") %>%
-  add_code_step(
-    bookdown::render_book('index.Rmd', 'bookdown::gitbook'),
-    prepare_call = remotes::install_github("rstudio/bookdown")
-  )
+  add_code_step(bookdown::render_book('index.Rmd', 'bookdown::gitbook'))
 
 if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # pkgdown documentation can be built optionally. Other example criteria:

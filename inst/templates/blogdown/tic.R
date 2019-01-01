@@ -2,7 +2,7 @@ get_stage("before_install") %>%
   add_code_step(update.packages(ask = FALSE))
 
 get_stage("install") %>%
-  add_code_step(blogdown::install_hugo(), prepare_call = remotes::install_github("rstudio/blogdown"))
+  add_code_step(blogdown::install_hugo())
 
 if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # pkgdown documentation can be built optionally. Other example criteria:
