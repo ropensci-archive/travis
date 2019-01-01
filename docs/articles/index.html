@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set the GITHUB_PAT variable on Travis — travis_set_pat • travis</title>
+<title>Articles • travis</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,7 @@
 
 
 
-<meta property="og:title" content="Set the GITHUB_PAT variable on Travis — travis_set_pat" />
-
-<meta property="og:description" content="Assigns a GitHub PAT to the GITHUB_PAT private variable on Travis CI
-via travis_set_var(),
-among others this works around GitHub API rate limitations.
-By default, the PAT is obtained from github_create_pat()." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -53,7 +47,7 @@ By default, the PAT is obtained from github_create_pat()." />
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -108,65 +102,17 @@ By default, the PAT is obtained from github_create_pat()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set the GITHUB_PAT variable on Travis</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropenscilabs/travis/blob/master/R/travis-pat.R'><code>R/travis-pat.R</code></a></small>
-    <div class="hidden name"><code>travis_set_pat.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Assigns a GitHub PAT to the <code>GITHUB_PAT</code> private variable on Travis CI
-via <code><a href='travis_get_vars.html'>travis_set_var()</a></code>,
-among others this works around GitHub API rate limitations.
-By default, the PAT is obtained from <code><a href='github_create_pat.html'>github_create_pat()</a></code>.</p>
-    
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="travis.html">Working with Travis in R</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>travis_set_pat</span>(<span class='kw'>pat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>pat</th>
-      <td><p><code>[string]</code><br />
-If set, avoids calling <code><a href='github_create_pat.html'>github_create_pat()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>repo</th>
-      <td><p><code>[string|numeric]</code><br />
-The GitHub repo slug, by default obtained through <code><a href='github_info.html'>github_repo()</a></code>.
-Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>token</th>
-      <td><p><code>[Token2.0]</code><br />
-A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()</a></code> or <code><a href='auth_travis.html'>auth_travis()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p><code>[flag]</code><br />
-Set to <code>FALSE</code> to suppress success message.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Travis CI functions: <code><a href='travis_get_caches.html'>travis_get_caches</a></code>,
-  <code><a href='travis_repo_info.html'>travis_repo_info</a></code>,
-  <code><a href='travis_repos.html'>travis_repos</a></code></p></div>
-    
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
   </div>
 </div>
 
