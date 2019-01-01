@@ -71,7 +71,9 @@ The package is linked to the "rtravis" application, and will request GitHub perm
 
     ```r
     travis_get_builds()
+    ```
     
+    ```
     A collection of 25 Travis CI builds:
     - id: 430482536, number: 415, state: started, duration: NULL, event_type: pull_request, ...
     - id: 430482493, number: 414, state: failed, duration: 2886, event_type: push, ...
@@ -85,19 +87,31 @@ The package is linked to the "rtravis" application, and will request GitHub perm
 
     ```r
     travis_get_caches()
+    ```
     
+    ```
     A collection of 56 Travis CI caches:
-    - repository_id: 10785882, size: 68080246, name: cache-linux-trusty-118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb--R-3.5.0.tgz, branch: PR.64, last_modified: 2018-09-13T22:29:55Z, repo: list(`@type` = "repository", `@href` = "/repo/10785882", `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
+    - repository_id: 10785882, size: 68080246, name: cache-linux-trusty-
+      118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb--R-3.5.0.tgz, 
+      branch: PR.64, last_modified: 2018-09-13T22:29:55Z, 
+      repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
+      `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
     
-    - repository_id: 10785882, size: 60603887, name: cache-linux-trusty-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--R-3.1.3.tgz, branch: PR.64, last_modified: 2018-09-13T22:27:07Z, repo: list(`@type` = "repository", `@href` = "/repo/10785882", `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
-    [...]
+    - repository_id: 10785882, size: 60603887, name: cache-linux-trusty-
+      e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855--R-3.1.3.tgz, 
+      branch: PR.64, last_modified: 2018-09-13T22:27:07Z, 
+      repo: list(`@type` = "repository", `@href` = "/repo/10785882", 
+      `@representation` = "minimal", id = 10785882, name = "tic", slug = "ropenscilabs/tic")
+      [...]
     ```
     
 1. Clear all caches (caution, currently its only possible to delete all caches!):
     
     ```r
     travis_delete_caches()
+    ```
     
+    ```
     Finished deleting caches for <repo> on Travis CI.
     ```
     
@@ -105,18 +119,41 @@ The package is linked to the "rtravis" application, and will request GitHub perm
 
     ```r
     travis_set_pat()
+    ```
     
-    Create a personal access token, make sure that you are signed in as the correct user. The suggested description 'travis+tic for <repo>' has been copied to the clipboard. If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked. Then, copy the new token to the clipboard, it will be detected and applied automatically. Please visit https://github.com/settings/tokens/new. A browser window will be opened. Waiting for PAT to appear on the clipboard. Detected PAT, clearing clipboard. Finished adding private environment variable GITHUB_PAT to <repo> on Travis CI.
+    ```
+    Create a personal access token, make sure that you are signed in as the correct user. 
+    The suggested description 'travis+tic for <repo>' has been copied to the clipboard. 
+    If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked.
+    Then, copy the new token to the clipboard, it will be detected and applied automatically. 
+    Please visit https://github.com/settings/tokens/new. A browser window will be opened. 
+    Waiting for PAT to appear on the clipboard. Detected PAT, clearing clipboard. 
+    Finished adding private environment variable GITHUB_PAT to <repo> on Travis CI.
     ```
     
 1. Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.
 
     ```r
     travis_set_var()
-    
-    Finished adding private environment variable variable to <repo> on Travis CI.
     ```
     
+    ```
+    Finished adding private environment variable variable to <repo> on Travis CI.
+    ```
+
+1. Fetch the complete log of a specific build
+
+    ```r
+    travis_get_log("454188046")
+    ```
+    
+    ```
+    Setting up libatomic1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
+    Setting up libitm1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
+    Setting up libgomp1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
+    Setting up libasan0:amd64 (4.8.4-2ubuntu1~14.04.4) ...
+    [...]
+    ```
 ---
 
 [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
