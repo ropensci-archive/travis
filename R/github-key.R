@@ -49,7 +49,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
   message(
     "Successfully added public deploy key '", title, "' to GitHub for ", repo, ". ",
     "You should receive a confirmation e-mail from GitHub. ",
-    "Delete the key in the repository's settings when you no longer need it."
+    "Delete the key in the repository's settings to revoke access for that key or when you no longer need it."
   )
 
   invisible(ret)
