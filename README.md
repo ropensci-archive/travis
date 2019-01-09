@@ -19,7 +19,7 @@ remotes::install_github("ropenscilabs/travis")
 The package is linked to the "rtravis" application, and will request GitHub permissions to carry out its actions. 
 Revoking these permissions also invalidates any SSH keys created by this package.
 
-## Example
+## Function examples
 
 1. Create a repository on GitHub (if it's not there yet)
 
@@ -41,11 +41,17 @@ Revoking these permissions also invalidates any SSH keys created by this package
 
 1. Browse the repo on Travis
 
-Check the [Getting Started](travis.html) vignette for examples.
+    ```r
+    travis_browse()
+    ```
 
 1. Set up push access for Travis: This creates an SSH key, stores it as encoded
    encrypted environment variable on Travis, and enables push access for the
    corresponding public key. GitHub notifies you via e-mail.
+
+    ```r
+    use_travis_deploy()
+    ```
 
 1. Query current state of the repo on Travis.
 
