@@ -89,9 +89,9 @@
 <a href="#permissions" class="anchor"></a>Permissions</h2>
 <p>The package is linked to the “rtravis” application, and will request GitHub permissions to carry out its actions. Revoking these permissions also invalidates any SSH keys created by this package.</p>
 </div>
-<div id="example" class="section level2">
+<div id="function-examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#function-examples" class="anchor"></a>Function examples</h2>
 <ol>
 <li>
 <p>Create a repository on GitHub (if it’s not there yet)</p>
@@ -105,14 +105,17 @@
 <p>Turn on Travis for this repo (syncs from GitHub if necessary!)</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/travis_enable.html">travis_enable</a></span>()</a></code></pre></div>
 </li>
-<li><p>Browse the repo on Travis</p></li>
-</ol>
-<p>Check the <a href="travis.html">Getting Started</a> vignette for examples.</p>
-<ol>
-<li><p>Set up push access for Travis: This creates an SSH key, stores it as encoded encrypted environment variable on Travis, and enables push access for the corresponding public key. GitHub notifies you via e-mail.</p></li>
+<li>
+<p>Browse the repo on Travis</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/travis_sync.html">travis_browse</a></span>()</a></code></pre></div>
+</li>
+<li>
+<p>Set up push access for Travis: This creates an SSH key, stores it as encoded encrypted environment variable on Travis, and enables push access for the corresponding public key. GitHub notifies you via e-mail.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/use_travis_deploy.html">use_travis_deploy</a></span>()</a></code></pre></div>
+</li>
 <li>
 <p>Query current state of the repo on Travis.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_builds</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_builds</a></span>()</a></code></pre></div>
 <pre><code>A collection of 25 Travis CI builds:
 - id: 430482536, number: 415, state: started, duration: NULL, event_type: pull_request, ...
 - id: 430482493, number: 414, state: failed, duration: 2886, event_type: push, ...
@@ -123,7 +126,7 @@
 </li>
 <li>
 <p>Retrieve cache information</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_get_caches</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_get_caches</a></span>()</a></code></pre></div>
 <pre><code>A collection of 56 Travis CI caches:
 - repository_id: 10785882, size: 68080246, name: cache-linux-trusty-
   118a1ba90e288592bc83914310d60771d319c6a1e959176fb3aadede7b9782cb--R-3.5.0.tgz, 
@@ -140,12 +143,12 @@
 </li>
 <li>
 <p>Clear all caches (caution, currently its only possible to delete all caches!):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_delete_caches</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_delete_caches</a></span>()</a></code></pre></div>
 <pre><code>Finished deleting caches for &lt;repo&gt; on Travis CI.</code></pre>
 </li>
 <li>
 <p>Create a Personal Access Token (PAT) to avoid Github’s rate limit</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/travis_set_pat.html">travis_set_pat</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/travis_set_pat.html">travis_set_pat</a></span>()</a></code></pre></div>
 <pre><code>Create a personal access token, make sure that you are signed in as the correct user. 
 The suggested description 'travis+tic for &lt;repo&gt;' has been copied to the clipboard. 
 If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked.
@@ -156,12 +159,12 @@ Finished adding private environment variable GITHUB_PAT to &lt;repo&gt; on Travi
 </li>
 <li>
 <p>Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_vars.html">travis_set_var</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_vars.html">travis_set_var</a></span>()</a></code></pre></div>
 <pre><code>Finished adding private environment variable variable to &lt;repo&gt; on Travis CI.</code></pre>
 </li>
 <li>
 <p>Fetch the complete log of a specific build</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_log</a></span>(<span class="st">"454188046"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_log</a></span>(<span class="st">"454188046"</span>)</a></code></pre></div>
 <pre><code>Setting up libatomic1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
 Setting up libitm1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
 Setting up libgomp1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
