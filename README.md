@@ -4,6 +4,7 @@
 
 The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
 Its main purpose is to provide a command-line way in R for certain Travis tasks that are usually done in the browser (build checking, cache deletion, build restarts, etc.).
+To learn more about Travis CI, read [this blog post](http://mahugh.com/2016/09/02/travis-ci-for-test-automation/) and the [Getting Started](https://ropenscilabs/tic/articles/tic.html#prerequisites) vignette of the _tic_ package.
 
 ## Installation
 
@@ -16,10 +17,11 @@ remotes::install_github("ropenscilabs/travis")
 
 ## Permissions
 
-The package is linked to the "rtravis" application, and will request GitHub permissions to carry out its actions. 
+The package is linked to the ["rtravis" application](https://github.com/settings/connections/applications/a8495eadc51e6c64d598), and will request GitHub permissions to carry out its actions. 
+We try hard to minimize the scope of the permissions we request, but this may lead to multiple authentication requests.
 Revoking these permissions also invalidates any SSH keys created by this package.
 
-## Function examples
+## Examples
 
 1. Create a repository on GitHub (if it's not there yet)
 
@@ -33,18 +35,26 @@ Revoking these permissions also invalidates any SSH keys created by this package
     github_repo()
     ```
 
-1. Turn on Travis for this repo (syncs from GitHub if necessary!)
-
-    ```r
-    travis_enable()
-    ```
-
 1. Browse the repo on Travis
 
     ```r
     travis_browse()
     ```
 
+## Examples that require authentication
+
+The first time you're calling these function in an R session, several browser windows will open, prompting you:
+
+- to sign in with GitHub (if you're not signed in already)
+- to permit the _travis_ package to carry out actions on your behalf on GitHub, by authenticating the ["rtravis" application](https://github.com/settings/connections/applications/a8495eadc51e6c64d598)
+- to sign in with Travis (if you're not signed in already)
+
+1. Turn on Travis for this repo (syncs from GitHub if necessary!)
+
+    ```r
+    travis_enable()
+    ```
+    
 1. Set up push access for Travis: This creates an SSH key, stores it as encoded
    encrypted environment variable on Travis, and enables push access for the
    corresponding public key. GitHub notifies you via e-mail.
@@ -52,7 +62,7 @@ Revoking these permissions also invalidates any SSH keys created by this package
     ```r
     use_travis_deploy()
     ```
-
+    
 1. Query current state of the repo on Travis.
 
     ```r
@@ -91,7 +101,7 @@ Revoking these permissions also invalidates any SSH keys created by this package
       [...]
     ```
     
-1. Clear all caches (caution, currently its only possible to delete all caches!):
+1. Clear all caches (caution, currently it's only possible to delete all caches!):
     
     ```r
     travis_delete_caches()
@@ -101,7 +111,7 @@ Revoking these permissions also invalidates any SSH keys created by this package
     Finished deleting caches for <repo> on Travis CI.
     ```
     
-1. Create a Personal Access Token (PAT) to avoid Github's rate limit
+1. Create a Personal Access Token (PAT) to avoid GitHub's rate limit
 
     ```r
     travis_set_pat()
@@ -110,14 +120,25 @@ Revoking these permissions also invalidates any SSH keys created by this package
     ```
     Create a personal access token, make sure that you are signed in as the correct user. 
     The suggested description 'travis+tic for <repo>' has been copied to the clipboard. 
-    If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked.
+    If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.
     Then, copy the new token to the clipboard, it will be detected and applied automatically. 
     Please visit https://github.com/settings/tokens/new. A browser window will be opened. 
-    Waiting for PAT to appear on the clipboard. Detected PAT, clearing clipboard. 
+    Waiting for PAT to appear on the clipboard.
+    ```
+    
+    After competing all authentications, the process stops here.
+    A browser window will be opened, prompting you to create a new GitHub PAT.
+    At this point, the suggested description for the PAT has been placed in your clipboard, you can hit Ctrl + V (Cmd + V on the Mac) to paste the description in the text box.
+    Leave all checkboxes unchecked, click the green "Generate token" button.
+    The newly created token appears in the browser, click the clipboard icon next to the token to place it on the clipboard.
+    The R process continues:
+    
+    ```
+    Detected PAT, clearing clipboard. 
     Finished adding private environment variable GITHUB_PAT to <repo> on Travis CI.
     ```
     
-1. Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.
+1. Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the R history, you may want to review your `.Rhistory` file.
 
     ```r
     travis_set_var()
