@@ -76,7 +76,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#travis" class="anchor"></a>travis</h1></div>
 
-<p>The goal of travis is to simplify the setup of continuous integration with <a href="https://travis-ci.org/">Travis CI</a>. Its main purpose is to provide a command-line way in R for certain Travis tasks that are usually done in the browser (build checking, cache deletion, build restarts, etc.).</p>
+<p>The goal of travis is to simplify the setup of continuous integration with <a href="https://travis-ci.org/">Travis CI</a>. Its main purpose is to provide a command-line way in R for certain Travis tasks that are usually done in the browser (build checking, cache deletion, build restarts, etc.). To learn more about Travis CI, read <a href="http://mahugh.com/2016/09/02/travis-ci-for-test-automation/">this blog post</a> and the <a href="https://ropenscilabs/tic/articles/tic.html#prerequisites">Getting Started</a> vignette of the <em>tic</em> package.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -87,11 +87,11 @@
 <div id="permissions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#permissions" class="anchor"></a>Permissions</h2>
-<p>The package is linked to the “rtravis” application, and will request GitHub permissions to carry out its actions. Revoking these permissions also invalidates any SSH keys created by this package.</p>
+<p>The package is linked to the <a href="https://github.com/settings/connections/applications/a8495eadc51e6c64d598">“rtravis” application</a>, and will request GitHub permissions to carry out its actions. We try hard to minimize the scope of the permissions we request, but this may lead to multiple authentication requests. Revoking these permissions also invalidates any SSH keys created by this package.</p>
 </div>
-<div id="function-examples" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#function-examples" class="anchor"></a>Function examples</h2>
+<a href="#examples" class="anchor"></a>Examples</h2>
 <ol>
 <li>
 <p>Create a repository on GitHub (if it’s not there yet)</p>
@@ -102,12 +102,25 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/github_info.html">github_repo</a></span>()</a></code></pre></div>
 </li>
 <li>
-<p>Turn on Travis for this repo (syncs from GitHub if necessary!)</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/travis_enable.html">travis_enable</a></span>()</a></code></pre></div>
-</li>
-<li>
 <p>Browse the repo on Travis</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/travis_sync.html">travis_browse</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/travis_sync.html">travis_browse</a></span>()</a></code></pre></div>
+</li>
+</ol>
+</div>
+<div id="examples-that-require-authentication" class="section level2">
+<h2 class="hasAnchor">
+<a href="#examples-that-require-authentication" class="anchor"></a>Examples that require authentication</h2>
+<p>The first time you’re calling these function in an R session, several browser windows will open, prompting you:</p>
+<ul>
+<li>to sign in with GitHub (if you’re not signed in already)</li>
+<li>to permit the <em>travis</em> package to carry out actions on your behalf on GitHub, by authenticating the <a href="https://github.com/settings/connections/applications/a8495eadc51e6c64d598">“rtravis” application</a>
+</li>
+<li>to sign in with Travis (if you’re not signed in already)</li>
+</ul>
+<ol>
+<li>
+<p>Turn on Travis for this repo (syncs from GitHub if necessary!)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/travis_enable.html">travis_enable</a></span>()</a></code></pre></div>
 </li>
 <li>
 <p>Set up push access for Travis: This creates an SSH key, stores it as encoded encrypted environment variable on Travis, and enables push access for the corresponding public key. GitHub notifies you via e-mail.</p>
@@ -142,29 +155,31 @@
   [...]</code></pre>
 </li>
 <li>
-<p>Clear all caches (caution, currently its only possible to delete all caches!):</p>
+<p>Clear all caches (caution, currently it’s only possible to delete all caches!):</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_caches.html">travis_delete_caches</a></span>()</a></code></pre></div>
 <pre><code>Finished deleting caches for &lt;repo&gt; on Travis CI.</code></pre>
 </li>
 <li>
-<p>Create a Personal Access Token (PAT) to avoid Github’s rate limit</p>
+<p>Create a Personal Access Token (PAT) to avoid GitHub’s rate limit</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/travis_set_pat.html">travis_set_pat</a></span>()</a></code></pre></div>
 <pre><code>Create a personal access token, make sure that you are signed in as the correct user. 
 The suggested description 'travis+tic for &lt;repo&gt;' has been copied to the clipboard. 
-If you use this token only to avoid GitHubts rate limit, you can leave all scopes unchecked.
+If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.
 Then, copy the new token to the clipboard, it will be detected and applied automatically. 
 Please visit https://github.com/settings/tokens/new. A browser window will be opened. 
-Waiting for PAT to appear on the clipboard. Detected PAT, clearing clipboard. 
+Waiting for PAT to appear on the clipboard.</code></pre>
+<p>After competing all authentications, the process stops here. A browser window will be opened, prompting you to create a new GitHub PAT. At this point, the suggested description for the PAT has been placed in your clipboard, you can hit Ctrl + V (Cmd + V on the Mac) to paste the description in the text box. Leave all checkboxes unchecked, click the green “Generate token” button. The newly created token appears in the browser, click the clipboard icon next to the token to place it on the clipboard. The R process continues:</p>
+<pre><code>Detected PAT, clearing clipboard. 
 Finished adding private environment variable GITHUB_PAT to &lt;repo&gt; on Travis CI.</code></pre>
 </li>
 <li>
-<p>Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the history.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_vars.html">travis_set_var</a></span>()</a></code></pre></div>
+<p>Set or update environment variables on Travis. Caution: The secret value passed to this function is captured in the R history, you may want to review your <code>.Rhistory</code> file.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_vars.html">travis_set_var</a></span>()</a></code></pre></div>
 <pre><code>Finished adding private environment variable variable to &lt;repo&gt; on Travis CI.</code></pre>
 </li>
 <li>
 <p>Fetch the complete log of a specific build</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_log</a></span>(<span class="st">"454188046"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="reference/travis_get_builds.html">travis_get_log</a></span>(<span class="st">"454188046"</span>)</a></code></pre></div>
 <pre><code>Setting up libatomic1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
 Setting up libitm1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
 Setting up libgomp1:amd64 (4.8.4-2ubuntu1~14.04.4) ...
