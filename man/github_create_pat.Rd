@@ -4,7 +4,7 @@
 \alias{github_create_pat}
 \title{Create a GitHub PAT}
 \usage{
-github_create_pat(path = ".", repo = github_repo(path))
+github_create_pat(path = usethis::proj_get(), repo = github_repo(path))
 }
 \arguments{
 \item{path}{\code{[string]}\cr

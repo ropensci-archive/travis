@@ -6,11 +6,11 @@
 \alias{uses_github}
 \title{Github information}
 \usage{
-github_info(path = ".", gh_token = NULL)
+github_info(path = usethis::proj_get(), gh_token = NULL)
 
-github_repo(path = ".", info = github_info(path))
+github_repo(path = usethis::proj_get(), info = github_info(path))
 
-uses_github(path = ".")
+uses_github(path = usethis::proj_get())
 }
 \arguments{
 \item{path}{\code{[string]}\cr
