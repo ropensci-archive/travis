@@ -8,7 +8,7 @@
 #'   Less verbose output? Default: `FALSE`.
 #'
 #' @export
-use_tic <- function(path = ".", quiet = FALSE) {
+use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
   #' @details
   #' The preparation consists of the following steps:
   withr::with_dir(path, {

@@ -15,7 +15,7 @@
 #'   (the GitHub repo to which the public deploy key is added).
 #'
 #' @export
-use_travis_deploy <- function(path = ".", info = github_info(path),
+use_travis_deploy <- function(path = usethis::proj_get(), info = github_info(path),
                               repo = github_repo(info = info), travis_repo = repo) {
 
   # authenticate on github and travis and set up keys/vars
