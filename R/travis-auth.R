@@ -51,9 +51,12 @@ travis_token_ <- function(repo = NULL) {
   token
 }
 
-review_travis_app_permission <- function(org) {
-  url_stop("You may need to retry in a few seconds, or allow Travis access to your organization ", org,
-           url = "https://github.com/settings/connections/applications/f244293c729d5066cf27")
+review_travis_app_permission <- function(repo) {
+  url_stop(
+    "You may need to retry in a few seconds. ",
+    "If your repo ", repo, " belongs to an organization, you may need to allow Travis access to that organization",
+    url = "https://github.com/settings/connections/applications/f244293c729d5066cf27"
+  )
 }
 
 #' @description
