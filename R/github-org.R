@@ -1,4 +1,4 @@
-check_write_org <- function(org, gh_token) {
+get_role_in_org <- function(org, gh_token) {
   req <- GITHUB_GET(paste0("/user/memberships/orgs/", org), token = gh_token)
   if (httr::status_code(req) %in% 403) {
     org_perm_url <- paste0(
@@ -22,6 +22,11 @@ check_write_org <- function(org, gh_token) {
   membership <- httr::content(req)
   role_in_org <- membership$role
 
+  role_in_org
+}
+
+check_write_org <- function(org, gh_token) {
+  role_in_org <- get_role_in_org(org, gh_token)
   if (role_in_org != "admin") {
     stopc("Must have role admin to edit organization ", org, ", not ", role_in_org)
   }
