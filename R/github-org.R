@@ -24,7 +24,7 @@ get_role_in_repo <- function(repo, gh_token) {
 }
 
 check_admin_repo <- function(repo, gh_token) {
-  role_in_repo <- get_role_in_repo(org, gh_token)
+  role_in_repo <- get_role_in_repo(repo, gh_token)
   if (role_in_repo != "admin") {
     stopc("Must have role admin to add deploy key to repo ", repo, ", not ", role_in_repo)
   }
