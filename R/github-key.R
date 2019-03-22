@@ -26,20 +26,18 @@ github_add_key <- function(pubkey, title = "travis+tic",
   if (!inherits(pubkey, "pubkey"))
     stopc("`pubkey` must be an RSA/EC public key")
 
-  if (info$owner$type == "User") {
-    if (is.null(gh_token)) {
+  if (is.null(gh_token)) {
+    if (info$owner$type == "User") {
       gh_token <- auth_github("public_repo")
-    }
-  } else {
-    if (is.null(gh_token)) {
+    } else {
       gh_token <- auth_github("public_repo", "write:org")
     }
-
-    check_write_org(info$owner$login, gh_token)
   }
 
-  key_data <- create_key_data(pubkey, title)
   repo <- github_repo(info = info)
+  check_admin_repo(repo, gh_token)
+
+  key_data <- create_key_data(pubkey, title)
 
   # remove existing key
   remove_key_if_exists(key_data, repo, gh_token, quiet)
