@@ -24,25 +24,34 @@ github_create_pat <- function(path = ".", repo = github_repo(path)) {
 
   desc <- paste0("travis+tic for ", repo)
   clipr::write_clip(desc)
-  url_message(
-    "Create a personal access token, make sure that you are signed in as the correct user. ",
-    "The suggested description '", desc, "' has been copied to the clipboard. ",
-    "If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked. ",
-    "Then, copy the new token to the clipboard, it will be detected and applied automatically",
-    url = "https://github.com/settings/tokens/new"
-  )
 
+  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    " Creating a personal access token (PAT).")
+  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    sprintf(" The suggested description '%s' has been copied to the clipboard.", desc))
+  cli::cat_bullet(bullet = "info", bullet_col = "yellow",
+    " If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.",)
+  cli::cat_bullet(bullet = "info", bullet_col = "yellow",
+    " Then, copy the new token to the clipboard, it will be detected and applied automatically.")
+
+  open_browser_window("https://github.com/settings/tokens/new")
   wait_for_clipboard_pat()
 }
 
 wait_for_clipboard_pat <- function() {
-  message("Waiting for PAT to appear on the clipboard.")
+
+  cli::cat_bullet(bullet = "info", bullet_col = "yellow",
+    " If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.")
+
+  cli::cat_bullet(bullet = "info", bullet_col = "yellow",
+    " Waiting for PAT to appear on the clipboard.")
   repeat {
     pat <- clipr::read_clip()
     if (is_pat(pat)) break
     Sys.sleep(0.1)
   }
-  message("Detected PAT, clearing clipboard.")
+  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    " Detected PAT, clearing clipboard.")
   tryCatch(
     clipr::write_clip(""),
     error = function(e) {
