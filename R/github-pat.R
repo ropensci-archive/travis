@@ -42,7 +42,13 @@ github_create_pat <- function(path = usethis::proj_get(), repo = github_repo(pat
     " Then, copy the new token to the clipboard, it will be detected and applied automatically."
   )
 
-  open_browser_window("https://github.com/settings/tokens/new")
+  url <- "https://github.com/settings/tokens/new"
+  cli::cat_bullet(
+    bullet = "info", bullet_col = "yellow",
+    format_url_msg(url = url)
+  )
+
+  open_browser_window(url)
   wait_for_clipboard_pat()
 }
 
