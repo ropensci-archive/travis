@@ -126,14 +126,18 @@ use_github <- function(path = usethis::proj_get(), push = NA,
 
 ask_remote_url <- function(...) {
   urls <- c(...)
-  if (!interactive()) return(urls[[1]])
+  if (!interactive()) {
+    return(urls[[1]])
+  }
 
   res <- utils::menu(urls, title = "Choose remote URL")
   urls[[res]]
 }
 
 ask_push <- function() {
-  if (!interactive()) return(FALSE)
+  if (!interactive()) {
+    return(FALSE)
+  }
 
   utils::menu(c(
     "Push to GitHub, contents of your repository will be made public",

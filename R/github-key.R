@@ -82,7 +82,9 @@ remove_key_if_exists <- function(key_data, repo, gh_token, quiet) {
   titles <- vapply(keys, "[[", "title", FUN.VALUE = character(1))
   our_title_idx <- which(titles == key_data$title)
 
-  if (length(our_title_idx) == 0) return()
+  if (length(our_title_idx) == 0) {
+    return()
+  }
 
   our_title_idx <- our_title_idx[[1]]
 
