@@ -1,3 +1,24 @@
+# travis 0.2.11.9001
+
+- Using `usethis::proj_get()` as default path for all functions (#103, @maelle).
+- Use {cli} for messages (#103).
+- Permission checks before creating deploy key are more accurate, taking into account situations where the current user is not admin of the organization but admin of the repository (#95).
+- Clarify error message after failing to find repo after synchronizing with Travis (#99).
+- Pass `repo` argument from `travis_set_pat()` to `travis_set_var()` (#98, @maelle).
+- Add "Getting Started" vignette (#92, @pat-s).
+- Tweak README (#93, @pat-s).
+- Tweak tic.R templates (#94).
+- Travis template avoids reinstalling remotes (and curl) if the packages are installed already (#94, @pat-s).
+- Adapt templates to reflect that bookdown and blogdown are on CRAN now.
+- Avoid deployment for tags.
+- Document how to avoid recording secret value in history (#80).
+- New `travis_lint()` (#74).
+- Update rtravis application id in error message (#86, @fmichonneau).
+- Add BugReports and URL fields (#81).
+- Update doc of `travis-is-enabled()` (#76, @pat-s).
+- Fix transformation of remote URL to only remove ".git" if it appears at the end (#75, @fmichonneau).
+
+
 # travis 0.2.11.9000
 
 - New `travis_get_jobs()`.
