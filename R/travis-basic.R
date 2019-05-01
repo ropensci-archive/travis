@@ -28,7 +28,9 @@ travis_repo_info <- function(repo = github_repo(),
 travis_has_repo <- function(repo = github_repo(), token = travis_token()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s", encode_slug(repo)), token = token)
   status <- httr::status_code(req)
-  if (status == 404) return(FALSE)
+  if (status == 404) {
+    return(FALSE)
+  }
   httr::stop_for_status(req, paste("try to access repository"))
   TRUE
 }

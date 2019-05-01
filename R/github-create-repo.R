@@ -85,24 +85,40 @@ use_github <- function(path = usethis::proj_get(), push = NA,
 
   remote_url <- ask_remote_url(new_info$ssh_url, new_info$clone_url)
 
-  if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-    sprintf(" Setting origin remote to ", remote_url))
+  if (!quiet) {
+    cli::cat_bullet(
+      bullet = "pointer", bullet_col = "yellow",
+      paste0(" Setting origin remote to ", remote_url)
+    )
+  }
   git2r::remote_add(r, "origin", remote_url)
 
   if ("master" %in% names(git2r::branches(r, "local"))) {
     if (is.na(push)) push <- ask_push()
 
     if (push) {
-      if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-        " Pushing master to origin.")
+      if (!quiet) {
+        cli::cat_bullet(
+          bullet = "pointer", bullet_col = "yellow",
+          " Pushing master to origin."
+        )
+      }
       git2r::push(r, "origin", "refs/heads/master")
     } else {
-      if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-        " Not pushed to GitHub yet.")
+      if (!quiet) {
+        cli::cat_bullet(
+          bullet = "pointer", bullet_col = "yellow",
+          " Not pushed to GitHub yet."
+        )
+      }
     }
   } else {
-    if (!quiet) cli::cat_bullet(bullet_col = "red", bullet = "cross",
-      " master branch not found, cannot push to GitHub.")
+    if (!quiet) {
+      cli::cat_bullet(
+        bullet_col = "red", bullet = "cross",
+        " master branch not found, cannot push to GitHub."
+      )
+    }
   }
 
   invisible(new_info)
@@ -110,14 +126,18 @@ use_github <- function(path = usethis::proj_get(), push = NA,
 
 ask_remote_url <- function(...) {
   urls <- c(...)
-  if (!interactive()) return(urls[[1]])
+  if (!interactive()) {
+    return(urls[[1]])
+  }
 
   res <- utils::menu(urls, title = "Choose remote URL")
   urls[[res]]
 }
 
 ask_push <- function() {
-  if (!interactive()) return(FALSE)
+  if (!interactive()) {
+    return(FALSE)
+  }
 
   utils::menu(c(
     "Push to GitHub, contents of your repository will be made public",
@@ -167,5 +187,4 @@ new_github <- function(path, user = getOption("devtools.desc.author"),
     path = path, push = TRUE, name = name, org = org, private = private,
     gh_token = gh_token, quiet = quiet
   )
-
 }

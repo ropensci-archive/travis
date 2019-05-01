@@ -46,10 +46,16 @@ use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
 }
 
 use_github_interactive <- function() {
-  if (!interactive()) return()
-  if (uses_github()) return()
+  if (!interactive()) {
+    return()
+  }
+  if (uses_github()) {
+    return()
+  }
 
-  if (!yesno("Create GitHub repo and push code?")) return()
+  if (!yesno("Create GitHub repo and push code?")) {
+    return()
+  }
 
   message("Creating GitHub repository")
   use_github(push = TRUE)
@@ -96,10 +102,18 @@ yesno <- function(...) {
 }
 
 detect_repo_type <- function() {
-  if (file.exists("_bookdown.yml")) return("bookdown")
-  if (file.exists("_site.yml")) return("site")
-  if (file.exists("config.toml")) return("blogdown")
-  if (file.exists("DESCRIPTION")) return("package")
+  if (file.exists("_bookdown.yml")) {
+    return("bookdown")
+  }
+  if (file.exists("_site.yml")) {
+    return("site")
+  }
+  if (file.exists("config.toml")) {
+    return("blogdown")
+  }
+  if (file.exists("DESCRIPTION")) {
+    return("package")
+  }
   "unknown"
 }
 

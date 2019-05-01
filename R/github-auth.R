@@ -1,19 +1,23 @@
 auth_github_ <- function(...) {
-
-  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub.")
+  cli::cat_bullet(
+    bullet = "pointer", bullet_col = "yellow",
+    " Authenticating to GitHub."
+  )
   cache <- FALSE
 
   scopes <- c(...)
   app <- httr::oauth_app("github",
-                         key = "a8495eadc51e6c64d598",
-                         secret = "8de4a03c5f978b77c3bd021b7c9528b794301168")
+    key = "a8495eadc51e6c64d598",
+    secret = "8de4a03c5f978b77c3bd021b7c9528b794301168"
+  )
   token <- httr::oauth2.0_token(
     httr::oauth_endpoints("github"), app,
     scope = scopes, cache = cache
   )
-  cli::cat_bullet(bullet = "tick", bullet_col = "green",
-    "Authentication successful.")
+  cli::cat_bullet(
+    bullet = "tick", bullet_col = "green",
+    "Authentication successful."
+  )
 
   token
 }

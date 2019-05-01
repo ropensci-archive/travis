@@ -20,7 +20,8 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
   }
 
   req <- TRAVIS_POST3(sprintf("/repo/%s/%s", encode_slug(repo), activate),
-                      token = token)
+    token = token
+  )
   check_status(
     req,
     sprintf(
