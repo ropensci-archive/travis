@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">travis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.11.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.11.9001</span>
       </span>
     </div>
 
@@ -106,6 +106,29 @@
       <small>Source: <a href='https://github.com/ropenscilabs/travis/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="travis-0-2-11-9001" class="section level1">
+<h1 class="page-header">
+<a href="#travis-0-2-11-9001" class="anchor"></a>travis 0.2.11.9001</h1>
+<ul>
+<li>Using <code><a href="https://usethis.r-lib.org/reference/proj_utils.html">usethis::proj_get()</a></code> as default path for all functions (<a href='https://github.com/ropenscilabs/travis/issues/103'>#103</a>, <a href='https://github.com/maelle'>@maelle</a>).</li>
+<li>Use {cli} for messages (<a href='https://github.com/ropenscilabs/travis/issues/103'>#103</a>).</li>
+<li>Permission checks before creating deploy key are more accurate, taking into account situations where the current user is not admin of the organization but admin of the repository (<a href='https://github.com/ropenscilabs/travis/issues/95'>#95</a>).</li>
+<li>Clarify error message after failing to find repo after synchronizing with Travis (<a href='https://github.com/ropenscilabs/travis/issues/99'>#99</a>).</li>
+<li>Pass <code>repo</code> argument from <code><a href="../reference/travis_set_pat.html">travis_set_pat()</a></code> to <code><a href="../reference/travis_get_vars.html">travis_set_var()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/98'>#98</a>, <a href='https://github.com/maelle'>@maelle</a>).</li>
+<li>Add “Getting Started” vignette (<a href='https://github.com/ropenscilabs/travis/issues/92'>#92</a>, <a href='https://github.com/pat-s'>@pat-s</a>).</li>
+<li>Tweak README (<a href='https://github.com/ropenscilabs/travis/issues/93'>#93</a>, <a href='https://github.com/pat-s'>@pat-s</a>).</li>
+<li>Tweak tic.R templates (<a href='https://github.com/ropenscilabs/travis/issues/94'>#94</a>).</li>
+<li>Travis template avoids reinstalling remotes (and curl) if the packages are installed already (<a href='https://github.com/ropenscilabs/travis/issues/94'>#94</a>, <a href='https://github.com/pat-s'>@pat-s</a>).</li>
+<li>Adapt templates to reflect that bookdown and blogdown are on CRAN now.</li>
+<li>Avoid deployment for tags.</li>
+<li>Document how to avoid recording secret value in history (<a href='https://github.com/ropenscilabs/travis/issues/80'>#80</a>).</li>
+<li>New <code><a href="../reference/travis_lint.html">travis_lint()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/74'>#74</a>).</li>
+<li>Update rtravis application id in error message (<a href='https://github.com/ropenscilabs/travis/issues/86'>#86</a>, <a href='https://github.com/fmichonneau'>@fmichonneau</a>).</li>
+<li>Add BugReports and URL fields (<a href='https://github.com/ropenscilabs/travis/issues/81'>#81</a>).</li>
+<li>Update doc of <code>travis-is-enabled()</code> (<a href='https://github.com/ropenscilabs/travis/issues/76'>#76</a>, <a href='https://github.com/pat-s'>@pat-s</a>).</li>
+<li>Fix transformation of remote URL to only remove “.git” if it appears at the end (<a href='https://github.com/ropenscilabs/travis/issues/75'>#75</a>, <a href='https://github.com/fmichonneau'>@fmichonneau</a>).</li>
+</ul>
+</div>
     <div id="travis-0-2-11-9000" class="section level1">
 <h1 class="page-header">
 <a href="#travis-0-2-11-9000" class="anchor"></a>travis 0.2.11.9000</h1>
@@ -266,6 +289,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#travis-0-2-11-9001">0.2.11.9001</a></li>
         <li><a href="#travis-0-2-11-9000">0.2.11.9000</a></li>
         <li><a href="#travis-0-2-11-2017-07-24">0.2-11</a></li>
         <li><a href="#travis-0-2-10-2017-06-29">0.2-10</a></li>
