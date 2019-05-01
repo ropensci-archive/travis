@@ -30,7 +30,7 @@ github_create_pat <- function(path = ".", repo = github_repo(path)) {
   cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
     sprintf(" The suggested description '%s' has been copied to the clipboard.", desc))
   cli::cat_bullet(bullet = "info", bullet_col = "yellow",
-    " If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.",)
+    " If you use this token only to avoid GitHub's rate limit, you can leave all scopes unchecked.")
   cli::cat_bullet(bullet = "info", bullet_col = "yellow",
     " Then, copy the new token to the clipboard, it will be detected and applied automatically.")
 
