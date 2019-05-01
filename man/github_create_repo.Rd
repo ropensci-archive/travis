@@ -9,8 +9,8 @@
 github_create_repo(name, org = NULL, private = FALSE,
   gh_token = NULL, quiet = FALSE)
 
-use_github(path = ".", push = NA, name = NULL, org = NULL,
-  private = FALSE, gh_token = NULL, quiet = FALSE)
+use_github(path = usethis::proj_get(), push = NA, name = NULL,
+  org = NULL, private = FALSE, gh_token = NULL, quiet = FALSE)
 
 new_github(path, user = getOption("devtools.desc.author"), name = NULL,
   org = NULL, private = FALSE, gh_token = NULL, quiet = FALSE)

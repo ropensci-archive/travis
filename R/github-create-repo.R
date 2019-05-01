@@ -64,7 +64,7 @@ github_create_repo <- function(name, org = NULL,
 #'
 #' @export
 #' @rdname github_create_repo
-use_github <- function(path = ".", push = NA,
+use_github <- function(path = usethis::proj_get(), push = NA,
                        name = NULL, org = NULL, private = FALSE,
                        gh_token = NULL, quiet = FALSE) {
 

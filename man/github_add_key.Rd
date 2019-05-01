@@ -4,8 +4,9 @@
 \alias{github_add_key}
 \title{Add a deploy key to GitHub}
 \usage{
-github_add_key(pubkey, title = "travis+tic", path = ".",
-  info = github_info(path), gh_token = NULL, quiet = FALSE)
+github_add_key(pubkey, title = "travis+tic",
+  path = usethis::proj_get(), info = github_info(path),
+  gh_token = NULL, quiet = FALSE)
 }
 \arguments{
 \item{pubkey}{\code{[pubkey]}\cr

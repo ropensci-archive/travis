@@ -17,7 +17,7 @@
 #' @family GitHub functions
 #'
 #' @export
-github_create_pat <- function(path = ".", repo = github_repo(path)) {
+github_create_pat <- function(path = usethis::proj_get(), repo = github_repo(path)) {
   if (!interactive()) {
     stopc("Cannot use `github_create_pat()` in non-interactive mode")
   }

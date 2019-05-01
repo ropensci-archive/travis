@@ -4,7 +4,7 @@
 \alias{use_tic}
 \title{Getting tic testing up and running}
 \usage{
-use_tic(path = ".", quiet = FALSE)
+use_tic(path = usethis::proj_get(), quiet = FALSE)
 }
 \arguments{
 \item{path}{\code{[string]}\cr

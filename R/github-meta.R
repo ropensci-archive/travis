@@ -13,7 +13,7 @@
 #'   empty scope.
 #'
 #' @family GitHub functions
-github_info <- function(path = ".", gh_token = NULL) {
+github_info <- function(path = usethis::proj_get(), gh_token = NULL) {
   remote_url <- get_remote_url(path)
   repo <- extract_repo(remote_url)
   if (is.null(gh_token)) {
@@ -37,7 +37,7 @@ get_repo_data <- function(repo, gh_token) {
 #'
 #' @export
 #' @rdname github_info
-github_repo <- function(path = ".", info = github_info(path)) {
+github_repo <- function(path = usethis::proj_get(), info = github_info(path)) {
   paste(info$owner$login, info$name, sep = "/")
 }
 
@@ -49,7 +49,7 @@ github_repo <- function(path = ".", info = github_info(path)) {
 #'
 #' @export
 #' @rdname github_info
-uses_github <- function(path = ".") {
+uses_github <- function(path = usethis::proj_get()) {
   tryCatch(
     {
       info <- github_info(path)

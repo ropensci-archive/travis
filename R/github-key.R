@@ -19,7 +19,7 @@
 #'
 #' @seealso [github_create_repo()]
 github_add_key <- function(pubkey, title = "travis+tic",
-                           path = ".", info = github_info(path),
+                           path = usethis::proj_get(), info = github_info(path),
                            gh_token = NULL, quiet = FALSE) {
   if (inherits(pubkey, "key"))
     pubkey <- as.list(pubkey)$pubkey

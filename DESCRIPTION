@@ -38,13 +38,13 @@ Imports:
     httr,
     memoise,
     openssl,
+    usethis,
     withr
 Suggests:
     knitr,
     remotes,
     roxygen2,
-    testthat,
-    usethis
+    testthat
 VignetteBuilder: 
     knitr
 Remotes:
