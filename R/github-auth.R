@@ -1,5 +1,7 @@
 auth_github_ <- function(...) {
-  message("Authenticating with GitHub")
+
+  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    " Authenticating to GitHub.")
   cache <- FALSE
 
   scopes <- c(...)
@@ -10,6 +12,8 @@ auth_github_ <- function(...) {
     httr::oauth_endpoints("github"), app,
     scope = scopes, cache = cache
   )
+  cli::cat_bullet(bullet = "tick", bullet_col = "green",
+    "Authentication successful.")
 }
 
 #' Authenticate with GitHub

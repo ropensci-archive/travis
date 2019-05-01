@@ -1,5 +1,6 @@
 auth_travis_ <- function(gh_token = NULL) {
-  message("Authenticating with Travis")
+  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    " Authenticating to GitHub.")
   if (is.null(gh_token)) {
     # Do not allow caching this token, it needs to be fresh
     gh_token <- auth_github_(

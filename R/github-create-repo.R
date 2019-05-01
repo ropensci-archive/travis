@@ -85,20 +85,24 @@ use_github <- function(path = ".", push = NA,
 
   remote_url <- ask_remote_url(new_info$ssh_url, new_info$clone_url)
 
-  if (!quiet) message("Setting origin remote to ", remote_url)
+  if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+    sprintf(" Setting origin remote to ", remote_url))
   git2r::remote_add(r, "origin", remote_url)
 
   if ("master" %in% names(git2r::branches(r, "local"))) {
     if (is.na(push)) push <- ask_push()
 
     if (push) {
-      if (!quiet) message("Pushing master to origin")
+      if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+        " Pushing master to origin.")
       git2r::push(r, "origin", "refs/heads/master")
     } else {
-      if (!quiet) message("Not pushed to GitHub yet")
+      if (!quiet) cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
+        " Not pushed to GitHub yet.")
     }
   } else {
-    if (!quiet) message("master branch not found, cannot push to GitHub")
+    if (!quiet) cli::cat_bullet(bullet_col = "red", bullet = "cross",
+      " master branch not found, cannot push to GitHub.")
   }
 
   invisible(new_info)
