@@ -170,8 +170,9 @@ travis_debug_job <- function(job_id,
                              token = travis_token(repo),
                              quiet = FALSE) {
   req <- TRAVIS_POST3(paste0("/job/", job_id, "/debug"),
-                      query = list(quiet = !log_output),
-                      token = token)
+    query = list(quiet = !log_output),
+    token = token
+  )
   check_status(
     req,
     sprintf(
@@ -197,7 +198,8 @@ travis_get_log <- function(job_id,
                            token = travis_token(repo),
                            quiet = FALSE) {
   req <- TRAVIS_GET_TEXT3(paste0("/job/", job_id, "/log.txt"),
-                          token = token)
+    token = token
+  )
   check_status(
     req,
     sprintf(
@@ -217,7 +219,8 @@ travis_delete_log <- function(job_id,
                               token = travis_token(repo),
                               quiet = FALSE) {
   req <- TRAVIS_DELETE3(paste0("/job/", job_id, "/log"),
-                        token = token)
+    token = token
+  )
   check_status(
     req,
     sprintf(

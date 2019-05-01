@@ -1,7 +1,8 @@
 auth_github_ <- function(...) {
-
-  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub.")
+  cli::cat_bullet(
+    bullet = "pointer", bullet_col = "yellow",
+    " Authenticating to GitHub."
+  )
   cache <- FALSE
 
   scopes <- c(...)

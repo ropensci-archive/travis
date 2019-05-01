@@ -35,7 +35,8 @@ get_role_in_org <- function(org, gh_token) {
   if (httr::status_code(req) %in% 403) {
     org_perm_url <- paste0(
       "https://github.com/orgs/", org,
-      "/policies/applications/551569")
+      "/policies/applications/551569"
+    )
 
     url_stop(
       "You may need to allow access for the rtravis GitHub app to your organization ", org,

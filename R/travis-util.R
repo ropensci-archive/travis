@@ -15,7 +15,8 @@ travis_sync <- function(block = TRUE, token = travis_token(), quiet = FALSE) {
   user_id <- travis_user(token = token)[["id"]]
 
   req <- TRAVIS_POST3(sprintf("/user/%s/sync", user_id),
-                      token = token)
+    token = token
+  )
 
   check_status(req, "initiat[ing]{e} sync with GitHub", quiet, 409)
 

@@ -15,7 +15,8 @@
 #' }
 travis_get_vars <- function(repo = github_repo(), token = travis_token(repo)) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
-                     token = token)
+    token = token
+  )
   httr::stop_for_status(
     req,
     sprintf("get environment variables for %s from Travis CI", repo)
@@ -131,7 +132,8 @@ travis_delete_var <- function(name, repo = github_repo(),
   if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")
 
   req <- TRAVIS_DELETE3(sprintf("/repo/%s/env_var/%s", encode_slug(repo), id),
-                        token = token)
+    token = token
+  )
   check_status(
     req,
     sprintf(
@@ -151,8 +153,9 @@ travis_post_var <- function(name, value, public, token, repo, quiet) {
   )
 
   req <- TRAVIS_POST3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
-                      body = var_data,
-                      token = token)
+    body = var_data,
+    token = token
+  )
   check_status(
     req,
     sprintf(
@@ -171,8 +174,9 @@ travis_patch_var <- function(id, name, value, public, token, repo, quiet) {
   )
 
   req <- TRAVIS_PATCH3(sprintf("/repo/%s/env_var/%s", encode_slug(repo), id),
-                       body = var_data,
-                       token = token)
+    body = var_data,
+    token = token
+  )
   check_status(
     req,
     sprintf(
