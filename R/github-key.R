@@ -45,7 +45,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
   ret <- add_key(key_data, repo, gh_token, quiet)
 
   cli::cat_bullet(bullet = "tick", bullet_col = "green",
-    sprintf("Successfully added added public deploy key ", title, "' to GitHub for ", repo, ". "))
+    sprintf("Successfully added public deploy key ", title, "' to GitHub for ", repo, ". "))
   cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
     " You should receive a confirmation e-mail from GitHub.")
   cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
