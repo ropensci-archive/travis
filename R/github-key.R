@@ -21,10 +21,13 @@
 github_add_key <- function(pubkey, title = "travis+tic",
                            path = usethis::proj_get(), info = github_info(path),
                            gh_token = NULL, quiet = FALSE) {
-  if (inherits(pubkey, "key"))
+
+  if (inherits(pubkey, "key")) {
     pubkey <- as.list(pubkey)$pubkey
-  if (!inherits(pubkey, "pubkey"))
+  }
+  if (!inherits(pubkey, "pubkey")) {
     stopc("`pubkey` must be an RSA/EC public key")
+  }
 
   if (is.null(gh_token)) {
     if (info$owner$type == "User") {
