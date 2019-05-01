@@ -49,7 +49,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
 
   cli::cat_bullet(
     bullet = "tick", bullet_col = "green",
-    sprintf("Successfully added public deploy key ", title, "' to GitHub for ", repo, ". ")
+    paste0("Successfully added public deploy key ", title, "' to GitHub for ", repo, ". ")
   )
   cli::cat_bullet(
     bullet = "pointer", bullet_col = "yellow",

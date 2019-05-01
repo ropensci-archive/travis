@@ -35,7 +35,7 @@ use_travis_deploy <- function(path = usethis::proj_get(), info = github_info(pat
 
   cli::cat_bullet(
     bullet = "tick", bullet_col = "green",
-    sprintf(
+    paste0(
       "Successfully added private deploy key to ",
       travis_repo, " as secure environment variable id_rsa to Travis CI."
     )

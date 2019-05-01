@@ -88,7 +88,7 @@ use_github <- function(path = usethis::proj_get(), push = NA,
   if (!quiet) {
     cli::cat_bullet(
       bullet = "pointer", bullet_col = "yellow",
-      sprintf(" Setting origin remote to ", remote_url)
+      paste0(" Setting origin remote to ", remote_url)
     )
   }
   git2r::remote_add(r, "origin", remote_url)

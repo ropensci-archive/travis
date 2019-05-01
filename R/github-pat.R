@@ -31,7 +31,7 @@ github_create_pat <- function(path = usethis::proj_get(), repo = github_repo(pat
   )
   cli::cat_bullet(
     bullet = "pointer", bullet_col = "yellow",
-    sprintf(" The suggested description '%s' has been copied to the clipboard.", desc)
+    paste0(" The suggested description '%s' has been copied to the clipboard.", desc)
   )
   cli::cat_bullet(
     bullet = "info", bullet_col = "yellow",
