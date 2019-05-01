@@ -20,8 +20,9 @@ travis_set_pat <- function(pat = NULL,
   if (is.null(pat)) {
     pat <- github_create_pat(repo = repo)
   }
-  travis_set_var(
-    "GITHUB_PAT", pat, public = FALSE,
+  travis_set_var("GITHUB_PAT", pat,
+    public = FALSE,
     repo = repo,
-    token = token, quiet = quiet)
+    token = token, quiet = quiet
+  )
 }

@@ -44,12 +44,18 @@ github_add_key <- function(pubkey, title = "travis+tic",
   # add public key to repo deploy keys on GitHub
   ret <- add_key(key_data, repo, gh_token, quiet)
 
-  cli::cat_bullet(bullet = "tick", bullet_col = "green",
-    sprintf("Successfully added public deploy key ", title, "' to GitHub for ", repo, ". "))
-  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-    " You should receive a confirmation e-mail from GitHub.")
-  cli::cat_bullet(bullet = "pointer", bullet_col = "yellow",
-    " Delete the key in the repository's settings to revoke access for that key or when you no longer need it.")
+  cli::cat_bullet(
+    bullet = "tick", bullet_col = "green",
+    sprintf("Successfully added public deploy key ", title, "' to GitHub for ", repo, ". ")
+  )
+  cli::cat_bullet(
+    bullet = "pointer", bullet_col = "yellow",
+    " You should receive a confirmation e-mail from GitHub."
+  )
+  cli::cat_bullet(
+    bullet = "pointer", bullet_col = "yellow",
+    " Delete the key in the repository's settings to revoke access for that key or when you no longer need it."
+  )
 
   invisible(ret)
 }
