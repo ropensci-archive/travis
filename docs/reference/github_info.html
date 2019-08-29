@@ -8,10 +8,12 @@
 
 <title>Github information — github_info • travis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,8 +32,8 @@
 
 
 
-<meta property="og:title" content="Github information — github_info" />
 
+<meta property="og:title" content="Github information — github_info" />
 <meta property="og:description" content="Retrieves metadata about a Git repository from GitHub.
 github_info() returns a list as obtained from the GET &quot;/repos/:repo&quot; API.
 github_repo() returns the true repository name as string.
@@ -40,6 +42,7 @@ If TRUE, the &quot;info&quot; and &quot;repo&quot; attributes contain the result
 corresponding functions. If FALSE, the &quot;reason&quot; attribute explains what
 happened during detection of GitHub status." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -91,7 +94,6 @@ happened during detection of GitHub status." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropenscilabs/travis">
@@ -117,7 +119,6 @@ happened during detection of GitHub status." />
     </div>
 
     <div class="ref-description">
-    
     <p>Retrieves metadata about a Git repository from GitHub.</p>
 <p><code>github_info()</code> returns a list as obtained from the GET "/repos/:repo" API.</p>
 <p><code>github_repo()</code> returns the true repository name as string.</p>
@@ -125,7 +126,6 @@ happened during detection of GitHub status." />
 If <code>TRUE</code>, the "info" and "repo" attributes contain the results of the
 corresponding functions. If <code>FALSE</code>, the "reason" attribute explains what
 happened during detection of GitHub status.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>github_info</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>usethis</span><span class='kw ns'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/proj_utils.html'>proj_get</a></span>(), <span class='kw'>gh_token</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -133,7 +133,7 @@ happened during detection of GitHub status.</p>
 <span class='fu'>github_repo</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>usethis</span><span class='kw ns'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/proj_utils.html'>proj_get</a></span>(), <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'>github_info</span>(<span class='no'>path</span>))
 
 <span class='fu'>uses_github</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>usethis</span><span class='kw ns'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/proj_utils.html'>proj_get</a></span>())</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -155,22 +155,20 @@ GitHub information for the repository, by default obtained through
 <code>github_info()</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other GitHub functions: <code><a href='github_add_key.html'>github_add_key</a></code>,
   <code><a href='github_create_pat.html'>github_create_pat</a></code>,
   <code><a href='github_create_repo.html'>github_create_repo</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

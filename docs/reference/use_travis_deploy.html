@@ -8,10 +8,12 @@
 
 <title>Setup deployment for Travis CI — use_travis_deploy • travis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,8 +32,8 @@
 
 
 
-<meta property="og:title" content="Setup deployment for Travis CI — use_travis_deploy" />
 
+<meta property="og:title" content="Setup deployment for Travis CI — use_travis_deploy" />
 <meta property="og:description" content="Creates a public-private key pair,
 adds the public key to the GitHub repository via github_add_key(),
 and stores the private key as an encrypted environment variable in Travis CI
@@ -40,6 +42,7 @@ possibly in a different repository.
 The tic companion package contains facilities for installing such a key
 during a Travis CI build." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -91,7 +94,6 @@ during a Travis CI build." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropenscilabs/travis">
@@ -117,7 +119,6 @@ during a Travis CI build." />
     </div>
 
     <div class="ref-description">
-    
     <p>Creates a public-private key pair,
 adds the public key to the GitHub repository via <code><a href='github_add_key.html'>github_add_key()</a></code>,
 and stores the private key as an encrypted environment variable in Travis CI
@@ -125,12 +126,11 @@ via <code><a href='travis_get_vars.html'>travis_set_var()</a></code>,
 possibly in a different repository.
 The <span class="pkg">tic</span> companion package contains facilities for installing such a key
 during a Travis CI build.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>use_travis_deploy</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>usethis</span><span class='kw ns'>::</span><span class='fu'><a href='https://usethis.r-lib.org/reference/proj_utils.html'>proj_get</a></span>(), <span class='kw'>info</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_info</a></span>(<span class='no'>path</span>),
   <span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(<span class='kw'>info</span> <span class='kw'>=</span> <span class='no'>info</span>), <span class='kw'>travis_repo</span> <span class='kw'>=</span> <span class='no'>repo</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -158,14 +158,14 @@ The Travis CI repository to add the private key to, default: <code>repo</code>
 (the GitHub repo to which the public deploy key is added).</p></td>
     </tr>
     </table>
-    
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+    </ul>
 
   </div>
 </div>
