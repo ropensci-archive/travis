@@ -8,10 +8,12 @@
 
 <title>Travis CI utilities — travis_sync • travis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,13 +32,14 @@
 
 
 
-<meta property="og:title" content="Travis CI utilities — travis_sync" />
 
+<meta property="og:title" content="Travis CI utilities — travis_sync" />
 <meta property="og:description" content="Helper functions for Travis CI.
 travis_sync() initiates synchronization with GitHub and waits for completion
 by default.
 travis_browse() opens a browser pointing to the current repo on  Travis CI." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -88,7 +91,6 @@ travis_browse() opens a browser pointing to the current repo on  Travis CI." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropenscilabs/travis">
@@ -114,18 +116,16 @@ travis_browse() opens a browser pointing to the current repo on  Travis CI." />
     </div>
 
     <div class="ref-description">
-    
     <p>Helper functions for Travis CI.</p>
 <p><code>travis_sync()</code> initiates synchronization with GitHub and waits for completion
 by default.</p>
 <p><code>travis_browse()</code> opens a browser pointing to the current repo on  Travis CI.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>travis_sync</span>(<span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>travis_browse</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>())</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -151,14 +151,14 @@ The GitHub repo slug, by default obtained through <code><a href='github_info.htm
 Alternatively, the Travis CI repo ID, e.g. obtained through <code><a href='travis_repo_info.html'>travis_repo_id()</a></code>.</p></td>
     </tr>
     </table>
-    
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+    </ul>
 
   </div>
 </div>

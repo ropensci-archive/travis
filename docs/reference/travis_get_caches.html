@@ -8,10 +8,12 @@
 
 <title>Get/delete repository cache(s) from Travis CI — travis_get_caches • travis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -30,12 +32,13 @@
 
 
 
-<meta property="og:title" content="Get/delete repository cache(s) from Travis CI — travis_get_caches" />
 
+<meta property="og:title" content="Get/delete repository cache(s) from Travis CI — travis_get_caches" />
 <meta property="og:description" content="Return cache information
 travis_get_caches() queries the &quot;/repos/:repo/caches&quot; API.
 travis_delete_caches() returns the repo ID obtained from travis_repo_info()." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -87,7 +90,6 @@ travis_delete_caches() returns the repo ID obtained from travis_repo_info()." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ropenscilabs/travis">
@@ -113,11 +115,9 @@ travis_delete_caches() returns the repo ID obtained from travis_repo_info()." />
     </div>
 
     <div class="ref-description">
-    
     <p>Return cache information</p>
 <p><code>travis_get_caches()</code> queries the "/repos/:repo/caches" API.</p>
 <p><code>travis_delete_caches()</code> returns the repo ID obtained from <code><a href='travis_repo_info.html'>travis_repo_info()</a></code>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>travis_get_caches</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
@@ -125,7 +125,7 @@ travis_delete_caches() returns the repo ID obtained from travis_repo_info()." />
 
 <span class='fu'>travis_delete_caches</span>(<span class='kw'>repo</span> <span class='kw'>=</span> <span class='fu'><a href='github_info.html'>github_repo</a></span>(), <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='auth_travis.html'>travis_token</a></span>(<span class='no'>repo</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -146,21 +146,19 @@ A Travis CI token obtained from <code><a href='auth_travis.html'>travis_token()<
 Set to <code>FALSE</code> to suppress success message.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Travis CI functions: <code><a href='travis_repo_info.html'>travis_repo_info</a></code>,
   <code><a href='travis_repos.html'>travis_repos</a></code>, <code><a href='travis_set_pat.html'>travis_set_pat</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
