@@ -33,6 +33,7 @@ Depends:
 Imports:
     cli,
     clipr,
+    gh,
     git2r,
     glue (>= 1.2.0),
     httr,
