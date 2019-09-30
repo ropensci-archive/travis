@@ -48,9 +48,11 @@ github_create_repo <- function(name, org = NULL,
     check_write_org(org, gh_token)
   }
 
+  browser()
+  req = gh::gh(sprintf("POST %s%s", url), body = data)
   req <- GITHUB_POST(url, body = data, token = gh_token)
-  check_status(req, sprintf("creat[ing]{e} GitHub repository %s", name), quiet)
-  invisible(httr::content(req))
+  message(sprintf("creat[ing]{e} GitHub repository %s", name), quiet)
+  invisible(req)
 }
 
 #' @description

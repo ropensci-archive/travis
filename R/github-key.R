@@ -20,7 +20,7 @@
 #' @seealso [github_create_repo()]
 github_add_key <- function(pubkey, title = "travis+tic",
                            path = usethis::proj_get(), info = github_info(path),
-                           gh_token = NULL, quiet = FALSE) {
+                           quiet = FALSE) {
 
   if (inherits(pubkey, "key")) {
     pubkey <- as.list(pubkey)$pubkey
@@ -29,24 +29,15 @@ github_add_key <- function(pubkey, title = "travis+tic",
     stopc("`pubkey` must be an RSA/EC public key")
   }
 
-  if (is.null(gh_token)) {
-    if (info$owner$type == "User") {
-      gh_token <- auth_github("public_repo")
-    } else {
-      gh_token <- auth_github("public_repo", "write:org")
-    }
-  }
-
   repo <- github_repo(info = info)
-  check_admin_repo(repo, gh_token)
+  check_admin_repo(repo)
 
   key_data <- create_key_data(pubkey, title)
 
-  browser()
   # remove existing key
-  remove_key_if_exists(key_data, repo, gh_token, quiet)
+  remove_key_if_exists(key_data, repo, quiet)
   # add public key to repo deploy keys on GitHub
-  ret <- add_key(key_data, repo, gh_token, quiet)
+  ret <- add_key(key_data, repo, quiet)
 
   cli::cat_bullet(
     bullet = "tick", bullet_col = "green",
@@ -72,7 +63,7 @@ create_key_data <- function(pubkey, title) {
   )
 }
 
-remove_key_if_exists <- function(key_data, repo, gh_token, quiet) {
+remove_key_if_exists <- function(key_data, repo, quiet) {
 
   req = gh::gh(sprintf("GET /repos/%s/keys", repo))
 
@@ -87,7 +78,7 @@ remove_key_if_exists <- function(key_data, repo, gh_token, quiet) {
   message(sprintf("delet[ing]{e} existing deploy key on GitHub for repo %s", repo))
 }
 
-add_key <- function(key_data, repo, gh_token, quiet) {
+add_key <- function(key_data, repo, quiet) {
 
   # FIXME: catch status returns to process errors
   gh::gh(sprintf("POST /repos/%s/keys", repo), title = key_data$title,

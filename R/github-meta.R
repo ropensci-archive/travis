@@ -8,24 +8,18 @@
 #' @export
 #' @param path `[string]`\cr
 #'   The path to a GitHub-enabled Git repository (or a subdirectory thereof).
-#' @param gh_token `[Token2.0]`\cr
-#'   GitHub authentication token, by default obtained from [auth_github()] with
-#'   empty scope.
 #'
 #' @family GitHub functions
-github_info <- function(path = usethis::proj_get(), gh_token = NULL) {
+github_info <- function(path = usethis::proj_get()) {
   remote_url <- get_remote_url(path)
   repo <- extract_repo(remote_url)
-  if (is.null(gh_token)) {
-    gh_token <- auth_github()
-  }
-  get_repo_data(repo, gh_token = gh_token)
+  get_repo_data(repo)
 }
 
-get_repo_data <- function(repo, gh_token) {
-  req <- GITHUB_GET(paste0("/repos/", repo), token = gh_token)
-  httr::stop_for_status(req, paste0("retrieve repo information for: ", repo))
-  httr::content(req)
+get_repo_data <- function(repo) {
+  message(sprintf("retrieve repo information for: '%s'", repo))
+  req = gh::gh(sprintf("GET /repos/%s", repo))
+  return(req)
 }
 
 #' @description

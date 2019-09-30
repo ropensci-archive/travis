@@ -1,36 +1,29 @@
-github_user <- function(gh_token) {
-  req <- GITHUB_GET(paste0("/user"), token = gh_token)
-
-  httr::stop_for_status(
-    req,
-    "get information on authenticated user"
-  )
-
-  httr::content(req)
+github_user <- function() {
+  req = gh("GET /user")
+  return(req)
 }
 
-get_role_in_repo <- function(repo, gh_token) {
-  user <- github_user(gh_token)$login
+get_role_in_repo <- function(repo) {
+  user <- github_user()$login
 
-  req <- GITHUB_GET(paste0("/repos/", repo, "/collaborators/", user, "/permission"), token = gh_token)
+  browser()
+  req = gh(sprintf("GET /repos/%s/collaborators/%s/permission", repo, user))
 
-  httr::stop_for_status(
-    req,
-    paste0("get collaborator information on repo ", repo, " for user ", user)
-  )
+  message("get collaborator information on repo ", repo, " for user ", user)
 
-  response <- httr::content(req)
-  response$permission
+  req$permission
 }
 
-check_admin_repo <- function(repo, gh_token) {
-  role_in_repo <- get_role_in_repo(repo, gh_token)
+check_admin_repo <- function(repo) {
+  role_in_repo <- get_role_in_repo(repo)
   if (role_in_repo != "admin") {
     stopc("Must have role admin to add deploy key to repo ", repo, ", not ", role_in_repo)
   }
 }
 
 get_role_in_org <- function(org, gh_token) {
+  browser()
+  gh(sprintf("GET /user/memberships/orgs/%s", org), .token = gh_token)
   req <- GITHUB_GET(paste0("/user/memberships/orgs/", org), token = gh_token)
   if (httr::status_code(req) %in% 403) {
     org_perm_url <- paste0(
@@ -44,13 +37,11 @@ get_role_in_org <- function(org, gh_token) {
     )
   }
 
-  httr::stop_for_status(
-    req,
-    paste0(
+    message(sprintf(
       "query membership for organization ", org, ". ",
       "Check if you are a member of this organization"
     )
-  )
+    )
 
   membership <- httr::content(req)
   role_in_org <- membership$role
