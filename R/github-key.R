@@ -42,6 +42,7 @@ github_add_key <- function(pubkey, title = "travis+tic",
 
   key_data <- create_key_data(pubkey, title)
 
+  browser()
   # remove existing key
   remove_key_if_exists(key_data, repo, gh_token, quiet)
   # add public key to repo deploy keys on GitHub
@@ -72,36 +73,25 @@ create_key_data <- function(pubkey, title) {
 }
 
 remove_key_if_exists <- function(key_data, repo, gh_token, quiet) {
-  req <- GITHUB_GET(
-    sprintf("/repos/%s/keys", repo),
-    token = gh_token
-  )
 
-  httr::stop_for_status(req, sprintf("query deploy keys on GitHub for repo %s", repo))
-  keys <- httr::content(req)
-  titles <- vapply(keys, "[[", "title", FUN.VALUE = character(1))
-  our_title_idx <- which(titles == key_data$title)
+  req = gh::gh(sprintf("GET /repos/%s/keys", repo))
 
-  if (length(our_title_idx) == 0) {
+  if (length(req[[1]]) == 1) {
     return()
   }
 
-  our_title_idx <- our_title_idx[[1]]
 
-  req <- GITHUB_DELETE(
-    sprintf("/repos/%s/keys/%s", repo, keys[[our_title_idx]]$id),
-    token = gh_token
-  )
-  check_status(req, sprintf("delet[ing]{e} existing deploy key on GitHub for repo %s", repo), quiet)
+  # FIXME: catch status returns to process errors
+  gh::gh(sprintf("DELETE %s", req[[1]]$url))
+
+  message(sprintf("delet[ing]{e} existing deploy key on GitHub for repo %s", repo))
 }
 
 add_key <- function(key_data, repo, gh_token, quiet) {
-  req <- GITHUB_POST(
-    sprintf("/repos/%s/keys", repo),
-    body = key_data,
-    token = gh_token
-  )
 
-  check_status(req, sprintf("ad[ding]{d} deploy keys on GitHub for repo %s", repo), quiet)
-  invisible(httr::content(req))
+  # FIXME: catch status returns to process errors
+  gh::gh(sprintf("POST /repos/%s/keys", repo), title = key_data$title,
+         key = key_data$key, read_only = key_data$read_only)
+
+  message(sprintf("ad[ding]{d} deploy keys on GitHub for repo %s", repo))
 }
