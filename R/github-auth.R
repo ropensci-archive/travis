@@ -1,9 +1,6 @@
 auth_github_ <- function(...) {
-  cli::cat_bullet(
-    bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub."
-  )
-  cache <- FALSE
+  # FIXME: Why can we not cache this?
+  cache <- TRUE
 
   scopes <- c(...)
   app <- httr::oauth_app("github",

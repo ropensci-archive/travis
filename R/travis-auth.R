@@ -1,9 +1,11 @@
 auth_travis_ <- function() {
   cli::cat_bullet(
     bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub."
+    "Authenticating to GitHub to log into Travis with your GH account."
   )
-    # Do not allow caching this token, it needs to be fresh
+
+  # Do not allow caching this token, it needs to be fresh
+  # FIXME: This call actually pops up all the browser windows
     gh_token <- auth_github_(
       "read:org", "user:email", "repo_deployment", "repo:status",
       "read:repo_hook", "write:repo_hook"
@@ -35,6 +37,12 @@ auth_travis_ <- function() {
 auth_travis <- memoise::memoise(auth_travis_)
 
 travis_token_ <- function(repo = NULL) {
+
+  cli::cat_bullet(
+    bullet = "pointer", bullet_col = "yellow",
+    "Querying your Travis CI Personal Access Token."
+  )
+
   token <- auth_travis()
   if (!is.null(repo)) {
     if (!travis_has_repo(repo, token)) {
