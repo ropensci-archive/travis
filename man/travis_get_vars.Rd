@@ -59,7 +59,8 @@ because this is what seems to be used in Travis CI builds in such a case.
 \code{travis_delete_var()} deletes a variable.
 }
 \details{
-Avoid using \code{travis_set_var()} with literal values
+Avoid using \code{travis_set_var()} with literal values, because they will be
+recorded in the \code{.Rhistory} file.
 }
 \examples{
 \dontrun{

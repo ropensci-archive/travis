@@ -80,7 +80,8 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' because this is what seems to be used in Travis CI builds in such a case.
 #'
 #' @details
-#' Avoid using `travis_set_var()` with literal values
+#' Avoid using `travis_set_var()` with literal values, because they will be
+#' recorded in the `.Rhistory` file.
 #'
 #' @param value `[string]`\cr
 #'   The value for the new or updated variable.
