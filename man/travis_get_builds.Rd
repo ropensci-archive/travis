@@ -13,7 +13,8 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo(), token = travis_token(repo))
+travis_get_builds(repo = github_repo(), token = travis_token(repo),
+  ...)
 
 travis_restart_build(build_id, repo = github_repo(),
   token = travis_token(repo), quiet = FALSE)
@@ -49,6 +50,8 @@ Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id
 
 \item{token}{\code{[Token2.0]}\cr
 A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+
+\item{...}{see \code{\link[httr:GET]{httr::GET()}}}
 
 \item{build_id}{\code{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}
