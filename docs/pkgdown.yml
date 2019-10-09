@@ -1,5 +1,9 @@
 pandoc: '2.2'
+<<<<<<< HEAD
 pkgdown: 1.4.1
+=======
+pkgdown: 1.4.0
+>>>>>>> master
 pkgdown_sha: ~
 articles:
   travis: travis.html
