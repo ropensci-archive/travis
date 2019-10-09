@@ -21,7 +21,6 @@ check_admin_repo <- function(repo) {
 }
 
 get_role_in_org <- function(org) {
-  browser()
   req = gh::gh(sprintf("GET /user/memberships/orgs/%s", org))
 
   # FIXME: Query 403 exit code to check if rtravis is enabled for the repo

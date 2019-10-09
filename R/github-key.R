@@ -8,9 +8,6 @@
 #'   openssl public key, see [openssl::read_pubkey()].
 #' @param title `[string]`\cr
 #'   The title for the new key, default: "travis+tic".
-#' @param gh_token `[Token2.0]`\cr
-#'   GitHub authentication token, by default obtained from [auth_github()] with
-#'   the "public_repo" and (if an organization repo) "write:org" scopes.
 #' @inheritParams travis_repo_info
 #' @inheritParams github_repo
 #' @inheritParams github_create_repo

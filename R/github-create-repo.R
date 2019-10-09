@@ -45,12 +45,10 @@ github_create_repo <- function(name, org = NULL,
       gh_token <- auth_github("public_repo", "write:org")
     }
 
-    check_write_org(org, gh_token)
+    check_write_org(org)
   }
 
-  browser()
   req = gh::gh(sprintf("POST %s%s", url), body = data)
-  req <- GITHUB_POST(url, body = data, token = gh_token)
   message(sprintf("creat[ing]{e} GitHub repository %s", name), quiet)
   invisible(req)
 }

@@ -6,7 +6,7 @@
 \alias{uses_github}
 \title{Github information}
 \usage{
-github_info(path = usethis::proj_get(), gh_token = NULL)
+github_info(path = usethis::proj_get())
 
 github_repo(path = usethis::proj_get(), info = github_info(path))
 
@@ -15,10 +15,6 @@ uses_github(path = usethis::proj_get())
 \arguments{
 \item{path}{\code{[string]}\cr
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
-
-\item{gh_token}{\code{[Token2.0]}\cr
-GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
-empty scope.}
 
 \item{info}{\code{[list]}\cr
 GitHub information for the repository, by default obtained through

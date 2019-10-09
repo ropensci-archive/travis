@@ -6,7 +6,7 @@
 \usage{
 github_add_key(pubkey, title = "travis+tic",
   path = usethis::proj_get(), info = github_info(path),
-  gh_token = NULL, quiet = FALSE)
+  quiet = FALSE)
 }
 \arguments{
 \item{pubkey}{\code{[pubkey]}\cr
@@ -21,10 +21,6 @@ The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 \item{info}{\code{[list]}\cr
 GitHub information for the repository, by default obtained through
 \code{\link[=github_info]{github_info()}}.}
-
-\item{gh_token}{\code{[Token2.0]}\cr
-GitHub authentication token, by default obtained from \code{\link[=auth_github]{auth_github()}} with
-the "public_repo" and (if an organization repo) "write:org" scopes.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
