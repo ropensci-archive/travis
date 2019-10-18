@@ -38,6 +38,6 @@ travis_sync <- function(block = TRUE, quiet = FALSE) {
   )
 }
 
-##' @importFrom usethis browse_travis
-##' @export
-NULL
+#' @importFrom usethis browse_travis
+#' @export
+usethis::browse_travis
