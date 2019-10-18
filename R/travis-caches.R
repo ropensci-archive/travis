@@ -3,7 +3,8 @@
 #' @description
 #' Return cache information
 #'
-#' `travis_get_caches()` queries the "/repos/:repo/caches" API.
+#' @details
+#' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
 #'
 #' @inheritParams travis_set_pat
 #'
@@ -11,18 +12,19 @@
 #'
 #' @export
 travis_get_caches <- function(repo = github_repo(),
-                              token = travis_token(repo),
                               quiet = FALSE) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
-  check_status(
-    req,
-    sprintf(
-      "get[ting] caches for %s on Travis CI",
-      repo
-    ),
-    quiet
-  )
-  new_travis_caches(httr::content(req))
+
+  req = travisHTTP(path = sprintf("/repo/%s/caches", encode_slug(repo)))
+
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Getting caches for '%s' on Travis CI.", repo
+      )
+    )
+  }
+  new_travis_caches(httr::content(req$response))
 }
 
 
@@ -45,18 +47,16 @@ new_travis_cache <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_caches
-travis_delete_caches <- function(repo = github_repo(),
-                                 token = travis_token(repo),
-                                 quiet = FALSE) {
+travis_delete_caches <- function(repo = github_repo()) {
+  req = travisHTTP(verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)))
 
-  req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
-  check_status(
-    req,
-    sprintf(
-      "delet[ing]{e} caches for %s on Travis CI",
-      repo
-    ),
-    quiet
-  )
-  invisible(new_travis_caches(httr::content(req)))
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Deleting caches for '%s' on Travis CI.", repo
+      )
+    )
+    invisible(new_travis_caches(content(req$response)))
+  }
 }
