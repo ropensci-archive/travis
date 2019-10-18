@@ -1,3 +1,10 @@
+# travis 0.2.11.9002
+
+- refactor authentication: Now a Travis API token is used for all requests. For first time user, the user is asked to create one. The token is then stored on disk and used in future requests.
+- remove `token` argument from all functions
+- replace `browse_travis()` by `usethis::browse_travis()`
+- remove ability to update env vars ("PATCH"). Please remove (`travis_delete_var()`) and create a new one (`travis_set_var()`).
+
 # travis 0.2.11.9001
 
 - Using `usethis::proj_get()` as default path for all functions (#103, @maelle).
