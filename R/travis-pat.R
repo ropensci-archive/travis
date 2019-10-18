@@ -15,7 +15,6 @@
 #' @export
 travis_set_pat <- function(pat = NULL,
                            repo = github_repo(),
-                           token = travis_token(repo),
                            quiet = FALSE) {
   if (is.null(pat)) {
     pat <- github_create_pat(repo = repo)
