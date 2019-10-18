@@ -57,6 +57,11 @@ travisHTTP <- function(verb = "GET",
                  accept_json()
     )
   }
+
+  # for travis_delete_var()
+  if (http_type(resp) == "application/octet-stream") {
+    return(resp)
+  }
   if (http_type(resp) == "text/plain") {
     return(resp)
   }
@@ -72,6 +77,9 @@ travisHTTP <- function(verb = "GET",
     stop()
   } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "log_already_removed") {
     cli::cat_bullet(bullet = "cross", bullet_col = "red", "Log has already been removed.")
+    stop()
+  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "not_found") {
+    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Could not find env var. This might be due to insufficient access rights.")
     stop()
   }
 
