@@ -61,11 +61,7 @@ do_create_gh_repo <- function(user, password, repo, org = NULL) {
   res$full_name
 }
 
-create_travis_token <- function(user) {
-  travis::travis_user()
-}
-
-enable_travis_for_repo <- function(repo, travis_token) {
+enable_travis_for_repo <- function(repo) {
   withr::with_dir(
     repo@path,
     travis::travis_enable()
