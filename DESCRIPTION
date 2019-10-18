@@ -1,7 +1,7 @@
 Type: Package
 Package: travis
 Title: Set Up 'Travis' for Testing and Deployment
-Version: 0.2.11.9001
+Version: 0.2.11.9002
 Authors@R: 
     c(person(given = "Kirill",
              family = "Müller",
@@ -39,7 +39,8 @@ Imports:
     memoise,
     openssl,
     usethis,
-    withr
+    withr,
+    jsonlite
 Suggests:
     knitr,
     remotes,
