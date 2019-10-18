@@ -54,7 +54,7 @@ travisHTTP <- function(verb = "GET",
                  add_headers(Authorization = sprintf("token %s", api_token),
                              "Travis-API-Version" = 3),
                  body = body, query = query, encode = encode, ua,
-                 accept_json(), content_type_json()
+                 accept_json()
     )
   }
   if (http_type(resp) == "text/plain") {
