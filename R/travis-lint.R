@@ -16,7 +16,7 @@
 #' travis_lint()
 #' }
 #' @export
-travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = travis_token(repo)) {
+travis_lint <- function(file = ".travis.yml", repo = github_repo()) {
 
   req = travisHTTP(verb = "POST",
                    path = "/lint", body = upload_file(file),
