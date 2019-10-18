@@ -3,6 +3,8 @@
 #' @description
 #' Return repository information, in particular the repository ID.
 #'
+#' @import httr
+#'
 #' `travis_repo_info()` queries the "/repos/:repo" API.
 #'
 #' @param repo `[string|numeric]`\cr
@@ -18,20 +20,23 @@
 #' @export
 travis_repo_info <- function(repo = github_repo(),
                              token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s", encode_slug(repo)), token = token)
-  httr::stop_for_status(req, sprintf("get repo info on %s from Travis", repo))
-  new_travis_repo(httr::content(req))
+
+  req = travisHTTP(path = sprintf("/repo/%s", encode_slug(repo)))
+
+  new_travis_repo(content(req$response))
 }
 
 #' @export
 #' @rdname travis_repo_info
 travis_has_repo <- function(repo = github_repo(), token = travis_token()) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s", encode_slug(repo)), token = token)
-  status <- httr::status_code(req)
+  req = travisHTTP(path = sprintf("/repo/%s", encode_slug(repo)))
+  status <- status_code(req)
   if (status == 404) {
     return(FALSE)
   }
-  httr::stop_for_status(req, paste("try to access repository"))
+  cli::cat_rule()
+  cli::cat_bullet(bullet = "cross", bullet_col = "red")
+  stop_for_status(req$response, paste("try to access repository"))
   TRUE
 }
 
@@ -50,9 +55,10 @@ travis_repo_id <- function(repo = github_repo(), token = travis_token(repo)) {
 #' @export
 #' @rdname travis_repo_info
 travis_repo_settings <- function(repo = github_repo(), token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/settings", encode_slug(repo)), token = token)
-  httr::stop_for_status(req, sprintf("get repo settings on %s from Travis", repo))
-  new_travis_settings(httr::content(req))
+  req = travisHTTP(path = sprintf("/repo/%s/settings", encode_slug(repo)))
+
+  stop_for_status(req$response, sprintf("get repo settings on %s from Travis", repo))
+  new_travis_settings(content(req$response))
 }
 
 new_travis_settings <- function(x) {
