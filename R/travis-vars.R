@@ -13,15 +13,18 @@
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo(), token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
-    token = token
-  )
-  httr::stop_for_status(
-    req,
-    sprintf("get environment variables for %s from Travis CI", repo)
-  )
-  new_travis_env_vars(httr::content(req))
+travis_get_vars <- function(repo = github_repo()) {
+  req = travisHTTP(path = sprintf("/repo/%s/env_vars", encode_slug(repo)))
+
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Get environment variables for '%s' on Travis CI.", repo
+      )
+    )
+    new_travis_env_vars(content(req$response))
+  }
 }
 
 new_travis_env_vars <- function(x) {
@@ -54,9 +57,8 @@ new_travis_env_var <- function(x) {
 #' # Get the ID of a variable.
 #' travis_get_var_id("secret_var")
 #' }
-travis_get_var_id <- function(name, repo = github_repo(),
-                              token = travis_token(repo)) {
-  vars <- travis_get_vars(repo = repo, token = token)
+travis_get_var_id <- function(name, repo = github_repo()) {
+  vars <- travis_get_vars(repo = repo)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the
@@ -99,18 +101,27 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' # by reading the value from the console:
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
-travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
-                           token = travis_token(repo),
-                           quiet = FALSE) {
-  var_id <- travis_get_var_id(
-    name = name, repo = repo, token = token
+travis_set_var <- function(name, value, public = FALSE, repo = github_repo()) {
+
+  var_data <- list(
+    "env_var.name" = name,
+    "env_var.value" = value,
+    "env_var.public" = public
   )
 
-  if (!is.null(var_id)) {
-    travis_patch_var(var_id, name, value, public, token, repo, quiet)
-  } else {
-    travis_post_var(name, value, public, token, repo, quiet)
+  req = travisHTTP(verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
+                   body = var_data)
+
+  if (status_code(req$response) == 201) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Adding environment variables for '%s' on Travis CI.", repo
+      )
+    )
+    new_travis_env_var(content(req$response))
   }
+
 }
 
 #' @description
@@ -127,65 +138,22 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' travis_delete_var("secret_var")
 #' }
 travis_delete_var <- function(name, repo = github_repo(),
-                              token = travis_token(repo),
-                              id = travis_get_var_id(name, repo = repo, token = token),
-                              quiet = FALSE) {
-  if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")
+                              id = travis_get_var_id(name, repo = repo)) {
+  if (is.null(id)) stopc(paste0("`id` must not be NULL; or variable `name` not found.",
+                         " Does it really exist? Check with `travis_get_vars()`.",
+                         collapse = ""))
 
-  req <- TRAVIS_DELETE3(sprintf("/repo/%s/env_var/%s", encode_slug(repo), id),
-    token = token
-  )
-  check_status(
-    req,
-    sprintf(
-      "delet[ing]{e} environment variable %s (id: %s) from %s on Travis CI",
-      name, id, repo
-    ),
-    quiet
-  )
-  invisible(httr::content(req))
-}
+  req = travisHTTP(verb = "DELETE", sprintf("/repo/%s/env_var/%s",
+                                            encode_slug(repo), id))
 
-travis_post_var <- function(name, value, public, token, repo, quiet) {
-  var_data <- list(
-    "env_var.name" = name,
-    "env_var.value" = value,
-    "env_var.public" = public
-  )
-
-  req <- TRAVIS_POST3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
-    body = var_data,
-    token = token
-  )
-  check_status(
-    req,
-    sprintf(
-      "ad[ding]{d} %s environment variable %s to %s on Travis CI",
-      if (public) "public" else "private", name, repo
-    ),
-    quiet
-  )
-  invisible(new_travis_env_var(httr::content(req)))
-}
-
-travis_patch_var <- function(id, name, value, public, token, repo, quiet) {
-  var_data <- list(
-    "env_var.value" = value,
-    "env_var.public" = public
-  )
-
-  req <- TRAVIS_PATCH3(sprintf("/repo/%s/env_var/%s", encode_slug(repo), id),
-    body = var_data,
-    token = token
-  )
-  check_status(
-    req,
-    sprintf(
-      "updat[ing]{e} %s environment variable %s for %s on Travis CI",
-      if (public) "public" else "private", name, repo
-    ),
-    quiet
-  )
-
-  invisible(new_travis_env_var(httr::content(req)))
+  if (status_code(req) == 204) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Deleting environment variable with id = '%s' for '%s' on Travis CI.",
+        id, repo
+      )
+    )
+    invisible(req)
+  }
 }
