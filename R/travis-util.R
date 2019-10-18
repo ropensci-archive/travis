@@ -32,11 +32,6 @@ travis_sync <- function(block = TRUE, token = travis_token(), quiet = FALSE) {
   if (!quiet) message("Finished sync with GitHub.")
 }
 
-#' @description
-#' `travis_browse()` opens a browser pointing to the current repo on  Travis CI.
-#'
-#' @export
-#' @rdname travis_sync
-travis_browse <- function(repo = github_repo()) {
-  utils::browseURL(paste0("https://travis-ci.org/", repo))
-}
+##' @importFrom usethis browse_travis
+##' @export
+NULL
