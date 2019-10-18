@@ -177,19 +177,19 @@ travis_debug_job <- function(job_id,
                              log_output = FALSE,
                              repo = github_repo(),
                              quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/job/", job_id, "/debug"),
-    query = list(quiet = !log_output),
-    token = token
-  )
-  check_status(
-    req,
-    sprintf(
-      "restar[ting]{t} debug job %s from Travis CI",
-      job_id
-    ),
-    quiet
-  )
-  invisible(new_travis_pending_job(httr::content(req)))
+
+  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/debug", job_id),
+                   query = list(quiet = !log_output))
+
+  if (status_code(req$response) == 202) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Restarted build '%s' for '%s' in debugging mode on Travis CI.", job_id, repo
+      )
+    )
+    invisible(new_travis_pending_job(content(req$response)))
+  }
 }
 
 new_travis_pending_job <- function(x) {
