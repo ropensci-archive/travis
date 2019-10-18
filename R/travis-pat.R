@@ -21,7 +21,6 @@ travis_set_pat <- function(pat = NULL,
   }
   travis_set_var("GITHUB_PAT", pat,
     public = FALSE,
-    repo = repo,
-    token = token, quiet = quiet
+    repo = repo
   )
 }

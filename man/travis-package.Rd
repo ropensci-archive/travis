@@ -6,8 +6,7 @@
 \alias{travis-package}
 \title{travis: Set Up 'Travis' for Testing and Deployment}
 \description{
-Tools for interacting with the 'Travis' and
-    'GitHub' APIs for setting up continuous integration for R packages and
+Tools for interacting with the 'Travis' API for setting up continuous integration for R packages and
     other R-based projects.
 }
 \details{
@@ -43,6 +42,7 @@ Authors:
   \item Mika Braginsky \email{mika.br@gmail.com}
   \item Karthik Ram \email{karthik.ram@gmail.com}
   \item Jeroen Ooms \email{jeroen.ooms@stat.ucla.edu}
+  \item Patrick Schratz \email{patrick.schratz@gmail.com} (0000-0003-0748-6624)
 }
 
 Other contributors:

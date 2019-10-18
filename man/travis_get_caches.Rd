@@ -5,19 +5,14 @@
 \alias{travis_delete_caches}
 \title{Get/delete repository cache(s) from Travis CI}
 \usage{
-travis_get_caches(repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_get_caches(repo = github_repo(), quiet = FALSE)
 
-travis_delete_caches(repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_delete_caches(repo = github_repo())
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
 Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
-
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}
@@ -25,9 +20,10 @@ Set to \code{FALSE} to suppress success message.}
 \description{
 Return cache information
 
-\code{travis_get_caches()} queries the "/repos/:repo/caches" API.
-
 \code{travis_delete_caches()} returns the repo ID obtained from \code{travis_repo_info()}.
+}
+\details{
+\code{travis_get_caches()} queries the \code{"/repos/:repo/caches"} API.
 }
 \seealso{
 Other Travis CI functions: \code{\link{travis_repo_info}},

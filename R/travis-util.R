@@ -12,7 +12,7 @@
 #'
 #' @export
 travis_sync <- function(block = TRUE, quiet = FALSE) {
-  user_id <- travis_user(token = token)[["id"]]
+  user_id <- travis_user()[["id"]]
 
   req = travisHTTP(verb = "POST", path = sprintf("/user/%s/sync", user_id))
 

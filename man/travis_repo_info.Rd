@@ -7,30 +7,28 @@
 \alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
-travis_repo_info(repo = github_repo(), token = travis_token(repo))
+travis_repo_info(repo = github_repo())
 
-travis_has_repo(repo = github_repo(), token = travis_token())
+travis_has_repo(repo = github_repo())
 
-travis_repo_id(repo = github_repo(), token = travis_token(repo))
+travis_repo_id(repo = github_repo())
 
-travis_repo_settings(repo = github_repo(), token = travis_token(repo))
+travis_repo_settings(repo = github_repo())
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
 Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
-
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
 }
 \description{
 Return repository information, in particular the repository ID.
 
-\code{travis_repo_info()} queries the "/repos/:repo" API.
-
 \code{travis_repo_id()} returns the repo ID obtained from \code{travis_repo_info()}.
 
 \code{travis_repo_settings()} returns build settings
+}
+\details{
+\code{travis_repo_info()} queries the \code{"/repos/:repo"} API.
 }
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
