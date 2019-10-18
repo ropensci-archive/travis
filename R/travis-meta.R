@@ -54,7 +54,7 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @export
 #'
 #' @rdname travis_repos
-travis_user <- function(token = travis_token()) {
+travis_user <- function() {
 
   req = travisHTTP(path = "/user")
 
