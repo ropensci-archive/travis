@@ -42,7 +42,10 @@ check_status <- function(req, message, quiet = TRUE, accept_code = integer()) {
   if (!(httr::status_code(req) %in% accept_code)) {
     httr::stop_for_status(req, remove_brackets(message))
   }
-  if (!quiet) message("Finished ", keep_brackets(message), ".")
+  cli::cat_bullet(
+    bullet = "tick", bullet_col = "green",
+    "Finished checking status."
+  )
 }
 
 remove_brackets <- function(message) {
