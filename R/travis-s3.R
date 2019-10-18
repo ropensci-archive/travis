@@ -11,7 +11,7 @@ travis_no_attr <- function(x) {
 new_travis <- function(x, attr, subclass) {
   attr[["names"]] <- names(x)
   attributes(x) <- attr
-  structure(x, class = c(paste0("travis_", subclass), "travis"))
+  suppressWarnings(structure(x, class = c(paste0("travis_", subclass), "travis")))
 }
 
 new_travis_object <- function(x, subclass) {
