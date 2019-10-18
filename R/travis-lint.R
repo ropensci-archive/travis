@@ -6,6 +6,7 @@
 #' in particular if `language: r` is used (which is the default for R projects).
 #'
 #' @inheritParams travis_set_pat
+#' @import httr
 #'
 #' @param file A character string specifying a path to a \samp{.travis.yml} file.
 #'
@@ -15,21 +16,20 @@
 #' travis_lint()
 #' }
 #' @export
-travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = travis_token(repo), quiet = FALSE) {
-  req <- TRAVIS_POST3(
-    "/lint",
-    body = httr::upload_file(file),
-    encode = "raw",
-    token = token
-  )
+travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = travis_token(repo)) {
 
-  check_status(
-    req,
-    sprintf("lint[ing] %s", file),
-    quiet
-  )
+  req = travisHTTP(verb = "POST",
+                   path = "/lint", body = upload_file(file),
+                   encode = "raw")
+  browser()
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf("Linting %s", file)
+    )
+    new_travis_lint(content(req$response))
+  }
 
-  new_travis_lint(httr::content(req))
 }
 
 new_travis_lint <- function(x) {
