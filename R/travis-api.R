@@ -15,10 +15,6 @@ TRAVIS_POST <- function(url, ..., encode = "json", token) {
   )
 }
 
-TRAVIS_POST3 <- function(url, ..., token) {
-  TRAVIS_POST(url, ..., httr::add_headers("Travis-API-Version" = 3), token = token)
-}
-
 TRAVIS_PATCH <- function(url, ..., token) {
   httr::PATCH(travis(url),
     encode = "json",
