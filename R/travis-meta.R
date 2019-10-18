@@ -1,21 +1,28 @@
-#' Retrieve meta information from Travis CI
+#' @title Retrieve meta information from Travis CI
 #'
 #' @description
 #' Return repositories and user information.
 #'
-#' `travis_repositories()` queries the "/repos" API.
+#' @details
+#' `travis_repositories()` queries the `"/repos"` API.
 #'
 #' @inheritParams travis_repo_info
 #'
-#' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
+#' @seealso [Travis CI API documentation](https://developer.travis-ci.com/)
 #'
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(token = travis_token()) {
-  req <- TRAVIS_GET3("/repos", token = token)
-  httr::stop_for_status(req, paste("list repositories"))
-  new_travis_repos(httr::content(req))
+travis_repos <- function() {
+  req = travisHTTP(path = "/repos")
+
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      "Querying information about repos."
+    )
+    new_travis_repos(httr::content(req$response))
+  }
 }
 
 new_travis_repos <- function(x) {
@@ -48,9 +55,16 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #'
 #' @rdname travis_repos
 travis_user <- function(token = travis_token()) {
-  req <- TRAVIS_GET3("/user", token = token)
-  httr::stop_for_status(req, paste("get current user information"))
-  new_travis_user(httr::content(req))
+
+  req = travisHTTP(path = "/user")
+
+  if (status_code(req$response) == 200) {
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      "Querying information about user."
+    )
+    new_travis_user(httr::content(req$response))
+  }
 }
 
 new_travis_user <- function(x) {
