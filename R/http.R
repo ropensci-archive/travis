@@ -4,6 +4,7 @@
 #'   Travis CI.
 #'
 #' @import httr
+#' @importFrom jsonlite fromJSON
 #'
 #' @details This is mostly an internal function for executing API requests. In
 #'   almost all cases, users do not need to access this directly.
@@ -37,38 +38,50 @@ travisHTTP <- function(verb = "GET",
   if (verb == "GET") {
     resp <- GET(url,
                 add_headers(Authorization = sprintf("token %s", api_token),
-                            "Travis-API-Version" = "3"),
+                            "Travis-API-Version" = 3),
                 query = query, encode = encode, ua, accept_json(),
                 content_type_json()
     )
   } else if (verb == "DELETE") {
     resp <- DELETE(url,
-                   add_headers(Authentication = sprintf("token %s", api_token),
-                               "Travis-API-Version" = "3"),
+                   add_headers(Authorization = sprintf("token %s", api_token),
+                               "Travis-API-Version" = 3),
                    query = query, encode = encode, ua, accept_json(),
                    content_type_json()
     )
   } else if (verb == "POST") {
     resp <- POST(url,
-                 add_headers(Authentication = sprintf("token %s", api_token),
-                             "Travis-API-Version" = "3"),
+                 add_headers(Authorization = sprintf("token %s", api_token),
+                             "Travis-API-Version" = 3),
                  body = body, query = query, encode = encode, ua,
                  accept_json(), content_type_json()
     )
   }
-  if (http_type(resp) != "application/json") {
-    stop("API did not return json", call. = FALSE)
+  if (http_type(resp) == "text/plain") {
+    return(resp)
   }
 
-  parsed <- jsonlite::fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+  parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+
+  # catch specific errors
+  if (any(grepl("error_type", names(parsed))) && parsed$error_type == "job_already_running") {
+    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job already running.")
+    stop()
+  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "job_not_cancelable") {
+    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job is not running, cannot cancel.")
+    stop()
+  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "log_already_removed") {
+    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Log has already been removed.")
+    stop()
+  }
 
   if (status_code(resp) != 200 && status_code(resp) != 201 && status_code(resp) != 202) {
     stop(
       sprintf(
         "GitHub API request failed [%s]\n%s\n<%s>",
         status_code(resp),
-        parsed$message,
-        parsed$documentation_url
+        parsed[["@type"]],
+        parsed$content
       ),
       call. = FALSE
     )
