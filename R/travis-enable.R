@@ -11,7 +11,7 @@
 #'
 #' @export
 travis_enable <- function(active = TRUE, repo = github_repo(),
-                          token = travis_token(repo = repo),
+                          token = travis_auth(),
                           quiet = FALSE) {
   if (active) {
     activate <- "activate"
@@ -37,7 +37,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
 #' `travis_is_enabled()` returns if Travis CI is active for a repo.
 #' @export
 #' @rdname travis_enable
-travis_is_enabled <- function(repo = github_repo(), token = travis_token(repo)) {
+travis_is_enabled <- function(repo = github_repo(), token = auth_travis()) {
   info <- travis_repo_info(repo = repo, token = token)
   info[["active"]]
 }

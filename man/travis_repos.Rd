@@ -5,13 +5,9 @@
 \alias{travis_user}
 \title{Retrieve meta information from Travis CI}
 \usage{
-travis_repos(token = travis_token())
+travis_repos(token = auth_travis())
 
-travis_user(token = travis_token())
-}
-\arguments{
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+travis_user(token = auth_travis())
 }
 \description{
 Return repositories and user information.

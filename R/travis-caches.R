@@ -11,7 +11,7 @@
 #'
 #' @export
 travis_get_caches <- function(repo = github_repo(),
-                              token = travis_token(repo),
+                              token = auth_travis(),
                               quiet = FALSE) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
   check_status(
@@ -46,7 +46,7 @@ new_travis_cache <- function(x) {
 #' @export
 #' @rdname travis_get_caches
 travis_delete_caches <- function(repo = github_repo(),
-                                 token = travis_token(repo),
+                                 token = auth_travis(),
                                  quiet = FALSE) {
 
   req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)

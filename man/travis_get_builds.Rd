@@ -13,42 +13,38 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo(), token = travis_token(repo))
+travis_get_builds(repo = github_repo(), token = auth_travis())
 
 travis_restart_build(build_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+  token = auth_travis(), quiet = FALSE)
 
-travis_restart_last_build(repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_restart_last_build(repo = github_repo(), token = auth_travis(),
+  quiet = FALSE)
 
 travis_cancel_build(build_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+  token = auth_travis(), quiet = FALSE)
 
-travis_get_jobs(build_id, repo = github_repo(),
-  token = travis_token(repo))
+travis_get_jobs(build_id, repo = github_repo(), token = auth_travis())
 
-travis_restart_job(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_restart_job(job_id, repo = github_repo(), token = auth_travis(),
+  quiet = FALSE)
 
-travis_cancel_job(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_cancel_job(job_id, repo = github_repo(), token = auth_travis(),
+  quiet = FALSE)
 
 travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+  token = auth_travis(), quiet = FALSE)
 
-travis_get_log(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_get_log(job_id, repo = github_repo(), token = auth_travis(),
+  quiet = FALSE)
 
-travis_delete_log(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_delete_log(job_id, repo = github_repo(), token = auth_travis(),
+  quiet = FALSE)
 }
 \arguments{
 \item{repo}{\code{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
 Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
-
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
 
 \item{build_id}{\code{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}

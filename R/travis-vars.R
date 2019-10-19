@@ -13,7 +13,7 @@
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo(), token = travis_token(repo)) {
+travis_get_vars <- function(repo = github_repo(), token = auth_travis()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/env_vars", encode_slug(repo)),
     token = token
   )
@@ -55,7 +55,7 @@ new_travis_env_var <- function(x) {
 #' travis_get_var_id("secret_var")
 #' }
 travis_get_var_id <- function(name, repo = github_repo(),
-                              token = travis_token(repo)) {
+                              token = auth_travis()) {
   vars <- travis_get_vars(repo = repo, token = token)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
@@ -100,7 +100,7 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
-                           token = travis_token(repo),
+                           token = auth_travis(),
                            quiet = FALSE) {
   var_id <- travis_get_var_id(
     name = name, repo = repo, token = token
@@ -127,7 +127,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' travis_delete_var("secret_var")
 #' }
 travis_delete_var <- function(name, repo = github_repo(),
-                              token = travis_token(repo),
+                              token = auth_travis(),
                               id = travis_get_var_id(name, repo = repo, token = token),
                               quiet = FALSE) {
   if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")

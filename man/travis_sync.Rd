@@ -5,16 +5,13 @@
 \alias{travis_browse}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, token = travis_token(), quiet = FALSE)
+travis_sync(block = TRUE, token = auth_travis(), quiet = FALSE)
 
 travis_browse(repo = github_repo())
 }
 \arguments{
 \item{block}{\code{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
-
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
 
 \item{quiet}{\code{[flag]}\cr
 Set to \code{FALSE} to suppress success message.}

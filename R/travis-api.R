@@ -2,11 +2,12 @@ travis <- function(endpoint = "") {
   paste0("https://api.travis-ci.org", endpoint)
 }
 
-TRAVIS_GET <- function(url, ..., accept = NULL, token) {
+TRAVIS_GET <- function(url, ..., accept = NULL, token = auth_travis()) {
   if (is.null(accept)) {
     accept <- httr::accept("application/vnd.travis-ci.2+json")
   }
 
+  browser()
   httr::GET(travis(url),
     httr::user_agent("ropenscilabs/travis"),
     accept,
@@ -15,15 +16,15 @@ TRAVIS_GET <- function(url, ..., accept = NULL, token) {
   )
 }
 
-TRAVIS_GET3 <- function(url, ..., token) {
+TRAVIS_GET3 <- function(url, ..., token = auth_travis()) {
   TRAVIS_GET(url, ..., httr::add_headers("Travis-API-Version" = 3), token = token)
 }
 
-TRAVIS_GET_TEXT3 <- function(url, ..., token) {
+TRAVIS_GET_TEXT3 <- function(url, ..., token = auth_travis()) {
   TRAVIS_GET3(url, ..., accept = httr::accept("text/plain"), token = token)
 }
 
-TRAVIS_POST <- function(url, ..., encode = "json", token) {
+TRAVIS_POST <- function(url, ..., encode = "json", token = auth_travis()) {
   httr::POST(travis(url),
     httr::user_agent("ropenscilabs/travis"),
     httr::accept("application/vnd.travis-ci.2+json"),
@@ -32,11 +33,11 @@ TRAVIS_POST <- function(url, ..., encode = "json", token) {
   )
 }
 
-TRAVIS_POST3 <- function(url, ..., token) {
+TRAVIS_POST3 <- function(url, ..., token = auth_travis()) {
   TRAVIS_POST(url, ..., httr::add_headers("Travis-API-Version" = 3), token = token)
 }
 
-TRAVIS_PATCH <- function(url, ..., token) {
+TRAVIS_PATCH <- function(url, ..., token = auth_travis()) {
   httr::PATCH(travis(url),
     encode = "json",
     httr::user_agent("ropenscilabs/travis"),
@@ -46,11 +47,11 @@ TRAVIS_PATCH <- function(url, ..., token) {
   )
 }
 
-TRAVIS_PATCH3 <- function(url, ..., token) {
+TRAVIS_PATCH3 <- function(url, ..., token = auth_travis()) {
   TRAVIS_PATCH(url, ..., httr::add_headers("Travis-API-Version" = 3), token = token)
 }
 
-TRAVIS_DELETE <- function(url, ..., token) {
+TRAVIS_DELETE <- function(url, ..., token  = auth_travis()) {
   httr::DELETE(travis(url),
     encode = "json",
     httr::user_agent("ropenscilabs/travis"),
@@ -60,7 +61,7 @@ TRAVIS_DELETE <- function(url, ..., token) {
   )
 }
 
-TRAVIS_DELETE3 <- function(url, ..., token) {
+TRAVIS_DELETE3 <- function(url, ..., token = auth_travis()) {
   TRAVIS_DELETE(url, ..., httr::add_headers("Travis-API-Version" = 3), token = token)
 }
 

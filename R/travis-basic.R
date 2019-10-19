@@ -8,16 +8,13 @@
 #' @param repo `[string|numeric]`\cr
 #'   The GitHub repo slug, by default obtained through [github_repo()].
 #'   Alternatively, the Travis CI repo ID, e.g. obtained through `travis_repo_id()`.
-#' @param token `[Token2.0]`\cr
-#'   A Travis CI token obtained from [travis_token()] or [auth_travis()].
-#'
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
 #' @family Travis CI functions
 #'
 #' @export
 travis_repo_info <- function(repo = github_repo(),
-                             token = travis_token(repo)) {
+                             token = auth_travis()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s", encode_slug(repo)), token = token)
   httr::stop_for_status(req, sprintf("get repo info on %s from Travis", repo))
   new_travis_repo(httr::content(req))
@@ -25,7 +22,7 @@ travis_repo_info <- function(repo = github_repo(),
 
 #' @export
 #' @rdname travis_repo_info
-travis_has_repo <- function(repo = github_repo(), token = travis_token()) {
+travis_has_repo <- function(repo = github_repo(), token = auth_travis()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s", encode_slug(repo)), token = token)
   status <- httr::status_code(req)
   if (status == 404) {
@@ -40,7 +37,7 @@ travis_has_repo <- function(repo = github_repo(), token = travis_token()) {
 #'
 #' @export
 #' @rdname travis_repo_info
-travis_repo_id <- function(repo = github_repo(), token = travis_token(repo)) {
+travis_repo_id <- function(repo = github_repo(), token = auth_travis()) {
   travis_repo_info(repo = repo, token = token)$id
 }
 
@@ -49,7 +46,7 @@ travis_repo_id <- function(repo = github_repo(), token = travis_token(repo)) {
 #'
 #' @export
 #' @rdname travis_repo_info
-travis_repo_settings <- function(repo = github_repo(), token = travis_token(repo)) {
+travis_repo_settings <- function(repo = github_repo(), token = auth_travis()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/settings", encode_slug(repo)), token = token)
   httr::stop_for_status(req, sprintf("get repo settings on %s from Travis", repo))
   new_travis_settings(httr::content(req))

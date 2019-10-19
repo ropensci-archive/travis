@@ -1,75 +1,70 @@
-auth_travis_ <- function(gh_token = NULL) {
+auth_travis <- function(endpoint = ".org") {
+  yml <- tryCatch({
+    readLines("~/.travis/config.yml")
+  },
+  warning = function(cond) {
+    cli::cat_bullet(
+      bullet = "pointer", bullet_col = "yellow",
+      c(
+        "To interact with the Travis CI API, an API token is required.",
+        "This is a one-time procedure. The token will be stored in your home directory in the '.travis' directory."
+      )
+    )
+    message("Querying API token...")
+    utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
+    wait_for_clipboard_token(endpoint = endpoint)
+    return(readLines("~/.travis/config.yml"))
+  }
+  )
+
+  # create api token if none is found but config file exists
+  if (!any(grepl("token", yml))) {
+    requireNamespace("utils", quietly = TRUE)
+    utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
+    wait_for_clipboard_token(endpoint = endpoint)
+  }
+  return(read_token())
+}
+
+wait_for_clipboard_token <- function(endpoint) {
+  cli::cat_bullet(
+    bullet = "info", bullet_col = "yellow",
+    " Waiting for API token to appear on the clipboard."
+  )
+  Sys.sleep(3)
+
+  repeat {
+    token <- readline("Please paste the API token to the console.\n")
+    if (is_token(token)) break
+    Sys.sleep(0.1)
+  }
   cli::cat_bullet(
     bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub."
+    " Detected token, clearing clipboard."
   )
-  if (is.null(gh_token)) {
-    # Do not allow caching this token, it needs to be fresh
-    gh_token <- auth_github_(
-      "read:org", "user:email", "repo_deployment", "repo:status",
-      "read:repo_hook", "write:repo_hook"
-    )
-  }
-  auth_travis_data <- list(
-    "github_token" = gh_token$credentials$access_token
-  )
-  auth_travis <- TRAVIS_POST(
-    url = "/auth/github",
-    body = auth_travis_data,
-    httr::user_agent("Travis/1.0"),
-    token = NULL
-  )
-  httr::stop_for_status(auth_travis, "authenticate with travis")
-  httr::content(auth_travis)$access_token
-}
-
-#' Authenticate with Travis CI
-#'
-#' @description
-#' Authenticates with Travis using your Github account. Returns an access token.
-#' The token will be obtained only once in each
-#' R session, but it will never be cached on the file system.
-#' In most scenarios, these functions will be called implicitly by other functions.
-#'
-#' `auth_travis()` only performs the authentication with Travis CI.
-#'
-#' @param gh_token `[Token2.0]`\cr
-#'   A GitHub token, by default obtained from [auth_github()] using the
-#'   "read:org", "user:email", "repo_deployment", "repo:status",
-#'   "read:repo_hook", and "write:repo_hook" scopes.
-#'
-#' @export
-auth_travis <- memoise::memoise(auth_travis_)
-
-travis_token_ <- function(repo = NULL) {
-  token <- auth_travis()
-  if (!is.null(repo)) {
-    if (!travis_has_repo(repo, token)) {
-      travis_sync(token = token)
-      if (!travis_has_repo(repo, token)) {
-        review_travis_app_permission(repo)
-      }
+  requireNamespace("clipr", quietly = TRUE)
+  tryCatch(
+    clipr::write_clip(""),
+    error = function(e) {
+      warning("Error clearing clipboard: ", conditionMessage(e))
     }
-  }
-  token
-}
-
-review_travis_app_permission <- function(repo) {
-  url_stop(
-    "You may need to retry in a few seconds. ",
-    "If your repo ", repo, " belongs to an organization, you may need to allow Travis access to that organization",
-    url = "https://github.com/settings/connections/applications/f244293c729d5066cf27"
   )
+  dir.create("~/.travis")
+  cat(sprintf("endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
+              endpoint, token), sep = "\n", file = "~/.travis/config.yml")
 }
 
-#' @description
-#' `travis_token()` authenticates and checks if the repository is known to
-#' Travis CI. If not, a GitHub sync via [travis_sync()] is performed.
-#'
-#' @param repo `[string]`\cr
-#'   The GitHub repo slug in the format "<user|org>/<repo>", if `NULL` no sync
-#'   is performed.
-#'
-#' @export
-#' @rdname auth_travis
-travis_token <- memoise::memoise(travis_token_)
+is_token <- function(token) {
+  grepl("\\b[a-zA-Z0-9]{18}\\b", token)
+}
+
+travis <- function(endpoint = "") {
+  sprintf("https://api.travis-ci%s", endpoint)
+}
+
+read_token <- function() {
+  yml <- readLines("~/.travis/config.yml")
+  token <- yml[which(grepl("access_token", yml))]
+  token <- strsplit(token, " ")[[1]][6]
+  return(token)
+}

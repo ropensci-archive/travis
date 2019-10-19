@@ -11,7 +11,7 @@
 #' @inheritParams travis_set_pat
 #'
 #' @export
-travis_sync <- function(block = TRUE, token = travis_token(), quiet = FALSE) {
+travis_sync <- function(block = TRUE, token = auth_travis(), quiet = FALSE) {
   user_id <- travis_user(token = token)[["id"]]
 
   req <- TRAVIS_POST3(sprintf("/user/%s/sync", user_id),

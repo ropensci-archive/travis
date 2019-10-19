@@ -12,7 +12,7 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(token = travis_token()) {
+travis_repos <- function(token = auth_travis()) {
   req <- TRAVIS_GET3("/repos", token = token)
   httr::stop_for_status(req, paste("list repositories"))
   new_travis_repos(httr::content(req))
@@ -47,7 +47,7 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @export
 #'
 #' @rdname travis_repos
-travis_user <- function(token = travis_token()) {
+travis_user <- function(token = auth_travis()) {
   req <- TRAVIS_GET3("/user", token = token)
   httr::stop_for_status(req, paste("get current user information"))
   new_travis_user(httr::content(req))
