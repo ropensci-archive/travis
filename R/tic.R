@@ -13,8 +13,7 @@ use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
   #' The preparation consists of the following steps:
   withr::with_dir(path, {
     #' 1. If necessary, create a GitHub repository via [use_github()]
-    use_github_interactive()
-    stopifnot(uses_github())
+    # FIXME: DO this with the 'gh' pkg
 
     #' 1. Enable Travis via [travis_enable()]
     travis_enable()
@@ -35,8 +34,6 @@ use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
     #'    via [use_travis_deploy()]
     if (needs_deploy(repo_type)) use_travis_deploy()
 
-    #' 1. Create a GitHub PAT and install it on Travis CI via [travis_set_pat()]
-    travis_set_pat()
   })
 
   #'
@@ -45,21 +42,6 @@ use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
   #' functions.
 }
 
-use_github_interactive <- function() {
-  if (!interactive()) {
-    return()
-  }
-  if (uses_github()) {
-    return()
-  }
-
-  if (!yesno("Create GitHub repo and push code?")) {
-    return()
-  }
-
-  message("Creating GitHub repository")
-  use_github(push = TRUE)
-}
 
 use_travis_yml <- function() {
   use_template("dot-travis.yml", target = ".travis.yml")

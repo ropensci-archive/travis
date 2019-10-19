@@ -5,17 +5,16 @@
 \title{Linting}
 \usage{
 travis_lint(file = ".travis.yml", repo = github_repo(),
-  token = auth_travis(), quiet = FALSE)
+  token = auth_travis())
 }
 \arguments{
 \item{file}{A character string specifying a path to a \samp{.travis.yml} file.}
 
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 }
 \value{
 A list.

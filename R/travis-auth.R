@@ -1,3 +1,10 @@
+#' Authenticate to Travis
+#' @description
+#'   Authenticates to Travis and returns a Travis API token
+#' @param endpoint ´string´\cr
+#'   Which endpoint to use. Defaults to ".org".
+#' @export
+#'
 auth_travis <- function(endpoint = ".org") {
   yml <- tryCatch({
     readLines("~/.travis/config.yml")

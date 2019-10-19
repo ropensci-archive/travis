@@ -6,7 +6,8 @@
 #' `travis_repositories()` queries the "/repos" API.
 #'
 #' @inheritParams travis_repo_info
-#'
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
 #' @family Travis CI functions

@@ -8,6 +8,8 @@
 #' @param repo `[string|numeric]`\cr
 #'   The GitHub repo slug, by default obtained through [github_repo()].
 #'   Alternatively, the Travis CI repo ID, e.g. obtained through `travis_repo_id()`.
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
 #' @family Travis CI functions

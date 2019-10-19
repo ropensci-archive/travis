@@ -9,6 +9,10 @@ travis_repos(token = auth_travis())
 
 travis_user(token = auth_travis())
 }
+\arguments{
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
+}
 \description{
 Return repositories and user information.
 
@@ -20,7 +24,6 @@ Return repositories and user information.
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
 Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repo_info}},
-  \code{\link{travis_set_pat}}
+  \code{\link{travis_repo_info}}
 }
 \concept{Travis CI functions}

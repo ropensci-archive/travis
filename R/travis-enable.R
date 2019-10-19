@@ -7,12 +7,14 @@
 #'
 #' @param active `[flag]`\cr
 #'   Set to `FALSE` to deactivate instead of activating.
-#' @inheritParams travis_set_pat
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #'
 #' @export
 travis_enable <- function(active = TRUE, repo = github_repo(),
-                          token = travis_auth(),
-                          quiet = FALSE) {
+                          token = auth_travis()) {
   if (active) {
     activate <- "activate"
   } else {
@@ -27,8 +29,7 @@ travis_enable <- function(active = TRUE, repo = github_repo(),
     sprintf(
       "%s repo %s on Travis CI",
       ifelse(active, "activat[ing]{e}", "deactivat[ing]{e}"), repo
-    ),
-    quiet
+    )
   )
   invisible(new_travis_repo(httr::content(req)))
 }

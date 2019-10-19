@@ -12,16 +12,17 @@ travis_get_vars(repo = github_repo(), token = auth_travis())
 travis_get_var_id(name, repo = github_repo(), token = auth_travis())
 
 travis_set_var(name, value, public = FALSE, repo = github_repo(),
-  token = auth_travis(), quiet = FALSE)
+  token = auth_travis())
 
 travis_delete_var(name, repo = github_repo(), token = auth_travis(),
-  id = travis_get_var_id(name, repo = repo, token = token),
-  quiet = FALSE)
+  id = travis_get_var_id(name, repo = repo, token = token))
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
+
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 
 \item{name}{\code{[string]}\cr
 The name of the variable.}
@@ -31,9 +32,6 @@ The value for the new or updated variable.}
 
 \item{public}{\code{[flag]}\cr
 Should the variable be public or private?}
-
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
 
 \item{id}{\code{[string]}\cr
 The ID of the variable, by default obtained from \code{travis_get_var_id()}.}

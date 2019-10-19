@@ -5,7 +5,7 @@
 \alias{travis_browse}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, token = auth_travis(), quiet = FALSE)
+travis_sync(block = TRUE, token = auth_travis())
 
 travis_browse(repo = github_repo())
 }
@@ -13,12 +13,11 @@ travis_browse(repo = github_repo())
 \item{block}{\code{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 }
 \description{
 Helper functions for Travis CI.

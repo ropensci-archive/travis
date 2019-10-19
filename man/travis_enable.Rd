@@ -6,7 +6,7 @@
 \title{Activate Travis CI}
 \usage{
 travis_enable(active = TRUE, repo = github_repo(),
-  token = travis_auth(), quiet = FALSE)
+  token = auth_travis())
 
 travis_is_enabled(repo = github_repo(), token = auth_travis())
 }
@@ -14,12 +14,11 @@ travis_is_enabled(repo = github_repo(), token = auth_travis())
 \item{active}{\code{[flag]}\cr
 Set to \code{FALSE} to deactivate instead of activating.}
 
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 }
 \description{
 Activating Travis CI, and querying activity status.

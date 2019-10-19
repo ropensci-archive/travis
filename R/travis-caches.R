@@ -4,23 +4,22 @@
 #' Return cache information
 #'
 #' `travis_get_caches()` queries the "/repos/:repo/caches" API.
-#'
-#' @inheritParams travis_set_pat
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @family Travis CI functions
 #'
 #' @export
 travis_get_caches <- function(repo = github_repo(),
-                              token = auth_travis(),
-                              quiet = FALSE) {
+                              token = auth_travis()) {
   req <- TRAVIS_GET3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
   check_status(
     req,
     sprintf(
       "get[ting] caches for %s on Travis CI",
       repo
-    ),
-    quiet
+    )
   )
   new_travis_caches(httr::content(req))
 }
@@ -46,8 +45,7 @@ new_travis_cache <- function(x) {
 #' @export
 #' @rdname travis_get_caches
 travis_delete_caches <- function(repo = github_repo(),
-                                 token = auth_travis(),
-                                 quiet = FALSE) {
+                                 token = auth_travis()) {
 
   req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
   check_status(
@@ -55,8 +53,7 @@ travis_delete_caches <- function(repo = github_repo(),
     sprintf(
       "delet[ing]{e} caches for %s on Travis CI",
       repo
-    ),
-    quiet
+    )
   )
   invisible(new_travis_caches(httr::content(req)))
 }

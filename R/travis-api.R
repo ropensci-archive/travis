@@ -33,7 +33,7 @@ TRAVIS_POST3 <- function(url, ..., token = auth_travis()) {
 }
 
 TRAVIS_PATCH <- function(url, ..., token = auth_travis()) {
-  httr::PATCH(sprintf("%s/%s", travis(".org"), url),
+  httr::PATCH(sprintf("%s%s", travis(".org"), url),
     encode = "json",
     httr::user_agent("ropenscilabs/travis"),
     httr::accept("application/vnd.travis-ci.2+json"),
@@ -47,10 +47,8 @@ TRAVIS_PATCH3 <- function(url, ..., token = auth_travis()) {
 }
 
 TRAVIS_DELETE <- function(url, ..., token  = auth_travis()) {
-  httr::DELETE(sprintf("%s/%s", travis(".org"), url),
-    encode = "json",
+  httr::DELETE(sprintf("%s%s", travis(".org"), url),
     httr::user_agent("ropenscilabs/travis"),
-    httr::accept("application/vnd.travis-ci.2+json"),
     httr::add_headers(Authorization = paste("token", token)),
     ...
   )

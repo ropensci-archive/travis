@@ -5,31 +5,32 @@
 #'
 #' `travis_sync()` initiates synchronization with GitHub and waits for completion
 #' by default.
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @param block `[flag]`\cr
 #'   Set to `FALSE` to return immediately instead of waiting.
-#' @inheritParams travis_set_pat
-#'
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @export
-travis_sync <- function(block = TRUE, token = auth_travis(), quiet = FALSE) {
+travis_sync <- function(block = TRUE, token = auth_travis()) {
   user_id <- travis_user(token = token)[["id"]]
 
   req <- TRAVIS_POST3(sprintf("/user/%s/sync", user_id),
     token = token
   )
 
-  check_status(req, "initiat[ing]{e} sync with GitHub", quiet, 409)
+  check_status(req, "initiat[ing]{e} sync with GitHub", 409)
 
   if (block) {
     message("Waiting for sync with GitHub", appendLF = FALSE)
     while (travis_user(token = token)[["is_syncing"]]) {
-      if (!quiet) message(".", appendLF = FALSE)
+      message(".", appendLF = FALSE)
       Sys.sleep(1)
     }
-    if (!quiet) message()
+    message()
   }
 
-  if (!quiet) message("Finished sync with GitHub.")
+   message("Finished sync with GitHub.")
 }
 
 #' @description

@@ -39,7 +39,8 @@ Imports:
     memoise,
     openssl,
     usethis,
-    withr
+    withr,
+    gh
 Suggests:
     knitr,
     remotes,

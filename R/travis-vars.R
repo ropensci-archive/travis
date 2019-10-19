@@ -4,9 +4,10 @@
 #' Functions around public and private variables available in Travis CI builds.
 #'
 #' `travis_get_vars()` calls the "/settings/env_vars" API.
-#'
-#' @inheritParams travis_set_pat
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @export
 #' @examples
 #' \dontrun{
@@ -100,17 +101,15 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
-                           token = auth_travis(),
-                           quiet = FALSE) {
+                           token = auth_travis()) {
   var_id <- travis_get_var_id(
     name = name, repo = repo, token = token
   )
 
   if (!is.null(var_id)) {
-    travis_patch_var(var_id, name, value, public, token, repo, quiet)
-  } else {
-    travis_post_var(name, value, public, token, repo, quiet)
+    travis_delete_var(id = var_id, name = name, token = token, repo = repo)
   }
+    travis_post_var(name, value, public, token, repo)
 }
 
 #' @description
@@ -128,8 +127,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' }
 travis_delete_var <- function(name, repo = github_repo(),
                               token = auth_travis(),
-                              id = travis_get_var_id(name, repo = repo, token = token),
-                              quiet = FALSE) {
+                              id = travis_get_var_id(name, repo = repo, token = token)) {
   if (is.null(id)) stopc("`id` must not be NULL, or variable `name` not found")
 
   req <- TRAVIS_DELETE3(sprintf("/repo/%s/env_var/%s", encode_slug(repo), id),
@@ -140,13 +138,12 @@ travis_delete_var <- function(name, repo = github_repo(),
     sprintf(
       "delet[ing]{e} environment variable %s (id: %s) from %s on Travis CI",
       name, id, repo
-    ),
-    quiet
+    )
   )
   invisible(httr::content(req))
 }
 
-travis_post_var <- function(name, value, public, token, repo, quiet) {
+travis_post_var <- function(name, value, public, token, repo) {
   var_data <- list(
     "env_var.name" = name,
     "env_var.value" = value,
@@ -162,13 +159,12 @@ travis_post_var <- function(name, value, public, token, repo, quiet) {
     sprintf(
       "ad[ding]{d} %s environment variable %s to %s on Travis CI",
       if (public) "public" else "private", name, repo
-    ),
-    quiet
+    )
   )
   invisible(new_travis_env_var(httr::content(req)))
 }
 
-travis_patch_var <- function(id, name, value, public, token, repo, quiet) {
+travis_patch_var <- function(id, name, value, public, token, repo) {
   var_data <- list(
     "env_var.value" = value,
     "env_var.public" = public
@@ -183,8 +179,7 @@ travis_patch_var <- function(id, name, value, public, token, repo, quiet) {
     sprintf(
       "updat[ing]{e} %s environment variable %s for %s on Travis CI",
       if (public) "public" else "private", name, repo
-    ),
-    quiet
+    )
   )
 
   invisible(new_travis_env_var(httr::content(req)))

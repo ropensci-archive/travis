@@ -4,9 +4,10 @@
 #'
 #' This function may incorrectly report valid `.travis.yml` files as broken,
 #' in particular if `language: r` is used (which is the default for R projects).
-#'
-#' @inheritParams travis_set_pat
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @param file A character string specifying a path to a \samp{.travis.yml} file.
 #'
 #' @return A list.
@@ -15,7 +16,7 @@
 #' travis_lint()
 #' }
 #' @export
-travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = auth_travis(), quiet = FALSE) {
+travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = auth_travis()) {
   req <- TRAVIS_POST3(
     "/lint",
     body = httr::upload_file(file),
@@ -25,8 +26,7 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = auth
 
   check_status(
     req,
-    sprintf("lint[ing] %s", file),
-    quiet
+    sprintf("lint[ing] %s", file)
   )
 
   new_travis_lint(httr::content(req))

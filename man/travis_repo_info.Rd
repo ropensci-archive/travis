@@ -19,6 +19,9 @@ travis_repo_settings(repo = github_repo(), token = auth_travis())
 \item{repo}{\code{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
 Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 }
 \description{
 Return repository information, in particular the repository ID.
@@ -33,6 +36,6 @@ Return repository information, in particular the repository ID.
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
 Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
+  \code{\link{travis_repos}}
 }
 \concept{Travis CI functions}
