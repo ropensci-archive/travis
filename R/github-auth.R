@@ -15,6 +15,6 @@ auth_github <- function() {
     )
     usethis::browse_github_token()
     cli::cat_bullet(bullet = "cross", bullet_col = "red")
-    stop("Circle: Please restart your R session after setting the token and try again.")
+    stop("Travis: Please restart your R session after setting the token and try again.")
   }
 }

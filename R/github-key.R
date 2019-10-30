@@ -51,7 +51,7 @@ add_key <- function(key_data, user, project) {
 
   cli::cat_bullet(
     bullet = "pointer", bullet_col = "yellow",
-    sprintf("Adding deploy keys on GitHub and Circle CI for repo '%s'.", project)
+    sprintf("Adding deploy keys on GitHub and Travis CI for repo '%s'.", project)
   )
 
   invisible(resp)

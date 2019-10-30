@@ -34,7 +34,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   private_key <- encode_private_key(key)
 
   # add to GitHub first, because this can fail because of missing org permissions
-  title <- "Deploy key for Circle CI"
+  title <- "Deploy key for Travis CI"
   github_add_key(pubkey = pub_key, user = user, repo = repo, title = title)
 
   travis_set_var("id_rsa", private_key, public = FALSE, repo = github_repo())
