@@ -20,9 +20,9 @@ github_add_key <- function(pubkey, repo = NULL, user = NULL,
   key_data <- create_key_data(pubkey, title)
 
   # remove existing key
-  remove_key_if_exists(key_data, user, repo)
+  remove_key_if_exists(key_data, user = github_info()$owner$login, repo)
   # add public key to repo deploy keys on GitHub
-  ret <- add_key(key_data, user, repo)
+  ret <- add_key(key_data, user = github_info()$owner$login, repo)
 
   cli::cat_rule()
   cli::cat_bullet(
