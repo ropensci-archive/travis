@@ -20,7 +20,7 @@
 #'
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),
-                              user = github_user()$owner$login,
+                              user = github_user()$login,
                               repo = github_info()$name) {
 
   # authenticate on github and travis and set up keys/vars
