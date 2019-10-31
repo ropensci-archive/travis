@@ -42,7 +42,6 @@ check_admin_repo <- function(owner, user, repo) {
 
 add_key <- function(key_data, user, project) {
 
-  # FIXME: catch status returns to process errors
   resp <- gh::gh("POST /repos/:owner/:repo/keys",
                  owner = user, repo = project,
                  title = key_data$title,
