@@ -7,9 +7,10 @@
 #' `travis_get_builds()` calls the "builds" API for the current repository.
 #'
 #' @export
-travis_get_builds <- function(repo = github_repo()) {
+travis_get_builds <- function(repo = github_repo(), endpoint = NULL) {
 
-  req = travisHTTP(path = sprintf("/repo/%s/builds", encode_slug(repo)))
+  req = travisHTTP(path = sprintf("/repo/%s/builds", encode_slug(repo)),
+                   endpoint = endpoint)
 
   stop_for_status(
     req$response,
