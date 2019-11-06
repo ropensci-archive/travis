@@ -30,8 +30,8 @@ travisHTTP <- function(verb = "GET",
                        encode = "json") {
   url <- sprintf("https://api.travis-ci%s%s", endpoint, path)
 
-  auth_travis()
-  api_token <- read_token()
+  auth_travis(endpoint = endpoint)
+  api_token <- read_token(endpoint = endpoint)
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")
 

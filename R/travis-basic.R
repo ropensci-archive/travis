@@ -16,9 +16,9 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repo_info <- function(repo = github_repo()) {
+travis_repo_info <- function(repo = github_repo(), endpoint = NULL) {
 
-  req = travisHTTP(path = sprintf("/repo/%s", encode_slug(repo)))
+  req = travisHTTP(path = sprintf("/repo/%s", encode_slug(repo)), endpoint = endpoint)
 
   new_travis_repo(content(req$response))
 }
