@@ -7,7 +7,8 @@
 #'
 #' @param active `[flag]`\cr
 #'   Set to `FALSE` to deactivate instead of activating.
-#' @inheritParams travis_set_pat
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #'
 #' @export
 travis_enable <- function(active = TRUE, repo = github_repo()) {

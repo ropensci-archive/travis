@@ -30,7 +30,6 @@ in interactive mode only)
 (package, website, bookdown, ...)
 \item Enable deployment (if necessary, depending on repo type)
 via \code{\link[=use_travis_deploy]{use_travis_deploy()}}
-\item Create a GitHub PAT and install it on Travis CI via \code{\link[=travis_set_pat]{travis_set_pat()}}
 }
 
 This function is aimed at supporting the most common use cases.

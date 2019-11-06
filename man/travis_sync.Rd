@@ -4,14 +4,14 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, quiet = FALSE)
+travis_sync(block = TRUE, token = auth_travis())
 }
 \arguments{
 \item{block}{\code{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{token}{\cr
+A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
 }
 \description{
 Helper functions for Travis CI.

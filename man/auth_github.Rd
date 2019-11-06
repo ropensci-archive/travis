@@ -4,15 +4,8 @@
 \alias{auth_github}
 \title{Authenticate with GitHub}
 \usage{
-auth_github(...)
-}
-\arguments{
-\item{...}{\code{[character]}\cr
-One or more OAuth scopes for GitHub.}
+auth_github()
 }
 \description{
-Creates an OAuth token for the requested scopes.
-For each combination of scopes, the token will be obtained only once in each
-R session, but it will never be cached on the file system.
-In most scenarios, this function will be called implicitly by other functions.
+Creates a \code{GITHUB_TOKEN} and asks you to store it in your \code{.Renviron} file.
 }

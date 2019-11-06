@@ -13,9 +13,8 @@ travis_is_enabled(repo = github_repo())
 \item{active}{\code{[flag]}\cr
 Set to \code{FALSE} to deactivate instead of activating.}
 
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 }
 \description{
 Activating Travis CI, and querying activity status.

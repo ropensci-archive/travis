@@ -44,7 +44,8 @@ Imports:
     openssl,
     usethis,
     withr,
-    jsonlite
+    jsonlite,
+    gh,
 Suggests:
     knitr,
     remotes,

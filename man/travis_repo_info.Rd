@@ -34,6 +34,6 @@ Return repository information, in particular the repository ID.
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
 Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
+  \code{\link{travis_repos}}
 }
 \concept{Travis CI functions}

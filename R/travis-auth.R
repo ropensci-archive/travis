@@ -1,3 +1,10 @@
+#' Authenticate to Travis
+#' @description
+#'   Authenticates to Travis and returns a Travis API token
+#' @param endpoint ´string´\cr
+#'   Which endpoint to use. Defaults to ".org".
+#' @export
+#'
 auth_travis <- function(endpoint = ".org") {
   yml <- tryCatch({
     readLines("~/.travis/config.yml")
@@ -23,6 +30,7 @@ auth_travis <- function(endpoint = ".org") {
     utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
     wait_for_clipboard_token(endpoint = endpoint)
   }
+  return(read_token())
 }
 
 wait_for_clipboard_token <- function(endpoint) {
@@ -50,7 +58,7 @@ wait_for_clipboard_token <- function(endpoint) {
   )
   dir.create("~/.travis")
   cat(sprintf("endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
-             endpoint, token), sep = "\n", file = "~/.travis/config.yml")
+              endpoint, token), sep = "\n", file = "~/.travis/config.yml")
 }
 
 is_token <- function(token) {

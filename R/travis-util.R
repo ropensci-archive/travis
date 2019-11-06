@@ -5,13 +5,12 @@
 #'
 #' `travis_sync()` initiates synchronization with GitHub and waits for completion
 #' by default.
-#'
 #' @param block `[flag]`\cr
 #'   Set to `FALSE` to return immediately instead of waiting.
-#' @inheritParams travis_set_pat
-#'
+#' @param token \cr
+#'   A Travis CI API token obtained from [auth_travis()].
 #' @export
-travis_sync <- function(block = TRUE, quiet = FALSE) {
+travis_sync <- function(block = TRUE, token = auth_travis()) {
   user_id <- travis_user()[["id"]]
 
   req = travisHTTP(verb = "POST", path = sprintf("/user/%s/sync", user_id))
@@ -19,7 +18,7 @@ travis_sync <- function(block = TRUE, quiet = FALSE) {
   check_status(req$response, cli::cat_bullet(bullet = "info",
                                              bullet_col = "yellow",
                                              "Initiating sync with GitHub."),
-               quiet, 409)
+               409)
 
   if (block) {
     cli::cat_bullet(
@@ -29,7 +28,7 @@ travis_sync <- function(block = TRUE, quiet = FALSE) {
     while (travis_user()[["is_syncing"]]) {
       Sys.sleep(1)
     }
-    if (!quiet) message()
+    message()
   }
 
   cli::cat_bullet(

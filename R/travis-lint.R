@@ -7,7 +7,8 @@
 #'
 #' @inheritParams travis_set_pat
 #' @import httr
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @param file A character string specifying a path to a \samp{.travis.yml} file.
 #'
 #' @return A list.
@@ -29,7 +30,6 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo()) {
     )
     new_travis_lint(content(req$response))
   }
-
 }
 
 new_travis_lint <- function(x) {

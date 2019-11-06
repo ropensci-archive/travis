@@ -2,7 +2,8 @@
 #'
 #' @description
 #' Return cache information
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @details
 #' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
 #'
@@ -11,8 +12,7 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_get_caches <- function(repo = github_repo(),
-                              quiet = FALSE) {
+travis_get_caches <- function(repo = github_repo()) {
 
   req = travisHTTP(path = sprintf("/repo/%s/caches", encode_slug(repo)))
 

@@ -21,7 +21,6 @@ Return repositories and user information.
 \href{https://developer.travis-ci.com/}{Travis CI API documentation}
 
 Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repo_info}},
-  \code{\link{travis_set_pat}}
+  \code{\link{travis_repo_info}}
 }
 \concept{Travis CI functions}

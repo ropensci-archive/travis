@@ -17,9 +17,8 @@ travis_delete_var(name, repo = github_repo(),
   id = travis_get_var_id(name, repo = repo))
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
 \item{name}{\code{[string]}\cr
 The name of the variable.}

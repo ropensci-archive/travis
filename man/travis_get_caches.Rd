@@ -5,17 +5,13 @@
 \alias{travis_delete_caches}
 \title{Get/delete repository cache(s) from Travis CI}
 \usage{
-travis_get_caches(repo = github_repo(), quiet = FALSE)
+travis_get_caches(repo = github_repo())
 
 travis_delete_caches(repo = github_repo())
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
-
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{repo}{\code{[string]}\cr
+The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 }
 \description{
 Return cache information
@@ -27,6 +23,6 @@ Return cache information
 }
 \seealso{
 Other Travis CI functions: \code{\link{travis_repo_info}},
-  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
+  \code{\link{travis_repos}}
 }
 \concept{Travis CI functions}

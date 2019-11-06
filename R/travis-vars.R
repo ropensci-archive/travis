@@ -4,9 +4,8 @@
 #' Functions around public and private variables available in Travis CI builds.
 #'
 #' `travis_get_vars()` calls the "/settings/env_vars" API.
-#'
-#' @inheritParams travis_set_pat
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @export
 #' @examples
 #' \dontrun{
@@ -121,7 +120,6 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo()) {
     )
     new_travis_env_var(content(req$response))
   }
-
 }
 
 #' @description
