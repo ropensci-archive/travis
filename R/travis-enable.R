@@ -11,11 +11,16 @@
 #'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #'
 #' @export
-travis_enable <- function(active = TRUE, repo = github_info()$owner$login, endpoint = endpoint) {
+travis_enable <- function(active = TRUE, repo = github_info()$owner$login,
+                          endpoint = endpoint) {
   if (active) {
     activate <- "activate"
   } else {
     activate <- "deactivate"
+  }
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   req = travisHTTP(verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
@@ -38,6 +43,11 @@ travis_enable <- function(active = TRUE, repo = github_info()$owner$login, endpo
 #' @export
 #' @rdname travis_enable
 travis_is_enabled <- function(repo = github_repo(), endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
   info <- travis_repo_info(repo = repo, endpoint = endpoint)
   info[["active"]]
 }
