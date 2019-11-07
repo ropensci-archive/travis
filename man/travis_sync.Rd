@@ -4,7 +4,7 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, token = auth_travis())
+travis_sync(block = TRUE, token = auth_travis(), endpoint = NULL)
 }
 \arguments{
 \item{block}{\code{[flag]}\cr

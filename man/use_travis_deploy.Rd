@@ -5,7 +5,8 @@
 \title{Setup deployment for Travis CI}
 \usage{
 use_travis_deploy(path = usethis::proj_get(),
-  user = github_user()$login, repo = github_info()$name)
+  user = github_user()$login, repo = github_info()$name,
+  endpoint = NULL)
 }
 \arguments{
 \item{path}{\code{[string]} \cr

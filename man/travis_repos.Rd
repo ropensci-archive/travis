@@ -5,7 +5,7 @@
 \alias{travis_user}
 \title{Retrieve meta information from Travis CI}
 \usage{
-travis_repos()
+travis_repos(endpoint = NULL)
 
 travis_user()
 }
