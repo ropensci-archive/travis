@@ -9,6 +9,11 @@ travis_repos(endpoint = NULL)
 
 travis_user()
 }
+\arguments{
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+}
 \description{
 Return repositories and user information.
 

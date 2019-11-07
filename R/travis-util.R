@@ -7,10 +7,9 @@
 #' by default.
 #' @param block `[flag]`\cr
 #'   Set to `FALSE` to return immediately instead of waiting.
-#' @param token \cr
-#'   A Travis CI API token obtained from [auth_travis()].
+#' @template endpoint
 #' @export
-travis_sync <- function(block = TRUE, token = auth_travis(), endpoint = NULL) {
+travis_sync <- function(block = TRUE, endpoint = NULL) {
 
   if (is.null(endpoint)) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")

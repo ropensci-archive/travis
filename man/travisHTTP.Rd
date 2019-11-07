@@ -19,7 +19,9 @@ This is used to pass the API token.}
 \item{body}{A named list or character string of what should be passed in the
 request. Corresponds to the "-d" argument of the \code{curl} command.}
 
-\item{endpoint}{Which Travis endpoint (.org / .com) to use. Default is '.org'.}
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{encode}{Encoding format. See \link[httr:POST]{httr::POST}.}
 }

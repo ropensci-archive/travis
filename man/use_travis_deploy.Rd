@@ -18,6 +18,10 @@ Name of the Github user account.}
 \item{repo}{\code{[string]}\cr
 The Travis CI repository to add the private key to, default: \code{repo}
 (the GitHub repo to which the public deploy key is added).}
+
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
 Creates a public-private key pair,

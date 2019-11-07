@@ -17,6 +17,7 @@
 #' @param repo `[string]`\cr
 #'   The Travis CI repository to add the private key to, default: `repo`
 #'   (the GitHub repo to which the public deploy key is added).
+#' @template endpoint
 #'
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),

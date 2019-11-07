@@ -143,6 +143,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #'
 #' @param id `[string]`\cr
 #'   The ID of the variable, by default obtained from `travis_get_var_id()`.
+#' @template endpoint
 #'
 #' @export
 #' @rdname travis_get_vars

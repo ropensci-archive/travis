@@ -16,6 +16,10 @@ Set to \code{FALSE} to deactivate instead of activating.}
 
 \item{repo}{\code{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
+
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
 Activating Travis CI, and querying activity status.

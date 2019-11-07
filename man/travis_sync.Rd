@@ -4,14 +4,15 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, token = auth_travis(), endpoint = NULL)
+travis_sync(block = TRUE, endpoint = NULL)
 }
 \arguments{
 \item{block}{\code{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
 
-\item{token}{\cr
-A Travis CI API token obtained from \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
 Helper functions for Travis CI.

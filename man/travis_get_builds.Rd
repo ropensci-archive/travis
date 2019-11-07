@@ -39,6 +39,10 @@ travis_delete_log(job_id, repo = github_repo(), endpoint = NULL)
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 \code{travis_get_builds()} calls the "builds" API for the current repository.}
 
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
 \item{build_id}{\code{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}
 

@@ -10,6 +10,7 @@
 #' @param repo `[string]`\cr
 #'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @param file A character string specifying a path to a \samp{.travis.yml} file.
+#' @template endpoint
 #'
 #' @return A list.
 #' @examples

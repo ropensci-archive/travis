@@ -5,6 +5,7 @@
 #' @param repo `[string]`\cr
 #'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' `travis_get_builds()` calls the "builds" API for the current repository.
+#' @template endpoint
 #'
 #' @export
 travis_get_builds <- function(repo = github_repo(), endpoint = NULL) {

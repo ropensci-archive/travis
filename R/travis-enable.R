@@ -9,6 +9,7 @@
 #'   Set to `FALSE` to deactivate instead of activating.
 #' @param repo `[string]`\cr
 #'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @template endpoint
 #'
 #' @export
 travis_enable <- function(active = TRUE, repo = github_info()$owner$login,

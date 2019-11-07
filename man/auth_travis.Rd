@@ -7,8 +7,9 @@
 auth_travis(endpoint = ".org")
 }
 \arguments{
-\item{endpoint}{´string´\cr
-Which endpoint to use. Defaults to ".org".}
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
 Authenticates to Travis and returns a Travis API token
