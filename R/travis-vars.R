@@ -12,8 +12,14 @@
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo()) {
-  req = travisHTTP(path = sprintf("/repo/%s/env_vars", encode_slug(repo)))
+travis_get_vars <- function(repo = github_repo(), endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
@@ -56,8 +62,13 @@ new_travis_env_var <- function(x) {
 #' # Get the ID of a variable.
 #' travis_get_var_id("secret_var")
 #' }
-travis_get_var_id <- function(name, repo = github_repo()) {
-  vars <- travis_get_vars(repo = repo)
+travis_get_var_id <- function(name, repo = github_repo(), endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  vars <- travis_get_vars(repo = repo, endpoint = endpoint)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the
@@ -100,7 +111,12 @@ travis_get_var_id <- function(name, repo = github_repo()) {
 #' # by reading the value from the console:
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
-travis_set_var <- function(name, value, public = FALSE, repo = github_repo()) {
+travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
+                           endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
 
   var_data <- list(
     "env_var.name" = name,
@@ -109,7 +125,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo()) {
   )
 
   req = travisHTTP(verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
-                   body = var_data)
+                   body = var_data, endpoint = endpoint)
 
   if (status_code(req$response) == 201) {
     cli::cat_bullet(
@@ -136,13 +152,20 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo()) {
 #' travis_delete_var("secret_var")
 #' }
 travis_delete_var <- function(name, repo = github_repo(),
-                              id = travis_get_var_id(name, repo = repo)) {
+                              id = travis_get_var_id(name, repo = repo),
+                              endpoint = endpoint) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
   if (is.null(id)) stopc(paste0("`id` must not be NULL; or variable `name` not found.",
                          " Does it really exist? Check with `travis_get_vars()`.",
                          collapse = ""))
 
   req = travisHTTP(verb = "DELETE", sprintf("/repo/%s/env_var/%s",
-                                            encode_slug(repo), id))
+                                            encode_slug(repo), id),
+                   endpoint = endpoint)
 
   if (status_code(req) == 204) {
     cli::cat_bullet(
