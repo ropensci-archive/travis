@@ -5,9 +5,10 @@
 \alias{travis_is_enabled}
 \title{Activate Travis CI}
 \usage{
-travis_enable(active = TRUE, repo = github_repo())
+travis_enable(active = TRUE, repo = github_info()$owner$login,
+  endpoint = endpoint)
 
-travis_is_enabled(repo = github_repo())
+travis_is_enabled(repo = github_repo(), endpoint = NULL)
 }
 \arguments{
 \item{active}{\code{[flag]}\cr

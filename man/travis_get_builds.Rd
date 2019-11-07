@@ -13,9 +13,9 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo())
+travis_get_builds(repo = github_repo(), endpoint = NULL)
 
-travis_restart_build(build_id, repo = github_repo())
+travis_restart_build(build_id, repo = github_repo(), endpoint = NULL)
 
 travis_restart_last_build(repo = github_repo())
 

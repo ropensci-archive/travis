@@ -9,6 +9,10 @@
 #' @export
 travis_get_builds <- function(repo = github_repo(), endpoint = NULL) {
 
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
   req = travisHTTP(path = sprintf("/repo/%s/builds", encode_slug(repo)),
                    endpoint = endpoint)
 
@@ -41,12 +45,13 @@ new_travis_build <- function(x) {
 #' @export
 #' @rdname travis_get_builds
 travis_restart_build <- function(build_id, repo = github_repo(), endpoint = NULL) {
-  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/restart", build_id),
-                   endpoint = endpoint)
 
   if (is.null(endpoint)) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
+
+  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/restart", build_id),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
     cli::cat_bullet(

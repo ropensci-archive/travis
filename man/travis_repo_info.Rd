@@ -7,7 +7,7 @@
 \alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
-travis_repo_info(repo = github_repo())
+travis_repo_info(repo = github_repo(), endpoint = NULL)
 
 travis_has_repo(repo = github_repo())
 
