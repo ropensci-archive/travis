@@ -8,6 +8,11 @@ Authors@R:
              role = c("aut", "cre"),
              email = "krlmlr+r@mailbox.org",
              comment = c(ORCID = "0000-0002-1416-3412")),
+      person(given = "Patrick",
+             family = "Schratz",
+             role = "aut",
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Mika",
              family = "Braginsky",
              role = "aut",
@@ -20,15 +25,11 @@ Authors@R:
              family = "Ooms",
              role = "aut",
              email = "jeroen.ooms@stat.ucla.edu"),
-      person(given = "Patrick",
-             family = "Schratz",
-             role = "aut",
-             email = "patrick.schratz@gmail.com",
-             comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "rOpenSci",
              role = "fnd"))
-Description: Tools for interacting with the 'Travis' API for setting up continuous integration for R packages and
-    other R-based projects.
+Description: Tools for interacting with the 'Travis' API for
+    setting up continuous integration for R packages and other R-based
+    projects.
 License: GPL (>= 2)
 URL: https://github.com/ropenscilabs/travis
 BugReports: https://github.com/ropenscilabs/travis/issues
@@ -37,15 +38,15 @@ Depends:
 Imports:
     cli,
     clipr,
+    gh,
     git2r,
     glue (>= 1.2.0),
     httr,
+    jsonlite,
     memoise,
     openssl,
     usethis,
-    withr,
-    jsonlite,
-    gh,
+    withr
 Suggests:
     knitr,
     remotes,
