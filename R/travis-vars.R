@@ -109,7 +109,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
   if (!is.null(var_id)) {
     travis_delete_var(id = var_id, name = name, token = token, repo = repo)
   }
-    travis_post_var(name, value, public, token, repo)
+  travis_post_var(name, value, public, token, repo)
 }
 
 #' @description
