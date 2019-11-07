@@ -13,8 +13,13 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function() {
-  req = travisHTTP(path = "/repos")
+travis_repos <- function(endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(path = "/repos", endpoint = endpoint)
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
