@@ -17,21 +17,22 @@ travis_get_builds(repo = github_repo(), endpoint = NULL)
 
 travis_restart_build(build_id, repo = github_repo(), endpoint = NULL)
 
-travis_restart_last_build(repo = github_repo())
+travis_restart_last_build(repo = github_repo(), endpoint = NULL)
 
-travis_cancel_build(build_id, repo = github_repo())
+travis_cancel_build(build_id, repo = github_repo(), endpoint = NULL)
 
-travis_get_jobs(build_id, repo = github_repo())
+travis_get_jobs(build_id, repo = github_repo(), endpoint = NULL)
 
-travis_restart_job(job_id, repo = github_repo())
+travis_restart_job(job_id, repo = github_repo(), endpoint = NULL)
 
-travis_cancel_job(job_id, repo = github_repo())
+travis_cancel_job(job_id, repo = github_repo(), endpoint = NULL)
 
-travis_debug_job(job_id, log_output = FALSE, repo = github_repo())
+travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
+  endpoint = endpoint)
 
-travis_get_log(job_id, repo = github_repo())
+travis_get_log(job_id, repo = github_repo(), endpoint = NULL)
 
-travis_delete_log(job_id, repo = github_repo())
+travis_delete_log(job_id, repo = github_repo(), endpoint = NULL)
 }
 \arguments{
 \item{repo}{\code{[string]}\cr

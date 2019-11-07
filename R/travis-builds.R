@@ -68,11 +68,17 @@ travis_restart_build <- function(build_id, repo = github_repo(), endpoint = NULL
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_last_build <- function(repo = github_repo()) {
-  builds <- travis_get_builds(repo = repo)
+travis_restart_last_build <- function(repo = github_repo(), endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  builds <- travis_get_builds(repo = repo, endpoint = endpoint)
   last_build_id <- builds[[1]]$id
   travis_restart_build(last_build_id,
-    repo = repo
+    repo = repo,
+    endpoint = endpoint
   )
 }
 
@@ -80,8 +86,14 @@ travis_restart_last_build <- function(repo = github_repo()) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_cancel_build <- function(build_id, repo = github_repo()) {
-  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/cancel", build_id))
+travis_cancel_build <- function(build_id, repo = github_repo(), endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/cancel", build_id),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
     cli::cat_bullet(
@@ -104,9 +116,13 @@ new_travis_pending_build <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_get_jobs <- function(build_id, repo = github_repo()) {
+travis_get_jobs <- function(build_id, repo = github_repo(), endpoint = NULL) {
 
-  req = travisHTTP(path = sprintf("/build/%s/jobs", build_id))
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(path = sprintf("/build/%s/jobs", build_id), endpoint = endpoint)
 
   httr::stop_for_status(
     req$response,
@@ -136,9 +152,14 @@ new_travis_job <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_job <- function(job_id, repo = github_repo()) {
+travis_restart_job <- function(job_id, repo = github_repo(), endpoint = NULL) {
 
-  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/restart", job_id))
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/restart", job_id),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
     cli::cat_bullet(
@@ -155,9 +176,14 @@ travis_restart_job <- function(job_id, repo = github_repo()) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_cancel_job <- function(job_id, repo = github_repo()) {
+travis_cancel_job <- function(job_id, repo = github_repo(), endpoint = NULL) {
 
-  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/cancel", job_id))
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/cancel", job_id),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
     cli::cat_bullet(
@@ -180,10 +206,15 @@ travis_cancel_job <- function(job_id, repo = github_repo()) {
 #' @rdname travis_get_builds
 travis_debug_job <- function(job_id,
                              log_output = FALSE,
-                             repo = github_repo()) {
+                             repo = github_repo(),
+                             endpoint = endpoint) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
 
   req = travisHTTP(verb = "POST", path = sprintf("/job/%s/debug", job_id),
-                   query = list(quiet = !log_output))
+                   query = list(quiet = !log_output), endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
     cli::cat_bullet(
@@ -206,9 +237,14 @@ new_travis_pending_job <- function(x) {
 #' @export
 #' @rdname travis_get_builds
 travis_get_log <- function(job_id,
-                           repo = github_repo()) {
+                           repo = github_repo(),
+                           endpoint = NULL) {
 
-  req = travisHTTP(path = sprintf("/job/%s/log.txt", job_id))
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
 
   if (status_code(req) == 200) {
     cli::cat_bullet(
@@ -225,8 +261,15 @@ travis_get_log <- function(job_id,
 #' @export
 #' @rdname travis_get_builds
 travis_delete_log <- function(job_id,
-                              repo = github_repo()) {
-  req = travisHTTP(verb = "DELETE", path = sprintf("/job/%s/log", job_id))
+                              repo = github_repo(),
+                              endpoint = NULL) {
+
+  if (is.null(endpoint)) {
+    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+  }
+
+  req = travisHTTP(verb = "DELETE", path = sprintf("/job/%s/log", job_id),
+                   endpoint = endpoint)
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
