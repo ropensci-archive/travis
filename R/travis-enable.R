@@ -12,10 +12,9 @@
 #' @template endpoint
 #'
 #' @export
-travis_enable <- function(active = TRUE, repo = github_info()$owner$login,
+travis_enable <- function(active = TRUE, repo = github_info()$full_name,
                           endpoint = NULL) {
 
-  browser()
   if (active) {
     activate <- "activate"
   } else {
