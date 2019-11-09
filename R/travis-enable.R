@@ -13,7 +13,9 @@
 #'
 #' @export
 travis_enable <- function(active = TRUE, repo = github_info()$owner$login,
-                          endpoint = endpoint) {
+                          endpoint = NULL) {
+
+  browser()
   if (active) {
     activate <- "activate"
   } else {
@@ -21,7 +23,7 @@ travis_enable <- function(active = TRUE, repo = github_info()$owner$login,
   }
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint = Sys.getenv("R_TRAVIS")
   }
 
   req = travisHTTP(verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
