@@ -23,11 +23,11 @@
 #'
 #' @export
 travis <- function(verb = "GET",
-                       path = "",
-                       query = list(),
-                       body = "",
-                       endpoint = ".org",
-                       encode = "json") {
+                   path = "",
+                   query = list(),
+                   body = "",
+                   endpoint = ".org",
+                   encode = "json") {
   url <- sprintf("https://api.travis-ci%s%s", endpoint, path)
 
   auth_travis(endpoint = endpoint)
@@ -35,28 +35,15 @@ travis <- function(verb = "GET",
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")
 
-  if (verb == "GET") {
-    resp <- GET(url,
-                add_headers(Authorization = sprintf("token %s", api_token),
-                            "Travis-API-Version" = 3),
-                query = query, encode = encode, ua, accept_json(),
-                content_type_json()
-    )
-  } else if (verb == "DELETE") {
-    resp <- DELETE(url,
-                   add_headers(Authorization = sprintf("token %s", api_token),
-                               "Travis-API-Version" = 3),
-                   query = query, encode = encode, ua, accept_json(),
-                   content_type_json()
-    )
-  } else if (verb == "POST") {
-    resp <- POST(url,
-                 add_headers(Authorization = sprintf("token %s", api_token),
-                             "Travis-API-Version" = 3),
-                 body = body, query = query, encode = encode, ua,
-                 accept_json()
-    )
-  }
+  resp <- VERB(
+    verb = verb, url = url,
+    add_headers(
+      Authorization = sprintf("token %s", api_token),
+      "Travis-API-Version" = 3
+    ),
+    query = query, encode = encode, ua, accept_json(),
+    content_type_json()
+  )
 
   # for travis_delete_var()
   if (http_type(resp) == "application/octet-stream") {
