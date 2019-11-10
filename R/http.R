@@ -55,19 +55,9 @@ travis <- function(verb = "GET",
 
   parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
 
-  # catch specific errors
-  if (any(grepl("error_type", names(parsed))) && parsed$error_type == "job_already_running") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job already running.")
-    stop()
-  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "job_not_cancelable") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job is not running, cannot cancel.")
-    stop()
-  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "log_already_removed") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Log has already been removed.")
-    stop()
-  } else if (any(grepl("error_type", names(parsed))) && parsed$error_type == "not_found") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Could not find env var. This might be due to insufficient access rights.")
-    stop()
+  # handle special errors without response code
+  if (!is.null(parsed$error_type)) {
+    catch_error(parsed)
   }
 
   if (status_code(resp) != 200 && status_code(resp) != 201 && status_code(resp) != 202) {
