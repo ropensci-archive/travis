@@ -22,11 +22,13 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
   }
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS")
+    endpoint <- Sys.getenv("R_TRAVIS")
   }
 
-  req = travis(verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
-                   endpoint = endpoint)
+  req <- travis(
+    verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
+    endpoint = endpoint
+  )
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
@@ -47,7 +49,7 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
 travis_is_enabled <- function(repo = github_repo(), endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   info <- travis_repo_info(repo = repo, endpoint = endpoint)

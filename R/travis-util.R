@@ -12,18 +12,24 @@
 travis_sync <- function(block = TRUE, endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   user_id <- travis_user()[["id"]]
 
-  req = travis(verb = "POST", path = sprintf("/user/%s/sync", user_id),
-                   endpoint = endpoint)
+  req <- travis(
+    verb = "POST", path = sprintf("/user/%s/sync", user_id),
+    endpoint = endpoint
+  )
 
-  check_status(req$response, cli::cat_bullet(bullet = "info",
-                                             bullet_col = "yellow",
-                                             "Initiating sync with GitHub."),
-               409)
+  check_status(
+    req$response, cli::cat_bullet(
+      bullet = "info",
+      bullet_col = "yellow",
+      "Initiating sync with GitHub."
+    ),
+    409
+  )
 
   if (block) {
     cli::cat_bullet(

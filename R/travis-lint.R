@@ -22,13 +22,15 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(),
                         endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travis(verb = "POST",
-                   path = "/lint", body = upload_file(file),
-                   encode = "raw",
-                   endpoint = endpoint)
+  req <- travis(
+    verb = "POST",
+    path = "/lint", body = upload_file(file),
+    encode = "raw",
+    endpoint = endpoint
+  )
   browser()
   if (status_code(req$response) == 200) {
     cli::cat_bullet(

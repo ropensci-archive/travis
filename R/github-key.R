@@ -43,9 +43,9 @@ check_admin_repo <- function(owner, user, repo) {
 add_key <- function(key_data, user, project) {
 
   resp <- gh::gh("POST /repos/:owner/:repo/keys",
-                 owner = user, repo = project,
-                 title = key_data$title,
-                 key = key_data$key, read_only = key_data$read_only
+    owner = user, repo = project,
+    title = key_data$title,
+    key = key_data$key, read_only = key_data$read_only
   )
 
   cli::cat_bullet(
@@ -59,7 +59,7 @@ add_key <- function(key_data, user, project) {
 get_role_in_repo <- function(owner, user, repo) {
 
   req <- gh::gh("/repos/:owner/:repo/collaborators/:username/permission",
-                owner = owner, repo = repo, username = user
+    owner = owner, repo = repo, username = user
   )
   req$permission
 }
@@ -117,6 +117,6 @@ github_info <- function(path = usethis::proj_get()) {
 }
 
 get_repo_data <- function(repo) {
-  req = gh::gh("/repos/:repo", repo = repo)
+  req <- gh::gh("/repos/:repo", repo = repo)
   return(req)
 }

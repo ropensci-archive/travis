@@ -66,7 +66,7 @@ keep_brackets <- function(message) {
   message
 }
 
-catch_error = function(object) {
+catch_error <- function(object) {
   if (object$error_type == "job_already_running") {
     cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job already running.")
     stop()

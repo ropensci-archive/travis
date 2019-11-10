@@ -1,5 +1,5 @@
 "_PACKAGE"
-.onLoad = function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
 
   if (Sys.getenv("R_TRAVIS") != "") {
     cli::cli_text("{.pkg travis}: Using Travis endpoint '{Sys.getenv('R_TRAVIS')}' set via env var {.code R_TRAVIS}.")

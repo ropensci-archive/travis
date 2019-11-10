@@ -16,11 +16,13 @@
 travis_get_caches <- function(repo = github_repo(), endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travis(path = sprintf("/repo/%s/caches", encode_slug(repo)),
-                   endpoint = endpoint)
+  req <- travis(
+    path = sprintf("/repo/%s/caches", encode_slug(repo)),
+    endpoint = endpoint
+  )
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
@@ -56,11 +58,13 @@ new_travis_cache <- function(x) {
 travis_delete_caches <- function(repo = github_repo(), endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travis(verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),
-                   endpoint = endpoint)
+  req <- travis(
+    verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),
+    endpoint = endpoint
+  )
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(

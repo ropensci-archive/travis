@@ -26,14 +26,14 @@ use_travis_deploy <- function(path = usethis::proj_get(),
                               endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   # authenticate on github and travis and set up keys/vars
   auth_github()
 
   # generate deploy key pair
-  key <- openssl::rsa_keygen()  # TOOD: num bits?
+  key <- openssl::rsa_keygen() # TOOD: num bits?
 
   # encrypt private key using tempkey and iv
   pub_key <- get_public_key(key)
@@ -43,8 +43,10 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   title <- "Deploy key for Travis CI"
   github_add_key(pubkey = pub_key, user = user, repo = repo, title = title)
 
-  travis_set_var("id_rsa", private_key, public = FALSE, repo = github_repo(),
-                 endpoint = endpoint)
+  travis_set_var("id_rsa", private_key,
+    public = FALSE, repo = github_repo(),
+    endpoint = endpoint
+  )
 
   cli::cat_rule()
   cli::cat_bullet(

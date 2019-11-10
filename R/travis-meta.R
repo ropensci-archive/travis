@@ -16,10 +16,10 @@
 travis_repos <- function(endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travis(path = "/repos", endpoint = endpoint)
+  req <- travis(path = "/repos", endpoint = endpoint)
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
@@ -61,7 +61,7 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @rdname travis_repos
 travis_user <- function() {
 
-  req = travis(path = "/user")
+  req <- travis(path = "/user")
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(

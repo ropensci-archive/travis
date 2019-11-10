@@ -15,11 +15,13 @@
 travis_get_vars <- function(repo = github_repo(), endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travis(path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
-                   endpoint = endpoint)
+  req <- travis(
+    path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
+    endpoint = endpoint
+  )
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
@@ -65,7 +67,7 @@ new_travis_env_var <- function(x) {
 travis_get_var_id <- function(name, repo = github_repo(), endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   vars <- travis_get_vars(repo = repo, endpoint = endpoint)
@@ -115,7 +117,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
                            endpoint = NULL) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
   var_data <- list(
@@ -124,8 +126,10 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     "env_var.public" = public
   )
 
-  req = travis(verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
-                   body = var_data, endpoint = endpoint)
+  req <- travis(
+    verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
+    body = var_data, endpoint = endpoint
+  )
 
   if (status_code(req$response) == 201) {
     cli::cat_bullet(
@@ -157,16 +161,23 @@ travis_delete_var <- function(name, repo = github_repo(),
                               endpoint = endpoint) {
 
   if (is.null(endpoint)) {
-    endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  if (is.null(id)) stopc(paste0("`id` must not be NULL; or variable `name` not found.",
-                         " Does it really exist? Check with `travis_get_vars()`.",
-                         collapse = ""))
+  if (is.null(id)) {
+    stopc(paste0("`id` must not be NULL; or variable `name` not found.",
+      " Does it really exist? Check with `travis_get_vars()`.",
+      collapse = ""
+    ))
+  }
 
-  req = travis(verb = "DELETE", sprintf("/repo/%s/env_var/%s",
-                                            encode_slug(repo), id),
-                   endpoint = endpoint)
+  req <- travis(
+    verb = "DELETE", sprintf(
+      "/repo/%s/env_var/%s",
+      encode_slug(repo), id
+    ),
+    endpoint = endpoint
+  )
 
   if (status_code(req) == 204) {
     cli::cat_bullet(
