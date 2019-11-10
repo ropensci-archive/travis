@@ -15,11 +15,11 @@ new_travis <- function(x, attr, subclass) {
 }
 
 new_travis_object <- function(x, subclass) {
-  new_travisHTTP(travis_no_attr(x), travis_attr(x), subclass)
+  new_travis(travis_no_attr(x), travis_attr(x), subclass)
 }
 
 new_travis_collection <- function(x, attr, subclass) {
-  new_travisHTTP(x, attr, c(subclass, "collection"))
+  new_travis(x, attr, c(subclass, "collection"))
 }
 
 `[.travis_collection` <- function(x, i) {

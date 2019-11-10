@@ -23,15 +23,15 @@
 #' @keywords internal
 #' @export
 travisHTTP <- function(verb = "GET",
-                   path = "",
-                   query = list(),
-                   body = "",
-                   endpoint = ".org",
-                   encode = "json") {
+                       path = "",
+                       query = list(),
+                       body = "",
+                       endpoint = ".org",
+                       encode = "json") {
 
   url <- endpoint(endpoint, path)
 
-  auth_travisHTTP(endpoint = endpoint)
+  auth_travis(endpoint = endpoint)
   api_token <- read_token(endpoint = endpoint)
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")

@@ -21,11 +21,11 @@ travis_repos <- function(endpoint = NULL) {
 
   req <- travisHTTP(path = "/repos", endpoint = endpoint)
 
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      "Querying information about repos."
-    )
-    new_travis_repos(httr::content(req$response))
+  cli::cat_bullet(
+    bullet = "tick", bullet_col = "green",
+    "Querying information about repos."
+  )
+  new_travis_repos(httr::content(req$response))
 }
 
 new_travis_repos <- function(x) {
