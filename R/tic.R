@@ -33,7 +33,6 @@ use_tic <- function(path = usethis::proj_get(), quiet = FALSE) {
     #' 1. Enable deployment (if necessary, depending on repo type)
     #'    via [use_travis_deploy()]
     if (needs_deploy(repo_type)) use_travis_deploy()
-
   })
 
   #'

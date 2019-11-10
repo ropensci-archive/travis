@@ -9,3 +9,4 @@ auth_github()
 \description{
 Creates a \code{GITHUB_TOKEN} and asks you to store it in your \code{.Renviron} file.
 }
+\keyword{internal}

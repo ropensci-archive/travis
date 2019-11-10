@@ -20,7 +20,7 @@
 #' @param encode Encoding format. See [httr::POST].
 #'
 #' @return The JSON response, or the relevant error.
-#'
+#' @keywords internal
 #' @export
 travis <- function(verb = "GET",
                    path = "",
@@ -54,6 +54,7 @@ travis <- function(verb = "GET",
     return(resp)
   }
 
+  # parse response into readable object
   parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
 
   # handle special errors without response code

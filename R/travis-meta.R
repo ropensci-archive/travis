@@ -21,13 +21,11 @@ travis_repos <- function(endpoint = NULL) {
 
   req <- travis(path = "/repos", endpoint = endpoint)
 
-  if (status_code(req$response) == 200) {
     cli::cat_bullet(
       bullet = "tick", bullet_col = "green",
       "Querying information about repos."
     )
     new_travis_repos(httr::content(req$response))
-  }
 }
 
 new_travis_repos <- function(x) {

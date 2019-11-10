@@ -1,6 +1,6 @@
 #' Authenticate to Travis
 #' @description
-#'   Authenticates to Travis and returns a Travis API token
+#'   Authenticates to Travis and asks to create an API key if none exists.
 #' @template endpoint
 #' @export
 #'

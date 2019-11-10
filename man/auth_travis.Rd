@@ -12,5 +12,5 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
-Authenticates to Travis and returns a Travis API token
+Authenticates to Travis and asks to create an API key if none exists.
 }

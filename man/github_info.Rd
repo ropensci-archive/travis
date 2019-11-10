@@ -25,3 +25,4 @@ Retrieves metadata about a Git repository from GitHub.
 \code{github_info()} returns a list as obtained from the GET "/repos/:repo" API.
 }
 \concept{GitHub functions}
+\keyword{internal}

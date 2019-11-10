@@ -4,13 +4,10 @@
 \alias{travis}
 \title{Travis CI HTTP Requests}
 \usage{
-travis(endpoint = "")
+travis(verb = "GET", path = "", query = list(), body = "",
+  endpoint = ".org", encode = "json")
 }
 \arguments{
-\item{endpoint}{\code{[string]}\cr
-Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
-and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
-
 \item{verb}{A character string containing an HTTP verb, defaulting to \code{GET}.}
 
 \item{path}{A character string with the API endpoint (should begin with a
@@ -21,6 +18,10 @@ This is used to pass the API token.}
 
 \item{body}{A named list or character string of what should be passed in the
 request. Corresponds to the "-d" argument of the \code{curl} command.}
+
+\item{endpoint}{\code{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{encode}{Encoding format. See \link[httr:POST]{httr::POST}.}
 }
@@ -35,3 +36,4 @@ Travis CI.
 This is mostly an internal function for executing API requests. In
 almost all cases, users do not need to access this directly.
 }
+\keyword{internal}

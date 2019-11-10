@@ -2,6 +2,7 @@
 #'
 #' Creates a `GITHUB_TOKEN` and asks you to store it in your `.Renviron` file.
 #' @export
+#' @keywords internal
 auth_github <- function() {
   # authenticate on github
   token <- usethis::github_token()

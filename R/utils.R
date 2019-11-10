@@ -82,6 +82,10 @@ catch_error <- function(object) {
   }
 }
 
-endpoint <- function(ednpoint, path) {
+endpoint <- function(endpoint, path) {
   return(sprintf("https://api.travis-ci%s%s", endpoint, path))
+}
+
+encode_slug <- function(repo) {
+  utils::URLencode(as.character(repo), reserved = TRUE)
 }

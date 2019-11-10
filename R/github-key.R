@@ -95,6 +95,7 @@ create_key_data <- function(pubkey, title) {
 #'   [github_info()].
 #'
 #' @export
+#' @keywords internal
 #' @rdname github_info
 github_repo <- function(path = usethis::proj_get(), info = github_info(path)) {
   paste(info$owner$login, info$name, sep = "/")
@@ -110,6 +111,7 @@ github_repo <- function(path = usethis::proj_get(), info = github_info(path)) {
 #' @param path `[string]`\cr
 #'   The path to a GitHub-enabled Git repository (or a subdirectory thereof).
 #' @family GitHub functions
+#' @keywords internal
 github_info <- function(path = usethis::proj_get()) {
   remote_url <- get_remote_url(path)
   repo <- extract_repo(remote_url)
