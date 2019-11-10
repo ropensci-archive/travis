@@ -81,3 +81,7 @@ catch_error = function(object) {
     stop()
   }
 }
+
+endpoint <- function(ednpoint, path) {
+  return(sprintf("https://api.travis-ci%s%s", endpoint, path))
+}

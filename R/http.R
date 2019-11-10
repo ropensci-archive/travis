@@ -28,7 +28,8 @@ travis <- function(verb = "GET",
                    body = "",
                    endpoint = ".org",
                    encode = "json") {
-  url <- sprintf("https://api.travis-ci%s%s", endpoint, path)
+
+  url <- endpoint(endpoint, path)
 
   auth_travis(endpoint = endpoint)
   api_token <- read_token(endpoint = endpoint)
