@@ -55,8 +55,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
+    r-lib/cli,
     r-lib/usethis
-    r-lib/cli
 Encoding: UTF-8
 LazyData: TRUE
 Roxygen: list(markdown = TRUE)
