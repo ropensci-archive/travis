@@ -25,7 +25,7 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
     endpoint <- Sys.getenv("R_TRAVIS")
   }
 
-  req <- travis(
+  req <- travisHTTP(
     verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
     endpoint = endpoint
   )

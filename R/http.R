@@ -22,7 +22,7 @@
 #' @return The JSON response, or the relevant error.
 #' @keywords internal
 #' @export
-travis <- function(verb = "GET",
+travisHTTP <- function(verb = "GET",
                    path = "",
                    query = list(),
                    body = "",
@@ -31,7 +31,7 @@ travis <- function(verb = "GET",
 
   url <- endpoint(endpoint, path)
 
-  auth_travis(endpoint = endpoint)
+  auth_travisHTTP(endpoint = endpoint)
   api_token <- read_token(endpoint = endpoint)
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")

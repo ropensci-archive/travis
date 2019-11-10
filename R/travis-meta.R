@@ -19,7 +19,7 @@ travis_repos <- function(endpoint = NULL) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req <- travis(path = "/repos", endpoint = endpoint)
+  req <- travisHTTP(path = "/repos", endpoint = endpoint)
 
     cli::cat_bullet(
       bullet = "tick", bullet_col = "green",
@@ -59,7 +59,7 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @rdname travis_repos
 travis_user <- function() {
 
-  req <- travis(path = "/user")
+  req <- travisHTTP(path = "/user")
 
   if (status_code(req$response) == 200) {
     cli::cat_bullet(

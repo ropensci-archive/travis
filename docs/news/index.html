@@ -145,7 +145,7 @@
 <li>Using Travis CI API v3 (<a href='https://github.com/ropenscilabs/travis/issues/63'>#63</a>).</li>
 <li>Remove <code>travis_accounts()</code>.</li>
 <li>New <code><a href="../reference/travis_repo_info.html">travis_has_repo()</a></code>.</li>
-<li>Rename <code>uses_travis()</code> to <code><a href="../reference/travis_enable.html">travis_is_enabled()</a></code>.</li>
+<li>Rename <code>uses_travisHTTP()</code> to <code><a href="../reference/travis_enable.html">travis_is_enabled()</a></code>.</li>
 <li>Rename <code>travis_repositories()</code> to <code><a href="../reference/travis_repos.html">travis_repos()</a></code>.</li>
 <li>New <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> and <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> methods for collections and objects, new S3 classes <code>"travis"</code>, <code>"travis_collection"</code> and <code>"travis_xxx"</code> (one for each collection and item type).</li>
 <li>Merge functionality from cloudyr/travisci (<a href='https://github.com/ropenscilabs/travis/issues/65'>#65</a>, <a href='https://github.com/leeper'>@leeper</a>).</li>
@@ -216,7 +216,7 @@
 <h1 class="page-header">
 <a href="#travis-0-2-5-2017-06-10" class="anchor"></a>travis 0.2-5 (2017-06-10)</h1>
 <ul>
-<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travis()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travis()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/47'>#47</a>).</li>
+<li>The new <code><a href="../reference/github_info.html">uses_github()</a></code> and <code>uses_travisHTTP()</code> functions allow determining if GitHub or Travis is enabled for a repository. Note that <code>uses_travisHTTP()</code> needs a repo slug, which is available from an attribute of the value returned by <code><a href="../reference/github_info.html">uses_github()</a></code> (<a href='https://github.com/ropenscilabs/travis/issues/47'>#47</a>).</li>
 <li>Only interactive sessions will open a browser window to improve setup experience. The <code><a href="../reference/travis_sync.html">travis_browse()</a></code> function still opens a browser window unconditionally (<a href='https://github.com/ropenscilabs/travis/issues/52'>#52</a>).</li>
 <li>All API functions that provide a side effect return the result of the request invisibly (<a href='https://github.com/ropenscilabs/travis/issues/57'>#57</a>).</li>
 <li>For organization repos, adding deploy keys or creating new repos checks if the user and the app have permission to perform this action, and gives more accurate error messages (<a href='https://github.com/ropenscilabs/travis/issues/51'>#51</a>).</li>
@@ -251,7 +251,7 @@
 <li>Support remote URLs with embedded passwords (HTTP/S only).</li>
 <li>Economical request for GitHub scopes, in particular <code>write:org</code>.</li>
 <li>Travis authentication can be bound to a repository, in this case a synchronization is attempted if the repository is not found. A token is only returned if the user is permitted to edit the Travis configuration.</li>
-<li>Export <code><a href="../reference/auth_github.html">auth_github()</a></code> and <code><a href="../reference/auth_travis.html">auth_travis()</a></code>.</li>
+<li>Export <code><a href="../reference/auth_github.html">auth_github()</a></code> and <code><a href="../reference/auth_travis.html">auth_travisHTTP()</a></code>.</li>
 <li>New <code><a href="../reference/github_create_repo.html">github_create_repo()</a></code>.</li>
 <li>New <code>info</code> arg to `github_repo().</li>
 <li>New <code>gh_token</code> arg to <code><a href="../reference/github_add_key.html">github_add_key()</a></code>.</li>

@@ -40,7 +40,7 @@
 The token will be obtained only once in each
 R session, but it will never be cached on the file system.
 In most scenarios, these functions will be called implicitly by other functions.
-auth_travis() only performs the authentication with Travis CI.
+auth_travisHTTP() only performs the authentication with Travis CI.
 travis_token() authenticates and checks if the repository is known to
 Travis CI. If not, a GitHub sync via travis_sync() is performed." />
 <meta name="twitter:card" content="summary" />
@@ -127,7 +127,7 @@ Travis CI. If not, a GitHub sync via travis_sync() is performed." />
 The token will be obtained only once in each
 R session, but it will never be cached on the file system.
 In most scenarios, these functions will be called implicitly by other functions.</p>
-<p><code>auth_travis()</code> only performs the authentication with Travis CI.</p>
+<p><code>auth_travisHTTP()</code> only performs the authentication with Travis CI.</p>
 <p><code>travis_token()</code> authenticates and checks if the repository is known to
 Travis CI. If not, a GitHub sync via <code><a href='travis_sync.html'>travis_sync()</a></code> is performed.</p>
     </div>

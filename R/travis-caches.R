@@ -19,7 +19,7 @@ travis_get_caches <- function(repo = github_repo(), endpoint = NULL) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req <- travis(
+  req <- travisHTTP(
     path = sprintf("/repo/%s/caches", encode_slug(repo)),
     endpoint = endpoint
   )
@@ -61,7 +61,7 @@ travis_delete_caches <- function(repo = github_repo(), endpoint = NULL) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req <- travis(
+  req <- travisHTTP(
     verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),
     endpoint = endpoint
   )
