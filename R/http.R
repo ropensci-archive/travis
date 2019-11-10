@@ -22,7 +22,7 @@
 #' @return The JSON response, or the relevant error.
 #'
 #' @export
-travisHTTP <- function(verb = "GET",
+travis <- function(verb = "GET",
                        path = "",
                        query = list(),
                        body = "",

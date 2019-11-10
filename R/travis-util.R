@@ -17,7 +17,7 @@ travis_sync <- function(block = TRUE, endpoint = NULL) {
 
   user_id <- travis_user()[["id"]]
 
-  req = travisHTTP(verb = "POST", path = sprintf("/user/%s/sync", user_id),
+  req = travis(verb = "POST", path = sprintf("/user/%s/sync", user_id),
                    endpoint = endpoint)
 
   check_status(req$response, cli::cat_bullet(bullet = "info",

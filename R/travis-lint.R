@@ -25,7 +25,7 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(),
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST",
+  req = travis(verb = "POST",
                    path = "/lint", body = upload_file(file),
                    encode = "raw",
                    endpoint = endpoint)

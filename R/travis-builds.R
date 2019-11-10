@@ -14,7 +14,7 @@ travis_get_builds <- function(repo = github_repo(), endpoint = NULL) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(path = sprintf("/repo/%s/builds", encode_slug(repo)),
+  req = travis(path = sprintf("/repo/%s/builds", encode_slug(repo)),
                    endpoint = endpoint)
 
   stop_for_status(
@@ -51,7 +51,7 @@ travis_restart_build <- function(build_id, repo = github_repo(), endpoint = NULL
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/restart", build_id),
+  req = travis(verb = "POST", path = sprintf("/build/%s/restart", build_id),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
@@ -93,7 +93,7 @@ travis_cancel_build <- function(build_id, repo = github_repo(), endpoint = NULL)
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST", path = sprintf("/build/%s/cancel", build_id),
+  req = travis(verb = "POST", path = sprintf("/build/%s/cancel", build_id),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
@@ -123,7 +123,7 @@ travis_get_jobs <- function(build_id, repo = github_repo(), endpoint = NULL) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(path = sprintf("/build/%s/jobs", build_id), endpoint = endpoint)
+  req = travis(path = sprintf("/build/%s/jobs", build_id), endpoint = endpoint)
 
   httr::stop_for_status(
     req$response,
@@ -159,7 +159,7 @@ travis_restart_job <- function(job_id, repo = github_repo(), endpoint = NULL) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/restart", job_id),
+  req = travis(verb = "POST", path = sprintf("/job/%s/restart", job_id),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
@@ -183,7 +183,7 @@ travis_cancel_job <- function(job_id, repo = github_repo(), endpoint = NULL) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/cancel", job_id),
+  req = travis(verb = "POST", path = sprintf("/job/%s/cancel", job_id),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
@@ -214,7 +214,7 @@ travis_debug_job <- function(job_id,
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "POST", path = sprintf("/job/%s/debug", job_id),
+  req = travis(verb = "POST", path = sprintf("/job/%s/debug", job_id),
                    query = list(quiet = !log_output), endpoint = endpoint)
 
   if (status_code(req$response) == 202) {
@@ -245,7 +245,7 @@ travis_get_log <- function(job_id,
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
+  req = travis(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
 
   if (status_code(req) == 200) {
     cli::cat_bullet(
@@ -269,7 +269,7 @@ travis_delete_log <- function(job_id,
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(verb = "DELETE", path = sprintf("/job/%s/log", job_id),
+  req = travis(verb = "DELETE", path = sprintf("/job/%s/log", job_id),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 200) {

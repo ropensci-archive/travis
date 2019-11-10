@@ -18,7 +18,7 @@ travis_get_vars <- function(repo = github_repo(), endpoint = NULL) {
     endpoint = Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req = travisHTTP(path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
+  req = travis(path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
                    endpoint = endpoint)
 
   if (status_code(req$response) == 200) {
@@ -124,7 +124,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     "env_var.public" = public
   )
 
-  req = travisHTTP(verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
+  req = travis(verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
                    body = var_data, endpoint = endpoint)
 
   if (status_code(req$response) == 201) {
@@ -164,7 +164,7 @@ travis_delete_var <- function(name, repo = github_repo(),
                          " Does it really exist? Check with `travis_get_vars()`.",
                          collapse = ""))
 
-  req = travisHTTP(verb = "DELETE", sprintf("/repo/%s/env_var/%s",
+  req = travis(verb = "DELETE", sprintf("/repo/%s/env_var/%s",
                                             encode_slug(repo), id),
                    endpoint = endpoint)
 
