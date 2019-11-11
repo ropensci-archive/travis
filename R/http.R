@@ -37,7 +37,7 @@ travisHTTP <- function(verb = "GET",
   ua <- user_agent("http://github.com/ropenscilabs/travis")
 
   resp <- VERB(
-    verb = verb, url = url,
+    verb = verb, url = url, body = body,
     add_headers(
       Authorization = sprintf("token %s", api_token),
       "Travis-API-Version" = 3
