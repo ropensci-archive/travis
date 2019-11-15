@@ -49,6 +49,7 @@ Imports:
     withr
 Suggests:
     knitr,
+    purrr,
     remotes,
     roxygen2,
     testthat

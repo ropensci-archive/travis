@@ -39,9 +39,50 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   pub_key <- get_public_key(key)
   private_key <- encode_private_key(key)
 
+  # Github deploy key ----------------------------------------------------------
+
+  # check if key(s) exists
+  cli::cli_text("Querying Github deploy keys from repo.")
+  gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = github_info()$owner$login, repo = repo)
+  gh_keys_names <- gh_keys %>%
+    purrr::map_chr(~ .x$title)
+  if (any(gh_keys %in% sprintf("Deploy key for Travis CI (%s)", endpoint))) {
+    cli::cli_text("Deploy key for Travis CI {endpoint} already present. Not taking action.")
+  }
+
+  # delete old keys with no endpoint spec
+  # this helps to avoid having unused keys stored
+  old_keys <- gh_keys_names %>%
+    purrr::map_lgl(~ .x == "Deploy key for Travis CI")
+  if (any(old_keys == TRUE)) {
+    purrr::walk(gh_keys[old_keys], ~ gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
+                                            owner = github_info()$owner$login,
+                                            repo = repo,
+                                            key_id = .x$id))
+    cli::cat_bullet(
+      bullet = "tick", bullet_col = "green",
+      sprintf(
+        "Deleted unused old Travis deploy key(s) from Github repo.",
+        repo
+      )
+    )
+  }
+
   # add to GitHub first, because this can fail because of missing org permissions
-  title <- "Deploy key for Travis CI"
+  title <- sprintf("Deploy key for Travis CI (%s)", endpoint)
   github_add_key(pubkey = pub_key, user = user, repo = repo, title = title)
+
+  # env var 'id_rsa' on Travis -------------------------------------------------
+
+  # check if id_rsa already exists on Travis
+  idrsa <- travis_get_vars() %>%
+    purrr::map_lgl(~ .x$name == "id_rsa") %>%
+    any()
+
+  # delete existing ssh key
+  if (isTRUE(idrsa)) {
+    travis_delete_var(travis_get_var_id("id_rsa"))
+  }
 
   travis_set_var("id_rsa", private_key,
     public = FALSE, repo = github_repo(),
