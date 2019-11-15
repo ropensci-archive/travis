@@ -41,14 +41,11 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   # Github deploy key ----------------------------------------------------------
 
-  # check if key(s) exists
+  # query deploy key
   cli::cli_text("Querying Github deploy keys from repo.")
   gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = github_info()$owner$login, repo = repo)
   gh_keys_names <- gh_keys %>%
     purrr::map_chr(~ .x$title)
-  if (any(gh_keys %in% sprintf("Deploy key for Travis CI (%s)", endpoint))) {
-    cli::cli_text("Deploy key for Travis CI {endpoint} already present. Not taking action.")
-  }
 
   # delete old keys with no endpoint spec
   # this helps to avoid having unused keys stored
@@ -66,6 +63,11 @@ use_travis_deploy <- function(path = usethis::proj_get(),
         repo
       )
     )
+  }
+
+  # check if key(s) exists
+  if (any(gh_keys_names %in% sprintf("Deploy key for Travis CI (%s)", endpoint))) {
+    return(cli::cli_text("Deploy key for Travis CI {(endpoint)} already present. No action required."))
   }
 
   # add to GitHub first, because this can fail because of missing org permissions
