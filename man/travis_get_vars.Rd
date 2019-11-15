@@ -11,30 +11,34 @@ travis_get_vars(repo = github_repo(), endpoint = NULL)
 
 travis_get_var_id(name, repo = github_repo(), endpoint = NULL)
 
-travis_set_var(name, value, public = FALSE, repo = github_repo(),
-  endpoint = NULL)
+travis_set_var(
+  name,
+  value,
+  public = FALSE,
+  repo = github_repo(),
+  endpoint = NULL
+)
 
-travis_delete_var(name, repo = github_repo(),
-  id = travis_get_var_id(name, repo = repo), endpoint = endpoint)
+travis_delete_var(id, repo = github_repo(), endpoint = NULL)
 }
 \arguments{
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
-\item{name}{\code{[string]}\cr
+\item{name}{\verb{[string]}\cr
 The name of the variable.}
 
-\item{value}{\code{[string]}\cr
+\item{value}{\verb{[string]}\cr
 The value for the new or updated variable.}
 
-\item{public}{\code{[flag]}\cr
+\item{public}{\verb{[flag]}\cr
 Should the variable be public or private?}
 
-\item{id}{\code{[string]}\cr
+\item{id}{\verb{[string]}\cr
 The ID of the variable, by default obtained from \code{travis_get_var_id()}.}
 }
 \description{
