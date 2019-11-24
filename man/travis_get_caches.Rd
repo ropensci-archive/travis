@@ -10,10 +10,10 @@ travis_get_caches(repo = github_repo(), endpoint = NULL)
 travis_delete_caches(repo = github_repo(), endpoint = NULL)
 }
 \arguments{
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
@@ -26,7 +26,8 @@ Return cache information
 \code{travis_get_caches()} queries the \code{"/repos/:repo/caches"} API.
 }
 \seealso{
-Other Travis CI functions: \code{\link{travis_repo_info}},
-  \code{\link{travis_repos}}
+Other Travis CI functions: 
+\code{\link{travis_repo_info}()},
+\code{\link{travis_repos}()}
 }
 \concept{Travis CI functions}

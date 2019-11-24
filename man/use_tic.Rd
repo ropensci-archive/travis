@@ -7,10 +7,10 @@
 use_tic(path = usethis::proj_get(), quiet = FALSE)
 }
 \arguments{
-\item{path}{\code{[string]}\cr
+\item{path}{\verb{[string]}\cr
 The path to the repo to prepare.}
 
-\item{quiet}{\code{[flag]}\cr
+\item{quiet}{\verb{[flag]}\cr
 Less verbose output? Default: \code{FALSE}.}
 }
 \description{

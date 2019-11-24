@@ -10,7 +10,7 @@ travis_repos(endpoint = NULL)
 travis_user()
 }
 \arguments{
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
@@ -25,7 +25,8 @@ Return repositories and user information.
 \seealso{
 \href{https://developer.travis-ci.com/}{Travis CI API documentation}
 
-Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repo_info}}
+Other Travis CI functions: 
+\code{\link{travis_get_caches}()},
+\code{\link{travis_repo_info}()}
 }
 \concept{Travis CI functions}

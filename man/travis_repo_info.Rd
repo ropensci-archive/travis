@@ -16,11 +16,11 @@ travis_repo_id(repo = github_repo())
 travis_repo_settings(repo = github_repo())
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
+\item{repo}{\verb{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
 Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
@@ -37,7 +37,8 @@ Return repository information, in particular the repository ID.
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
-Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repos}}
+Other Travis CI functions: 
+\code{\link{travis_get_caches}()},
+\code{\link{travis_repos}()}
 }
 \concept{Travis CI functions}

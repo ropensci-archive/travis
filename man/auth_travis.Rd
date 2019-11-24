@@ -7,7 +7,7 @@
 auth_travis(endpoint = ".org")
 }
 \arguments{
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }

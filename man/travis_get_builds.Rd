@@ -27,26 +27,30 @@ travis_restart_job(job_id, repo = github_repo(), endpoint = NULL)
 
 travis_cancel_job(job_id, repo = github_repo(), endpoint = NULL)
 
-travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
-  endpoint = endpoint)
+travis_debug_job(
+  job_id,
+  log_output = FALSE,
+  repo = github_repo(),
+  endpoint = endpoint
+)
 
 travis_get_log(job_id, repo = github_repo(), endpoint = NULL)
 
 travis_delete_log(job_id, repo = github_repo(), endpoint = NULL)
 }
 \arguments{
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 \code{travis_get_builds()} calls the "builds" API for the current repository.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
-\item{build_id}{\code{[integer(1)]}\cr
+\item{build_id}{\verb{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}
 
-\item{job_id}{\code{[integer(1)]}\cr
+\item{job_id}{\verb{[integer(1)]}\cr
 The job ID, as obtained from \code{travis_get_builds()}.}
 
 \item{log_output}{Show the debugging output in the publicly visible log? When

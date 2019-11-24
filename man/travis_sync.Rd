@@ -7,10 +7,10 @@
 travis_sync(block = TRUE, endpoint = NULL)
 }
 \arguments{
-\item{block}{\code{[flag]}\cr
+\item{block}{\verb{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }

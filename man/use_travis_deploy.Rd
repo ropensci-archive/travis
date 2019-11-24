@@ -4,22 +4,25 @@
 \alias{use_travis_deploy}
 \title{Setup deployment for Travis CI}
 \usage{
-use_travis_deploy(path = usethis::proj_get(),
-  user = github_user()$login, repo = github_info()$name,
-  endpoint = NULL)
+use_travis_deploy(
+  path = usethis::proj_get(),
+  user = github_user()$login,
+  repo = github_info()$name,
+  endpoint = NULL
+)
 }
 \arguments{
-\item{path}{\code{[string]} \cr
+\item{path}{\verb{[string]} \cr
 The path to the repository.}
 
-\item{user}{\code{[string]} \cr
+\item{user}{\verb{[string]} \cr
 Name of the Github user account.}
 
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The Travis CI repository to add the private key to, default: \code{repo}
 (the GitHub repo to which the public deploy key is added).}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }

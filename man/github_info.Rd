@@ -10,10 +10,10 @@ github_repo(path = usethis::proj_get(), info = github_info(path))
 github_info(path = usethis::proj_get())
 }
 \arguments{
-\item{path}{\code{[string]}\cr
+\item{path}{\verb{[string]}\cr
 The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
 
-\item{info}{\code{[list]}\cr
+\item{info}{\verb{[list]}\cr
 GitHub information for the repository, by default obtained through
 \code{\link[=github_info]{github_info()}}.}
 }

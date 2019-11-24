@@ -5,19 +5,18 @@
 \alias{travis_is_enabled}
 \title{Activate Travis CI}
 \usage{
-travis_enable(active = TRUE, repo = github_info()$full_name,
-  endpoint = NULL)
+travis_enable(active = TRUE, repo = github_info()$full_name, endpoint = NULL)
 
 travis_is_enabled(repo = github_repo(), endpoint = NULL)
 }
 \arguments{
-\item{active}{\code{[flag]}\cr
+\item{active}{\verb{[flag]}\cr
 Set to \code{FALSE} to deactivate instead of activating.}
 
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }

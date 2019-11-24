@@ -4,16 +4,15 @@
 \alias{travis_lint}
 \title{Linting}
 \usage{
-travis_lint(file = ".travis.yml", repo = github_repo(),
-  endpoint = NULL)
+travis_lint(file = ".travis.yml", repo = github_repo(), endpoint = NULL)
 }
 \arguments{
 \item{file}{A character string specifying a path to a \samp{.travis.yml} file.}
 
-\item{repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
 
-\item{endpoint}{\code{[string]}\cr
+\item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
