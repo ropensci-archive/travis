@@ -43,7 +43,6 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   # query deploy key
   cli::cli_text("Querying Github deploy keys from repo.")
-  browser()
   gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = "mlr-org", repo = repo)
 
   if (!gh_keys == "") {
