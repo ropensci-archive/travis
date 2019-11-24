@@ -49,6 +49,7 @@ Imports:
     withr
 Suggests:
     knitr,
+    magrittr,
     purrr,
     remotes,
     roxygen2,
