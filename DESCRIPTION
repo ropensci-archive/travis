@@ -46,10 +46,10 @@ Imports:
     memoise,
     openssl,
     usethis,
-    withr
+    withr,
+    magrittr
 Suggests:
     knitr,
-    magrittr,
     purrr,
     remotes,
     roxygen2,
