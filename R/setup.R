@@ -43,31 +43,35 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   # query deploy key
   cli::cli_text("Querying Github deploy keys from repo.")
-  gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = github_info()$owner$login, repo = repo)
-  gh_keys_names <- gh_keys %>%
-    purrr::map_chr(~ .x$title)
+  browser()
+  gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = "mlr-org", repo = repo)
 
-  # delete old keys with no endpoint spec
-  # this helps to avoid having unused keys stored
-  old_keys <- gh_keys_names %>%
-    purrr::map_lgl(~ .x == "Deploy key for Travis CI")
-  if (any(old_keys == TRUE)) {
-    purrr::walk(gh_keys[old_keys], ~ gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-                                            owner = github_info()$owner$login,
-                                            repo = repo,
-                                            key_id = .x$id))
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Deleted unused old Travis deploy key(s) from Github repo.",
-        repo
+  if (!gh_keys == "") {
+    gh_keys_names <- gh_keys %>%
+      purrr::map_chr(~ .x$title)
+
+    # delete old keys with no endpoint spec
+    # this helps to avoid having unused keys stored
+    old_keys <- gh_keys_names %>%
+      purrr::map_lgl(~ .x == "Deploy key for Travis CI")
+    if (any(old_keys == TRUE)) {
+      purrr::walk(gh_keys[old_keys], ~ gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
+                                              owner = github_info()$owner$login,
+                                              repo = repo,
+                                              key_id = .x$id))
+      cli::cat_bullet(
+        bullet = "tick", bullet_col = "green",
+        sprintf(
+          "Deleted unused old Travis deploy key(s) from Github repo.",
+          repo
+        )
       )
-    )
-  }
+    }
 
-  # check if key(s) exists
-  if (any(gh_keys_names %in% sprintf("Deploy key for Travis CI (%s)", endpoint))) {
-    return(cli::cli_text("Deploy key for Travis CI {(endpoint)} already present. No action required."))
+    # check if key(s) exists
+    if (any(gh_keys_names %in% sprintf("Deploy key for Travis CI (%s)", endpoint))) {
+      return(cli::cli_text("Deploy key for Travis CI {(endpoint)} already present. No action required."))
+    }
   }
 
   # add to GitHub first, because this can fail because of missing org permissions
