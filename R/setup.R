@@ -23,7 +23,6 @@ use_travis_deploy <- function(path = usethis::proj_get(),
                               repo = github_info(path = path)$name,
                               endpoint = get_endpoint()) {
 
-  # authenticate on github and travis and set up keys/vars
   auth_github()
 
   # generate deploy key pair
