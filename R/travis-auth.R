@@ -21,7 +21,7 @@ auth_travis <- function(endpoint = get_endpoint()) {
   # create api token if none is found but config file exists
   if (!any(grepl(sprintf("api.travis-ci%s/:", endpoint), yml))) {
     message("Querying API token...")
-    url = sprintf('https://travis-ci%s/account/preferences', endpoint)
+    url <- sprintf("https://travis-ci%s/account/preferences", endpoint)
     cli::cli_li("Opening {.url {url}}")
     utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
     wait_for_clipboard_token(endpoint = endpoint)
@@ -56,21 +56,13 @@ wait_for_clipboard_token <- function(endpoint) {
 
   # if there is already a file with the API key of a different endpoint,
   # we need to append only
-  has_conf <- tryCatch(
-    {
-      file.exists("~/.travis/config.yml")
-    },
-    warning = function(cond) {
-      cli::cat_bullet(
-        bullet = "pointer", bullet_col = "yellow",
-        c(
-          "Existing token detected. Appending new API token."
-        )
-      )
-    }
-  )
-
+  has_conf <- file.exists("~/.travis/config.yml")
   if (has_conf) {
+    cli::cat_bullet(
+      bullet = "pointer", bullet_col = "yellow",
+      "Existing token detected. Appending new API token."
+    )
+
     endpoint_line <- which(grepl(sprintf("endpoints", endpoint), readLines("~/.travis/config.yml")))
     yml <- readLines("~/.travis/config.yml")
     yml[endpoint_line] <- sprintf(
@@ -79,7 +71,6 @@ wait_for_clipboard_token <- function(endpoint) {
     )
     cli::cli_text("Appending Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
     writeLines(yml, "~/.travis/config.yml")
-
   } else {
     cli::cli_text("Writing Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
     writeLines(sprintf(
