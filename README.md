@@ -1,10 +1,9 @@
 # travis
 
 Set up Travis CI for testing and deployment 
-
 <!-- badges: start -->
-[![Build Status](https://img.shields.io/travis/ropenscilabs/travis/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/ropenscilabs/travis)
-[![codecov](https://codecov.io/gh/ropenscilabs/travis/branch/master/graph/badge.svg)](https://codecov.io/gh/ropenscilabs/travis)
+[![Travis build status](https://img.shields.io/travis/ropenscilabs/travis/master?logo=travis&style=flat-square&label=Linux)](https://travis-ci.org/ropenscilabs/travis)
+[![CRAN status](https://www.r-pkg.org/badges/version/travis)](https://cran.r-project.org/package=travis)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
