@@ -19,8 +19,6 @@ github_add_key <- function(pubkey, repo = NULL, user = NULL,
 
   key_data <- create_key_data(pubkey, title)
 
-  # remove existing key
-  remove_key_if_exists(key_data, user = github_info()$owner$login, repo)
   # add public key to repo deploy keys on GitHub
   ret <- add_key(key_data, user = github_info()$owner$login, repo)
 
@@ -67,16 +65,6 @@ get_role_in_repo <- function(owner, user, repo) {
 github_user <- function() {
   req <- gh::gh("GET /user")
   return(req)
-}
-
-remove_key_if_exists <- function(key_data, user, repo) {
-  req <- gh::gh("/repos/:owner/:repo/keys", owner = user, repo = repo)
-
-  if (length(req[[1]]) == 1) {
-    return()
-  }
-
-  gh::gh(sprintf("DELETE %s", req[[1]]$url))
 }
 
 create_key_data <- function(pubkey, title) {
