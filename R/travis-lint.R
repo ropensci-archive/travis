@@ -5,11 +5,9 @@
 #' This function may incorrectly report valid `.travis.yml` files as broken,
 #' in particular if `language: r` is used (which is the default for R projects).
 #'
-#' @inheritParams travis_set_pat
 #' @import httr
-#' @param repo `[string]`\cr
-#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
 #' @param file A character string specifying a path to a \samp{.travis.yml} file.
+#' @template repo
 #' @template endpoint
 #'
 #' @return A list.

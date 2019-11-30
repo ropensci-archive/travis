@@ -3,7 +3,7 @@
 #' @description
 #' Functions around completed or pending Travis CI builds and jobs.
 #' @param repo `[string]`\cr
-#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#'   The repository slug to use. Must follow the "`user/repo`" structure.
 #' `travis_get_builds()` calls the "builds" API for the current repository.
 #' @template endpoint
 #'

@@ -8,8 +8,6 @@
 #' The \pkg{tic} companion package contains facilities for installing such a key
 #' during a Travis CI build.
 #'
-#' @inheritParams travis_repo_info
-
 #' @param path `[string]` \cr
 #'   The path to the repository.
 #' @param user `[string]` \cr

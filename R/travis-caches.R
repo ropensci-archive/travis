@@ -2,13 +2,10 @@
 #'
 #' @description
 #' Return cache information
-#' @param repo `[string]`\cr
-#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @template repo
 #' @template endpoint
 #' @details
 #' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
-#'
-#' @inheritParams travis_set_pat
 #'
 #' @family Travis CI functions
 #'

@@ -4,8 +4,7 @@
 #' Functions around public and private variables available in Travis CI builds.
 #'
 #' `travis_get_vars()` calls the "/settings/env_vars" API.
-#' @param repo `[string]`\cr
-#'   The repository slug to use. Must follow the structure of ´<user>/<repo>´.
+#' @template repo
 #' @export
 #' @examples
 #' \dontrun{

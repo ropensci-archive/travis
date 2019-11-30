@@ -23,7 +23,7 @@ travis_delete_var(id, repo = github_repo(), endpoint = NULL)
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr
-The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
+The repository slug to use. Must follow the "\code{user/repo}" structure.}
 
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}

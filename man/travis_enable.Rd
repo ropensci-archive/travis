@@ -14,7 +14,7 @@ travis_is_enabled(repo = github_repo(), endpoint = NULL)
 Set to \code{FALSE} to deactivate instead of activating.}
 
 \item{repo}{\verb{[string]}\cr
-The repository slug to use. Must follow the structure of ´<user>/<repo>´.}
+The repository slug to use. Must follow the "\code{user/repo}" structure.}
 
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
