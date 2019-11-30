@@ -1,6 +1,0 @@
-pandoc: '2.2'
-pkgdown: 1.4.0
-pkgdown_sha: ~
-articles:
-  travis: travis.html
-
