@@ -22,7 +22,7 @@
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),
                               user = github_user()$login,
-                              repo = github_info()$name,
+                              repo = github_info(path = path)$name,
                               endpoint = NULL) {
 
   if (is.null(endpoint)) {
@@ -43,19 +43,19 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   # query deploy key
   cli::cli_text("Querying Github deploy keys from repo.")
-  gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = github_info()$owner$login, repo = repo)
+  gh_keys <- gh::gh("/repos/:owner/:repo/keys", owner = github_info(path = path)$owner$login, repo = repo)
 
-  if (!gh_keys == "") {
+  if (!gh_keys[1] == "") {
     gh_keys_names <- gh_keys %>%
       purrr::map_chr(~ .x$title)
 
     # delete old keys with no endpoint spec
     # this helps to avoid having unused keys stored
     old_keys <- gh_keys_names %>%
-      purrr::map_lgl(~ .x == "Deploy key for Travis CI")
+      purrr::map_lgl(~ .x == "Deploy key for Travis CI" | .x == "travis+tic")
     if (any(old_keys == TRUE)) {
       purrr::walk(gh_keys[old_keys], ~ gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-                                              owner = github_info()$owner$login,
+                                              owner = github_info(path = path)$owner$login,
                                               repo = repo,
                                               key_id = .x$id))
       cli::cat_bullet(
@@ -80,17 +80,18 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # env var 'id_rsa' on Travis -------------------------------------------------
 
   # check if id_rsa already exists on Travis
-  idrsa <- travis_get_vars() %>%
+  idrsa <- travis_get_vars(repo = github_repo(path = path)) %>%
     purrr::map_lgl(~ .x$name == "id_rsa") %>%
     any()
 
   # delete existing ssh key
   if (isTRUE(idrsa)) {
-    travis_delete_var(travis_get_var_id("id_rsa"))
+    travis_delete_var(travis_get_var_id("id_rsa", repo = github_repo(path = path)),
+                      repo = github_repo(path = path))
   }
 
   travis_set_var("id_rsa", private_key,
-    public = FALSE, repo = github_repo(),
+    public = FALSE, repo = github_repo(path = path),
     endpoint = endpoint
   )
 
