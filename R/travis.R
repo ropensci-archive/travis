@@ -36,11 +36,11 @@ NULL
 #' @return The JSON response, or the relevant error.
 #' @export
 travis <- function(verb = "GET",
-                       path = "",
-                       query = list(),
-                       body = "",
-                       endpoint = ".org",
-                       encode = "json") {
+                   path = "",
+                   query = list(),
+                   body = "",
+                   endpoint = ".org",
+                   encode = "json") {
 
   url <- endpoint(endpoint, path)
 

@@ -53,9 +53,10 @@ use_travis_deploy <- function(path = usethis::proj_get(),
       purrr::map_lgl(~ .x == "Deploy key for Travis CI" | .x == "travis+tic")
     if (any(old_keys == TRUE)) {
       purrr::walk(gh_keys[old_keys], ~ gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-                                              owner = github_info(path = path)$owner$login,
-                                              repo = repo,
-                                              key_id = .x$id))
+        owner = github_info(path = path)$owner$login,
+        repo = repo,
+        key_id = .x$id
+      ))
       cli::cat_bullet(
         bullet = "tick", bullet_col = "green",
         sprintf(
@@ -85,7 +86,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # delete existing ssh key
   if (isTRUE(idrsa)) {
     travis_delete_var(travis_get_var_id("id_rsa", repo = github_repo(path = path)),
-                      repo = github_repo(path = path))
+      repo = github_repo(path = path)
+    )
   }
 
   travis_set_var("id_rsa", private_key,
