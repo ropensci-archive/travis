@@ -4,7 +4,7 @@
 #' @template endpoint
 #' @export
 #'
-auth_travis <- function(endpoint = ".org") {
+auth_travis <- function(endpoint = get_endpoint()) {
   yml <- tryCatch(
     {
       readLines("~/.travis/config.yml")
@@ -12,10 +12,9 @@ auth_travis <- function(endpoint = ".org") {
     warning = function(cond) {
       cli::cat_bullet(
         bullet = "pointer", bullet_col = "yellow",
-        c(
-          "To interact with the Travis CI API, an API token is required.",
-          "This is a one-time procedure. The token will be stored in your home directory in the '.travis' directory."
-        )
+        cli::cli_text("To interact with the Travis CI API, an API token is
+        required. This is a one-time procedure. The token will be stored in
+        your home directory in the '.travis' directory.")
       )
     }
   )
