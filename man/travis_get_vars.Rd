@@ -7,7 +7,7 @@
 \alias{travis_delete_var}
 \title{Travis CI variables}
 \usage{
-travis_get_vars(repo = github_repo(), endpoint = NULL)
+travis_get_vars(repo = github_repo(), endpoint = get_endpoint())
 
 travis_get_var_id(name, repo = github_repo(), endpoint = NULL)
 
@@ -16,10 +16,10 @@ travis_set_var(
   value,
   public = FALSE,
   repo = github_repo(),
-  endpoint = NULL
+  endpoint = get_endpoint()
 )
 
-travis_delete_var(id, repo = github_repo(), endpoint = NULL)
+travis_delete_var(id, repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr

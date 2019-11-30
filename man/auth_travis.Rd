@@ -4,7 +4,7 @@
 \alias{auth_travis}
 \title{Authenticate to Travis}
 \usage{
-auth_travis(endpoint = ".org")
+auth_travis(endpoint = get_endpoint())
 }
 \arguments{
 \item{endpoint}{\verb{[string]}\cr

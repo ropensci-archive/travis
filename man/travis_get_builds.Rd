@@ -13,30 +13,30 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo(), endpoint = NULL)
+travis_get_builds(repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_build(build_id, repo = github_repo(), endpoint = NULL)
+travis_restart_build(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_last_build(repo = github_repo(), endpoint = NULL)
+travis_restart_last_build(repo = github_repo(), endpoint = get_endpoint())
 
-travis_cancel_build(build_id, repo = github_repo(), endpoint = NULL)
+travis_cancel_build(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_get_jobs(build_id, repo = github_repo(), endpoint = NULL)
+travis_get_jobs(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_job(job_id, repo = github_repo(), endpoint = NULL)
+travis_restart_job(job_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_cancel_job(job_id, repo = github_repo(), endpoint = NULL)
+travis_cancel_job(job_id, repo = github_repo(), endpoint = get_endpoint())
 
 travis_debug_job(
   job_id,
   log_output = FALSE,
   repo = github_repo(),
-  endpoint = endpoint
+  endpoint = get_endpoint()
 )
 
-travis_get_log(job_id, repo = github_repo(), endpoint = NULL)
+travis_get_log(job_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_delete_log(job_id, repo = github_repo(), endpoint = NULL)
+travis_delete_log(job_id, repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr

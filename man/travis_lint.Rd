@@ -4,7 +4,11 @@
 \alias{travis_lint}
 \title{Linting}
 \usage{
-travis_lint(file = ".travis.yml", repo = github_repo(), endpoint = NULL)
+travis_lint(
+  file = ".travis.yml",
+  repo = github_repo(),
+  endpoint = get_endpoint()
+)
 }
 \arguments{
 \item{file}{A character string specifying a path to a \samp{.travis.yml} file.}

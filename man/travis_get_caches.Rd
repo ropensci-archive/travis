@@ -5,9 +5,9 @@
 \alias{travis_delete_caches}
 \title{Get/delete repository cache(s) from Travis CI}
 \usage{
-travis_get_caches(repo = github_repo(), endpoint = NULL)
+travis_get_caches(repo = github_repo(), endpoint = get_endpoint())
 
-travis_delete_caches(repo = github_repo(), endpoint = NULL)
+travis_delete_caches(repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr

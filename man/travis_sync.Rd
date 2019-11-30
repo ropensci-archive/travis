@@ -4,7 +4,7 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, endpoint = NULL)
+travis_sync(block = TRUE, endpoint = get_endpoint())
 }
 \arguments{
 \item{block}{\verb{[flag]}\cr
