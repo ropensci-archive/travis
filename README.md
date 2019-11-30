@@ -1,6 +1,10 @@
 # travis
 
-[![Travis-CI Build Status](https://travis-ci.org/ropenscilabs/travis.svg?branch=master)](https://travis-ci.org/ropenscilabs/travis)
+<!-- badges: start -->
+[![Travis build status](https://img.shields.io/travis/ropenscilabs/travis/master?logo=travis&style=flat-square&label=Linux)](https://travis-ci.org/ropenscilabs/travis)
+[![CRAN status](https://www.r-pkg.org/badges/version/travis)](https://cran.r-project.org/package=travis)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
 
 The goal of travis is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
 Its main purpose is to provide a command-line way in R for certain Travis tasks that are usually done in the browser (build checking, cache deletion, build restarts, etc.).
