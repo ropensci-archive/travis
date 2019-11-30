@@ -9,7 +9,7 @@ auth_github <- function() {
   if (token == "") {
     cli::cat_bullet(
       bullet = "cross", bullet_col = "red",
-      cli::cli_text("Travis: Please call {.code usethis::browse_github_token()}
+      cli::cli_text("{.pkg travis}: Please call {.code usethis::browse_github_token()}
                     and follow the instructions. Then restart the session and try again.")
     )
   }
