@@ -21,6 +21,8 @@ auth_travis <- function(endpoint = get_endpoint()) {
   # create api token if none is found but config file exists
   if (!any(grepl(sprintf("api.travis-ci%s/:", endpoint), yml))) {
     message("Querying API token...")
+    url = sprintf('https://travis-ci%s/account/preferences', endpoint)
+    cli::cli_li("Opening {.url {url}}")
     utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
     wait_for_clipboard_token(endpoint = endpoint)
     return(invisible(TRUE))
@@ -75,9 +77,11 @@ wait_for_clipboard_token <- function(endpoint) {
       "endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
       endpoint, token
     )
+    cli::cli_text("Appending Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
     writeLines(yml, "~/.travis/config.yml")
 
   } else {
+    cli::cli_text("Writing Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
     writeLines(sprintf(
       "endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
       endpoint, token
