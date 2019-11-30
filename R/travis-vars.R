@@ -17,7 +17,7 @@ travis_get_vars <- function(repo = github_repo(), endpoint = NULL) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
   }
 
-  req <- travisHTTP(
+  req <- travis(
     path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
     endpoint = endpoint
   )
@@ -125,7 +125,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     "env_var.public" = public
   )
 
-  req <- travisHTTP(
+  req <- travis(
     verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
     body = var_data, endpoint = endpoint
   )
@@ -169,7 +169,7 @@ travis_delete_var <- function(id, repo = github_repo(),
     ))
   }
 
-  req <- travisHTTP(
+  req <- travis(
     verb = "DELETE", sprintf(
       "/repo/%s/env_var/%s",
       encode_slug(repo), id

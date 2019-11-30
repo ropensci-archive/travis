@@ -1,6 +1,20 @@
-#' @title Travis CI HTTP Requests
+#' Travis CI client package for R
 #'
-#' @description This is the workhorse function for executing API requests for
+#' Use [github_repo()] to get the name of the current repository
+#' as determined from the `origin` remote.
+#' The following functions simplify integrating R package testing and deployment
+#' with GitHub and Travis CI:
+#' - [travis_enable()] enables Travis CI for your repository,
+#' - [use_travis_deploy()] installs a public deploy key on GitHub and the
+#'   corresponding private key on Travis CI to simplify deployments to GitHub
+#'   from Travis CI.
+#' @docType package
+#' @name travis-package
+NULL
+
+#' Travis CI HTTP Requests
+#'
+#' This is the workhorse function for executing API requests for
 #'   Travis CI.
 #'
 #' @import httr
@@ -20,9 +34,8 @@
 #' @param encode Encoding format. See [httr::POST].
 #'
 #' @return The JSON response, or the relevant error.
-#' @keywords internal
 #' @export
-travisHTTP <- function(verb = "GET",
+travis <- function(verb = "GET",
                        path = "",
                        query = list(),
                        body = "",
