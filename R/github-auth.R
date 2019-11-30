@@ -8,14 +8,9 @@ auth_github <- function() {
   token <- usethis::github_token()
   if (token == "") {
     cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      cli::cat_bullet(
-        bullet = "info", bullet_col = "yellow",
-        "No Github token found. Opening a browser window to create one."
-      )
+      bullet = "cross", bullet_col = "red",
+      cli::cli_text("Travis: Please call {.code usethis::browse_github_token()}
+                    and follow the instructions. Then restart the session and try again.")
     )
-    usethis::browse_github_token()
-    cli::cat_bullet(bullet = "cross", bullet_col = "red")
-    stop("Travis: Please restart your R session after setting the token and try again.")
   }
 }
