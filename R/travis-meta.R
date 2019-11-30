@@ -13,11 +13,7 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+travis_repos <- function(endpoint = get_endpoint()) {
 
   req <- travis(path = "/repos", endpoint = endpoint)
 

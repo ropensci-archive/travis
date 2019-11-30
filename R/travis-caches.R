@@ -10,11 +10,7 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_get_caches <- function(repo = github_repo(), endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+travis_get_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
 
   req <- travis(
     path = sprintf("/repo/%s/caches", encode_slug(repo)),
@@ -52,11 +48,7 @@ new_travis_cache <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_caches
-travis_delete_caches <- function(repo = github_repo(), endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+travis_delete_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
 
   req <- travis(
     verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),

@@ -21,11 +21,7 @@
 use_travis_deploy <- function(path = usethis::proj_get(),
                               user = github_user()$login,
                               repo = github_info(path = path)$name,
-                              endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+                              endpoint = get_endpoint()) {
 
   # authenticate on github and travis and set up keys/vars
   auth_github()

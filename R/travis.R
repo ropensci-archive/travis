@@ -39,10 +39,10 @@ travis <- function(verb = "GET",
                    path = "",
                    query = list(),
                    body = "",
-                   endpoint = ".org",
+                   endpoint = get_endpoint(),
                    encode = "json") {
 
-  url <- endpoint(endpoint, path)
+  url <- endpoint_url(endpoint, path)
 
   auth_travis(endpoint = endpoint)
   api_token <- read_token(endpoint = endpoint)

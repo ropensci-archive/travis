@@ -17,11 +17,7 @@
 #' }
 #' @export
 travis_lint <- function(file = ".travis.yml", repo = github_repo(),
-                        endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+                        endpoint = get_endpoint()) {
 
   req <- travis(
     verb = "POST",

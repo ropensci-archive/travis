@@ -82,7 +82,12 @@ catch_error <- function(object) {
   }
 }
 
-endpoint <- function(endpoint, path) {
+get_endpoint <- function() {
+  endpoint <- Sys.getenv("R_TRAVIS")
+  return(endpoint)
+}
+
+endpoint_url <- function(endpoint, path) {
   return(sprintf("https://api.travis-ci%s%s", endpoint, path))
 }
 

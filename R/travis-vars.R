@@ -11,11 +11,7 @@
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo(), endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint()) {
 
   req <- travis(
     path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
@@ -113,11 +109,7 @@ travis_get_var_id <- function(name, repo = github_repo(), endpoint = NULL) {
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
-                           endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+                           endpoint = get_endpoint()) {
 
   var_data <- list(
     "env_var.name" = name,
@@ -156,11 +148,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' travis_delete_var("secret_var")
 #' }
 travis_delete_var <- function(id, repo = github_repo(),
-                              endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+                              endpoint = get_endpoint()) {
 
   if (is.null(id)) {
     stopc(paste0("`id` must not be NULL; or variable `name` not found.",

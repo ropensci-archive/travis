@@ -9,11 +9,7 @@
 #'   Set to `FALSE` to return immediately instead of waiting.
 #' @template endpoint
 #' @export
-travis_sync <- function(block = TRUE, endpoint = NULL) {
-
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
+travis_sync <- function(block = TRUE, endpoint = get_endpoint()) {
 
   user_id <- travis_user()[["id"]]
 
