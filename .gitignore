@@ -5,3 +5,4 @@
 .httr-oauth
 /.remake
 /tmp
+tests/testthat/travis-testthat
