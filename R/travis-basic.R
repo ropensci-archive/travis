@@ -10,7 +10,8 @@
 #'
 #' @param repo `[string|numeric]`\cr
 #'   The GitHub repo slug, by default obtained through [github_repo()].
-#'   Alternatively, the Travis CI repo ID, e.g. obtained through `travis_repo_id()`.
+#'   Alternatively, the Travis CI repo ID, e.g. obtained through
+#'   `travis_repo_id()`.
 #' @template endpoint
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
@@ -18,23 +19,25 @@
 #'
 #' @export
 travis_repo_info <- function(repo = github_repo(), endpoint = get_endpoint()) {
-
-  req <- travis(path = sprintf("/repo/%s", encode_slug(repo)), endpoint = endpoint)
+  req <- travis(
+    path = sprintf("/repo/%s", encode_slug(repo)),
+    endpoint = endpoint
+  )
 
   new_travis_repo(content(req$response))
 }
 
 #' @export
 #' @rdname travis_repo_info
-travis_has_repo <- function(repo = github_repo()) {
-  req <- travis(path = sprintf("/repo/%s", encode_slug(repo)))
-  status <- status_code(req)
+travis_has_repo <- function(repo = github_repo(), endpoint = get_endpoint()) {
+  req <- travis(
+    path = sprintf("/repo/%s", encode_slug(repo)),
+    endpoint = endpoint
+  )
+  status <- status_code(req$response)
   if (status == 404) {
     return(FALSE)
   }
-  cli::cat_rule()
-  cli::cat_bullet(bullet = "cross", bullet_col = "red")
-  stop_for_status(req$response, paste("try to access repository"))
   TRUE
 }
 
@@ -55,7 +58,10 @@ travis_repo_id <- function(repo = github_repo()) {
 travis_repo_settings <- function(repo = github_repo()) {
   req <- travis(path = sprintf("/repo/%s/settings", encode_slug(repo)))
 
-  stop_for_status(req$response, sprintf("get repo settings on %s from Travis", repo))
+  stop_for_status(
+    req$response,
+    sprintf("get repo settings on %s from Travis", repo)
+  )
   new_travis_settings(content(req$response))
 }
 
