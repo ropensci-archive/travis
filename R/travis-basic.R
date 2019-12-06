@@ -46,8 +46,8 @@ travis_has_repo <- function(repo = github_repo(), endpoint = get_endpoint()) {
 #'
 #' @export
 #' @rdname travis_repo_info
-travis_repo_id <- function(repo = github_repo()) {
-  travis_repo_info(repo = repo)$id
+travis_repo_id <- function(repo = github_repo(), endpoint = get_endpoint()) {
+  travis_repo_info(repo = repo, endpoint = endpoint)$id
 }
 
 #' @description
@@ -55,8 +55,12 @@ travis_repo_id <- function(repo = github_repo()) {
 #'
 #' @export
 #' @rdname travis_repo_info
-travis_repo_settings <- function(repo = github_repo()) {
-  req <- travis(path = sprintf("/repo/%s/settings", encode_slug(repo)))
+travis_repo_settings <- function(repo = github_repo(),
+                                 endpoint = get_endpoint()) {
+  req <- travis(
+    path = sprintf("/repo/%s/settings", encode_slug(repo)),
+    endpoint = endpoint
+  )
 
   stop_for_status(
     req$response,
