@@ -9,16 +9,17 @@
 \usage{
 travis_repo_info(repo = github_repo(), endpoint = get_endpoint())
 
-travis_has_repo(repo = github_repo())
+travis_has_repo(repo = github_repo(), endpoint = get_endpoint())
 
-travis_repo_id(repo = github_repo())
+travis_repo_id(repo = github_repo(), endpoint = get_endpoint())
 
-travis_repo_settings(repo = github_repo())
+travis_repo_settings(repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
 \item{repo}{\verb{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+Alternatively, the Travis CI repo ID, e.g. obtained through
+\code{travis_repo_id()}.}
 
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
