@@ -9,3 +9,4 @@
 ^tic\.R$
 ^_pkgdown\.yml$
 ^docs$
+^\.pre-commit-config\.yaml$
