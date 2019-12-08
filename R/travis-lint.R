@@ -1,12 +1,14 @@
 #' Linting
 #'
-#' This checks if a \samp{.travis.yml} file is valid, and identifies possible errors.
+#' This checks if a \samp{.travis.yml} file is valid, and identifies possible
+#' errors.
 #'
 #' This function may incorrectly report valid `.travis.yml` files as broken,
 #' in particular if `language: r` is used (which is the default for R projects).
 #'
 #' @import httr
-#' @param file A character string specifying a path to a \samp{.travis.yml} file.
+#' @param file A character string specifying a path to a \samp{.travis.yml}
+#'   file.
 #' @template repo
 #' @template endpoint
 #'
@@ -25,7 +27,6 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(),
     encode = "raw",
     endpoint = endpoint
   )
-  browser()
   if (status_code(req$response) == 200) {
     cli::cat_bullet(
       bullet = "tick", bullet_col = "green",

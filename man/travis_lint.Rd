@@ -11,7 +11,8 @@ travis_lint(
 )
 }
 \arguments{
-\item{file}{A character string specifying a path to a \samp{.travis.yml} file.}
+\item{file}{A character string specifying a path to a \samp{.travis.yml}
+file.}
 
 \item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the "\code{user/repo}" structure.}
@@ -24,7 +25,8 @@ and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 A list.
 }
 \description{
-This checks if a \samp{.travis.yml} file is valid, and identifies possible errors.
+This checks if a \samp{.travis.yml} file is valid, and identifies possible
+errors.
 }
 \details{
 This function may incorrectly report valid \code{.travis.yml} files as broken,
