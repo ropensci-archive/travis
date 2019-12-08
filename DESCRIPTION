@@ -37,7 +37,7 @@ BugReports: https://github.com/ropenscilabs/travis/issues
 Depends:
     R (>= 3.2.0)
 Imports:
-    cli,
+    cli (>= 1.9.9),
     clipr,
     gh,
     git2r,
