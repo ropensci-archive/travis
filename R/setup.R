@@ -66,7 +66,9 @@ use_travis_deploy <- function(path = usethis::proj_get(),
       endpoint
     ))) {
       return(cli::cli_alert("Deploy key for Travis CI ({.code {endpoint}})
-      already present. No action required.", wrap = TRUE))
+      already present in {.file ~/.travis/config.yml}. No action required.",
+        wrap = TRUE
+      ))
     }
   }
 
