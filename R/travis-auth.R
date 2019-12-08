@@ -10,19 +10,16 @@ auth_travis <- function(endpoint = get_endpoint()) {
       readLines("~/.travis/config.yml")
     },
     warning = function(cond) {
-      cli::cat_bullet(
-        bullet = "pointer", bullet_col = "yellow",
-        cli::cli_text("To interact with the Travis CI API, an API token is
+      cli::cli_alert_info("To interact with the Travis CI API, an API token is
         required. This is a one-time procedure. The token will be stored in
-        your home directory in the '.travis' directory.")
-      )
+        your home directory in the '.travis' directory.", wrap = TRUE)
     }
   )
   # create api token if none is found but config file exists
   if (!any(grepl(sprintf("api.travis-ci%s/:", endpoint), yml))) {
     message("Querying API token...")
     url <- sprintf("https://travis-ci%s/account/preferences", endpoint)
-    cli::cli_li("Opening {.url {url}}")
+    cli::cli_text("Opening {.url {url}}")
     utils::browseURL(sprintf("https://travis-ci%s/account/preferences", endpoint))
     wait_for_clipboard_token(endpoint = endpoint)
     return(invisible(TRUE))
@@ -30,9 +27,8 @@ auth_travis <- function(endpoint = get_endpoint()) {
 }
 
 wait_for_clipboard_token <- function(endpoint) {
-  cli::cat_bullet(
-    bullet = "info", bullet_col = "yellow",
-    " Waiting for API token to appear on the clipboard."
+  cli::cli_alert_info(
+    "Waiting for API token to appear on the clipboard."
   )
   Sys.sleep(3)
 
@@ -41,10 +37,7 @@ wait_for_clipboard_token <- function(endpoint) {
     if (is_token(token)) break
     Sys.sleep(0.1)
   }
-  cli::cat_bullet(
-    bullet = "pointer", bullet_col = "yellow",
-    " Detected token, clearing clipboard."
-  )
+  cli::cli_alert("Detected API token. Clearing clipboard.")
   requireNamespace("clipr", quietly = TRUE)
   tryCatch(
     clipr::write_clip(""),
@@ -58,9 +51,9 @@ wait_for_clipboard_token <- function(endpoint) {
   # we need to append only
   has_conf <- file.exists("~/.travis/config.yml")
   if (has_conf) {
-    cli::cat_bullet(
-      bullet = "pointer", bullet_col = "yellow",
-      "Existing token detected. Appending new API token."
+    cli::cli_alert_warning(
+      "Existing API token detected in {.file ~/.travis/config.yml}.
+      Appending new API token ({endpoint}).", wrap = TRUE
     )
 
     endpoint_line <- which(grepl(sprintf("endpoints", endpoint), readLines("~/.travis/config.yml")))
@@ -69,10 +62,12 @@ wait_for_clipboard_token <- function(endpoint) {
       "endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
       endpoint, token
     )
-    cli::cli_text("Appending Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
+    cli::cli_alert("Appending Travis CI API token for endpoint '{endpoint}' to
+                   {.file ~/.travis/config.yml}.", wrap = TRUE)
     writeLines(yml, "~/.travis/config.yml")
   } else {
-    cli::cli_text("Writing Travis CI API token for endpoint '{endpoint}' to {.file ~/.travis/config.yml}.")
+    cli::cli_alert("Storing Travis CI API token for endpoint '{endpoint}' in
+                  {.file ~/.travis/config.yml}.", wrap = TRUE)
     writeLines(sprintf(
       "endpoints:\n  https://api.travis-ci%s/:\n    access_token: %s",
       endpoint, token

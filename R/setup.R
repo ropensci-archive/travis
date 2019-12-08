@@ -24,6 +24,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
                               endpoint = get_endpoint()) {
 
   auth_github()
+  auth_travis()
 
   # generate deploy key pair
   key <- openssl::rsa_keygen() # TOOD: num bits?
@@ -35,7 +36,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # Github deploy key ----------------------------------------------------------
 
   # query deploy key
-  cli::cli_text("Querying Github deploy keys from repo.")
+  cli::cli_alert_info("Querying Github deploy keys from repo.")
   gh_keys <- gh::gh("/repos/:owner/:repo/keys",
     owner = github_info(path = path)$owner$login, repo = repo
   )
@@ -55,13 +56,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
         repo = repo,
         key_id = .x$id
       ))
-      cli::cat_bullet(
-        bullet = "tick", bullet_col = "green",
-        sprintf(
-          "Deleted unused old Travis deploy key(s) from Github repo.",
-          repo
-        )
-      )
+      cli::cli_alert_info("Deleted unused old Travis deploy key(s) from
+                          Github repo.", wrap = TRUE)
     }
 
     # check if key(s) exists
@@ -69,8 +65,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
       "Deploy key for Travis CI (%s)",
       endpoint
     ))) {
-      return(cli::cli_text("Deploy key for Travis CI {(endpoint)} already
-                           present. No action required."))
+      return(cli::cli_alert("Deploy key for Travis CI ({.code {endpoint}})
+      already present. No action required.", wrap = TRUE))
     }
   }
 
@@ -92,7 +88,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # delete existing ssh key
   if (isTRUE(idrsa)) {
     travis_delete_var(travis_get_var_id("id_rsa",
-      repo = github_repo(path = path)
+      repo = github_repo(path = path), quiet = TRUE
     ),
     repo = github_repo(path = path), endpoint = endpoint
     )
@@ -104,13 +100,10 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   )
 
   cli::cat_rule()
-  cli::cat_bullet(
-    bullet = "tick", bullet_col = "green",
-    sprintf(
-      "Added a private deploy key to project '%s' on Travis CI as secure
-      environment variable 'id_rsa'.",
-      repo
-    )
+  cli::cli_alert_success(
+    "Added a private deploy key to project {.code {repo}} on Travis CI as
+      secure environment variable 'id_rsa'.",
+    wrap = TRUE
   )
 }
 

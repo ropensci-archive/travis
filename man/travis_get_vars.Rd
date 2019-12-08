@@ -7,9 +7,14 @@
 \alias{travis_delete_var}
 \title{Travis CI variables}
 \usage{
-travis_get_vars(repo = github_repo(), endpoint = get_endpoint())
+travis_get_vars(repo = github_repo(), endpoint = get_endpoint(), quiet = FALSE)
 
-travis_get_var_id(name, repo = github_repo(), endpoint = NULL)
+travis_get_var_id(
+  name,
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  quiet = FALSE
+)
 
 travis_set_var(
   name,
@@ -28,6 +33,8 @@ The repository slug to use. Must follow the "\code{user/repo}" structure.}
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 
 \item{name}{\verb{[string]}\cr
 The name of the variable.}

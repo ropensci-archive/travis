@@ -5,13 +5,15 @@
 #'
 #' `travis_get_vars()` calls the "/settings/env_vars" API.
 #' @template repo
+#' @template quiet
 #' @export
 #' @examples
 #' \dontrun{
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint(),
+                            quiet = FALSE) {
 
   req <- travis(
     path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
@@ -19,12 +21,10 @@ travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint()) {
   )
 
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Get environment variables for '%s' on Travis CI.", repo
-      )
-    )
+    if (!quiet) {
+    cli::cli_alert_info("Getting environment variables for {.code {repo}} on
+                        Travis CI.", wrap = TRUE)
+    }
     new_travis_env_vars(content(req$response))
   }
 }
@@ -51,6 +51,7 @@ new_travis_env_var <- function(x) {
 #'
 #' @param name `[string]`\cr
 #'   The name of the variable.
+#' @template quiet
 #'
 #' @export
 #' @rdname travis_get_vars
@@ -59,13 +60,11 @@ new_travis_env_var <- function(x) {
 #' # Get the ID of a variable.
 #' travis_get_var_id("secret_var")
 #' }
-travis_get_var_id <- function(name, repo = github_repo(), endpoint = NULL) {
+travis_get_var_id <- function(name, repo = github_repo(),
+                              endpoint = get_endpoint(),
+                              quiet = FALSE) {
 
-  if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
-  }
-
-  vars <- travis_get_vars(repo = repo, endpoint = endpoint)
+  vars <- travis_get_vars(repo = repo, endpoint = endpoint, quiet = quiet)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the
