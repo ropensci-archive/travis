@@ -23,15 +23,13 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(),
 
   req <- travis(
     verb = "POST",
-    path = "/lint", body = upload_file(file),
+    path = "/lint",
+    body = upload_file(file),
     encode = "raw",
     endpoint = endpoint
   )
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf("Linting %s", file)
-    )
+    cli::cli_alert_info("Linting {.file {file}}.")
     new_travis_lint(content(req$response))
   }
 }

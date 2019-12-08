@@ -69,8 +69,7 @@ travis <- function(verb = "GET",
       Authorization = sprintf("token %s", api_token),
       "Travis-API-Version" = 3
     ),
-    query = query, encode = encode, ua, accept_json(),
-    content_type_json()
+    query = query, encode = encode, ua, accept_json()
   )
 
   # for travis_delete_var()
