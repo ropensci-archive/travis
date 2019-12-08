@@ -91,6 +91,29 @@ endpoint_url <- function(endpoint, path) {
   return(sprintf("https://api.travis-ci%s%s", endpoint, path))
 }
 
+check_endpoint <- function() {
+
+  if (Sys.getenv("R_TRAVIS_CHECKED") == "") {
+
+    Sys.setenv("R_TRAVIS_CHECKED" = "true")
+
+    if (Sys.getenv("R_TRAVIS") != "") {
+      cli::cli_text("{.pkg travis}: Using Travis endpoint
+        '{Sys.getenv('R_TRAVIS')}' set via env var {.code R_TRAVIS}.
+        If supplied, the {.code endpoint} argument in
+        any {.code travis_*} function will take precedence.
+        (This message is displayed once per session.)")
+    } else {
+      cli::cli_text("{.pkg travis}: Env var 'R_TRAVIS'
+        not set by user. Defaulting to '.org' endpoint.
+        If supplied, the {.code endpoint} argument in
+        any {.code travis_*} function will take precedence.
+        (This message is displayed once per session.)")
+      Sys.setenv("R_TRAVIS" = ".org")
+    }
+  }
+}
+
 encode_slug <- function(repo) {
   utils::URLencode(as.character(repo), reserved = TRUE)
 }

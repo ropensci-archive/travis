@@ -42,6 +42,9 @@ travis <- function(verb = "GET",
                    endpoint = get_endpoint(),
                    encode = "json") {
 
+  # check which endpoint to use, eventually write out message
+  check_endpoint()
+
   url <- endpoint_url(endpoint, path)
 
   auth_travis(endpoint = endpoint)
@@ -68,14 +71,17 @@ travis <- function(verb = "GET",
   }
 
   # parse response into readable object
-  parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+  parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"),
+    simplifyVector = FALSE
+  )
 
   # handle special errors without response code
   if (!is.null(parsed$error_type)) {
     catch_error(parsed)
   }
 
-  if (status_code(resp) != 200 && status_code(resp) != 201 && status_code(resp) != 202) {
+  if (status_code(resp) != 200 && status_code(resp) != 201 &&
+    status_code(resp) != 202) {
     stop(
       sprintf(
         "GitHub API request failed [%s]\n%s\n<%s>",
