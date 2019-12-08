@@ -44,11 +44,11 @@ Imports:
     glue (>= 1.2.0),
     httr,
     jsonlite,
+    magrittr,
     memoise,
     openssl,
     usethis,
-    withr,
-    magrittr
+    withr
 Suggests:
     knitr,
     purrr,

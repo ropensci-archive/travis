@@ -47,8 +47,19 @@ travis <- function(verb = "GET",
 
   url <- endpoint_url(endpoint, path)
 
-  auth_travis(endpoint = endpoint)
-  api_token <- read_token(endpoint = endpoint)
+  if (endpoint == ".org" && Sys.getenv("R_TRAVIS_ORG") == "") {
+    auth_travis(endpoint = endpoint)
+    api_token <- read_token(endpoint = endpoint)
+  } else if (endpoint == ".com" && Sys.getenv("R_TRAVIS_COM") == "") {
+    auth_travis(endpoint = endpoint)
+    api_token <- read_token(endpoint = endpoint)
+  } else {
+    if (endpoint == ".org") {
+      api_token = Sys.getenv("R_TRAVIS_ORG")
+    } else {
+      api_token = Sys.getenv("R_TRAVIS_COM")
+    }
+  }
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")
 
