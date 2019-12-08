@@ -26,13 +26,10 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
   )
 
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "%s repo '%s' on Travis CI (%s)",
-        ifelse(active, "Activating", "Deactivating"), repo, endpoint
+    cli::cli_alert_success(
+        "{ifelse(active, 'Activating', 'Deactivating')} repo {.code {repo}} on
+        Travis CI ({.code {endpoint}}).", wrap = TRUE
       )
-    )
     invisible(new_travis_repo(content(req$response)))
   }
 }
