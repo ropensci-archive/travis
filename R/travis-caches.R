@@ -18,16 +18,12 @@ travis_get_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
   )
 
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Getting caches for '%s' on Travis CI.", repo
-      )
+    cli::cli_alert_info(
+        "Getting caches for {.code {repo}} on Travis CI."
     )
   }
   new_travis_caches(httr::content(req$response))
 }
-
 
 new_travis_caches <- function(x) {
   stopifnot(x[["@type"]] == "caches")
@@ -56,12 +52,7 @@ travis_delete_caches <- function(repo = github_repo(), endpoint = get_endpoint()
   )
 
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Deleting caches for '%s' on Travis CI.", repo
-      )
-    )
+    cli::cli_alert_success("Deleted caches for {.code {repo}} on Travis CI.")
     invisible(new_travis_caches(content(req$response)))
   }
 }

@@ -22,7 +22,7 @@ travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint(),
 
   if (status_code(req$response) == 200) {
     if (!quiet) {
-    cli::cli_alert_info("Getting environment variables for {.code {repo}} on
+      cli::cli_alert_info("Getting environment variables for {.code {repo}} on
                         Travis CI.", wrap = TRUE)
     }
     new_travis_env_vars(content(req$response))
@@ -122,12 +122,8 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
   )
 
   if (status_code(req$response) == 201) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Adding environment variables for '%s' on Travis CI.", repo
-      )
-    )
+    cli::cli_alert_success("Added environment variable for {.code {repo}} on
+                           Travis CI.", wrap = TRUE)
     new_travis_env_var(content(req$response))
   }
 }
@@ -150,10 +146,9 @@ travis_delete_var <- function(id, repo = github_repo(),
                               endpoint = get_endpoint()) {
 
   if (is.null(id)) {
-    stopc(paste0("`id` must not be NULL; or variable `name` not found.",
-      " Does it really exist? Check with `travis_get_vars()`.",
-      collapse = ""
-    ))
+    cli::cli_alert_danger("{.code id} cannot not be {.code NULL}; or
+    {.code name} not found. Does it really exist? Check with
+    {.fun travis_get_vars}.", wrap = TRUE)
   }
 
   req <- travis(
@@ -165,12 +160,10 @@ travis_delete_var <- function(id, repo = github_repo(),
   )
 
   if (status_code(req) == 204) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      sprintf(
-        "Deleting environment variable with id = '%s' for '%s' on Travis CI.",
-        id, repo
-      )
+    cli::cli_alert_success(
+      "Deleted environment variable with id = {.val {id}} for {.code {repo}}
+        on Travis CI.",
+      wrap = TRUE
     )
     invisible(req)
   }

@@ -19,29 +19,19 @@ travis_sync <- function(block = TRUE, endpoint = get_endpoint()) {
   )
 
   check_status(
-    req$response, cli::cat_bullet(
-      bullet = "info",
-      bullet_col = "yellow",
-      "Initiating sync with GitHub."
-    ),
+    req$response, cli::cli_alert("Initiating sync with GitHub."),
     409
   )
 
   if (block) {
-    cli::cat_bullet(
-      bullet = "info", bullet_col = "yellow",
-      "Waiting for sync with GitHub."
-    )
+    cli::cli_alert_info("Waiting for sync with GitHub.")
     while (travis_user()[["is_syncing"]]) {
       Sys.sleep(1)
     }
     message()
   }
 
-  cli::cat_bullet(
-    bullet = "tick", bullet_col = "green",
-    "Finished sync with GitHub."
-  )
+  cli::cli_alert_success("Finished sync with GitHub.")
 }
 
 #' @importFrom usethis browse_travis

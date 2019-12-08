@@ -17,10 +17,7 @@ travis_repos <- function(endpoint = get_endpoint()) {
 
   req <- travis(path = "/repos", endpoint = endpoint)
 
-  cli::cat_bullet(
-    bullet = "tick", bullet_col = "green",
-    "Querying information about repos."
-  )
+  cli::cli_alert("Querying information about repos.")
   new_travis_repos(httr::content(req$response))
 }
 
@@ -58,10 +55,7 @@ travis_user <- function() {
   req <- travis(path = "/user")
 
   if (status_code(req$response) == 200) {
-    cli::cat_bullet(
-      bullet = "tick", bullet_col = "green",
-      "Querying information about user."
-    )
+    cli::cli_alert_success("Queried information about user.")
     new_travis_user(httr::content(req$response))
   }
 }

@@ -7,10 +7,8 @@ auth_github <- function() {
   # authenticate on github
   token <- usethis::github_token()
   if (token == "") {
-    cli::cat_bullet(
-      bullet = "cross", bullet_col = "red",
-      cli::cli_text("{.pkg travis}: Please call {.code usethis::browse_github_token()}
-                    and follow the instructions. Then restart the session and try again.")
-    )
+    cli::cli_alert_danger("{.pkg travis}: Please call
+      {.code usethis::browse_github_token()} and follow the instructions.
+      Then restart the session and try again.", wrap = TRUE)
   }
 }

@@ -23,10 +23,8 @@ github_add_key <- function(pubkey, repo = NULL, user = NULL,
   ret <- add_key(key_data, user = github_info()$owner$login, repo)
 
   cli::cat_rule()
-  cli::cat_bullet(
-    bullet = "tick", bullet_col = "green",
-    sprintf("Added a public deploy key to GitHub for repo '%s'.", repo)
-  )
+  cli::cli_alert_success("Added a public deploy key to GitHub for repo
+                         {.code {repo}}.", wrap = TRUE)
 
   invisible(ret)
 }
@@ -46,10 +44,8 @@ add_key <- function(key_data, user, project) {
     key = key_data$key, read_only = key_data$read_only
   )
 
-  cli::cat_bullet(
-    bullet = "pointer", bullet_col = "yellow",
-    sprintf("Adding deploy keys on GitHub and Travis CI for repo '%s'.", project)
-  )
+  cli::cli_alert_info("Adding deploy keys on GitHub and Travis CI for repo
+                      {.code {project}}.")
 
   invisible(resp)
 }

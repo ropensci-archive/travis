@@ -42,10 +42,7 @@ check_status <- function(req, message, quiet = TRUE, accept_code = integer()) {
   if (!(httr::status_code(req) %in% accept_code)) {
     httr::stop_for_status(req, remove_brackets(message))
   }
-  cli::cat_bullet(
-    bullet = "tick", bullet_col = "green",
-    "Finished checking status."
-  )
+  cli::cli_alert_success("Finished checking status.")
 }
 
 remove_brackets <- function(message) {
@@ -68,16 +65,19 @@ keep_brackets <- function(message) {
 
 catch_error <- function(object) {
   if (object$error_type == "job_already_running") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job already running.")
+    cli::cli_alert_danger("Job already running.")
     stop()
   } else if (object$error_type == "job_not_cancelable") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Job is not running, cannot cancel.")
+    cli::cli_alert_danger("Job is not running, cannot cancel.")
     stop()
   } else if (object$error_type == "log_already_removed") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Log has already been removed.")
+    cli::cli_alert_danger("Log has already been removed.")
     stop()
   } else if (object$error_type == "not_found") {
-    cli::cat_bullet(bullet = "cross", bullet_col = "red", "Could not find env var. This might be due to insufficient access rights.")
+    cli::cli_alert_danger("Could not find env var.
+                          This might be due to insufficient access rights.",
+      wrap = TRUE
+    )
     stop()
   }
 }
@@ -99,18 +99,21 @@ check_endpoint <- function() {
 
     if (Sys.getenv("R_TRAVIS") != "") {
       cli::cli_text("{.pkg travis}: Using Travis endpoint
-        '{Sys.getenv('R_TRAVIS')}' set via env var {.code R_TRAVIS}.
-        If supplied, the {.code endpoint} argument in
-        any {.code travis_*} function will take precedence.
+        {.code {Sys.getenv('R_TRAVIS')}} set via env var {.envvar R_TRAVIS}.
+        If supplied, the {.arg endpoint} argument in
+        any {.fun travis_*} function will take precedence.
         (This message is displayed once per session.)")
     } else {
-      cli::cli_text("{.pkg travis}: Env var 'R_TRAVIS'
+      cli::cli_text("{.pkg travis}: Env var {.envvar R_TRAVIS}
         not set by user. Defaulting to '.org' endpoint.
-        If supplied, the {.code endpoint} argument in
-        any {.code travis_*} function will take precedence.
+        If supplied, the {.arg endpoint} argument in
+        any {.fun travis_*} function will take precedence.
         (This message is displayed once per session.)")
       Sys.setenv("R_TRAVIS" = ".org")
     }
+    # for an empty line before any log output appears
+    cli::cli_par()
+    cli::cli_end()
   }
 }
 
