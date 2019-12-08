@@ -99,7 +99,7 @@ test_that("restarting a debug job works", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(endpoint = ".org")[[1]]$id,
+        travis_get_builds(endpoint = ".org")[[2]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -110,7 +110,7 @@ test_that("restarting a debug job works", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(endpoint = ".com")[[1]]$id,
+        travis_get_builds(endpoint = ".com")[[2]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
@@ -123,9 +123,9 @@ test_that("retrieving logs works", {
   expect_is(
     travis_get_log(
       travis_get_jobs(
-        travis_get_builds(endpoint = ".org")[[1]]$id,
+        travis_get_builds(endpoint = ".org")[[2]]$id,
         endpoint = ".org"
-      )[[1]]$id,
+      )[[2]]$id,
       endpoint = ".org"
     ),
     "character"
@@ -134,9 +134,9 @@ test_that("retrieving logs works", {
   expect_is(
     travis_get_log(
       travis_get_jobs(
-        travis_get_builds(endpoint = ".com")[[1]]$id,
+        travis_get_builds(endpoint = ".com")[[2]]$id,
         endpoint = ".com"
-      )[[1]]$id,
+      )[[2]]$id,
       endpoint = ".com"
     ),
     "character"
@@ -149,7 +149,7 @@ test_that("deleting logs works", {
       travis_get_jobs(
         travis_get_builds(endpoint = ".org")[[1]]$id,
         endpoint = ".org"
-      )[[1]]$id,
+      )[[3]]$id,
       endpoint = ".org"
     ),
     "character"
@@ -160,7 +160,7 @@ test_that("deleting logs works", {
       travis_get_jobs(
         travis_get_builds(endpoint = ".com")[[1]]$id,
         endpoint = ".com"
-      )[[1]]$id,
+      )[[3]]$id,
       endpoint = ".com"
     ),
     "character"
