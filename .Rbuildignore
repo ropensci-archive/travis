@@ -14,3 +14,4 @@
 ^_pkgdown\.yml$
 ^remake\.yml$
 ^remake$
+^\.pre-commit-config\.yaml$
