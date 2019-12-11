@@ -16,7 +16,7 @@ test_that("triggering a new build works (.org)", {
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
-      ".org"
+      endpoint = ".org"
     ),
     "travis_pending"
   )
@@ -26,7 +26,7 @@ test_that("triggering a new build works (.com)", {
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
-      ".com"
+      endpoint = ".com"
     ),
     "travis_pending"
   )
@@ -123,7 +123,7 @@ test_that("restarting a debug job works (.org)", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".org")[[2]]$id,
+        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".org")[[2]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -136,7 +136,7 @@ test_that("restarting a debug job works (.com)", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".com")[[2]]$id,
+        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[2]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
@@ -172,10 +172,12 @@ test_that("retrieving logs works (.com)", {
 })
 
 test_that("deleting logs works (.org)", {
+
+  skip_on_ci("We do not have enough logs to delete one at every build")
   expect_is(
     travis_delete_log(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
+        travis_get_builds(repo = repo, endpoint = ".org")[[5]]$id,
         endpoint = ".org"
       )[[3]]$id,
       endpoint = ".org"
@@ -185,10 +187,12 @@ test_that("deleting logs works (.org)", {
 })
 
 test_that("deleting logs works (.com)", {
+
+  skip_on_ci("We do not have enough logs to delete one at every build")
   expect_is(
     travis_delete_log(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
+        travis_get_builds(repo = repo, endpoint = ".com")[[5]]$id,
         endpoint = ".com"
       )[[3]]$id,
       endpoint = ".com"
