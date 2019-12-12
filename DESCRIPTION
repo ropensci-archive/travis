@@ -54,7 +54,8 @@ Suggests:
     purrr,
     remotes,
     roxygen2,
-    testthat
+    testthat,
+    vctrs
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
