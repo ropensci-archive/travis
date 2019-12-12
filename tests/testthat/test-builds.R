@@ -173,7 +173,9 @@ test_that("retrieving logs works (.com)", {
 
 test_that("deleting logs works (.org)", {
 
-  skip_on_ci("We do not have enough logs to delete one at every build")
+  # "We do not have enough logs to delete one at every build"
+  skip_on_ci()
+
   expect_is(
     travis_delete_log(
       travis_get_jobs(
@@ -188,7 +190,9 @@ test_that("deleting logs works (.org)", {
 
 test_that("deleting logs works (.com)", {
 
-  skip_on_ci("We do not have enough logs to delete one at every build")
+  # "We do not have enough logs to delete one at every build"
+  skip_on_ci()
+
   expect_is(
     travis_delete_log(
       travis_get_jobs(
