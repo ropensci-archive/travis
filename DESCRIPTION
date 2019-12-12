@@ -57,9 +57,6 @@ Suggests:
     testthat
 VignetteBuilder: 
     knitr
-Remotes:
-    r-lib/cli,
-    r-lib/usethis
 Encoding: UTF-8
 LazyData: TRUE
 Roxygen: list(markdown = TRUE)
