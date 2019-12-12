@@ -120,6 +120,8 @@ test_that("cancelling a job works (.com)", {
 })
 
 test_that("restarting a debug job works (.org)", {
+
+  print(github_info())
   expect_is(
     travis_debug_job(
       travis_get_jobs(
