@@ -68,8 +68,6 @@ test_that("Querying jobs works (.com)", {
 })
 
 test_that("restarting a job works (.org)", {
-
-  print(github_info())
   expect_is(
     travis_restart_job(
       travis_get_jobs(
@@ -122,12 +120,10 @@ test_that("cancelling a job works (.com)", {
 })
 
 test_that("restarting a debug job works (.org)", {
-
-  print(github_info())
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".org")[[2]]$id,
+        travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[5]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
