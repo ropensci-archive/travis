@@ -108,7 +108,8 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
 travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
-                           endpoint = get_endpoint()) {
+                           endpoint = get_endpoint(),
+                           quiet = FALSE) {
 
   var_data <- list(
     "env_var.name" = name,
@@ -122,8 +123,10 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
   )
 
   if (status_code(req$response) == 201) {
-    cli::cli_alert_success("Added environment variable for {.code {repo}} on
+    if (!quiet) {
+      cli::cli_alert_success("Added environment variable for {.code {repo}} on
                            Travis CI.", wrap = TRUE)
+    }
     new_travis_env_var(content(req$response))
   }
 }
@@ -134,6 +137,7 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' @param id `[string]`\cr
 #'   The ID of the variable, by default obtained from `travis_get_var_id()`.
 #' @template endpoint
+#' @template quiet
 #'
 #' @export
 #' @rdname travis_get_vars
@@ -143,7 +147,8 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
 #' travis_delete_var("secret_var")
 #' }
 travis_delete_var <- function(id, repo = github_repo(),
-                              endpoint = get_endpoint()) {
+                              endpoint = get_endpoint(),
+                              quiet = FALSE) {
 
   if (is.null(id)) {
     cli::cli_alert_danger("{.code id} cannot not be {.code NULL}; or
@@ -160,11 +165,13 @@ travis_delete_var <- function(id, repo = github_repo(),
   )
 
   if (status_code(req) == 204) {
-    cli::cli_alert_success(
-      "Deleted environment variable with id = {.val {id}} for {.code {repo}}
+    if (!quiet) {
+      cli::cli_alert_success(
+        "Deleted environment variable with id = {.val {id}} for {.code {repo}}
         on Travis CI.",
-      wrap = TRUE
-    )
+        wrap = TRUE
+      )
+    }
     invisible(req)
   }
 }

@@ -21,10 +21,16 @@ travis_set_var(
   value,
   public = FALSE,
   repo = github_repo(),
-  endpoint = get_endpoint()
+  endpoint = get_endpoint(),
+  quiet = FALSE
 )
 
-travis_delete_var(id, repo = github_repo(), endpoint = get_endpoint())
+travis_delete_var(
+  id,
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  quiet = FALSE
+)
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr
