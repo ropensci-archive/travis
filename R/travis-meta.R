@@ -7,17 +7,20 @@
 #' `travis_repositories()` queries the `"/repos"` API.
 #'
 #' @inheritParams travis_repo_info
+#' @template quiet
 #'
 #' @seealso [Travis CI API documentation](https://developer.travis-ci.com/)
 #'
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(endpoint = get_endpoint()) {
+travis_repos <- function(endpoint = get_endpoint(), quiet = FALSE) {
 
   req <- travis(path = "/repos", endpoint = endpoint)
 
-  cli::cli_alert("Querying information about repos.")
+  if (!quiet) {
+    cli::cli_alert("Querying information about repos.")
+  }
   new_travis_repos(httr::content(req$response))
 }
 
@@ -47,15 +50,18 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @description
 #' `travis_user()` queries the "/users" API.
 #'
+#' @template quiet
 #' @export
 #'
 #' @rdname travis_repos
-travis_user <- function() {
+travis_user <- function(quiet = FALSE) {
 
   req <- travis(path = "/user")
 
   if (status_code(req$response) == 200) {
-    cli::cli_alert_success("Queried information about user.")
+    if (!quiet) {
+      cli::cli_alert_success("Queried information about user.")
+    }
     new_travis_user(httr::content(req$response))
   }
 }
