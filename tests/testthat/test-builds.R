@@ -15,9 +15,15 @@ test_that("Querying builds works (.com)", {
 test_that("triggering a new build works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false", message = "Skipping on Travis PR builds")
 
+  if (Sys.getenv("R_COVR") != "") {
+    id <- sample(2:8, 1) - 1
+  } else {
+    id <- sample(2:8, 1)
+  }
+
   expect_is(
     travis_restart_build(
-      travis_get_builds(repo = repo, endpoint = ".org")[[sample(1:8, 1)]]$id,
+      travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
       endpoint = ".org"
     ),
     "travis_pending"
@@ -29,9 +35,43 @@ test_that("triggering a new build works (.com)", {
     message = "Skipping on Travis PR builds"
   )
 
+  if (Sys.getenv("R_COVR") != "") {
+    id <- sample(2:8, 1) - 1
+  } else {
+    id <- sample(2:8, 1)
+  }
+
   expect_is(
     travis_restart_build(
-      travis_get_builds(repo = repo, endpoint = ".com")[[sample(1:8, 1)]]$id,
+      travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
+      endpoint = ".com"
+    ),
+    "travis_pending"
+  )
+})
+
+test_that("cancelling a build works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
+
+  expect_is(
+    travis_cancel_build(
+      travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
+      endpoint = ".org"
+    ),
+    "travis_pending"
+  )
+})
+
+test_that("cancelling a build works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
+
+  expect_is(
+    travis_cancel_build(
+      travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
       endpoint = ".com"
     ),
     "travis_pending"
@@ -103,7 +143,7 @@ test_that("restarting a job works (.org)", {
 
 test_that("restarting a job works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
@@ -163,7 +203,7 @@ test_that("cancelling a job works (.com)", {
 
 test_that("restarting a debug job works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   id <- sample(16:24, 1)
@@ -182,7 +222,7 @@ test_that("restarting a debug job works (.org)", {
 
 test_that("restarting a debug job works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   id <- sample(16:24, 1)
