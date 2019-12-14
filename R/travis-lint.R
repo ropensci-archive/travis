@@ -11,6 +11,7 @@
 #'   file or a URL.
 #' @template repo
 #' @template endpoint
+#' @template quiet
 #'
 #' @return A list.
 #' @examples
@@ -18,12 +19,14 @@
 #' travis_lint()
 #' }
 #' @export
-travis_lint <- function(file = ".travis.yml", repo = github_repo(),
-                        endpoint = get_endpoint()) {
+travis_lint <- function(file = ".travis.yml",
+                        repo = github_repo(),
+                        endpoint = get_endpoint(),
+                        quiet = FALSE) {
 
   if (!file.exists(file) && !http_error(file)) {
     writeLines(readLines(file), paste0(tempdir(), "/file.yml"))
-    file = paste0(tempdir(), "/file.yml")
+    file <- paste0(tempdir(), "/file.yml")
   }
 
   req <- travis(
@@ -34,7 +37,9 @@ travis_lint <- function(file = ".travis.yml", repo = github_repo(),
     endpoint = endpoint
   )
   if (status_code(req$response) == 200) {
-    cli::cli_alert_info("Linting {.file {file}}.")
+    if (!quiet) {
+      cli::cli_alert_info("Linting {.file {file}}.")
+    }
     new_travis_lint(content(req$response))
   }
 }
