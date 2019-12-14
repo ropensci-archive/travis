@@ -63,7 +63,7 @@ test_that("cancelling a build works (.org)", {
 
   expect_is(
     travis_cancel_build(
-      travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
+      travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
       endpoint = ".org", repo = repo
     ),
     "travis_pending"
@@ -83,7 +83,7 @@ test_that("cancelling a build works (.com)", {
 
   expect_is(
     travis_cancel_build(
-      travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
+      travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
       endpoint = ".com", repo = repo
     ),
     "travis_pending"
