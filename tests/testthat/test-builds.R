@@ -55,6 +55,8 @@ test_that("cancelling a build works (.org)", {
     message = "Skipping on Travis PR builds"
   )
 
+  Sys.sleep(5)
+
   expect_is(
     travis_cancel_build(
       travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
@@ -68,6 +70,8 @@ test_that("cancelling a build works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
           message = "Skipping on Travis PR builds"
   )
+
+  Sys.sleep(5)
 
   expect_is(
     travis_cancel_build(
