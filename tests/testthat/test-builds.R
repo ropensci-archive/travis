@@ -13,6 +13,8 @@ test_that("Querying builds works (.com)", {
 })
 
 test_that("triggering a new build works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false", message = "Skipping on Travis PR builds")
+
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".org")[[sample(1:8, 1)]]$id,
@@ -23,6 +25,10 @@ test_that("triggering a new build works (.org)", {
 })
 
 test_that("triggering a new build works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
+
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".com")[[sample(1:8, 1)]]$id,
@@ -33,6 +39,10 @@ test_that("triggering a new build works (.com)", {
 })
 
 test_that("restarting the last build works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
+
   expect_is(
     travis_restart_last_build(repo = repo, endpoint = ".org"),
     "travis_pending"
@@ -40,6 +50,10 @@ test_that("restarting the last build works (.org)", {
 })
 
 test_that("restarting the last build works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
+
   expect_is(
     travis_restart_last_build(repo = repo, endpoint = ".com"),
     "travis_pending"
@@ -68,8 +82,11 @@ test_that("Querying jobs works (.com)", {
 })
 
 test_that("restarting a job works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(9:16, 1)
+  id <- sample(9:16, 1)
 
   expect_is(
     travis_restart_job(
@@ -84,8 +101,11 @@ test_that("restarting a job works (.org)", {
 })
 
 test_that("restarting a job works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(9:16, 1)
+  id <- sample(9:16, 1)
 
   expect_is(
     travis_restart_job(
@@ -100,8 +120,11 @@ test_that("restarting a job works (.com)", {
 })
 
 test_that("cancelling a job works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(9:16, 1)
+  id <- sample(9:16, 1)
 
   expect_is(
     travis_cancel_job(
@@ -116,8 +139,11 @@ test_that("cancelling a job works (.org)", {
 })
 
 test_that("cancelling a job works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(9:16, 1)
+  id <- sample(9:16, 1)
 
   expect_is(
     travis_cancel_job(
@@ -132,8 +158,11 @@ test_that("cancelling a job works (.com)", {
 })
 
 test_that("restarting a debug job works (.org)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(16:24, 1)
+  id <- sample(16:24, 1)
 
   expect_is(
     travis_debug_job(
@@ -148,8 +177,11 @@ test_that("restarting a debug job works (.org)", {
 })
 
 test_that("restarting a debug job works (.com)", {
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+          message = "Skipping on Travis PR builds"
+  )
 
-  id = sample(16:24, 1)
+  id <- sample(16:24, 1)
 
   expect_is(
     travis_debug_job(
@@ -164,7 +196,6 @@ test_that("restarting a debug job works (.com)", {
 })
 
 test_that("retrieving logs works (.org)", {
-
   expect_is(
     travis_get_log(
       travis_get_jobs(
@@ -191,9 +222,7 @@ test_that("retrieving logs works (.com)", {
 })
 
 test_that("deleting logs works (.org)", {
-
-  # "We do not have enough logs to delete one at every build"
-  skip_on_ci()
+  skip(message = "We do not have enough logs to delete one at every build")
 
   expect_is(
     travis_delete_log(
@@ -208,9 +237,7 @@ test_that("deleting logs works (.org)", {
 })
 
 test_that("deleting logs works (.com)", {
-
-  # "We do not have enough logs to delete one at every build"
-  skip_on_ci()
+  skip(message = "We do not have enough logs to delete one at every build")
 
   expect_is(
     travis_delete_log(
