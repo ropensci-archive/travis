@@ -110,7 +110,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   cli::cat_rule()
   cli::cli_alert_success(
     "Added a private deploy key to project {.code {repo}} on Travis CI as
-      secure environment variable 'id_rsa'.",
+      secure environment variable {.var id_rsa}.",
     wrap = TRUE
   )
 }
