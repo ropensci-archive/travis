@@ -25,7 +25,7 @@ test_that("triggering a new build works (.org)", {
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
-      endpoint = ".org"
+      endpoint = ".org", repo = repo
     ),
     "travis_pending"
   )
@@ -46,7 +46,7 @@ test_that("triggering a new build works (.com)", {
   expect_is(
     travis_restart_build(
       travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
-      endpoint = ".com"
+      endpoint = ".com", repo = repo
     ),
     "travis_pending"
   )
