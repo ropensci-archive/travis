@@ -15,7 +15,7 @@ test_that("Querying builds works (.com)", {
 test_that("triggering a new build works (.org)", {
   expect_is(
     travis_restart_build(
-      travis_get_builds(repo = repo, endpoint = ".org")[[2]]$id,
+      travis_get_builds(repo = repo, endpoint = ".org")[[sample(1:8, 1)]]$id,
       endpoint = ".org"
     ),
     "travis_pending"
@@ -25,7 +25,7 @@ test_that("triggering a new build works (.org)", {
 test_that("triggering a new build works (.com)", {
   expect_is(
     travis_restart_build(
-      travis_get_builds(repo = repo, endpoint = ".com")[[2]]$id,
+      travis_get_builds(repo = repo, endpoint = ".com")[[sample(1:8, 1)]]$id,
       endpoint = ".com"
     ),
     "travis_pending"
@@ -68,10 +68,13 @@ test_that("Querying jobs works (.com)", {
 })
 
 test_that("restarting a job works (.org)", {
+
+  id = sample(9:16, 1)
+
   expect_is(
     travis_restart_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".org")[[3]]$id,
+        travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -84,7 +87,7 @@ test_that("restarting a job works (.com)", {
   expect_is(
     travis_restart_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".com")[[3]]$id,
+        travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
@@ -97,7 +100,7 @@ test_that("cancelling a job works (.org)", {
   expect_is(
     travis_cancel_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".org")[[3]]$id,
+        travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -110,7 +113,7 @@ test_that("cancelling a job works (.com)", {
   expect_is(
     travis_cancel_job(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".com")[[3]]$id,
+        travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
@@ -120,10 +123,13 @@ test_that("cancelling a job works (.com)", {
 })
 
 test_that("restarting a debug job works (.org)", {
+
+  id = sample(16:24, 1)
+
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[5]]$id,
+        travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[id]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -136,7 +142,7 @@ test_that("restarting a debug job works (.com)", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[2]]$id,
+        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
@@ -146,10 +152,11 @@ test_that("restarting a debug job works (.com)", {
 })
 
 test_that("retrieving logs works (.org)", {
+
   expect_is(
     travis_get_log(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".org")[[4]]$id,
+        travis_get_builds(repo = repo, endpoint = ".org")[[25]]$id,
         endpoint = ".org"
       )[[1]]$id,
       endpoint = ".org"
@@ -162,7 +169,7 @@ test_that("retrieving logs works (.com)", {
   expect_is(
     travis_get_log(
       travis_get_jobs(
-        travis_get_builds(repo = repo, endpoint = ".com")[[4]]$id,
+        travis_get_builds(repo = repo, endpoint = ".com")[[25]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com"
