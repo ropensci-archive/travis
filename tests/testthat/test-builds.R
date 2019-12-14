@@ -16,11 +16,7 @@ test_that("triggering a new build works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false", message = "Skipping on Travis PR builds")
 
   set.seed(42)
-  if (Sys.getenv("R_COVR") != "") {
-    id <- sample(2:8, 1) - 1
-  } else {
-    id <- sample(2:8, 1)
-  }
+  id <- sample(2:8, 1)
 
   expect_is(
     travis_restart_build(
@@ -37,11 +33,7 @@ test_that("triggering a new build works (.com)", {
   )
 
   set.seed(42)
-  if (Sys.getenv("R_COVR") != "") {
-    id <- sample(2:8, 1) - 1
-  } else {
-    id <- sample(2:8, 1)
-  }
+  id <- sample(2:8, 1)
 
   expect_is(
     travis_restart_build(
@@ -58,11 +50,7 @@ test_that("cancelling a build works (.org)", {
   )
 
   set.seed(42)
-  if (Sys.getenv("R_COVR") != "") {
-    id <- sample(2:8, 1) - 1
-  } else {
-    id <- sample(2:8, 1)
-  }
+  id <- sample(2:8, 1)
 
   expect_is(
     travis_cancel_build(
@@ -75,15 +63,11 @@ test_that("cancelling a build works (.org)", {
 
 test_that("cancelling a build works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
-  if (Sys.getenv("R_COVR") != "") {
-    id <- sample(2:8, 1) - 1
-  } else {
-    id <- sample(2:8, 1)
-  }
+  id <- sample(2:8, 1)
 
   expect_is(
     travis_cancel_build(
@@ -179,7 +163,7 @@ test_that("restarting a job works (.com)", {
 
 test_that("cancelling a job works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
@@ -199,7 +183,7 @@ test_that("cancelling a job works (.org)", {
 
 test_that("cancelling a job works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
@@ -260,7 +244,7 @@ test_that("restarting a debug job works (.com)", {
 # we need to cancel to be able to start again during covr
 test_that("cancelling a debug job works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
@@ -281,7 +265,7 @@ test_that("cancelling a debug job works (.org)", {
 # we need to cancel to be able to start again during covr
 test_that("cancelling a debug job works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
