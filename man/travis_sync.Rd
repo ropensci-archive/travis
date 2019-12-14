@@ -4,7 +4,7 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, endpoint = get_endpoint())
+travis_sync(block = TRUE, endpoint = get_endpoint(), quiet = FALSE)
 }
 \arguments{
 \item{block}{\verb{[flag]}\cr
@@ -13,10 +13,12 @@ Set to \code{FALSE} to return immediately instead of waiting.}
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \description{
 Helper functions for Travis CI.
 
-\code{travis_sync()} initiates synchronization with GitHub and waits for completion
-by default.
+\code{travis_sync()} initiates synchronization with GitHub and waits for
+completion by default.
 }
