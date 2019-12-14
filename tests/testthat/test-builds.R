@@ -86,6 +86,7 @@ test_that("restarting a job works (.org)", {
     message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   id <- sample(9:16, 1)
 
   expect_is(
@@ -105,6 +106,7 @@ test_that("restarting a job works (.com)", {
           message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   id <- sample(9:16, 1)
 
   expect_is(
@@ -124,6 +126,7 @@ test_that("cancelling a job works (.org)", {
           message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   id <- sample(9:16, 1)
 
   expect_is(
@@ -143,6 +146,7 @@ test_that("cancelling a job works (.com)", {
           message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   id <- sample(9:16, 1)
 
   expect_is(
