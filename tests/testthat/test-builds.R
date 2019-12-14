@@ -55,7 +55,11 @@ test_that("cancelling a build works (.org)", {
     message = "Skipping on Travis PR builds"
   )
 
-  Sys.sleep(5)
+  if (Sys.getenv("R_COVR") != "") {
+    id <- sample(2:8, 1) - 1
+  } else {
+    id <- sample(2:8, 1)
+  }
 
   expect_is(
     travis_cancel_build(
@@ -71,7 +75,11 @@ test_that("cancelling a build works (.com)", {
           message = "Skipping on Travis PR builds"
   )
 
-  Sys.sleep(5)
+  if (Sys.getenv("R_COVR") != "") {
+    id <- sample(2:8, 1) - 1
+  } else {
+    id <- sample(2:8, 1)
+  }
 
   expect_is(
     travis_cancel_build(
