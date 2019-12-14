@@ -4,6 +4,7 @@
 - remove `token` argument from all functions
 - replace `browse_travis()` by `usethis::browse_travis()`
 - remove ability to update env vars ("PATCH"). Please remove (`travis_delete_var()`) and create a new one (`travis_set_var()`).
+- `travis_lint()` now also accepts a URL as input for arg `file`.
 
 # travis 0.2.11.9001
 

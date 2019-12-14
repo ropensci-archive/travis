@@ -12,7 +12,7 @@ travis_lint(
 }
 \arguments{
 \item{file}{A character string specifying a path to a \samp{.travis.yml}
-file.}
+file or a URL.}
 
 \item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the "\code{user/repo}" structure.}

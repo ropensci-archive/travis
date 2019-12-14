@@ -8,7 +8,7 @@
 #'
 #' @import httr
 #' @param file A character string specifying a path to a \samp{.travis.yml}
-#'   file.
+#'   file or a URL.
 #' @template repo
 #' @template endpoint
 #'
@@ -20,6 +20,11 @@
 #' @export
 travis_lint <- function(file = ".travis.yml", repo = github_repo(),
                         endpoint = get_endpoint()) {
+
+  if (!file.exists(file) && !http_error(file)) {
+    writeLines(readLines(file), paste0(tempdir(), "/file.yml"))
+    file = paste0(tempdir(), "/file.yml")
+  }
 
   req <- travis(
     verb = "POST",
