@@ -4,13 +4,16 @@
 #' Return cache information
 #' @template repo
 #' @template endpoint
+#' @template quiet
 #' @details
 #' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
 #'
 #' @family Travis CI functions
 #'
 #' @export
-travis_get_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_get_caches <- function(repo = github_repo(),
+                              endpoint = get_endpoint(),
+                              quiet = FALSE) {
 
   req <- travis(
     path = sprintf("/repo/%s/caches", encode_slug(repo)),
@@ -18,9 +21,11 @@ travis_get_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
   )
 
   if (status_code(req$response) == 200) {
-    cli::cli_alert_info(
+    if (!quiet) {
+      cli::cli_alert_info(
         "Getting caches for {.code {repo}} on Travis CI."
-    )
+      )
+    }
   }
   new_travis_caches(httr::content(req$response))
 }
@@ -44,7 +49,8 @@ new_travis_cache <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_caches
-travis_delete_caches <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_delete_caches <- function(repo = github_repo(),
+                                 endpoint = get_endpoint()) {
 
   req <- travis(
     verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),

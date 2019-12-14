@@ -7,7 +7,8 @@
 travis_lint(
   file = ".travis.yml",
   repo = github_repo(),
-  endpoint = get_endpoint()
+  endpoint = get_endpoint(),
+  quiet = FALSE
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ The repository slug to use. Must follow the "\code{user/repo}" structure.}
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \value{
 A list.

@@ -11,7 +11,8 @@
 #' @template endpoint
 #'
 #' @export
-travis_enable <- function(active = TRUE, repo = github_info()$full_name,
+travis_enable <- function(active = TRUE,
+                          repo = github_info()$full_name,
                           endpoint = get_endpoint()) {
 
   if (active) {
@@ -38,7 +39,8 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
 #' `travis_is_enabled()` returns if Travis CI is active for a repo.
 #' @export
 #' @rdname travis_enable
-travis_is_enabled <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_is_enabled <- function(repo = github_repo(),
+                              endpoint = get_endpoint()) {
 
   if (is.null(endpoint)) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask") # nocov

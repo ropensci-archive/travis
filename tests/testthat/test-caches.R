@@ -1,9 +1,6 @@
 context("caches")
 
 test_that("retrieving caches works (.org)", {
-  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-    message = "Skipping on Travis PR builds"
-  )
 
   expect_is(
     travis_get_caches(
@@ -16,9 +13,6 @@ test_that("retrieving caches works (.org)", {
 })
 
 test_that("retrieving caches works (.com)", {
-  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
-  )
 
   expect_is(
     travis_get_caches(
