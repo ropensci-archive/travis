@@ -231,7 +231,7 @@ test_that("restarting a debug job works (.org)", {
         travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[id]]$id,
         endpoint = ".org"
       )[[1]]$id,
-      endpoint = ".org"
+      endpoint = ".org", repo = "mlr-org/mlr"
     ),
     "travis_pending"
   )
@@ -251,20 +251,20 @@ test_that("restarting a debug job works (.com)", {
         travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
-      endpoint = ".com"
+      endpoint = ".com", repo = "ropenscilabs/tic"
     ),
     "travis_pending"
   )
 })
 
 # we need to cancel to be able to start again during covr
-test_that("cancelling a job works (.org)", {
+test_that("cancelling a debug job works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
           message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
-  id <- sample(9:16, 1)
+  id <- sample(16:24, 1)
 
   expect_is(
     travis_cancel_job(
@@ -272,20 +272,20 @@ test_that("cancelling a job works (.org)", {
         travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[id]]$id,
         endpoint = ".org"
       )[[1]]$id,
-      endpoint = ".org"
+      endpoint = ".org", repo = "mlr-org/mlr"
     ),
     "travis_pending"
   )
 })
 
 # we need to cancel to be able to start again during covr
-test_that("cancelling a job works (.com)", {
+test_that("cancelling a debug job works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
           message = "Skipping on Travis PR builds"
   )
 
   set.seed(42)
-  id <- sample(9:16, 1)
+  id <- sample(16:24, 1)
 
   expect_is(
     travis_cancel_job(
@@ -293,7 +293,7 @@ test_that("cancelling a job works (.com)", {
         travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
-      endpoint = ".com"
+      endpoint = ".com", repo = "ropenscilabs/tic"
     ),
     "travis_pending"
   )
