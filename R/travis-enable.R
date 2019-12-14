@@ -41,7 +41,7 @@ travis_enable <- function(active = TRUE, repo = github_info()$full_name,
 travis_is_enabled <- function(repo = github_repo(), endpoint = get_endpoint()) {
 
   if (is.null(endpoint)) {
-    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask")
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask") # nocov
   }
 
   info <- travis_repo_info(repo = repo, endpoint = endpoint)
