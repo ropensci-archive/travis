@@ -9,7 +9,7 @@ repos:
     -   id: lintr
     -   id: parsable-R
     -   id: no-browser-statement
-    -   id: readme-rmd-rendered
+    #-   id: readme-rmd-rendered
     #  R package development
     -   id: roxygenize
     -   id: use-tidy-description
