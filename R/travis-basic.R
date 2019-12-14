@@ -30,14 +30,10 @@ travis_repo_info <- function(repo = github_repo(), endpoint = get_endpoint()) {
 #' @export
 #' @rdname travis_repo_info
 travis_has_repo <- function(repo = github_repo(), endpoint = get_endpoint()) {
-  req <- travis(
+  invisible(travis(
     path = sprintf("/repo/%s", encode_slug(repo)),
     endpoint = endpoint
-  )
-  status <- status_code(req$response)
-  if (status == 404) {
-    return(FALSE)
-  }
+  ))
   TRUE
 }
 
