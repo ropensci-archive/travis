@@ -15,6 +15,7 @@ test_that("Querying builds works (.com)", {
 test_that("triggering a new build works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false", message = "Skipping on Travis PR builds")
 
+  set.seed(42)
   if (Sys.getenv("R_COVR") != "") {
     id <- sample(2:8, 1) - 1
   } else {
@@ -35,6 +36,7 @@ test_that("triggering a new build works (.com)", {
     message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   if (Sys.getenv("R_COVR") != "") {
     id <- sample(2:8, 1) - 1
   } else {
@@ -55,6 +57,7 @@ test_that("cancelling a build works (.org)", {
     message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   if (Sys.getenv("R_COVR") != "") {
     id <- sample(2:8, 1) - 1
   } else {
@@ -75,6 +78,7 @@ test_that("cancelling a build works (.com)", {
           message = "Skipping on Travis PR builds"
   )
 
+  set.seed(42)
   if (Sys.getenv("R_COVR") != "") {
     id <- sample(2:8, 1) - 1
   } else {
