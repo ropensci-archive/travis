@@ -11,7 +11,7 @@ github_add_key <- function(pubkey, repo = NULL, user = NULL,
     pubkey <- as.list(pubkey)$pubkey
   }
   if (!inherits(pubkey, "pubkey")) {
-    stop("`pubkey` must be an RSA/EC public key")
+    stopc("`pubkey` must be an RSA/EC public key")
   }
 
   # check if we have enough rights to add a key
@@ -32,7 +32,10 @@ github_add_key <- function(pubkey, repo = NULL, user = NULL,
 check_admin_repo <- function(owner, user, repo) {
   role_in_repo <- get_role_in_repo(owner, user, repo)
   if (role_in_repo != "admin") {
-    stop("Must have role admin to add deploy key to repo ", repo, ", not ", role_in_repo)
+    stopc(
+      "Must have role admin to add deploy key to repo ",
+      repo, ", not ", role_in_repo
+    )
   }
 }
 
