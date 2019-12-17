@@ -76,6 +76,7 @@ travis <- function(verb = "GET",
   if (http_type(resp) == "application/octet-stream") {
     return(resp)
   }
+  # for travis_get_log
   if (http_type(resp) == "text/plain") {
     return(resp)
   }
@@ -84,11 +85,6 @@ travis <- function(verb = "GET",
   parsed <- fromJSON(content(resp, "text", encoding = "UTF-8"),
     simplifyVector = FALSE
   )
-
-  # handle special errors without response code
-  if (!is.null(parsed$error_type)) {
-    catch_error(parsed)
-  }
 
   structure(
     list(

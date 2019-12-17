@@ -65,25 +65,6 @@ keep_brackets <- function(message) {
   message
 }
 
-catch_error <- function(object) {
-  if (object$error_type == "job_already_running") {
-    cli::cli_alert_danger("Job already running.")
-    stop()
-  } else if (object$error_type == "job_not_cancelable") {
-    cli::cli_alert_danger("Job is not running, cannot cancel.")
-    stop()
-  } else if (object$error_type == "log_already_removed") {
-    cli::cli_alert_danger("Log has already been removed.")
-    stop()
-  } else if (object$error_type == "not_found") {
-    cli::cli_alert_danger("Could not find env var.
-                          This might be due to insufficient access rights.",
-      wrap = TRUE
-    )
-    stop()
-  }
-}
-
 get_endpoint <- function() {
   endpoint <- Sys.getenv("R_TRAVIS")
   return(endpoint)

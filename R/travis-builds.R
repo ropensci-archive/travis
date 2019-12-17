@@ -233,7 +233,7 @@ travis_get_log <- function(job_id,
   req <- travis(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
 
   stop_for_status(
-    req$response, "get logs."
+    req, "get logs."
   )
 
   cli::cli_alert_info(
