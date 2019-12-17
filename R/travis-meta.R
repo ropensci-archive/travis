@@ -58,12 +58,12 @@ travis_user <- function(quiet = FALSE) {
 
   req <- travis(path = "/user")
 
-  if (status_code(req$response) == 200) {
-    if (!quiet) {
-      cli::cli_alert_success("Queried information about user.")
-    }
-    new_travis_user(httr::content(req$response))
+  stop_for_status(req$response)
+
+  if (!quiet) {
+    cli::cli_alert_success("Queried information about user.")
   }
+  new_travis_user(httr::content(req$response))
 }
 
 new_travis_user <- function(x) {

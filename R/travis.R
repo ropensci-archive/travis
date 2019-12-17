@@ -55,9 +55,9 @@ travis <- function(verb = "GET",
     api_token <- read_token(endpoint = endpoint)
   } else {
     if (endpoint == ".org") {
-      api_token = Sys.getenv("R_TRAVIS_ORG")
+      api_token <- Sys.getenv("R_TRAVIS_ORG")
     } else {
-      api_token = Sys.getenv("R_TRAVIS_COM")
+      api_token <- Sys.getenv("R_TRAVIS_COM")
     }
   }
   # set user agent
@@ -88,19 +88,6 @@ travis <- function(verb = "GET",
   # handle special errors without response code
   if (!is.null(parsed$error_type)) {
     catch_error(parsed)
-  }
-
-  if (status_code(resp) != 200 && status_code(resp) != 201 &&
-    status_code(resp) != 202) {
-    stop(
-      sprintf(
-        "GitHub API request failed [%s]\n%s\n<%s>",
-        status_code(resp),
-        parsed[["@type"]],
-        parsed$content
-      ),
-      call. = FALSE
-    )
   }
 
   structure(

@@ -20,12 +20,14 @@ travis_get_caches <- function(repo = github_repo(),
     endpoint = endpoint
   )
 
-  if (status_code(req$response) == 200) {
-    if (!quiet) {
-      cli::cli_alert_info(
-        "Getting caches for {.code {repo}} on Travis CI."
-      )
-    }
+  stop_for_status(
+    req$response, "get caches for repo."
+  )
+
+  if (!quiet) {
+    cli::cli_alert_info(
+      "Getting caches for {.code {repo}} on Travis CI."
+    )
   }
   new_travis_caches(httr::content(req$response))
 }
@@ -45,7 +47,8 @@ new_travis_cache <- function(x) {
 }
 
 #' @description
-#' `travis_delete_caches()` returns the repo ID obtained from `travis_repo_info()`.
+#' `travis_delete_caches()` returns the repo ID obtained from
+#' `travis_repo_info()`.
 #'
 #' @export
 #' @rdname travis_get_caches
@@ -57,8 +60,10 @@ travis_delete_caches <- function(repo = github_repo(),
     endpoint = endpoint
   )
 
-  if (status_code(req$response) == 200) {
-    cli::cli_alert_success("Deleted caches for {.code {repo}} on Travis CI.")
-    invisible(new_travis_caches(content(req$response)))
-  }
+  stop_for_status(
+    req$response, "delete caches for repo."
+  )
+
+  cli::cli_alert_success("Deleted caches for {.code {repo}} on Travis CI.")
+  invisible(new_travis_caches(content(req$response)))
 }

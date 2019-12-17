@@ -12,7 +12,8 @@
 #' # List all variables:
 #' travis_get_vars()
 #' }
-travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint(),
+travis_get_vars <- function(repo = github_repo(),
+                            endpoint = get_endpoint(),
                             quiet = FALSE) {
 
   req <- travis(
@@ -20,13 +21,15 @@ travis_get_vars <- function(repo = github_repo(), endpoint = get_endpoint(),
     endpoint = endpoint
   )
 
-  if (status_code(req$response) == 200) {
-    if (!quiet) {
-      cli::cli_alert_info("Getting environment variables for {.code {repo}} on
+  stop_for_status(
+    req$response, "get environment variables."
+  )
+
+  if (!quiet) {
+    cli::cli_alert_info("Getting environment variables for {.code {repo}} on
                         Travis CI.", wrap = TRUE)
-    }
-    new_travis_env_vars(content(req$response))
   }
+  new_travis_env_vars(content(req$response))
 }
 
 new_travis_env_vars <- function(x) {
@@ -71,7 +74,8 @@ travis_get_var_id <- function(name, repo = github_repo(),
     # same name are defined; we update the last
     if (length(var_idx) > 1) {
       warningc(
-        "Multiple entries found for variable ", name, ", updating the last entry."
+        "Multiple entries found for variable ", name,
+        ", updating the last entry."
       )
       var_idx <- var_idx[[length(var_idx)]]
     }
@@ -83,9 +87,9 @@ travis_get_var_id <- function(name, repo = github_repo(),
 }
 
 #' @description
-#' `travis_set_var()` creates or updates a variable.
-#' If multiple variables exist by that name, it updates the last (with a warning),
-#' because this is what seems to be used in Travis CI builds in such a case.
+#' `travis_set_var()` creates or updates a variable. If multiple variables exist
+#' by that name, it updates the last (with a warning), because this is what
+#' seems to be used in Travis CI builds in such a case.
 #'
 #' @details
 #' Avoid using `travis_set_var()` with literal values, because they will be
@@ -107,7 +111,10 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #' # by reading the value from the console:
 #' travis_set_var("secret_var", readLines(n = 1))
 #' }
-travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
+travis_set_var <- function(name,
+                           value,
+                           public = FALSE,
+                           repo = github_repo(),
                            endpoint = get_endpoint(),
                            quiet = FALSE) {
 
@@ -122,13 +129,15 @@ travis_set_var <- function(name, value, public = FALSE, repo = github_repo(),
     body = var_data, endpoint = endpoint
   )
 
-  if (status_code(req$response) == 201) {
-    if (!quiet) {
-      cli::cli_alert_success("Added environment variable for {.code {repo}} on
+  stop_for_status(
+    req$response, "set environment variable. Is the variable already defined?"
+  )
+
+  if (!quiet) {
+    cli::cli_alert_success("Added environment variable for {.code {repo}} on
                            Travis CI.", wrap = TRUE)
-    }
-    new_travis_env_var(content(req$response))
   }
+  new_travis_env_var(content(req$response))
 }
 
 #' @description
@@ -164,14 +173,16 @@ travis_delete_var <- function(id, repo = github_repo(),
     endpoint = endpoint
   )
 
-  if (status_code(req) == 204) {
-    if (!quiet) {
-      cli::cli_alert_success(
-        "Deleted environment variable with id = {.val {id}} for {.code {repo}}
+  stop_for_status(
+    req$response, "delete environment variable. Does the variable exist?"
+  )
+
+  if (!quiet) {
+    cli::cli_alert_success(
+      "Deleted environment variable with id = {.val {id}} for {.code {repo}}
         on Travis CI.",
-        wrap = TRUE
-      )
-    }
-    invisible(req)
+      wrap = TRUE
+    )
   }
+  invisible(req)
 }

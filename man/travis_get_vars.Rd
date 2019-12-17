@@ -64,9 +64,9 @@ If multiple variables exist by that name, it returns the ID of the last
 (with a warning),
 because this is what seems to be used in Travis CI builds in such a case.
 
-\code{travis_set_var()} creates or updates a variable.
-If multiple variables exist by that name, it updates the last (with a warning),
-because this is what seems to be used in Travis CI builds in such a case.
+\code{travis_set_var()} creates or updates a variable. If multiple variables exist
+by that name, it updates the last (with a warning), because this is what
+seems to be used in Travis CI builds in such a case.
 
 \code{travis_delete_var()} deletes a variable.
 }

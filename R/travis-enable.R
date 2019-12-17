@@ -26,13 +26,14 @@ travis_enable <- function(active = TRUE,
     endpoint = endpoint
   )
 
-  if (status_code(req$response) == 200) {
-    cli::cli_alert_success(
-        "{ifelse(active, 'Activating', 'Deactivating')} repo {.code {repo}} on
-        Travis CI ({.code {endpoint}}).", wrap = TRUE
-      )
-    invisible(new_travis_repo(content(req$response)))
-  }
+  stop_for_status(req$response)
+
+  cli::cli_alert_success(
+    "{ifelse(active, 'Activating', 'Deactivating')} repo {.code {repo}} on
+        Travis CI ({.code {endpoint}}).",
+    wrap = TRUE
+  )
+  invisible(new_travis_repo(content(req$response)))
 }
 
 #' @description

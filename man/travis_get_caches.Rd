@@ -26,7 +26,8 @@ and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 \description{
 Return cache information
 
-\code{travis_delete_caches()} returns the repo ID obtained from \code{travis_repo_info()}.
+\code{travis_delete_caches()} returns the repo ID obtained from
+\code{travis_repo_info()}.
 }
 \details{
 \code{travis_get_caches()} queries the \code{"/repos/:repo/caches"} API.

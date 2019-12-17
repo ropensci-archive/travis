@@ -36,12 +36,15 @@ travis_lint <- function(file = ".travis.yml",
     encode = "raw",
     endpoint = endpoint
   )
-  if (status_code(req$response) == 200) {
-    if (!quiet) {
-      cli::cli_alert_info("Linting {.file {file}}.")
-    }
-    new_travis_lint(content(req$response))
+
+  stop_for_status(
+    req$response, "lint the YAML file."
+  )
+
+  if (!quiet) {
+    cli::cli_alert_info("Linting {.file {file}}.")
   }
+  new_travis_lint(content(req$response))
 }
 
 new_travis_lint <- function(x) {
