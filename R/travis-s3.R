@@ -11,7 +11,7 @@ travis_no_attr <- function(x) {
 new_travis <- function(x, attr, subclass) {
   attr[["names"]] <- names(x)
   attributes(x) <- attr
-  suppressWarnings(structure(x, class = c(paste0("travis_", subclass), "travis")))
+  structure(x, class = c(paste0("travis_", subclass), "travis"))
 }
 
 new_travis_object <- function(x, subclass) {
@@ -47,9 +47,9 @@ bullets <- function(x) {
 }
 
 shorten <- function(x) {
-  N_MAX <- 6
-  if (length(x) > N_MAX) {
-    c(x[seq_len(N_MAX - 1)], "...")
+  n_max <- 6
+  if (length(x) > n_max) {
+    c(x[seq_len(n_max - 1)], "...")
   } else {
     x
   }
