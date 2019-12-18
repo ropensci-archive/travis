@@ -63,7 +63,7 @@ travis_check_api_key <- function(endpoint = get_endpoint()) {
 
   if (endpoint == ".org" && !Sys.getenv("R_TRAVIS_ORG") == "") {
     return(Sys.getenv("R_TRAVIS_ORG"))
-  } else if (endpoint == ".com" && Sys.getenv("R_TRAVIS_COM") == "") {
+  } else if (endpoint == ".com" && !Sys.getenv("R_TRAVIS_COM") == "") {
     return(Sys.getenv("R_TRAVIS_COM"))
   } else {
 

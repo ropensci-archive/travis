@@ -42,7 +42,7 @@ travis <- function(verb = "GET",
                    endpoint = get_endpoint(),
                    encode = "json") {
 
-  # check for endpoint env var R_TRAVIS or R_TRAVIS_ORG or R_TRAVIS_COM
+  # check for endpoint env var R_TRAVIS
   check_endpoint()
 
   # check for api key
