@@ -18,7 +18,8 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repo_info <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_repo_info <- function(repo = github_repo(),
+                             endpoint = get_endpoint()) {
   req <- travis(
     path = sprintf("/repo/%s", encode_slug(repo)),
     endpoint = endpoint
@@ -29,7 +30,8 @@ travis_repo_info <- function(repo = github_repo(), endpoint = get_endpoint()) {
 
 #' @export
 #' @rdname travis_repo_info
-travis_has_repo <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_has_repo <- function(repo = github_repo(),
+                            endpoint = get_endpoint()) {
   invisible(travis(
     path = sprintf("/repo/%s", encode_slug(repo)),
     endpoint = endpoint
@@ -42,7 +44,8 @@ travis_has_repo <- function(repo = github_repo(), endpoint = get_endpoint()) {
 #'
 #' @export
 #' @rdname travis_repo_info
-travis_repo_id <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_repo_id <- function(repo = github_repo(),
+                           endpoint = get_endpoint()) {
   travis_repo_info(repo = repo, endpoint = endpoint)$id
 }
 
