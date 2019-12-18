@@ -46,10 +46,7 @@ travis <- function(verb = "GET",
   check_endpoint()
 
   # check for api key
-  travis_check_api_key(endpoint = endpoint)
-
-  # get the api token for the endpoint
-  api_token <- get_api_token(endpoint = endpoint)
+  api_token <- travis_check_api_key(endpoint = endpoint)
 
   url <- endpoint_url(endpoint, path)
 
