@@ -13,7 +13,9 @@ test_that("Querying builds works (.com)", {
 })
 
 test_that("triggering a new build works (.org)", {
-  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false", message = "Skipping on Travis PR builds")
+  skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+    message = "Skipping on Travis PR builds"
+  )
 
   set.seed(42)
   id <- sample(2:8, 1)
@@ -102,7 +104,7 @@ test_that("restarting the last build works (.com)", {
 
 test_that("cancelling the last build works (.org)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   expect_is(
@@ -116,7 +118,7 @@ test_that("cancelling the last build works (.org)", {
 
 test_that("cancelling the last build works (.com)", {
   skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-          message = "Skipping on Travis PR builds"
+    message = "Skipping on Travis PR builds"
   )
 
   expect_is(
@@ -260,7 +262,10 @@ test_that("restarting a debug job works (.com)", {
   expect_is(
     travis_debug_job(
       travis_get_jobs(
-        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[id]]$id,
+        travis_get_builds(
+          repo = "ropenscilabs/tic",
+          endpoint = ".com"
+        )[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com", repo = "ropenscilabs/tic"
@@ -302,7 +307,10 @@ test_that("cancelling a debug job works (.com)", {
   expect_is(
     travis_cancel_job(
       travis_get_jobs(
-        travis_get_builds(repo = "ropenscilabs/tic", endpoint = ".com")[[id]]$id,
+        travis_get_builds(
+          repo = "ropenscilabs/tic",
+          endpoint = ".com"
+        )[[id]]$id,
         endpoint = ".com"
       )[[1]]$id,
       endpoint = ".com", repo = "ropenscilabs/tic"
