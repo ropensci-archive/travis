@@ -174,7 +174,7 @@ travis_delete_var <- function(id, repo = github_repo(),
   )
 
   stop_for_status(
-    req$response, "delete environment variable. Does the variable exist?"
+    reqe, "delete environment variable. Does the variable exist?"
   )
 
   if (!quiet) {
