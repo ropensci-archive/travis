@@ -15,3 +15,4 @@
 ^remake\.yml$
 ^remake$
 ^\.pre-commit-config\.yaml$
+tests/testthat/travis-testthat/.travis.yml

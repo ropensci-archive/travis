@@ -42,24 +42,17 @@ travis <- function(verb = "GET",
                    endpoint = get_endpoint(),
                    encode = "json") {
 
-  # check which endpoint to use, eventually write out message
+  # check for api key
+  travis_check_api_key()
+
+  # check for endpoint env var R_TRAVIS
   check_endpoint()
+
+  # get the api token for the endpoint
+  api_token <- get_api_token(endpoint = endpoint)
 
   url <- endpoint_url(endpoint, path)
 
-  if (endpoint == ".org" && Sys.getenv("R_TRAVIS_ORG") == "") {
-    auth_travis(endpoint = endpoint)
-    api_token <- read_token(endpoint = endpoint)
-  } else if (endpoint == ".com" && Sys.getenv("R_TRAVIS_COM") == "") {
-    auth_travis(endpoint = endpoint)
-    api_token <- read_token(endpoint = endpoint)
-  } else {
-    if (endpoint == ".org") {
-      api_token <- Sys.getenv("R_TRAVIS_ORG")
-    } else {
-      api_token <- Sys.getenv("R_TRAVIS_COM")
-    }
-  }
   # set user agent
   ua <- user_agent("http://github.com/ropenscilabs/travis")
 

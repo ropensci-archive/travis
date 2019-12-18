@@ -66,6 +66,7 @@ keep_brackets <- function(message) {
 }
 
 get_endpoint <- function() {
+
   endpoint <- Sys.getenv("R_TRAVIS")
   return(endpoint)
 }
@@ -102,4 +103,23 @@ check_endpoint <- function() {
 
 encode_slug <- function(repo) {
   utils::URLencode(as.character(repo), reserved = TRUE)
+}
+
+get_api_token <- function(endpoint) {
+
+  # one can set the API key directly via an env var. This is needed on CI
+  # systems to be able to have the API key available during builds
+
+  if (endpoint == ".org" && Sys.getenv("R_TRAVIS_ORG") == "") {
+    api_token <- read_token(endpoint = endpoint)
+  } else if (endpoint == ".com" && Sys.getenv("R_TRAVIS_COM") == "") {
+    api_token <- read_token(endpoint = endpoint)
+  } else {
+    if (endpoint == ".org") {
+      api_token <- Sys.getenv("R_TRAVIS_ORG")
+    } else {
+      api_token <- Sys.getenv("R_TRAVIS_COM")
+    }
+  }
+  return(api_token)
 }
