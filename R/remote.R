@@ -14,18 +14,33 @@ get_remote_url <- function(path) {
 
 extract_repo <- function(url) {
 
+  # account for http
+  if (grepl("http://github.com", url)) {
+    url <- sub("http://", "https://", url)
+  }
+
   # account for ssh notation
   if (grepl("^git@github.com:", url)) {
     url <- sub("^git@github.com:", "https://github.com/", url)
-  } else if (grepl("^git://github.com", url)) {
+  } else if (grepl("^git://github.com:", url)) {
     url <- sub("^git://github.com:", "https://github.com/", url)
+  } else if (grepl("^git://github.com", url)) {
+    url <- sub("^git://github.com", "https://github.com/", url)
   }
   # account for "www"
-    else if (grepl("^http://www.github.com", url)) {
+  if (grepl("http://www.github.com", url)) {
     url <- sub("http://www.github.com", "https://github.com", url)
-  } else if (grepl("^https://www.github.com", url)) {
+  } else if (grepl("https://www.github.com", url)) {
     url <- sub("https://www.github.com", "https://github.com", url)
   }
+
+  # account for "user/pass"
+  if (grepl("^http://(.+@)?github.com", url)) {
+    url <- sub("^http://(.+@)?github.com", "https://github.com", url)
+  } else if (grepl("^https://(.+@)github.com", url)) {
+    url <- sub("^https://(.+@)github.com", "https://github.com", url)
+  }
+
   if (!all(grepl("^https://github.com", url))) {
     stopc("Unrecognized repo format: ", url)
   }
