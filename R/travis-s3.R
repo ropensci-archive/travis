@@ -33,10 +33,14 @@ reconstruct <- function(new, orig) {
 
 #' @export
 format.travis_collection <- function(x, ...) {
-  paste0(
-    "A collection of ", length(x), " Travis CI ", attr(x, "@type"), ":\n",
-    bullets(vapply(shorten(x), format, short = TRUE, character(1)))
-  )
+  if (length(x) == 0) {
+    return(invisible(x))
+  } else {
+    paste0(
+      "A collection of ", length(x), " Travis CI ", attr(x, "@type"), ":\n",
+      bullets(vapply(shorten(x), format, short = TRUE, character(1)))
+    )
+  }
 }
 
 bullets <- function(x) {
@@ -47,9 +51,9 @@ bullets <- function(x) {
 }
 
 shorten <- function(x) {
-  N_MAX <- 6
-  if (length(x) > N_MAX) {
-    c(x[seq_len(N_MAX - 1)], "...")
+  n_max <- 6
+  if (length(x) > n_max) {
+    c(x[seq_len(n_max - 1)], "...")
   } else {
     x
   }

@@ -1,75 +1,103 @@
-auth_travis_ <- function(gh_token = NULL) {
-  cli::cat_bullet(
-    bullet = "pointer", bullet_col = "yellow",
-    " Authenticating to GitHub."
-  )
-  if (is.null(gh_token)) {
-    # Do not allow caching this token, it needs to be fresh
-    gh_token <- auth_github_(
-      "read:org", "user:email", "repo_deployment", "repo:status",
-      "read:repo_hook", "write:repo_hook"
-    )
-  }
-  auth_travis_data <- list(
-    "github_token" = gh_token$credentials$access_token
-  )
-  auth_travis <- TRAVIS_POST(
-    url = "/auth/github",
-    body = auth_travis_data,
-    httr::user_agent("Travis/1.0"),
-    token = NULL
-  )
-  httr::stop_for_status(auth_travis, "authenticate with travis")
-  httr::content(auth_travis)$access_token
+#' Authenticate to Travis
+#' @description
+#'   A Travis API Key is needed to interact with the Travis API.
+#'   `browse_travis_token()` opens a browser window for the respective Travis
+#'   endpoint. On this site, you can copy your personal API key and then follow
+#'   the instructions of the console output or the ones shown below.
+#' @section Store API Key:
+#'
+#'   The `travis` package supports two ways of storing the Travis API key(s):
+#'
+#'   - via env vars `R_TRAVIS_ORG` and `R_TRAVIS_COM`
+#'   - via `~/.travis/config.yml`
+#'
+#'   The latter should already be present if you already used the `travis` CLI
+#'   tool at some point in the past. If not, its up to your preference which
+#'   approach to use.
+#'
+#'   The following instructions should help to set up `~/.travis/config.yml`
+#'   correctly:
+#'   1. Copy the token from the browser window which just opened. You can use
+#'   `edit_travis_config()` to open `~/.travis/config.yml`.
+#'   2. The token should be stored using the following structure
+#'
+#'      ```
+#'      endpoints:
+#'       https://api.travis-ci.<endpoint>/:
+#'         access_token: <token>
+#'      ```
+#'      with `<endpoint>` being either 'com' or 'org'.
+#' @template endpoint
+#' @export
+#'
+browse_travis_token <- function(endpoint = get_endpoint()) {
+
+  check_endpoint()
+
+  cli::cli_alert("Querying API token...")
+  cli::cli_text("Opening URL {.url
+    https://travis-ci{endpoint}/account/preferences}.")
+  utils::browseURL(sprintf(
+    "https://travis-ci%s/account/preferences",
+    endpoint
+  ))
+  cli::cli_alert("Call {.fun travis::edit_travis_config} to open
+    {.file ~/.travis/config.yml} or {.fun edit_r_environ} to open
+    {.file ~/.Renviron}, depending on how
+    you want to store the API key. See {.code ?browse_travis_token()} for
+    details.", wrap = TRUE)
+  return(invisible(TRUE))
 }
 
-#' Authenticate with Travis CI
-#'
+#' @title Open Travis Configuration file
+#' @importFrom usethis edit_file
 #' @description
-#' Authenticates with Travis using your Github account. Returns an access token.
-#' The token will be obtained only once in each
-#' R session, but it will never be cached on the file system.
-#' In most scenarios, these functions will be called implicitly by other functions.
-#'
-#' `auth_travis()` only performs the authentication with Travis CI.
-#'
-#' @param gh_token `[Token2.0]`\cr
-#'   A GitHub token, by default obtained from [auth_github()] using the
-#'   "read:org", "user:email", "repo_deployment", "repo:status",
-#'   "read:repo_hook", and "write:repo_hook" scopes.
-#'
+#'   Opens `~/.travis/config.yml`.
 #' @export
-auth_travis <- memoise::memoise(auth_travis_)
+edit_travis_config <- function() {
+  edit_file("~/.travis/config.yml")
+}
 
-travis_token_ <- function(repo = NULL) {
-  token <- auth_travis()
-  if (!is.null(repo)) {
-    if (!travis_has_repo(repo, token)) {
-      travis_sync(token = token)
-      if (!travis_has_repo(repo, token)) {
-        review_travis_app_permission(repo)
+# check if API key is stored in ~/.travis/config.yml
+travis_check_api_key <- function(endpoint = get_endpoint()) {
+
+  if (endpoint == ".org" && !Sys.getenv("R_TRAVIS_ORG") == "") {
+    return(Sys.getenv("R_TRAVIS_ORG"))
+  } else if (endpoint == ".com" && !Sys.getenv("R_TRAVIS_COM") == "") {
+    return(Sys.getenv("R_TRAVIS_COM"))
+  } else {
+
+    # some checks for ~/.travis/config.yml
+
+    if (!file.exists("~/.travis/config.yml")) {
+
+      cli::cli_alert_danger("To interact with the Travis CI API, an API token is
+        required. Please call {.fun browse_travis_token} first.
+        Alternatively, set the API key via env vars {.var R_TRAVIS_ORG} or
+        {.var R_TRAVIS_COM}.", wrap = TRUE)
+      stopc("Travis API key missing.")
+    } else {
+      yml <- readLines("~/.travis/config.yml")
+      if (!any(grepl(sprintf("api.travis-ci%s/:", endpoint), yml))) {
+        cli::cli_alert_danger("No Travis API key for endpoint '{endpoint}'
+        found. Please call {.code browse_travis_token(endpoint =
+        '{endpoint}')} first.", wrap = TRUE)
+        stopc("Travis API key missing.")
       }
     }
+    return(read_token(endpoint = endpoint))
   }
-  token
+
 }
 
-review_travis_app_permission <- function(repo) {
-  url_stop(
-    "You may need to retry in a few seconds. ",
-    "If your repo ", repo, " belongs to an organization, you may need to allow Travis access to that organization",
-    url = "https://github.com/settings/connections/applications/f244293c729d5066cf27"
-  )
+is_token <- function(token) {
+  grepl("^[-a-zA-Z0-9_]{18}", token)
 }
 
-#' @description
-#' `travis_token()` authenticates and checks if the repository is known to
-#' Travis CI. If not, a GitHub sync via [travis_sync()] is performed.
-#'
-#' @param repo `[string]`\cr
-#'   The GitHub repo slug in the format "<user|org>/<repo>", if `NULL` no sync
-#'   is performed.
-#'
-#' @export
-#' @rdname auth_travis
-travis_token <- memoise::memoise(travis_token_)
+read_token <- function(endpoint) {
+  yml <- readLines("~/.travis/config.yml")
+  endpoint_line <- which(grepl(sprintf("api.travis.ci%s", endpoint), yml))
+  token <- yml[endpoint_line + 1]
+  token <- strsplit(token, " ")[[1]][6]
+  return(token)
+}

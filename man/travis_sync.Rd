@@ -2,32 +2,23 @@
 % Please edit documentation in R/travis-util.R
 \name{travis_sync}
 \alias{travis_sync}
-\alias{travis_browse}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, token = travis_token(), quiet = FALSE)
-
-travis_browse(repo = github_repo())
+travis_sync(block = TRUE, endpoint = get_endpoint(), quiet = FALSE)
 }
 \arguments{
-\item{block}{\code{[flag]}\cr
+\item{block}{\verb{[flag]}\cr
 Set to \code{FALSE} to return immediately instead of waiting.}
 
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
-
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \description{
 Helper functions for Travis CI.
 
-\code{travis_sync()} initiates synchronization with GitHub and waits for completion
-by default.
-
-\code{travis_browse()} opens a browser pointing to the current repo on  Travis CI.
+\code{travis_sync()} initiates synchronization with GitHub and waits for
+completion by default.
 }

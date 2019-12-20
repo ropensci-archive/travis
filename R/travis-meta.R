@@ -1,21 +1,27 @@
-#' Retrieve meta information from Travis CI
+#' @title Retrieve meta information from Travis CI
 #'
 #' @description
 #' Return repositories and user information.
 #'
-#' `travis_repositories()` queries the "/repos" API.
+#' @details
+#' `travis_repositories()` queries the `"/repos"` API.
 #'
 #' @inheritParams travis_repo_info
+#' @template quiet
 #'
-#' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
+#' @seealso [Travis CI API documentation](https://developer.travis-ci.com/)
 #'
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(token = travis_token()) {
-  req <- TRAVIS_GET3("/repos", token = token)
-  httr::stop_for_status(req, paste("list repositories"))
-  new_travis_repos(httr::content(req))
+travis_repos <- function(endpoint = get_endpoint(), quiet = FALSE) {
+
+  req <- travis(path = "/repos", endpoint = endpoint)
+
+  if (!quiet) {
+    cli::cli_alert("Querying information about repos.")
+  }
+  new_travis_repos(httr::content(req$response))
 }
 
 new_travis_repos <- function(x) {
@@ -44,13 +50,20 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' @description
 #' `travis_user()` queries the "/users" API.
 #'
+#' @template quiet
 #' @export
 #'
 #' @rdname travis_repos
-travis_user <- function(token = travis_token()) {
-  req <- TRAVIS_GET3("/user", token = token)
-  httr::stop_for_status(req, paste("get current user information"))
-  new_travis_user(httr::content(req))
+travis_user <- function(quiet = FALSE) {
+
+  req <- travis(path = "/user")
+
+  stop_for_status(req$response)
+
+  if (!quiet) {
+    cli::cli_alert_success("Queried information about user.")
+  }
+  new_travis_user(httr::content(req$response))
 }
 
 new_travis_user <- function(x) {

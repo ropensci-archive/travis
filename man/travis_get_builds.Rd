@@ -13,50 +13,44 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo(), token = travis_token(repo))
+travis_get_builds(repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_build(build_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_restart_build(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_last_build(repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_restart_last_build(repo = github_repo(), endpoint = get_endpoint())
 
-travis_cancel_build(build_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_cancel_build(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_get_jobs(build_id, repo = github_repo(),
-  token = travis_token(repo))
+travis_get_jobs(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_job(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_restart_job(job_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_cancel_job(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_cancel_job(job_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_debug_job(job_id, log_output = FALSE, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_debug_job(
+  job_id,
+  log_output = FALSE,
+  repo = github_repo(),
+  endpoint = get_endpoint()
+)
 
-travis_get_log(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_get_log(job_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_delete_log(job_id, repo = github_repo(),
-  token = travis_token(repo), quiet = FALSE)
+travis_delete_log(job_id, repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\verb{[string]}\cr
+The repository slug to use. Must follow the "\code{user/repo}" structure.
+\code{travis_get_builds()} calls the "builds" API for the current repository.}
 
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
-\item{build_id}{\code{[integer(1)]}\cr
+\item{build_id}{\verb{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
-
-\item{job_id}{\code{[integer(1)]}\cr
+\item{job_id}{\verb{[integer(1)]}\cr
 The job ID, as obtained from \code{travis_get_builds()}.}
 
 \item{log_output}{Show the debugging output in the publicly visible log? When
@@ -64,6 +58,4 @@ set to \code{TRUE}, refrain from issuing commands that might expose secrets.}
 }
 \description{
 Functions around completed or pending Travis CI builds and jobs.
-
-\code{travis_get_builds()} calls the "builds" API for the current repository.
 }

@@ -7,37 +7,46 @@
 #'
 #' @param active `[flag]`\cr
 #'   Set to `FALSE` to deactivate instead of activating.
-#' @inheritParams travis_set_pat
+#' @template repo
+#' @template endpoint
 #'
 #' @export
-travis_enable <- function(active = TRUE, repo = github_repo(),
-                          token = travis_token(repo = repo),
-                          quiet = FALSE) {
+travis_enable <- function(active = TRUE,
+                          repo = github_info()$full_name,
+                          endpoint = get_endpoint()) {
+
   if (active) {
     activate <- "activate"
   } else {
     activate <- "deactivate"
   }
 
-  req <- TRAVIS_POST3(sprintf("/repo/%s/%s", encode_slug(repo), activate),
-    token = token
+  req <- travis(
+    verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
+    endpoint = endpoint
   )
-  check_status(
-    req,
-    sprintf(
-      "%s repo %s on Travis CI",
-      ifelse(active, "activat[ing]{e}", "deactivat[ing]{e}"), repo
-    ),
-    quiet
+
+  stop_for_status(req$response)
+
+  cli::cli_alert_success(
+    "{ifelse(active, 'Activating', 'Deactivating')} repo {.code {repo}} on
+        Travis CI ({.code {endpoint}}).",
+    wrap = TRUE
   )
-  invisible(new_travis_repo(httr::content(req)))
+  invisible(new_travis_repo(content(req$response)))
 }
 
 #' @description
 #' `travis_is_enabled()` returns if Travis CI is active for a repo.
 #' @export
 #' @rdname travis_enable
-travis_is_enabled <- function(repo = github_repo(), token = travis_token(repo)) {
-  info <- travis_repo_info(repo = repo, token = token)
+travis_is_enabled <- function(repo = github_repo(),
+                              endpoint = get_endpoint()) {
+
+  if (is.null(endpoint)) {
+    endpoint <- Sys.getenv("R_TRAVIS", unset = "ask") # nocov
+  }
+
+  info <- travis_repo_info(repo = repo, endpoint = endpoint)
   info[["active"]]
 }

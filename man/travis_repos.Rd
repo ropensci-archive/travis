@@ -5,26 +5,30 @@
 \alias{travis_user}
 \title{Retrieve meta information from Travis CI}
 \usage{
-travis_repos(token = travis_token())
+travis_repos(endpoint = get_endpoint(), quiet = FALSE)
 
-travis_user(token = travis_token())
+travis_user(quiet = FALSE)
 }
 \arguments{
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \description{
 Return repositories and user information.
 
-\code{travis_repositories()} queries the "/repos" API.
-
 \code{travis_user()} queries the "/users" API.
 }
+\details{
+\code{travis_repositories()} queries the \code{"/repos"} API.
+}
 \seealso{
-\href{https://docs.travis-ci.com/api}{Travis CI API documentation}
+\href{https://developer.travis-ci.com/}{Travis CI API documentation}
 
-Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repo_info}},
-  \code{\link{travis_set_pat}}
+Other Travis CI functions: 
+\code{\link{travis_get_caches}()},
+\code{\link{travis_repo_info}()}
 }
 \concept{Travis CI functions}

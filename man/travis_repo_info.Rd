@@ -7,35 +7,39 @@
 \alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
-travis_repo_info(repo = github_repo(), token = travis_token(repo))
+travis_repo_info(repo = github_repo(), endpoint = get_endpoint())
 
-travis_has_repo(repo = github_repo(), token = travis_token())
+travis_has_repo(repo = github_repo(), endpoint = get_endpoint())
 
-travis_repo_id(repo = github_repo(), token = travis_token(repo))
+travis_repo_id(repo = github_repo(), endpoint = get_endpoint())
 
-travis_repo_settings(repo = github_repo(), token = travis_token(repo))
+travis_repo_settings(repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
+\item{repo}{\verb{[string|numeric]}\cr
 The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+Alternatively, the Travis CI repo ID, e.g. obtained through
+\code{travis_repo_id()}.}
 
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 }
 \description{
 Return repository information, in particular the repository ID.
-
-\code{travis_repo_info()} queries the "/repos/:repo" API.
 
 \code{travis_repo_id()} returns the repo ID obtained from \code{travis_repo_info()}.
 
 \code{travis_repo_settings()} returns build settings
 }
+\details{
+\code{travis_repo_info()} queries the \code{"/repos/:repo"} API.
+}
 \seealso{
 \href{https://docs.travis-ci.com/api}{Travis CI API documentation}
 
-Other Travis CI functions: \code{\link{travis_get_caches}},
-  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
+Other Travis CI functions: 
+\code{\link{travis_get_caches}()},
+\code{\link{travis_repos}()}
 }
 \concept{Travis CI functions}

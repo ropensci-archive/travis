@@ -5,32 +5,36 @@
 \alias{travis_delete_caches}
 \title{Get/delete repository cache(s) from Travis CI}
 \usage{
-travis_get_caches(repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_get_caches(
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  quiet = FALSE
+)
 
-travis_delete_caches(repo = github_repo(), token = travis_token(repo),
-  quiet = FALSE)
+travis_delete_caches(repo = github_repo(), endpoint = get_endpoint())
 }
 \arguments{
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
+\item{repo}{\verb{[string]}\cr
+The repository slug to use. Must follow the "\code{user/repo}" structure.}
 
-\item{token}{\code{[Token2.0]}\cr
-A Travis CI token obtained from \code{\link[=travis_token]{travis_token()}} or \code{\link[=auth_travis]{auth_travis()}}.}
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
-\item{quiet}{\code{[flag]}\cr
-Set to \code{FALSE} to suppress success message.}
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \description{
 Return cache information
 
-\code{travis_get_caches()} queries the "/repos/:repo/caches" API.
-
-\code{travis_delete_caches()} returns the repo ID obtained from \code{travis_repo_info()}.
+\code{travis_delete_caches()} returns the repo ID obtained from
+\code{travis_repo_info()}.
+}
+\details{
+\code{travis_get_caches()} queries the \code{"/repos/:repo/caches"} API.
 }
 \seealso{
-Other Travis CI functions: \code{\link{travis_repo_info}},
-  \code{\link{travis_repos}}, \code{\link{travis_set_pat}}
+Other Travis CI functions: 
+\code{\link{travis_repo_info}()},
+\code{\link{travis_repos}()}
 }
 \concept{Travis CI functions}

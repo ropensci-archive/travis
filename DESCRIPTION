@@ -1,13 +1,18 @@
 Type: Package
 Package: travis
 Title: Set Up 'Travis' for Testing and Deployment
-Version: 0.2.11.9001
+Version: 0.3.0.9000
 Authors@R: 
     c(person(given = "Kirill",
              family = "Müller",
              role = c("aut", "cre"),
              email = "krlmlr+r@mailbox.org",
              comment = c(ORCID = "0000-0002-1416-3412")),
+      person(given = "Patrick",
+             family = "Schratz",
+             role = "aut",
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")),
       person(given = "Mika",
              family = "Braginsky",
              role = "aut",
@@ -22,9 +27,9 @@ Authors@R:
              email = "jeroen.ooms@stat.ucla.edu"),
       person(given = "rOpenSci",
              role = "fnd"))
-Description: Tools for interacting with the 'Travis' and
-    'GitHub' APIs for setting up continuous integration for R packages and
-    other R-based projects.
+Description: Tools for interacting with the 'Travis' API for
+    setting up continuous integration for R packages and other R-based
+    projects.
 License: GPL (>= 2)
 URL: https://docs.ropensci.org/travis/dev,
     https://github.com/ropenscilabs/travis
@@ -32,25 +37,28 @@ BugReports: https://github.com/ropenscilabs/travis/issues
 Depends:
     R (>= 3.2.0)
 Imports:
-    cli,
+    cli (>= 2.0.0),
     clipr,
+    gh,
     git2r,
     glue (>= 1.2.0),
     httr,
+    jsonlite,
+    magrittr,
     memoise,
     openssl,
     usethis,
     withr
 Suggests:
     knitr,
+    purrr,
     remotes,
     roxygen2,
-    testthat
+    testthat,
+    vctrs
 VignetteBuilder: 
     knitr
-Remotes:
-    r-lib/usethis
 Encoding: UTF-8
 LazyData: TRUE
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

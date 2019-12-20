@@ -3,40 +3,45 @@
 #' @description
 #' Helper functions for Travis CI.
 #'
-#' `travis_sync()` initiates synchronization with GitHub and waits for completion
-#' by default.
-#'
+#' `travis_sync()` initiates synchronization with GitHub and waits for
+#' completion by default.
 #' @param block `[flag]`\cr
 #'   Set to `FALSE` to return immediately instead of waiting.
-#' @inheritParams travis_set_pat
-#'
+#' @template endpoint
+#' @template quiet
 #' @export
-travis_sync <- function(block = TRUE, token = travis_token(), quiet = FALSE) {
-  user_id <- travis_user(token = token)[["id"]]
+travis_sync <- function(block = TRUE,
+                        endpoint = get_endpoint(),
+                        quiet = FALSE) {
 
-  req <- TRAVIS_POST3(sprintf("/user/%s/sync", user_id),
-    token = token
+  user_id <- travis_user(quiet = quiet)[["id"]]
+
+  req <- travis(
+    verb = "POST", path = sprintf("/user/%s/sync", user_id),
+    endpoint = endpoint
   )
 
-  check_status(req, "initiat[ing]{e} sync with GitHub", quiet, 409)
+  check_status(
+    req$response,
+    409
+  )
 
   if (block) {
-    message("Waiting for sync with GitHub", appendLF = FALSE)
-    while (travis_user(token = token)[["is_syncing"]]) {
-      if (!quiet) message(".", appendLF = FALSE)
+    if (!quiet) {
+      cli::cli_alert_info("Waiting for sync with GitHub.")
+    }
+    while (travis_user(quiet = quiet)[["is_syncing"]]) {
       Sys.sleep(1)
     }
-    if (!quiet) message()
+    message()
   }
 
-  if (!quiet) message("Finished sync with GitHub.")
+  if (!quiet) {
+    cli::cli_alert_success("Finished sync with GitHub.")
+  }
+  invisible(req)
 }
 
-#' @description
-#' `travis_browse()` opens a browser pointing to the current repo on  Travis CI.
-#'
+#' @importFrom usethis browse_travis
 #' @export
-#' @rdname travis_sync
-travis_browse <- function(repo = github_repo()) {
-  utils::browseURL(paste0("https://travis-ci.org/", repo))
-}
+usethis::browse_travis

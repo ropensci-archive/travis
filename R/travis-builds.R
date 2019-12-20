@@ -2,19 +2,24 @@
 #'
 #' @description
 #' Functions around completed or pending Travis CI builds and jobs.
-#'
+#' @param repo `[string]`\cr
+#'   The repository slug to use. Must follow the "`user/repo`" structure.
 #' `travis_get_builds()` calls the "builds" API for the current repository.
-#'
-#' @inheritParams travis_set_pat
+#' @template endpoint
 #'
 #' @export
-travis_get_builds <- function(repo = github_repo(), token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/builds", encode_slug(repo)), token = token)
-  httr::stop_for_status(
-    req,
+travis_get_builds <- function(repo = github_repo(), endpoint = get_endpoint()) {
+
+  req <- travis(
+    path = sprintf("/repo/%s/builds", encode_slug(repo)),
+    endpoint = endpoint
+  )
+
+  stop_for_status(
+    req$response,
     sprintf("get builds for %s from Travis CI", repo)
   )
-  new_travis_builds(httr::content(req))
+  new_travis_builds(content(req$response))
 }
 
 new_travis_builds <- function(x) {
@@ -38,31 +43,37 @@ new_travis_build <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_build <- function(build_id, repo = github_repo(), token = travis_token(repo),
-                                 quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/build/", build_id, "/restart"), token = token)
-  check_status(
-    req,
-    sprintf(
-      "restar[ting]{t} build %s for %s from Travis CI",
-      build_id, repo
-    ),
-    quiet
+travis_restart_build <- function(build_id, repo = github_repo(),
+                                 endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "POST", path = sprintf("/build/%s/restart", build_id),
+    endpoint = endpoint
   )
-  invisible(new_travis_pending_build(httr::content(req)))
+
+  stop_for_status(
+    req$response,
+    "restart last build. Is the build already running?"
+  )
+
+  cli::cli_alert_success(
+    "Restarted build {.val {build_id}} for {.code {repo}} on Travis CI."
+  )
+  invisible(new_travis_pending_build(httr::content(req$response)))
 }
 
 #' `travis_restart_last_build()` restarts the *last* build.
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_last_build <- function(repo = github_repo(), token = travis_token(repo),
-                                      quiet = FALSE) {
-  builds <- travis_get_builds(repo = repo, token = token)
+travis_restart_last_build <- function(repo = github_repo(),
+                                      endpoint = get_endpoint()) {
+
+  builds <- travis_get_builds(repo = repo, endpoint = endpoint)
   last_build_id <- builds[[1]]$id
   travis_restart_build(last_build_id,
-    repo = repo, token = token,
-    quiet = quiet
+    repo = repo,
+    endpoint = endpoint
   )
 }
 
@@ -70,18 +81,23 @@ travis_restart_last_build <- function(repo = github_repo(), token = travis_token
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_cancel_build <- function(build_id, repo = github_repo(), token = travis_token(repo),
-                                quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/build/", build_id, "/cancel"), token = token)
-  check_status(
-    req,
-    sprintf(
-      "cance[lling]{l} build %s for %s from Travis CI",
-      build_id, repo
-    ),
-    quiet
+travis_cancel_build <- function(build_id, repo = github_repo(),
+                                endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "POST", path = sprintf("/build/%s/cancel", build_id),
+    endpoint = endpoint
   )
-  invisible(new_travis_pending_build(httr::content(req)))
+
+  stop_for_status(
+    req$response,
+    "cancel the build. Is the build actually running?"
+  )
+
+  cli::cli_alert_success(
+    "Cancelling build {.val {build_id}} for {.code {repo}} on Travis CI."
+  )
+  invisible(new_travis_pending_build(content(req$response)))
 }
 
 new_travis_pending_build <- function(x) {
@@ -94,13 +110,17 @@ new_travis_pending_build <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_get_jobs <- function(build_id, repo = github_repo(), token = travis_token(repo)) {
-  req <- TRAVIS_GET3(sprintf("/build/%s/jobs", build_id), token = token)
-  httr::stop_for_status(
-    req,
-    sprintf("get jobs for build %s from Travis CI", build_id)
-  )
-  new_travis_jobs(httr::content(req))
+travis_get_jobs <- function(build_id,
+                            repo = github_repo(),
+                            endpoint = get_endpoint()) {
+
+  req <- travis(path = sprintf("/build/%s/jobs", build_id), endpoint = endpoint)
+
+  stop_for_status(req$response, "get jobs.")
+
+  cli::cli_alert_danger("Getting jobs for build {.val {build_id}} from Travis
+                        CI", wrap = TRUE)
+  new_travis_jobs(httr::content(req$response))
 }
 
 new_travis_jobs <- function(x) {
@@ -124,41 +144,51 @@ new_travis_job <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_job <- function(job_id, repo = github_repo(), token = travis_token(repo),
-                               quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/job/", job_id, "/restart"), token = token)
-  check_status(
-    req,
-    sprintf(
-      "restar[ting]{t} job %s from Travis CI",
-      job_id
-    ),
-    quiet
+travis_restart_job <- function(job_id,
+                               repo = github_repo(),
+                               endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "POST", path = sprintf("/job/%s/restart", job_id),
+    endpoint = endpoint
   )
-  invisible(new_travis_pending_job(httr::content(req)))
+
+  stop_for_status(req$response, "restart job. Is the job already running?")
+
+  cli::cli_alert_success(
+    "Restarting job {.val {job_id}} for {.code {repo}} on Travis CI."
+  )
+  invisible(new_travis_pending_build(httr::content(req$response)))
 }
 
 #' `travis_cancel_job()` cancels a job with a given job ID.
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_cancel_job <- function(job_id, repo = github_repo(), token = travis_token(repo),
-                              quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/job/", job_id, "/cancel"), token = token)
-  check_status(
-    req,
-    sprintf(
-      "cance[lling]{l} job %s from Travis CI",
-      job_id
-    ),
-    quiet
+travis_cancel_job <- function(job_id,
+                              repo = github_repo(),
+                              endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "POST", path = sprintf("/job/%s/cancel", job_id),
+    endpoint = endpoint
   )
-  invisible(new_travis_pending_job(httr::content(req)))
+
+  stop_for_status(
+    req$response,
+    "cancel the job. Is the job actually running?"
+  )
+
+  cli::cli_alert_success(
+    "Cancelled build {.val {job_id}} for {.code {repo}} on Travis CI."
+  )
+  invisible(new_travis_pending_build(httr::content(req$response)))
 }
 
-#' `travis_debug_job()` restarts, in debug mode, a job with a given job ID.
-#' See the \href{https://docs.travis-ci.com/user/running-build-in-debug-mode/}{Travis CI documentation}
-#' for more details.
+#' `travis_debug_job()` restarts, in debug mode, a job with a given job ID. See
+#' the
+#' \href{https://docs.travis-ci.com/user/running-build-in-debug-mode/}{Travis CI
+#' documentation} for more details.
 #'
 #' @param log_output Show the debugging output in the publicly visible log? When
 #'   set to `TRUE`, refrain from issuing commands that might expose secrets.
@@ -167,21 +197,24 @@ travis_cancel_job <- function(job_id, repo = github_repo(), token = travis_token
 travis_debug_job <- function(job_id,
                              log_output = FALSE,
                              repo = github_repo(),
-                             token = travis_token(repo),
-                             quiet = FALSE) {
-  req <- TRAVIS_POST3(paste0("/job/", job_id, "/debug"),
-    query = list(quiet = !log_output),
-    token = token
+                             endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "POST", path = sprintf("/job/%s/debug", job_id),
+    query = list(quiet = !log_output), endpoint = endpoint
   )
-  check_status(
-    req,
-    sprintf(
-      "restar[ting]{t} debug job %s from Travis CI",
-      job_id
-    ),
-    quiet
+
+  stop_for_status(
+    req$response,
+    "start the build in debug mode. Is the build already running?"
   )
-  invisible(new_travis_pending_job(httr::content(req)))
+
+  cli::cli_alert_success(
+    "Restarted build {.val {job_id}} for {.code {repo}} in debugging mode
+        on Travis CI.",
+    wrap = TRUE
+  )
+  invisible(new_travis_pending_job(content(req$response)))
 }
 
 new_travis_pending_job <- function(x) {
@@ -195,20 +228,18 @@ new_travis_pending_job <- function(x) {
 #' @rdname travis_get_builds
 travis_get_log <- function(job_id,
                            repo = github_repo(),
-                           token = travis_token(repo),
-                           quiet = FALSE) {
-  req <- TRAVIS_GET_TEXT3(paste0("/job/", job_id, "/log.txt"),
-    token = token
+                           endpoint = get_endpoint()) {
+
+  req <- travis(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
+
+  stop_for_status(
+    req, "get logs."
   )
-  check_status(
-    req,
-    sprintf(
-      "get[ting] log from job %s on Travis CI",
-      job_id
-    ),
-    quiet
+
+  cli::cli_alert_info(
+    "Getting log from job {.val {job_id}} for {.code {repo}} on Travis CI."
   )
-  glue::as_glue(httr::content(req, encoding = "UTF-8"))
+  glue::as_glue(content(req, encoding = "UTF-8"))
 }
 
 #' `travis_delete_log()` deletes a build job log.
@@ -216,20 +247,21 @@ travis_get_log <- function(job_id,
 #' @rdname travis_get_builds
 travis_delete_log <- function(job_id,
                               repo = github_repo(),
-                              token = travis_token(repo),
-                              quiet = FALSE) {
-  req <- TRAVIS_DELETE3(paste0("/job/", job_id, "/log"),
-    token = token
+                              endpoint = get_endpoint()) {
+
+  req <- travis(
+    verb = "DELETE", path = sprintf("/job/%s/log", job_id),
+    endpoint = endpoint
   )
-  check_status(
-    req,
-    sprintf(
-      "delet[ing]{e} log from job %s on Travis CI",
-      job_id
-    ),
-    quiet
+
+  stop_for_status(
+    req$response, "delete logs. Do logs (still) exist for this job?"
   )
-  invisible(new_travis_log(httr::content(req)))
+
+  cli::cli_alert_success(
+    "Deleted log from job {.val {job_id}} for {.code {repo}} on Travis CI."
+  )
+  glue::as_glue(content(req$response, encoding = "UTF-8"))
 }
 
 new_travis_log <- function(x) {

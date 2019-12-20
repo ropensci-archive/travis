@@ -1,13 +1,17 @@
 #' Linting
 #'
-#' This checks if a \samp{.travis.yml} file is valid, and identifies possible errors.
+#' This checks if a \samp{.travis.yml} file is valid, and identifies possible
+#' errors.
 #'
 #' This function may incorrectly report valid `.travis.yml` files as broken,
 #' in particular if `language: r` is used (which is the default for R projects).
 #'
-#' @inheritParams travis_set_pat
-#'
-#' @param file A character string specifying a path to a \samp{.travis.yml} file.
+#' @import httr
+#' @param file A character string specifying a path to a \samp{.travis.yml}
+#'   file or a URL.
+#' @template repo
+#' @template endpoint
+#' @template quiet
 #'
 #' @return A list.
 #' @examples
@@ -15,21 +19,32 @@
 #' travis_lint()
 #' }
 #' @export
-travis_lint <- function(file = ".travis.yml", repo = github_repo(), token = travis_token(repo), quiet = FALSE) {
-  req <- TRAVIS_POST3(
-    "/lint",
-    body = httr::upload_file(file),
+travis_lint <- function(file = ".travis.yml",
+                        repo = github_repo(),
+                        endpoint = get_endpoint(),
+                        quiet = FALSE) {
+
+  if (!file.exists(file) && !http_error(file)) {
+    writeLines(readLines(file), paste0(tempdir(), "/file.yml"))
+    file <- paste0(tempdir(), "/file.yml")
+  }
+
+  req <- travis(
+    verb = "POST",
+    path = "/lint",
+    body = upload_file(file),
     encode = "raw",
-    token = token
+    endpoint = endpoint
   )
 
-  check_status(
-    req,
-    sprintf("lint[ing] %s", file),
-    quiet
+  stop_for_status(
+    req$response, "lint the YAML file."
   )
 
-  new_travis_lint(httr::content(req))
+  if (!quiet) {
+    cli::cli_alert_info("Linting {.file {file}}.")
+  }
+  new_travis_lint(content(req$response))
 }
 
 new_travis_lint <- function(x) {

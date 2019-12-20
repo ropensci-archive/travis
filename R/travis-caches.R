@@ -2,29 +2,35 @@
 #'
 #' @description
 #' Return cache information
-#'
-#' `travis_get_caches()` queries the "/repos/:repo/caches" API.
-#'
-#' @inheritParams travis_set_pat
+#' @template repo
+#' @template endpoint
+#' @template quiet
+#' @details
+#' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
 #'
 #' @family Travis CI functions
 #'
 #' @export
 travis_get_caches <- function(repo = github_repo(),
-                              token = travis_token(repo),
+                              endpoint = get_endpoint(),
                               quiet = FALSE) {
-  req <- TRAVIS_GET3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
-  check_status(
-    req,
-    sprintf(
-      "get[ting] caches for %s on Travis CI",
-      repo
-    ),
-    quiet
-  )
-  new_travis_caches(httr::content(req))
-}
 
+  req <- travis(
+    path = sprintf("/repo/%s/caches", encode_slug(repo)),
+    endpoint = endpoint
+  )
+
+  stop_for_status(
+    req$response, "get caches for repo."
+  )
+
+  if (!quiet) {
+    cli::cli_alert_info(
+      "Getting caches for {.code {repo}} on Travis CI."
+    )
+  }
+  new_travis_caches(httr::content(req$response))
+}
 
 new_travis_caches <- function(x) {
   stopifnot(x[["@type"]] == "caches")
@@ -41,22 +47,23 @@ new_travis_cache <- function(x) {
 }
 
 #' @description
-#' `travis_delete_caches()` returns the repo ID obtained from `travis_repo_info()`.
+#' `travis_delete_caches()` returns the repo ID obtained from
+#' `travis_repo_info()`.
 #'
 #' @export
 #' @rdname travis_get_caches
 travis_delete_caches <- function(repo = github_repo(),
-                                 token = travis_token(repo),
-                                 quiet = FALSE) {
+                                 endpoint = get_endpoint()) {
 
-  req <- TRAVIS_DELETE3(sprintf("/repo/%s/caches", encode_slug(repo)), token = token)
-  check_status(
-    req,
-    sprintf(
-      "delet[ing]{e} caches for %s on Travis CI",
-      repo
-    ),
-    quiet
+  req <- travis(
+    verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),
+    endpoint = endpoint
   )
-  invisible(new_travis_caches(httr::content(req)))
+
+  stop_for_status(
+    req$response, "delete caches for repo."
+  )
+
+  cli::cli_alert_success("Deleted caches for {.code {repo}} on Travis CI.")
+  invisible(new_travis_caches(content(req$response)))
 }

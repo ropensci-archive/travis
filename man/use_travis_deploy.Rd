@@ -4,28 +4,34 @@
 \alias{use_travis_deploy}
 \title{Setup deployment for Travis CI}
 \usage{
-use_travis_deploy(path = usethis::proj_get(), info = github_info(path),
-  repo = github_repo(info = info), travis_repo = repo)
+use_travis_deploy(
+  path = usethis::proj_get(),
+  user = github_user()$login,
+  repo = github_info(path = path)$name,
+  endpoint = get_endpoint(),
+  quiet = FALSE
+)
 }
 \arguments{
-\item{path}{\code{[string]}\cr
-The path to a GitHub-enabled Git repository (or a subdirectory thereof).}
+\item{path}{\verb{[string]} \cr
+The path to the repository.}
 
-\item{info}{\code{[list]}\cr
-GitHub information for the repository, by default obtained through
-\code{\link[=github_info]{github_info()}}.}
+\item{user}{\verb{[string]} \cr
+Name of the Github user account.}
 
-\item{repo}{\code{[string|numeric]}\cr
-The GitHub repo slug, by default obtained through \code{\link[=github_repo]{github_repo()}}.
-Alternatively, the Travis CI repo ID, e.g. obtained through \code{travis_repo_id()}.}
-
-\item{travis_repo}{\code{[string]}\cr
+\item{repo}{\verb{[string]}\cr
 The Travis CI repository to add the private key to, default: \code{repo}
 (the GitHub repo to which the public deploy key is added).}
+
+\item{endpoint}{\verb{[string]}\cr
+Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
+and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
 \description{
 Creates a public-private key pair,
-adds the public key to the GitHub repository via \code{\link[=github_add_key]{github_add_key()}},
+adds the public key to the GitHub repository via \code{github_add_key()},
 and stores the private key as an encrypted environment variable in Travis CI
 via \code{\link[=travis_set_var]{travis_set_var()}},
 possibly in a different repository.
