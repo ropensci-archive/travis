@@ -11,13 +11,6 @@ test_that("URLs containing 'www' are handled properly", {
 
 test_that("URLs containing 'git@github.com' are handled properly", {
 
-  foo = extract_repo("https://github.com/tidyverse/dplyr.git")
-
-  expect_match(foo, "tidyverse/dplyr")
-})
-
-test_that("URLs containing 'git@github.com' are handled properly", {
-
   foo = extract_repo("git@github.com:tidyverse/dplyr.git")
 
   expect_match(foo, "tidyverse/dplyr")
