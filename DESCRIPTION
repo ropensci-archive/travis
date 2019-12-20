@@ -38,7 +38,6 @@ Depends:
     R (>= 3.2.0)
 Imports:
     cli (>= 2.0.0),
-    clipr,
     gh,
     git2r,
     glue (>= 1.2.0),

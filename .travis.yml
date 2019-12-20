@@ -31,7 +31,6 @@ after_script: R -q -e 'tic::after_script()'
 # Header
 language: r
 os: linux
-dist: xenial
 cache: packages
 latex: false
 
@@ -40,31 +39,5 @@ env:
   global:
   - _R_CHECK_FORCE_SUGGESTS_=false
   - MAKEFLAGS="-j 2"
+  - BUILD_PKGDOWN=true
 
-#stages: smoke, full
-stages:
-- name: test
-- name: full
-  if: branch = master
-
-#jobs: 5x Linux (1x with deployment), 1x OS X
-jobs:
-  include:
-  - stage: test
-    r: devel
-  - stage: full
-    r: release
-    env:
-    - BUILD_PKGDOWN=true
-  - os: osx
-    r: release
-    env:
-      - BUILD_PKGDOWN=true
-  - r: 3.5
-  - r: 3.4
-  - r: 3.3
-  - r: 3.2
-  fast_finish: true
-
-#services
-services:
