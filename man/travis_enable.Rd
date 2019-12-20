@@ -7,7 +7,8 @@
 \usage{
 travis_enable(
   active = TRUE,
-  repo = github_info()$full_name,
+  repo = github_info(remote = remote)$full_name,
+  remote = "origin",
   endpoint = get_endpoint()
 )
 
@@ -19,6 +20,9 @@ Set to \code{FALSE} to deactivate instead of activating.}
 
 \item{repo}{\verb{[string]}\cr
 The repository slug to use. Must follow the "\code{user/repo}" structure.}
+
+\item{remote}{\verb{[string]}\cr
+The Github remote which should be used. Defaults to "origin".}
 
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}

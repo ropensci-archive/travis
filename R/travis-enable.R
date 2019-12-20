@@ -8,11 +8,13 @@
 #' @param active `[flag]`\cr
 #'   Set to `FALSE` to deactivate instead of activating.
 #' @template repo
+#' @template remote
 #' @template endpoint
 #'
 #' @export
 travis_enable <- function(active = TRUE,
-                          repo = github_info()$full_name,
+                          repo = github_info(remote = remote)$full_name,
+                          remote = "origin",
                           endpoint = get_endpoint()) {
 
   if (active) {

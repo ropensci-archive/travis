@@ -7,8 +7,9 @@
 use_travis_deploy(
   path = usethis::proj_get(),
   user = github_user()$login,
-  repo = github_info(path = path)$name,
+  repo = github_info(path = path, remote = remote)$name,
   endpoint = get_endpoint(),
+  remote = "origin",
   quiet = FALSE
 )
 }
@@ -26,6 +27,9 @@ The Travis CI repository to add the private key to, default: \code{repo}
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{remote}{\verb{[string]}\cr
+The Github remote which should be used. Defaults to "origin".}
 
 \item{quiet}{If \code{TRUE}, console output is suppressed.}
 }
