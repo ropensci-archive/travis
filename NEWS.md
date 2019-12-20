@@ -1,3 +1,5 @@
+# travis (development version)
+
 # travis 0.2.11.9002
 
 - refactor authentication: Now a Travis API token is used for all requests. For first time user, the user is asked to create one. The token is then stored on disk and used in future requests.

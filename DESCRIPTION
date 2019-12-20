@@ -1,7 +1,7 @@
 Type: Package
 Package: travis
 Title: Set Up 'Travis' for Testing and Deployment
-Version: 0.3.0
+Version: 0.3.0.9000
 Authors@R: 
     c(person(given = "Kirill",
              family = "Müller",
