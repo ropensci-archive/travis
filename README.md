@@ -1,6 +1,7 @@
 # travis
 
 Set up Travis CI for testing and deployment 
+
 <!-- badges: start -->
 [![Travis build status](https://img.shields.io/travis/ropenscilabs/travis/master?logo=travis&style=flat-square&label=Linux)](https://travis-ci.org/ropenscilabs/travis)
 [![CRAN status](https://www.r-pkg.org/badges/version/travis)](https://cran.r-project.org/package=travis)

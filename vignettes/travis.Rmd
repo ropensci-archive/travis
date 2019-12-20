@@ -21,29 +21,29 @@ Besides simplifying the deployment setup for Travis by creating a SSH key pair, 
 
 To learn more about Travis CI in general, read [this blog post](http://mahugh.com/2016/09/02/travis-ci-for-test-automation/) and the [Getting Started](https://ropenscilabs/tic/articles/tic.html#prerequisites) vignette of the _tic_ package.
 
-
-_travis_ works best when combined with the [gh](https://github.com/r-lib/gh), [usethis](https://github.com/r-lib/usethis) and the [tic](https://github.com/ropenscilabs/tic) package. 
-Here is a workflow which creates a repo on Github and activates it on Travis CI.
-
 ## Authentication
 
 The first time any function is called, it will check for the existence of a Travis API key (for the respective endpoint).
 This is a one-time procedure and needs to be done for each endpoint `.org` and `.com`.
-The API key will be stored locally in `~/.travis/config.yml`.
+By calling `browse_travis_toke()` you can query the API key for the respective endpoint and use either
 
-In addition, _travis_ scrapes information about the current repository from Github.
+- env vars `R_TRAVIS_ORG` or `R_TRAVIS_COM` for storing it
+
+- store it in file `~/.travis/config.yml` (see `?browse_travis_token()` for help)
+
+_travis_ scrapes information about the current repository from Github (currently only Github is supported).
 To be able to do this, a `GITHUB_TOKEN` is needed.
 You can create one using `usethis::browse_github_token()` if you haven't done so yet.
 
 ## Workflow example
 
-1. Create a repository on GitHub (if it's not there yet)
+1. Create a repository on GitHub (if none exists)
 
     ```r
     gh::gh("POST /user/repos", name = "my-new-repo-for-gh-testing")
     ```
 
-1. Show the GitHub repository name
+1. Enable the repository on Travis
 
     ```r
     travis::enable()
@@ -58,9 +58,5 @@ You can create one using `usethis::browse_github_token()` if you haven't done so
 1. Browse the repo on Travis
 
     ```r
-    usethis::browse_travis()
+    travis::browse_travis()
     ```
-
-## Relation to *tic* and *usethis* 
-
-See the ["tic, travis and usethis - an overview" vignette](https://ropenscilabs.github.io/tic/articles/tic-usethis-travis.html) from the _tic_ package for more information.
