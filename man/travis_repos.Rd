@@ -5,9 +5,9 @@
 \alias{travis_user}
 \title{Retrieve meta information from Travis CI}
 \usage{
-travis_repos(endpoint = get_endpoint(), quiet = FALSE)
+travis_repos(endpoint = get_endpoint(), quiet = FALSE, ...)
 
-travis_user(quiet = FALSE)
+travis_user(quiet = FALSE, ...)
 }
 \arguments{
 \item{endpoint}{\verb{[string]}\cr
@@ -15,6 +15,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{quiet}{If \code{TRUE}, console output is suppressed.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \description{
 Return repositories and user information.

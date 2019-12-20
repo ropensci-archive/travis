@@ -14,9 +14,11 @@
 #' @family Travis CI functions
 #'
 #' @export
-travis_repos <- function(endpoint = get_endpoint(), quiet = FALSE) {
+travis_repos <- function(endpoint = get_endpoint(),
+                         quiet = FALSE,
+                         ...) {
 
-  req <- travis(path = "/repos", endpoint = endpoint)
+  req <- travis(path = "/repos", endpoint = endpoint, ...)
 
   if (!quiet) {
     cli::cli_alert("Querying information about repos.")
@@ -51,12 +53,13 @@ format.travis_repo <- function(x, ..., short = FALSE) {
 #' `travis_user()` queries the "/users" API.
 #'
 #' @template quiet
+#' @template ellipsis
 #' @export
 #'
 #' @rdname travis_repos
-travis_user <- function(quiet = FALSE) {
+travis_user <- function(quiet = FALSE, ...) {
 
-  req <- travis(path = "/user")
+  req <- travis(path = "/user", ...)
 
   stop_for_status(req$response)
 

@@ -26,21 +26,20 @@ NULL
 #' @param verb A character string containing an HTTP verb, defaulting to `GET`.
 #' @param path A character string with the API endpoint (should begin with a
 #'   slash).
-#' @param query A list specifying any query string arguments to pass to the API.
-#'   This is used to pass the API token.
 #' @param body A named list or character string of what should be passed in the
 #'   request. Corresponds to the "-d" argument of the `curl` command.
 #' @template endpoint
 #' @param encode Encoding format. See [httr::POST].
+#' @template ellipsis
 #'
 #' @return The JSON response, or the relevant error.
 #' @export
 travis <- function(verb = "GET",
                    path = "",
-                   query = list(),
                    body = "",
                    endpoint = get_endpoint(),
-                   encode = "json") {
+                   encode = "json",
+                   ...) {
 
   # check for endpoint env var R_TRAVIS
   check_endpoint()
@@ -55,11 +54,10 @@ travis <- function(verb = "GET",
 
   resp <- VERB(
     verb = verb, url = url, body = body,
-    add_headers(
+    config = add_headers(
       Authorization = sprintf("token %s", api_token),
       "Travis-API-Version" = 3
-    ),
-    query = query, encode = encode, ua, accept_json()
+    ), encode = encode, ua, accept_json(), ...
   )
 
   # for travis_delete_var()

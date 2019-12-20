@@ -4,7 +4,7 @@
 \alias{travis_sync}
 \title{Travis CI utilities}
 \usage{
-travis_sync(block = TRUE, endpoint = get_endpoint(), quiet = FALSE)
+travis_sync(block = TRUE, endpoint = get_endpoint(), quiet = FALSE, ...)
 }
 \arguments{
 \item{block}{\verb{[flag]}\cr
@@ -15,6 +15,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{quiet}{If \code{TRUE}, console output is suppressed.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \description{
 Helper functions for Travis CI.

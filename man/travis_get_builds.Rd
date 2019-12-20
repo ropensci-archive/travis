@@ -13,30 +13,46 @@
 \alias{travis_delete_log}
 \title{Travis CI builds}
 \usage{
-travis_get_builds(repo = github_repo(), endpoint = get_endpoint())
+travis_get_builds(repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_restart_build(build_id, repo = github_repo(), endpoint = get_endpoint())
+travis_restart_build(
+  build_id,
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  ...
+)
 
-travis_restart_last_build(repo = github_repo(), endpoint = get_endpoint())
+travis_restart_last_build(repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_cancel_build(build_id, repo = github_repo(), endpoint = get_endpoint())
+travis_cancel_build(
+  build_id,
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  ...
+)
 
-travis_get_jobs(build_id, repo = github_repo(), endpoint = get_endpoint())
+travis_get_jobs(build_id, repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_restart_job(job_id, repo = github_repo(), endpoint = get_endpoint())
+travis_restart_job(
+  job_id,
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  ...
+)
 
-travis_cancel_job(job_id, repo = github_repo(), endpoint = get_endpoint())
+travis_cancel_job(job_id, repo = github_repo(), endpoint = get_endpoint(), ...)
 
 travis_debug_job(
   job_id,
   log_output = FALSE,
   repo = github_repo(),
-  endpoint = get_endpoint()
+  endpoint = get_endpoint(),
+  ...
 )
 
-travis_get_log(job_id, repo = github_repo(), endpoint = get_endpoint())
+travis_get_log(job_id, repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_delete_log(job_id, repo = github_repo(), endpoint = get_endpoint())
+travis_delete_log(job_id, repo = github_repo(), endpoint = get_endpoint(), ...)
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr
@@ -46,6 +62,8 @@ The repository slug to use. Must follow the "\code{user/repo}" structure.
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 
 \item{build_id}{\verb{[integer(1)]}\cr
 The build ID, as obtained from \code{travis_get_builds()}.}

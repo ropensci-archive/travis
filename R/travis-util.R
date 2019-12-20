@@ -9,10 +9,12 @@
 #'   Set to `FALSE` to return immediately instead of waiting.
 #' @template endpoint
 #' @template quiet
+#' @template ellipsis
 #' @export
 travis_sync <- function(block = TRUE,
                         endpoint = get_endpoint(),
-                        quiet = FALSE) {
+                        quiet = FALSE,
+                        ...) {
 
   user_id <- travis_user(quiet = quiet)[["id"]]
 

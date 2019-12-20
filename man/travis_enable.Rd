@@ -8,10 +8,11 @@
 travis_enable(
   active = TRUE,
   repo = github_info()$full_name,
-  endpoint = get_endpoint()
+  endpoint = get_endpoint(),
+  ...
 )
 
-travis_is_enabled(repo = github_repo(), endpoint = get_endpoint())
+travis_is_enabled(repo = github_repo(), endpoint = get_endpoint(), ...)
 }
 \arguments{
 \item{active}{\verb{[flag]}\cr
@@ -23,6 +24,8 @@ The repository slug to use. Must follow the "\code{user/repo}" structure.}
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \description{
 Activating Travis CI, and querying activity status.

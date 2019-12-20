@@ -7,13 +7,13 @@
 \alias{travis_repo_settings}
 \title{Get repository information from Travis CI}
 \usage{
-travis_repo_info(repo = github_repo(), endpoint = get_endpoint())
+travis_repo_info(repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_has_repo(repo = github_repo(), endpoint = get_endpoint())
+travis_has_repo(repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_repo_id(repo = github_repo(), endpoint = get_endpoint())
+travis_repo_id(repo = github_repo(), endpoint = get_endpoint(), ...)
 
-travis_repo_settings(repo = github_repo(), endpoint = get_endpoint())
+travis_repo_settings(repo = github_repo(), endpoint = get_endpoint(), ...)
 }
 \arguments{
 \item{repo}{\verb{[string|numeric]}\cr
@@ -24,6 +24,8 @@ Alternatively, the Travis CI repo ID, e.g. obtained through
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \description{
 Return repository information, in particular the repository ID.

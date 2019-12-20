@@ -5,6 +5,7 @@
 #' @template repo
 #' @template endpoint
 #' @template quiet
+#' @template ellipsis
 #' @details
 #' `travis_get_caches()` queries the `"/repos/:repo/caches"` API.
 #'
@@ -13,11 +14,13 @@
 #' @export
 travis_get_caches <- function(repo = github_repo(),
                               endpoint = get_endpoint(),
-                              quiet = FALSE) {
+                              quiet = FALSE,
+                              ...) {
 
   req <- travis(
     path = sprintf("/repo/%s/caches", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(
@@ -53,11 +56,13 @@ new_travis_cache <- function(x) {
 #' @export
 #' @rdname travis_get_caches
 travis_delete_caches <- function(repo = github_repo(),
-                                 endpoint = get_endpoint()) {
+                                 endpoint = get_endpoint(),
+                                 ...) {
 
   req <- travis(
     verb = "DELETE", path = sprintf("/repo/%s/caches", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(

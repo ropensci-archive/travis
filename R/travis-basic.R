@@ -13,16 +13,19 @@
 #'   Alternatively, the Travis CI repo ID, e.g. obtained through
 #'   `travis_repo_id()`.
 #' @template endpoint
+#' @template ellipsis
 #' @seealso [Travis CI API documentation](https://docs.travis-ci.com/api)
 #'
 #' @family Travis CI functions
 #'
 #' @export
 travis_repo_info <- function(repo = github_repo(),
-                             endpoint = get_endpoint()) {
+                             endpoint = get_endpoint(),
+                             ...) {
   req <- travis(
     path = sprintf("/repo/%s", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   new_travis_repo(content(req$response))
@@ -31,10 +34,12 @@ travis_repo_info <- function(repo = github_repo(),
 #' @export
 #' @rdname travis_repo_info
 travis_has_repo <- function(repo = github_repo(),
-                            endpoint = get_endpoint()) {
+                            endpoint = get_endpoint(),
+                            ...) {
   invisible(travis(
     path = sprintf("/repo/%s", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   ))
   TRUE
 }
@@ -45,8 +50,9 @@ travis_has_repo <- function(repo = github_repo(),
 #' @export
 #' @rdname travis_repo_info
 travis_repo_id <- function(repo = github_repo(),
-                           endpoint = get_endpoint()) {
-  travis_repo_info(repo = repo, endpoint = endpoint)$id
+                           endpoint = get_endpoint(),
+                           ...) {
+  travis_repo_info(repo = repo, endpoint = endpoint, ...)$id
 }
 
 #' @description
@@ -55,10 +61,12 @@ travis_repo_id <- function(repo = github_repo(),
 #' @export
 #' @rdname travis_repo_info
 travis_repo_settings <- function(repo = github_repo(),
-                                 endpoint = get_endpoint()) {
+                                 endpoint = get_endpoint(),
+                                 ...) {
   req <- travis(
     path = sprintf("/repo/%s/settings", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(

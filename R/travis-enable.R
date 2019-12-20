@@ -9,11 +9,13 @@
 #'   Set to `FALSE` to deactivate instead of activating.
 #' @template repo
 #' @template endpoint
+#' @template ellipsis
 #'
 #' @export
 travis_enable <- function(active = TRUE,
                           repo = github_info()$full_name,
-                          endpoint = get_endpoint()) {
+                          endpoint = get_endpoint(),
+                          ...) {
 
   if (active) {
     activate <- "activate"
@@ -23,7 +25,8 @@ travis_enable <- function(active = TRUE,
 
   req <- travis(
     verb = "POST", path = sprintf("/repo/%s/%s", encode_slug(repo), activate),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(req$response)
@@ -41,7 +44,8 @@ travis_enable <- function(active = TRUE,
 #' @export
 #' @rdname travis_enable
 travis_is_enabled <- function(repo = github_repo(),
-                              endpoint = get_endpoint()) {
+                              endpoint = get_endpoint(),
+                              ...) {
 
   if (is.null(endpoint)) {
     endpoint <- Sys.getenv("R_TRAVIS", unset = "ask") # nocov

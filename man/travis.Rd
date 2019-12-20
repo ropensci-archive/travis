@@ -7,10 +7,10 @@
 travis(
   verb = "GET",
   path = "",
-  query = list(),
   body = "",
   endpoint = get_endpoint(),
-  encode = "json"
+  encode = "json",
+  ...
 )
 }
 \arguments{
@@ -18,9 +18,6 @@ travis(
 
 \item{path}{A character string with the API endpoint (should begin with a
 slash).}
-
-\item{query}{A list specifying any query string arguments to pass to the API.
-This is used to pass the API token.}
 
 \item{body}{A named list or character string of what should be passed in the
 request. Corresponds to the "-d" argument of the \code{curl} command.}
@@ -30,6 +27,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{encode}{Encoding format. See \link[httr:POST]{httr::POST}.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \value{
 The JSON response, or the relevant error.

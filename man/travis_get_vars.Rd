@@ -7,13 +7,19 @@
 \alias{travis_delete_var}
 \title{Travis CI variables}
 \usage{
-travis_get_vars(repo = github_repo(), endpoint = get_endpoint(), quiet = FALSE)
+travis_get_vars(
+  repo = github_repo(),
+  endpoint = get_endpoint(),
+  quiet = FALSE,
+  ...
+)
 
 travis_get_var_id(
   name,
   repo = github_repo(),
   endpoint = get_endpoint(),
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
 travis_set_var(
@@ -22,14 +28,16 @@ travis_set_var(
   public = FALSE,
   repo = github_repo(),
   endpoint = get_endpoint(),
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
 travis_delete_var(
   id,
   repo = github_repo(),
   endpoint = get_endpoint(),
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 }
 \arguments{
@@ -41,6 +49,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{quiet}{If \code{TRUE}, console output is suppressed.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 
 \item{name}{\verb{[string]}\cr
 The name of the variable.}

@@ -8,10 +8,11 @@
 travis_get_caches(
   repo = github_repo(),
   endpoint = get_endpoint(),
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 )
 
-travis_delete_caches(repo = github_repo(), endpoint = get_endpoint())
+travis_delete_caches(repo = github_repo(), endpoint = get_endpoint(), ...)
 }
 \arguments{
 \item{repo}{\verb{[string]}\cr
@@ -22,6 +23,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{quiet}{If \code{TRUE}, console output is suppressed.}
+
+\item{...}{See \link[httr:VERB]{httr::VERB}}
 }
 \description{
 Return cache information

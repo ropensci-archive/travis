@@ -6,6 +6,7 @@
 #' `travis_get_vars()` calls the "/settings/env_vars" API.
 #' @template repo
 #' @template quiet
+#' @template ellipsis
 #' @export
 #' @examples
 #' \dontrun{
@@ -14,11 +15,13 @@
 #' }
 travis_get_vars <- function(repo = github_repo(),
                             endpoint = get_endpoint(),
-                            quiet = FALSE) {
+                            quiet = FALSE,
+                            ...) {
 
   req <- travis(
     path = sprintf("/repo/%s/env_vars", encode_slug(repo)),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(
@@ -55,6 +58,7 @@ new_travis_env_var <- function(x) {
 #' @param name `[string]`\cr
 #'   The name of the variable.
 #' @template quiet
+#' @template ellipsis
 #'
 #' @export
 #' @rdname travis_get_vars
@@ -65,9 +69,10 @@ new_travis_env_var <- function(x) {
 #' }
 travis_get_var_id <- function(name, repo = github_repo(),
                               endpoint = get_endpoint(),
-                              quiet = FALSE) {
+                              quiet = FALSE,
+                              ...) {
 
-  vars <- travis_get_vars(repo = repo, endpoint = endpoint, quiet = quiet)
+  vars <- travis_get_vars(repo = repo, endpoint = endpoint, quiet = quiet, ...)
   var_idx <- which(vapply(vars, "[[", "name", FUN.VALUE = character(1)) == name)
   if (length(var_idx) > 0) {
     # Travis seems to use the value of the last variable if multiple vars of the
@@ -99,6 +104,8 @@ travis_get_var_id <- function(name, repo = github_repo(),
 #'   The value for the new or updated variable.
 #' @param public `[flag]`\cr
 #'   Should the variable be public or private?
+#' @template quiet
+#' @template ellipsis
 #'
 #' @export
 #' @rdname travis_get_vars
@@ -116,7 +123,8 @@ travis_set_var <- function(name,
                            public = FALSE,
                            repo = github_repo(),
                            endpoint = get_endpoint(),
-                           quiet = FALSE) {
+                           quiet = FALSE,
+                           ...) {
 
   var_data <- list(
     "env_var.name" = name,
@@ -126,7 +134,7 @@ travis_set_var <- function(name,
 
   req <- travis(
     verb = "POST", sprintf("/repo/%s/env_vars", encode_slug(repo)),
-    body = var_data, endpoint = endpoint
+    body = var_data, endpoint = endpoint, ...
   )
 
   stop_for_status(
@@ -147,6 +155,7 @@ travis_set_var <- function(name,
 #'   The ID of the variable, by default obtained from `travis_get_var_id()`.
 #' @template endpoint
 #' @template quiet
+#' @template ellipsis
 #'
 #' @export
 #' @rdname travis_get_vars
@@ -157,7 +166,8 @@ travis_set_var <- function(name,
 #' }
 travis_delete_var <- function(id, repo = github_repo(),
                               endpoint = get_endpoint(),
-                              quiet = FALSE) {
+                              quiet = FALSE,
+                              ...) {
 
   if (is.null(id)) {
     cli::cli_alert_danger("{.code id} cannot not be {.code NULL}; or
@@ -170,7 +180,8 @@ travis_delete_var <- function(id, repo = github_repo(),
       "/repo/%s/env_var/%s",
       encode_slug(repo), id
     ),
-    endpoint = endpoint
+    endpoint = endpoint,
+    ...
   )
 
   stop_for_status(
