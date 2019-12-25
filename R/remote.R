@@ -26,6 +26,8 @@ extract_repo <- function(url) {
     url <- sub("^git://github.com:", "https://github.com/", url)
   } else if (grepl("^git://github.com", url)) {
     url <- sub("^git://github.com", "https://github.com/", url)
+  } else if (grepl("^ssh://git@github.com", url)) {
+    url <- sub("^ssh://git@github.com/", "https://github.com/", url)
   }
   # account for "www"
   if (grepl("http://www.github.com", url)) {

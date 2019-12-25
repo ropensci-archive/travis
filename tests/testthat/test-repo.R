@@ -15,4 +15,5 @@ test_that("extract_repo() works", {
   expect_match(extract_repo("https://github.com/ropenscilabs/travis"), repo)
   expect_match(extract_repo("https://user:pass@github.com/ropenscilabs/travis"), repo) # nolint
   expect_match(extract_repo("git@github.com:ropenscilabs/travis"), repo)
+  expect_match(extract_repo("ssh://git@github.com/ropenscilabs/travis"), repo)
 })
