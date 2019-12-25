@@ -20,7 +20,7 @@ To learn more about Travis CI in general, have a look at [this blog post](http:/
 
 {travis} package is closely coupled with the [{tic}](https://docs.ropensci.org/tic/) package which provides tools for an CI-agnostic workflow.
 
-See the [Get Started](https://ropenscilabs.github.io/travis/articles/travis.html) vignette for more information.
+See the [Get Started](https://docs.ropensci.org/travis/articles/travis.html) vignette for more information.
 
 ## Installation
 
