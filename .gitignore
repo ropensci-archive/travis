@@ -6,3 +6,4 @@
 /.remake
 /tmp
 tests/testthat/travis-testthat
+inst/doc
