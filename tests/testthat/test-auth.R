@@ -1,7 +1,7 @@
 context("authentication")
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     test_that("Travis enable/disable works", {
 

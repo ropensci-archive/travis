@@ -1,7 +1,7 @@
 context("basic")
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     test_that("travis_repo_info()", {
       expect_s3_class(

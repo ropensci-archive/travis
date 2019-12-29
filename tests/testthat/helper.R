@@ -3,7 +3,7 @@ if (!dir.exists("travis-testthat")) {
 }
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     repo <- github_repo(".")
   }

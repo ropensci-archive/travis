@@ -1,7 +1,7 @@
 context("vars")
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     test_that("getting env vars works (.org)", {
       expect_s3_class(

@@ -1,7 +1,7 @@
 context("lint")
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     test_that("linting works", {
       expect_s3_class(

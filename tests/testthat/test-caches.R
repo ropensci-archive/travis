@@ -1,7 +1,7 @@
 context("caches")
 
 withr::with_dir(
-  "./tests/testthat/travis-testthat",
+  "travis-testthat",
   {
     test_that("retrieving caches works (.org)", {
       expect_s3_class(
