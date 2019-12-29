@@ -6,7 +6,7 @@ withr::with_dir(
     test_that("custom remote is honored", {
       system("git remote add test https://github.com/pat-s/travis-testthat.git")
 
-      expect_is(github_info(remote = "test"), "gh_response")
+      expect_s3_class(github_info(remote = "test"), "gh_response")
 
       system("git remote remove test")
     })

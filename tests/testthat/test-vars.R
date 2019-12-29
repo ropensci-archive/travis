@@ -4,7 +4,7 @@ withr::with_dir(
   here::here("tests/testthat/travis-testthat"),
   {
     test_that("getting env vars works (.org)", {
-      expect_is(
+      expect_s3_class(
         travis_get_vars(
           repo = "ropenscilabs/travis", endpoint = ".org",
           quiet = TRUE
@@ -14,7 +14,7 @@ withr::with_dir(
     })
 
     test_that("getting env vars works (.com)", {
-      expect_is(
+      expect_s3_class(
         travis_get_vars(
           repo = "ropenscilabs/travis", endpoint = ".com",
           quiet = TRUE
@@ -24,7 +24,7 @@ withr::with_dir(
     })
 
     test_that("getting env var id works (.org)", {
-      expect_is(
+      expect_s3_class(
         travis_get_var_id(
           travis_get_vars(
             repo = "ropenscilabs/travis", endpoint = ".org",
@@ -38,7 +38,7 @@ withr::with_dir(
     })
 
     test_that("getting env var id works (.com)", {
-      expect_is(
+      expect_s3_class(
         travis_get_var_id(
           travis_get_vars(
             repo = "ropenscilabs/travis", endpoint = ".com",
@@ -52,7 +52,7 @@ withr::with_dir(
     })
 
     test_that("setting env vars works (.org)", {
-      expect_is(
+      expect_s3_class(
         travis_set_var(
           name = "test", value = "test",
           repo = repo, endpoint = ".org",
@@ -63,7 +63,7 @@ withr::with_dir(
     })
 
     test_that("setting env vars works (.com)", {
-      expect_is(
+      expect_s3_class(
         travis_set_var(
           name = "test", value = "test",
           repo = repo, endpoint = ".com",
@@ -74,7 +74,7 @@ withr::with_dir(
     })
 
     test_that("deleting env vars works (.org)", {
-      expect_is(
+      expect_s3_class(
         travis_delete_var(
           travis_get_var_id(
             name = "test", repo = repo,
@@ -88,7 +88,7 @@ withr::with_dir(
     })
 
     test_that("deleting env vars works (.com)", {
-      expect_is(
+      expect_s3_class(
         travis_delete_var(
           travis_get_var_id(
             name = "test", repo = repo,

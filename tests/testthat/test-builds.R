@@ -5,12 +5,12 @@ withr::with_dir(
   {
     test_that("Querying builds works (.org)", {
       builds <- travis_get_builds(repo = repo, endpoint = ".org")
-      expect_is(builds, "travis_builds")
+      expect_s3_class(builds, "travis_builds")
     })
 
     test_that("Querying builds works (.com)", {
       builds <- travis_get_builds(repo = repo, endpoint = ".com")
-      expect_is(builds, "travis_builds")
+      expect_s3_class(builds, "travis_builds")
     })
 
     test_that("triggering a new build works (.org)", {
@@ -21,7 +21,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(2:8, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_restart_build(
           travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
           endpoint = ".org", repo = repo
@@ -38,7 +38,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(2:8, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_restart_build(
           travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
           endpoint = ".com", repo = repo
@@ -55,7 +55,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(2:8, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_build(
           travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
           endpoint = ".org", repo = repo
@@ -72,7 +72,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(2:8, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_build(
           travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
           endpoint = ".com", repo = repo
@@ -86,7 +86,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      expect_is(
+      expect_s3_class(
         travis_restart_last_build(repo = repo, endpoint = ".org"),
         "travis_pending"
       )
@@ -97,7 +97,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      expect_is(
+      expect_s3_class(
         travis_restart_last_build(repo = repo, endpoint = ".com"),
         "travis_pending"
       )
@@ -108,7 +108,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_build(
           travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
           endpoint = ".org", repo = repo
@@ -122,7 +122,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_build(
           travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
           endpoint = ".com", repo = repo
@@ -138,7 +138,7 @@ withr::with_dir(
         )[[1]]$id,
         endpoint = ".org"
       )
-      expect_is(builds, "travis_jobs")
+      expect_s3_class(builds, "travis_jobs")
     })
 
     test_that("Querying jobs works (.com)", {
@@ -149,7 +149,7 @@ withr::with_dir(
         )[[1]]$id,
         endpoint = ".com"
       )
-      expect_is(builds, "travis_jobs")
+      expect_s3_class(builds, "travis_jobs")
     })
 
     test_that("restarting a job works (.org)", {
@@ -160,7 +160,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(9:16, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_restart_job(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
@@ -180,7 +180,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(9:16, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_restart_job(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
@@ -200,7 +200,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(9:16, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
@@ -220,7 +220,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(9:16, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
@@ -240,7 +240,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(16:24, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_debug_job(
           travis_get_jobs(
             travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[id]]$id,
@@ -260,7 +260,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(16:24, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_debug_job(
           travis_get_jobs(
             travis_get_builds(
@@ -284,7 +284,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(16:24, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
             travis_get_builds(repo = "mlr-org/mlr", endpoint = ".org")[[id]]$id,
@@ -305,7 +305,7 @@ withr::with_dir(
       set.seed(42)
       id <- sample(16:24, 1)
 
-      expect_is(
+      expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
             travis_get_builds(
@@ -321,7 +321,7 @@ withr::with_dir(
     })
 
     test_that("retrieving logs works (.org)", {
-      expect_is(
+      expect_s3_class(
         travis_get_log(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".org")[[17]]$id,
@@ -334,7 +334,7 @@ withr::with_dir(
     })
 
     test_that("retrieving logs works (.com)", {
-      expect_is(
+      expect_s3_class(
         travis_get_log(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".com")[[17]]$id,
@@ -349,7 +349,7 @@ withr::with_dir(
     test_that("deleting logs works (.org)", {
       skip(message = "We do not have enough logs to delete one at every build")
 
-      expect_is(
+      expect_s3_class(
         travis_delete_log(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".org")[[5]]$id,
@@ -364,7 +364,7 @@ withr::with_dir(
     test_that("deleting logs works (.com)", {
       skip(message = "We do not have enough logs to delete one at every build")
 
-      expect_is(
+      expect_s3_class(
         travis_delete_log(
           travis_get_jobs(
             travis_get_builds(repo = repo, endpoint = ".com")[[5]]$id,

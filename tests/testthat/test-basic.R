@@ -4,8 +4,8 @@ withr::with_dir(
   here::here("tests/testthat/travis-testthat"),
   {
     test_that("travis_repo_info()", {
-      expect_is(travis_repo_info(repo = repo, endpoint = ".org"), "travis_repo")
-      expect_is(travis_repo_info(repo = repo, endpoint = ".com"), "travis_repo")
+      expect_s3_class(travis_repo_info(repo = repo, endpoint = ".org"), "travis_repo")
+      expect_s3_class(travis_repo_info(repo = repo, endpoint = ".com"), "travis_repo")
     })
 
     test_that("travis_has_repo()", {
@@ -23,11 +23,11 @@ withr::with_dir(
     })
 
     test_that("travis_repo_settings()", {
-      expect_is(
+      expect_s3_class(
         travis_repo_settings(repo = repo, endpoint = ".org"),
         "travis_settings"
       )
-      expect_is(
+      expect_s3_class(
         travis_repo_settings(repo = repo, endpoint = ".com"),
         "travis_settings"
       )
