@@ -14,6 +14,10 @@ get_remote_url <- function(path) {
 
 extract_repo <- function(url) {
 
-  url <- strsplit(url, ".com.")[[1]][2]
+  url <- strsplit(url, "[.]com.")[[1]][2]
+
+  if (grepl(".git", url)) {
+    url <- sub(".git", "", url)
+  }
   return(url)
 }
