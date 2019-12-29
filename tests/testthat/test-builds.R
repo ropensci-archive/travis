@@ -1,7 +1,7 @@
 context("builds")
 
 withr::with_dir(
-  here::here("tests/testthat/travis-testthat"),
+  "./tests/testthat/travis-testthat",
   {
     test_that("Querying builds works (.org)", {
       builds <- travis_get_builds(repo = repo, endpoint = ".org")

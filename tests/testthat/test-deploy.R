@@ -1,7 +1,7 @@
 context("use-travis-deploy")
 
 withr::with_dir(
-  here::here("tests/testthat/travis-testthat"),
+  "./tests/testthat/travis-testthat",
   {
     test_that("use_travis_deploy detects existing keys (.org)", {
       # tests timing out on Travis for unknown reason

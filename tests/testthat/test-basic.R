@@ -1,11 +1,17 @@
 context("basic")
 
 withr::with_dir(
-  here::here("tests/testthat/travis-testthat"),
+  "./tests/testthat/travis-testthat",
   {
     test_that("travis_repo_info()", {
-      expect_s3_class(travis_repo_info(repo = repo, endpoint = ".org"), "travis_repo")
-      expect_s3_class(travis_repo_info(repo = repo, endpoint = ".com"), "travis_repo")
+      expect_s3_class(
+        travis_repo_info(repo = repo, endpoint = ".org"),
+        "travis_repo"
+      )
+      expect_s3_class(
+        travis_repo_info(repo = repo, endpoint = ".com"),
+        "travis_repo"
+      )
     })
 
     test_that("travis_has_repo()", {

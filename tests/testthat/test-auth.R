@@ -1,15 +1,21 @@
 context("authentication")
 
 withr::with_dir(
-  here::here("tests/testthat/travis-testthat"),
+  "./tests/testthat/travis-testthat",
   {
     test_that("Travis enable/disable works", {
 
       # disable
-      capture.output(travis_enable(repo = repo, endpoint = ".org", active = FALSE))
+      capture.output(travis_enable(
+        repo = repo, endpoint = ".org",
+        active = FALSE
+      ))
       expect_false(travis_is_enabled(repo = repo, endpoint = ".org"))
 
-      capture.output(travis_enable(repo = repo, endpoint = ".com", active = FALSE))
+      capture.output(travis_enable(
+        repo = repo, endpoint = ".com",
+        active = FALSE
+      ))
       expect_false(travis_is_enabled(endpoint = ".com"))
 
       # enable

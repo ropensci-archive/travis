@@ -1,7 +1,7 @@
 context("meta")
 
 withr::with_dir(
-  here::here("tests/testthat/travis-testthat"),
+  "./tests/testthat/travis-testthat",
   {
     test_that("Querying repos on Travis works", {
       expect_s3_class(
