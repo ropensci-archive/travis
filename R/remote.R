@@ -13,11 +13,14 @@ get_remote_url <- function(path) {
 }
 
 extract_repo <- function(url) {
+  # Borrowed from gh:::github_remote_parse
+  re <- "github[^/:]*[/:]([^/]+)/(.*?)(?:\\.git)?$"
+  m <- regexec(re, url)
+  match <- regmatches(url, m)[[1]]
 
-  url <- strsplit(url, "[.]com.")[[1]][2]
-
-  if (grepl(".git", url)) {
-    url <- sub(".git", "", url)
+  if (length(match) == 0) {
+    stopc("Unrecognized repo format: ", url)
   }
-  return(url)
+
+  paste0(match[2], "/", match[3])
 }
