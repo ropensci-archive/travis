@@ -52,6 +52,7 @@ Suggests:
     knitr,
     purrr,
     remotes,
+    rmarkdown,
     roxygen2,
     testthat,
     vctrs

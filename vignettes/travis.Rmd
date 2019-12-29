@@ -1,6 +1,5 @@
 ---
 title: "Working with Travis in R"
-author: "Patrick Schratz, Kirill Müller"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Kirill Müller}
@@ -15,41 +14,75 @@ knitr::opts_chunk$set(
 )
 ```
 
-The goal of the _travis_ pkg is to simplify the setup of continuous integration with [Travis CI](https://travis-ci.org/).
-The package supports both Travis CI endpoints `.org` and `.com`.
-Besides simplifying the deployment setup for Travis by creating a SSH key pair, the _travis_ package provides a command-line way in R to execute tasks which are usually done in the browser (build checking, cache deletion, build restarts, etc.).
-
-To learn more about Travis CI in general, read [this blog post](http://mahugh.com/2016/09/02/travis-ci-for-test-automation/) and the [Getting Started](https://ropenscilabs/tic/articles/tic.html#prerequisites) vignette of the _tic_ package.
-
-
-_travis_ works best when combined with the [gh](https://github.com/r-lib/gh), [usethis](https://github.com/r-lib/usethis) and the [tic](https://github.com/ropenscilabs/tic) package. 
-Here is a workflow which creates a repo on Github and activates it on Travis CI.
-
 ## Authentication
 
-The first time any function is called, it will check for the existence of a Travis API key (for the respective endpoint).
+The first time any function of {travis} is called, it will check for the existence of a Travis API key (for the respective endpoint).
 This is a one-time procedure and needs to be done for each endpoint `.org` and `.com`.
-The API key will be stored locally in `~/.travis/config.yml`.
+Without the API key, no requests to the API of Travis CI can be made.
 
-In addition, _travis_ scrapes information about the current repository from Github.
-To be able to do this, a `GITHUB_TOKEN` is needed.
-You can create one using `usethis::browse_github_token()` if you haven't done so yet.
+When calling `browse_travis_toke()`, a browser window will open.
+After logging in, the API key for the respective endpoint can be copied.
+
+This key can be stored in 
+
+- environment variables `R_TRAVIS_ORG` or `R_TRAVIS_COM`
+
+- or in file `~/.travis/config.yml` (see `?browse_travis_token()` for help)
+
+Storing it in one of these is enough.
+The second option is provided because it represents the way an API key is stored when using the [Travis CI CLI tool](https://github.com/travis-ci/travis.rb).
+
+## Setting the default endpoint
+
+Travis [announced in May 2018](https://blog.travis-ci.com/2018-05-02-open-source-projects-on-travis-ci-com-with-github-apps) to migrate open-source repositories from https://travis-ci.org to https://travis-ci.com.
+Since then, two endpoints (`.org` and `.com`) exist on which users can run their builds.
+To make it easier for the users to specify a default for the endpoint when using the {travis} package rather than having to specify the `endpoint` argument in all functions, one can set the environment variable `R_TRAVIS`
+
+```r
+# example for .com
+R_TRAVIS = ".com"
+```
+
+in `.Renviron` to the desired endpoint.
+If none is set, {travis} will by default use the `.org` endpoint.
+
+## Migrating from .org to .com
+
+Since there is quite some confusion on the difference of these endpoints and if one should migrate, we try to give some answers:
+
+- There is no difference in features between the endpoints
+
+- Once migrated an account/organization to `.com` via the migrate button, there is no way back. 
+  Meaning there is no chance to start builds ever again on `.org`.
+  
+- Via the API one could in the past enable repositories on both endpoints without a full migration.
+  However, this seem to have changed lately upstream on Travis CI and might now work anymore.
+  
+We will not make a statement whether you should migrate your repositories to the `.com` endpoint.
+However, at some point Travis CI will probably force the migration and since the endpoint exists since quite some time, things should be somewhat stable.
+
+## How {travis} scrapes the repository information
+
+{travis} scrapes information about the current repository from Github (currently only Github is supported).
+To do so, {travis} looks at the git repo slug and extracts the <owner:repo> information.
+
+Then, the [{gh}](https://github.com/r-lib/gh) package is used to query information about the repository and the current user.
+This is important for some functions which try to add keys (SSH keys, deploy keys) to the Github repo or to Travis CI.
+
+For this, the {gh} package needs access to the Github API via and relies also on a token, in this case a `GITHUB_TOKEN`.
+You can create one using `usethis::browse_github_token()` (if you haven't done so yet) and store it as an environment variable again.
 
 ## Workflow example
 
-1. Create a repository on GitHub (if it's not there yet)
+With an existing project that exists on Github, one can
 
-    ```r
-    gh::gh("POST /user/repos", name = "my-new-repo-for-gh-testing")
-    ```
-
-1. Show the GitHub repository name
+1. Enable the repository on Travis
 
     ```r
     travis::enable()
     ```
 
-1. Enabled deployment for this repository
+1. Enable deployment for this repository
 
    ```r
    travis::use_travis_deploy()
@@ -58,9 +91,7 @@ You can create one using `usethis::browse_github_token()` if you haven't done so
 1. Browse the repo on Travis
 
     ```r
-    usethis::browse_travis()
+    travis::browse_travis()
     ```
 
-## Relation to *tic* and *usethis* 
-
-See the ["tic, travis and usethis - an overview" vignette](https://ropenscilabs.github.io/tic/articles/tic-usethis-travis.html) from the _tic_ package for more information.
+and of course also use all the other [`travis_*()`](https://docs.ropensci.org/travis/reference/index.html) functions.
