@@ -13,18 +13,14 @@ get_remote_url <- function(path) {
 }
 
 extract_repo <- function(url) {
-  if (grepl("^git@github.com:", url)) {
-    url <- sub("^git@github.com:", "https://github.com/", url)
-  } else if (grepl("^git://github.com", url)) {
-    url <- sub("^git://github.com", "https://github.com", url)
-  } else if (grepl("^http://(.+@)?github.com", url)) {
-    url <- sub("^http://(.+@)?github.com", "https://github.com", url)
-  } else if (grepl("^https://(.+@)github.com", url)) {
-    url <- sub("^https://(.+@)github.com", "https://github.com", url)
-  }
-  if (!all(grepl("^https://github.com", url))) {
+  # Borrowed from gh:::github_remote_parse
+  re <- "github[^/:]*[/:]([^/]+)/(.*?)(?:\\.git)?$"
+  m <- regexec(re, url)
+  match <- regmatches(url, m)[[1]]
+
+  if (length(match) == 0) {
     stopc("Unrecognized repo format: ", url)
   }
-  url <- sub("\\.git$", "", url)
-  sub("^https://github.com/", "", url)
+
+  paste0(match[2], "/", match[3])
 }
