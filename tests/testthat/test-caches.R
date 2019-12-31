@@ -1,49 +1,52 @@
 context("caches")
 
-test_that("retrieving caches works (.org)", {
+withr::with_dir(
+  "travis-testthat",
+  {
+    test_that("retrieving caches works (.org)", {
+      expect_s3_class(
+        travis_get_caches(
+          repo = "ropenscilabs/tic",
+          endpoint = ".org",
+          quiet = TRUE
+        ),
+        "travis_caches"
+      )
+    })
 
-  expect_is(
-    travis_get_caches(
-      repo = "ropenscilabs/tic",
-      endpoint = ".org",
-      quiet = TRUE
-    ),
-    "travis_caches"
-  )
-})
+    test_that("retrieving caches works (.com)", {
+      expect_s3_class(
+        travis_get_caches(
+          repo = "ropenscilabs/tic",
+          endpoint = ".com",
+          quiet = TRUE
+        ),
+        "travis_caches"
+      )
+    })
 
-test_that("retrieving caches works (.com)", {
+    test_that("deleting caches works (.org)", {
+      skip("We do not want to delete any caches during testing")
 
-  expect_is(
-    travis_get_caches(
-      repo = "ropenscilabs/tic",
-      endpoint = ".com",
-      quiet = TRUE
-    ),
-    "travis_caches"
-  )
-})
+      expect_s3_class(
+        travis_delete_caches(
+          repo = "ropenscilabs/tic",
+          endpoint = ".org"
+        ),
+        "travis_caches"
+      )
+    })
 
-test_that("deleting caches works (.org)", {
-  skip("We do not want to delete any caches during testing")
+    test_that("deleting caches works (.com)", {
+      skip("We do not want to delete any caches during testing")
 
-  expect_is(
-    travis_delete_caches(
-      repo = "ropenscilabs/tic",
-      endpoint = ".org"
-    ),
-    "travis_caches"
-  )
-})
-
-test_that("deleting caches works (.com)", {
-  skip("We do not want to delete any caches during testing")
-
-  expect_is(
-    travis_delete_caches(
-      repo = "ropenscilabs/tic",
-      endpoint = ".com"
-    ),
-    "travis_caches"
-  )
-})
+      expect_s3_class(
+        travis_delete_caches(
+          repo = "ropenscilabs/tic",
+          endpoint = ".com"
+        ),
+        "travis_caches"
+      )
+    })
+  }
+)

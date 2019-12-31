@@ -16,13 +16,16 @@
 #'   The Travis CI repository to add the private key to, default: `repo`
 #'   (the GitHub repo to which the public deploy key is added).
 #' @template endpoint
+#' @template remote
 #' @template quiet
 #'
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),
                               user = github_user()$login,
-                              repo = github_info(path = path)$name,
+                              repo = github_info(path = path,
+                                                 remote = remote)$name,
                               endpoint = get_endpoint(),
+                              remote = "origin",
                               quiet = FALSE) {
 
   auth_github()
@@ -42,7 +45,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     cli::cli_alert_info("Querying Github deploy keys from repo.")
   }
   gh_keys <- gh::gh("/repos/:owner/:repo/keys",
-    owner = github_info(path = path)$owner$login, repo = repo
+    owner = github_info(path = path, remote = remote)$owner$login, repo = repo
   )
 
   if (!gh_keys[1] == "") {
@@ -56,7 +59,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     if (any(old_keys == TRUE)) {
       purrr::walk(gh_keys[old_keys], ~
       gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-        owner = github_info(path = path)$owner$login,
+        owner = github_info(path = path, remote = remote)$owner$login,
         repo = repo,
         key_id = .x$id
       ))
