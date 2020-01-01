@@ -62,6 +62,11 @@ travis <- function(verb = "GET",
     query = query, encode = encode, ua, accept_json()
   )
 
+  # check for invalid token
+  if (http_type(resp) == "text/html" && status_code(resp) == 403) {
+    stopc("Possibly invalid API key detected. Please double-check and retry.")
+  }
+
   # for travis_delete_var()
   if (http_type(resp) == "application/octet-stream") {
     return(resp)
