@@ -42,10 +42,10 @@ withr::with_dir(
       Sys.setenv("R_TRAVIS_COM" = "invalid")
 
       expect_error(travis_get_builds(repo = repo, endpoint = ".org"),
-        regexp = "Possibly invalid API key detected. Please double-check and retry." # nocov
+        regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
       )
       expect_error(travis_get_builds(repo = repo, endpoint = ".com"),
-        regexp = "Possibly invalid API key detected. Please double-check and retry." # nocov
+        regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
       )
 
       # restore
