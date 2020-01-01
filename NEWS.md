@@ -1,4 +1,8 @@
-# travis (development version)
+# travis 0.3.0.9001
+
+- Support Git remotes other than "origin" (#88).
+- Allow `www.` prefix in remote URLs (#114).
+
 
 # travis 0.3.0
 
