@@ -44,7 +44,7 @@ browse_travis_token <- function(endpoint = get_endpoint()) {
   cli::cli_alert("Call {.fun travis::edit_travis_config} to open
     {.file ~/.travis/config.yml} or {.fun edit_r_environ} to open
     {.file ~/.Renviron}, depending on how
-    you want to store the API key. See {.code ?browse_travis_token()} for
+    you want to store the API key. See {.code ?travis::browse_travis_token()} for
     details.", wrap = TRUE)
   return(invisible(TRUE))
 }
@@ -80,7 +80,7 @@ travis_check_api_key <- function(endpoint = get_endpoint()) {
       yml <- readLines("~/.travis/config.yml")
       if (!any(grepl(sprintf("api.travis-ci%s/:", endpoint), yml))) {
         cli::cli_alert_danger("No Travis API key for endpoint '{endpoint}'
-        found. Please call {.code browse_travis_token(endpoint =
+        found. Please call {.code travis::browse_travis_token(endpoint =
         '{endpoint}')} first.", wrap = TRUE)
         stopc("Travis API key missing.")
       }
