@@ -27,3 +27,30 @@ withr::with_dir(
     })
   }
 )
+
+withr::with_dir(
+  "travis-testthat",
+  {
+    test_that("Catch invalid API keys", {
+
+      # backup
+      api_key_org <- travis_check_api_key(".org")
+      api_key_com <- travis_check_api_key(".com")
+
+      # invalidate
+      Sys.setenv("R_TRAVIS_ORG" = "invalid")
+      Sys.setenv("R_TRAVIS_COM" = "invalid")
+
+      expect_error(travis_get_builds(repo = repo, endpoint = ".org"),
+        regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
+      )
+      expect_error(travis_get_builds(repo = repo, endpoint = ".com"),
+        regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
+      )
+
+      # restore
+      Sys.setenv("R_TRAVIS_ORG" = api_key_org)
+      Sys.setenv("R_TRAVIS_COM" = api_key_com)
+    })
+  }
+)
