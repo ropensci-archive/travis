@@ -1,7 +1,13 @@
+# travis 0.3.0.9002
+
+- Internal changes only.
+
+
 # travis 0.3.0.9001
 
 - Support Git remotes other than "origin" (#88).
 - Allow `www.` prefix in remote URLs (#114).
+- Remove `travis_restart_last_build()`, travis_get_jobs(): use last build if non supplied
 
 
 # travis 0.3.0
