@@ -42,6 +42,18 @@ travis_sync <- function(block = TRUE,
   invisible(req)
 }
 
-#' @importFrom usethis browse_travis
+#' @title Browse the Travis CI web interface
+#' @description
+#'   Open the current project or any other package on Travis CI.
+#' @template repo
+#' @template endpoint
 #' @export
-usethis::browse_travis
+browse_travis <- function(repo = NULL,
+                          endpoint = get_endpoint()) { # nocov start
+
+  if (is.null(repo)) {
+    repo <- github_repo()
+  }
+
+  utils::browseURL(sprintf("https://travis-ci%s/%s", endpoint, repo))
+} # nocov end
