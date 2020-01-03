@@ -81,56 +81,6 @@ withr::with_dir(
       )
     })
 
-    test_that("restarting the last build works (.org)", {
-      skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-        message = "Skipping on Travis PR builds"
-      )
-
-      expect_s3_class(
-        travis_restart_last_build(repo = repo, endpoint = ".org"),
-        "travis_pending"
-      )
-    })
-
-    test_that("restarting the last build works (.com)", {
-      skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-        message = "Skipping on Travis PR builds"
-      )
-
-      expect_s3_class(
-        travis_restart_last_build(repo = repo, endpoint = ".com"),
-        "travis_pending"
-      )
-    })
-
-    test_that("cancelling the last build works (.org)", {
-      skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-        message = "Skipping on Travis PR builds"
-      )
-
-      expect_s3_class(
-        travis_cancel_build(
-          travis_get_builds(repo = repo, endpoint = ".org")[[1]]$id,
-          endpoint = ".org", repo = repo
-        ),
-        "travis_pending"
-      )
-    })
-
-    test_that("cancelling the last build works (.com)", {
-      skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
-        message = "Skipping on Travis PR builds"
-      )
-
-      expect_s3_class(
-        travis_cancel_build(
-          travis_get_builds(repo = repo, endpoint = ".com")[[1]]$id,
-          endpoint = ".com", repo = repo
-        ),
-        "travis_pending"
-      )
-    })
-
     test_that("Querying jobs works (.org)", {
       builds <- travis_get_jobs(
         travis_get_builds(
