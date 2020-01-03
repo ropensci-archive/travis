@@ -3,7 +3,6 @@
 \name{travis_get_builds}
 \alias{travis_get_builds}
 \alias{travis_restart_build}
-\alias{travis_restart_last_build}
 \alias{travis_cancel_build}
 \alias{travis_get_jobs}
 \alias{travis_restart_job}
@@ -15,13 +14,19 @@
 \usage{
 travis_get_builds(repo = github_repo(), endpoint = get_endpoint())
 
-travis_restart_build(build_id, repo = github_repo(), endpoint = get_endpoint())
-
-travis_restart_last_build(repo = github_repo(), endpoint = get_endpoint())
+travis_restart_build(
+  build_id = NULL,
+  repo = github_repo(),
+  endpoint = get_endpoint()
+)
 
 travis_cancel_build(build_id, repo = github_repo(), endpoint = get_endpoint())
 
-travis_get_jobs(build_id, repo = github_repo(), endpoint = get_endpoint())
+travis_get_jobs(
+  build_id = NULL,
+  repo = github_repo(),
+  endpoint = get_endpoint()
+)
 
 travis_restart_job(job_id, repo = github_repo(), endpoint = get_endpoint())
 
@@ -34,7 +39,7 @@ travis_debug_job(
   endpoint = get_endpoint()
 )
 
-travis_get_log(job_id, repo = github_repo(), endpoint = get_endpoint())
+travis_get_log(job_id = NULL, repo = github_repo(), endpoint = get_endpoint())
 
 travis_delete_log(job_id, repo = github_repo(), endpoint = get_endpoint())
 }
@@ -48,7 +53,8 @@ Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".co
 and \code{".org"}. Can be set globally via env var \code{R_TRAVIS}.}
 
 \item{build_id}{\verb{[integer(1)]}\cr
-The build ID, as obtained from \code{travis_get_builds()}.}
+The build ID, as obtained from \code{travis_get_builds()}. If not supplied,
+the latest build is used.}
 
 \item{job_id}{\verb{[integer(1)]}\cr
 The job ID, as obtained from \code{travis_get_builds()}.}

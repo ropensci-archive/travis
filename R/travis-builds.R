@@ -8,7 +8,8 @@
 #' @template endpoint
 #'
 #' @export
-travis_get_builds <- function(repo = github_repo(), endpoint = get_endpoint()) {
+travis_get_builds <- function(repo = github_repo(),
+                              endpoint = get_endpoint()) {
 
   req <- travis(
     path = sprintf("/repo/%s/builds", encode_slug(repo)),
@@ -39,12 +40,18 @@ new_travis_build <- function(x) {
 #' `travis_restart_build()` restarts a build with a given build ID.
 #'
 #' @param build_id `[integer(1)]`\cr
-#'   The build ID, as obtained from `travis_get_builds()`.
+#'   The build ID, as obtained from `travis_get_builds()`. If not supplied,
+#'   the latest build is used.
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_restart_build <- function(build_id, repo = github_repo(),
+travis_restart_build <- function(build_id = NULL,
+                                 repo = github_repo(),
                                  endpoint = get_endpoint()) {
+
+  if (is.null(build_id)) {
+    build_id <- travis_get_builds()[[1]]$id
+  }
 
   req <- travis(
     verb = "POST", path = sprintf("/build/%s/restart", build_id),
@@ -62,26 +69,12 @@ travis_restart_build <- function(build_id, repo = github_repo(),
   invisible(new_travis_pending_build(httr::content(req$response)))
 }
 
-#' `travis_restart_last_build()` restarts the *last* build.
-#'
-#' @export
-#' @rdname travis_get_builds
-travis_restart_last_build <- function(repo = github_repo(),
-                                      endpoint = get_endpoint()) {
-
-  builds <- travis_get_builds(repo = repo, endpoint = endpoint)
-  last_build_id <- builds[[1]]$id
-  travis_restart_build(last_build_id,
-    repo = repo,
-    endpoint = endpoint
-  )
-}
-
 #' `travis_cancel_build()` cancels a build with a given build ID.
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_cancel_build <- function(build_id, repo = github_repo(),
+travis_cancel_build <- function(build_id,
+                                repo = github_repo(),
                                 endpoint = get_endpoint()) {
 
   req <- travis(
@@ -110,16 +103,21 @@ new_travis_pending_build <- function(x) {
 #'
 #' @export
 #' @rdname travis_get_builds
-travis_get_jobs <- function(build_id,
+travis_get_jobs <- function(build_id = NULL,
                             repo = github_repo(),
                             endpoint = get_endpoint()) {
 
+  if (is.null(build_id)) {
+    build_id <- travis_get_builds()[[1]]$id
+  }
+
   req <- travis(path = sprintf("/build/%s/jobs", build_id), endpoint = endpoint)
 
-  stop_for_status(req$response, "get jobs.")
+  stop_for_status(
+    req$response,
+    sprintf("getting jobs for build '%s' from Travis CI", build_id)
+  )
 
-  cli::cli_alert_danger("Getting jobs for build {.val {build_id}} from Travis
-                        CI", wrap = TRUE)
   new_travis_jobs(httr::content(req$response))
 }
 
@@ -226,19 +224,23 @@ new_travis_pending_job <- function(x) {
 #' `travis_job_log()` returns a build job log.
 #' @export
 #' @rdname travis_get_builds
-travis_get_log <- function(job_id,
+travis_get_log <- function(job_id = NULL,
                            repo = github_repo(),
                            endpoint = get_endpoint()) {
+
+  if (is.null(job_id)) {
+    job_id <- travis_get_jobs()[[1]]$id
+  }
 
   req <- travis(path = sprintf("/job/%s/log.txt", job_id), endpoint = endpoint)
 
   stop_for_status(
-    req, "get logs."
+    req, sprintf(
+      "getting log from job '%s' for '%s' on Travis CI.",
+      job_id, repo
+    )
   )
 
-  cli::cli_alert_info(
-    "Getting log from job {.val {job_id}} for {.code {repo}} on Travis CI."
-  )
   glue::as_glue(content(req, encoding = "UTF-8"))
 }
 
