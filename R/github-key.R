@@ -53,9 +53,6 @@ add_key <- function(key_data, user, project) {
     key = key_data$key, read_only = key_data$read_only
   )
 
-  cli::cli_alert_info("Adding deploy keys on GitHub and Travis CI for repo
-                      {.code {project}}.")
-
   invisible(resp)
 }
 
