@@ -51,6 +51,9 @@ travis_sync <- function(block = TRUE,
 browse_travis <- function(repo = NULL,
                           endpoint = get_endpoint()) { # nocov start
 
+  # check for endpoint env var R_TRAVIS
+  check_endpoint()
+
   if (is.null(repo)) {
     repo <- github_repo()
   }
