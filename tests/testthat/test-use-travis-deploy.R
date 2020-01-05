@@ -76,7 +76,7 @@ withr::with_dir(
       # delete private key
       if (private_key_exists) {
         # delete existing private key from Travis
-        travis_delete_var(travis_get_var_id("Deploy key for Travis CI (.org)",
+        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY_ORG",
           quiet = TRUE
         ),
         endpoint = ".org"
@@ -128,7 +128,7 @@ withr::with_dir(
       # delete private key
       if (private_key_exists) {
         # delete existing private key from Travis
-        travis_delete_var(travis_get_var_id("Deploy key for Travis CI (.org)",
+        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY_ORG",
           quiet = TRUE
         ),
         endpoint = ".org"

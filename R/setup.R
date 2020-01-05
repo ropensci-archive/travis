@@ -17,10 +17,10 @@
 #'   (the GitHub repo to which the public deploy key is added).
 #' @param key_name_private `[string]`\cr
 #'   The name of the private key of the SSH key pair which will be created.
-#'   If not supplied, `"Deploy key for Travis CI (<endpoint>)"` will be used.
+#'   If not supplied, `"TRAVIS_DEPLOY_KEY_<endpoint>"` will be used.
 #' @param key_name_public `[string]`\cr
 #'   The name of the private key of the SSH key pair which will be created.
-#'   Same default as for `key_name_private`.
+#'   If not supplied, `"Deploy key for Travis CI (<endpoint>)"` will be used.
 #' @template endpoint
 #' @template remote
 #' @template quiet
@@ -58,7 +58,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   if (is.null(key_name_private)) {
     key_name_private <- sprintf(
-      "Deploy key for Travis CI (%s)", endpoint
+      "TRAVIS_DEPLOY_KEY_%s", toupper(sub(".", "", endpoint))
     )
   }
 

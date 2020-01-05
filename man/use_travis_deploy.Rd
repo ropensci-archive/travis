@@ -28,11 +28,11 @@ The Travis CI repository to add the private key to, default: \code{repo}
 
 \item{key_name_private}{\verb{[string]}\cr
 The name of the private key of the SSH key pair which will be created.
-If not supplied, \code{"Deploy key for Travis CI (<endpoint>)"} will be used.}
+If not supplied, \code{"TRAVIS_DEPLOY_KEY_<endpoint>"} will be used.}
 
 \item{key_name_public}{\verb{[string]}\cr
 The name of the private key of the SSH key pair which will be created.
-Same default as for \code{key_name_private}.}
+If not supplied, \code{"Deploy key for Travis CI (<endpoint>)"} will be used.}
 
 \item{endpoint}{\verb{[string]}\cr
 Which Travis endpoint to use. Defaults to ".org". Accepted values are \code{".com"}
