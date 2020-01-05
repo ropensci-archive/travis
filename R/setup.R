@@ -39,6 +39,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
                               quiet = FALSE) {
 
   auth_github()
+  check_endpoint()
   travis_check_api_key()
 
   # generate deploy key pair
