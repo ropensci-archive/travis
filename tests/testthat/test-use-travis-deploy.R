@@ -4,6 +4,10 @@ withr::with_dir(
   "travis-testthat",
   {
     test_that("use_travis_deploy works if the public key is missing", {
+      skip_if(
+        !Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+        "Skipping test on PR to avoid race conditions."
+      )
       private_key_exists <- travis_get_vars(
         # repo = repo,
         endpoint = ".org"
@@ -56,6 +60,11 @@ withr::with_dir(
     })
 
     test_that("use_travis_deploy works if the private key is missing", {
+      skip_if(
+        !Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+        "Skipping test on PR to avoid race conditions."
+      )
+
       private_key_exists <- travis_get_vars(
         # repo = repo,
         endpoint = ".org"
@@ -170,6 +179,10 @@ withr::with_dir(
     })
 
     test_that("use_travis_deploy returns early if both keys are present", {
+      skip_if(
+        !Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+        "Skipping test on PR to avoid race conditions."
+      )
 
       # run function
       foo <- use_travis_deploy()
