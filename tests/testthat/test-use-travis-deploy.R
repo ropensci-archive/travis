@@ -107,7 +107,7 @@ withr::with_dir(
       expect_true(public_key_exists & private_key_exists)
     })
 
-    test_that("use_travis_deploy works if the private key is missing", {
+    test_that("use_travis_deploy works if both private and public key are missing", {
       private_key_exists <- travis_get_vars(
         # repo = repo,
         endpoint = ".org"
@@ -167,6 +167,13 @@ withr::with_dir(
         "Deploy key for Travis CI (.org)")
 
       expect_true(public_key_exists & private_key_exists)
+    })
+
+    test_that("use_travis_deploy returns early if both keys are present", {
+
+      # run function
+      foo <- use_travis_deploy()
+      expect_match(foo, "Deploy keys already present.")
     })
   }
 )

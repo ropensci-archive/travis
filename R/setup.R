@@ -108,8 +108,9 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     any()
 
   if (private_key_exists && public_key_exists) {
-    return(cli::cli_alert("Deploy keys for Travis CI ({.code {endpoint}})
-                           already present. No action required.", wrap = TRUE))
+    cli::cli_alert("Deploy keys for Travis CI ({.code {endpoint}})
+                           already present. No action required.", wrap = TRUE)
+    return(invisible("Deploy keys already present."))
   } else if (private_key_exists | public_key_exists ||
     !private_key_exists && !public_key_exists) {
     cli::cli_alert("At least one key part is missing (private or public).
