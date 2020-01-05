@@ -58,7 +58,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   if (is.null(key_name_private)) {
     key_name_private <- sprintf(
-      "TRAVIS_DEPLOY_KEY_%s", toupper(sub(".", "", endpoint))
+      "TRAVIS_DEPLOY_KEY_%s", toupper(sub("^[.]", "", endpoint))
     )
   }
 
