@@ -97,7 +97,11 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # check if key(s) exist ------------------------------------------------------
 
   # Github (public key)
-  public_key_exists <- any(gh_keys_names %in% key_name_public)
+  if (!gh_keys[1] == "") {
+    public_key_exists <- any(gh_keys_names %in% key_name_public)
+  } else {
+    public_key_exists <- FALSE
+  }
 
   # Travis (private key)
   private_key_exists <- travis_get_vars(
