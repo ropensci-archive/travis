@@ -87,7 +87,6 @@ travis_check_api_key <- function(endpoint = get_endpoint()) {
     }
     return(read_token(endpoint = endpoint))
   }
-
 }
 
 is_token <- function(token) {
