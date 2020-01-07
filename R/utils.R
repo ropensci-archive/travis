@@ -93,7 +93,7 @@ check_endpoint <- function() {
         If supplied, the {.arg endpoint} argument in
         any {.fun travis_*} function will take precedence.
         (This message is displayed once per session.)")
-      Sys.setenv("R_TRAVIS" = ".org")
+      Sys.setenv("R_TRAVIS" = ".com")
     }
     # for an empty line before any log output appears
     cli::cli_par()
