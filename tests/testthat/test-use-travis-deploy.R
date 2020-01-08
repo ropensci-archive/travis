@@ -37,7 +37,7 @@ withr::with_dir(
       }
 
       # run function
-      use_travis_deploy()
+      use_travis_deploy(endpoint = ".org")
 
       # check again if both are present
       private_key_exists <- travis_get_vars(
@@ -69,7 +69,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "Deploy key for Travis CI (.org)") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
         any()
 
       # delete existing public key from github
@@ -93,7 +93,7 @@ withr::with_dir(
       }
 
       # run function
-      use_travis_deploy()
+      use_travis_deploy(endpoint = ".org")
 
       # check again if both are present
       private_key_exists <- travis_get_vars(
@@ -117,11 +117,15 @@ withr::with_dir(
     })
 
     test_that("use_travis_deploy works if both private and public key are missing", {
+      skip_if(
+        !Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
+        "Skipping test on PR to avoid race conditions."
+      )
       private_key_exists <- travis_get_vars(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "Deploy key for Travis CI (.org)") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
         any()
 
       # delete existing public key from github
@@ -138,7 +142,7 @@ withr::with_dir(
       if (private_key_exists) {
         # delete existing private key from Travis
         travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY_ORG",
-          quiet = TRUE
+          quiet = TRUE, endpoint = ".org"
         ),
         endpoint = ".org"
         )
@@ -155,7 +159,7 @@ withr::with_dir(
       }
 
       # run function
-      use_travis_deploy()
+      use_travis_deploy(endpoint = ".org")
 
       # check again if both are present
       private_key_exists <- travis_get_vars(
@@ -185,7 +189,7 @@ withr::with_dir(
       )
 
       # run function
-      foo <- use_travis_deploy()
+      foo <- use_travis_deploy(endpoint = ".org")
       expect_match(foo, "Deploy keys already present.")
     })
   }
