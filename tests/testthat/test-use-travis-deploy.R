@@ -66,7 +66,7 @@ withr::with_dir(
       )
 
       private_key_exists <- travis_get_vars(
-        # repo = repo,
+        repo = repo,
         endpoint = ".org"
       ) %>%
         purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
@@ -100,7 +100,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "Deploy key for Travis CI (.org)") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
         any()
 
       # delete existing public key from github
@@ -166,7 +166,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "Deploy key for Travis CI (.org)") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
         any()
 
       # delete existing public key from github
