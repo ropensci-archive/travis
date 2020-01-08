@@ -108,12 +108,27 @@ github_repo <- function(path = usethis::proj_get(),
 #'   The path to a GitHub-enabled Git repository (or a subdirectory thereof).
 #' @template remote
 #' @family GitHub functions
+#' @export
 #' @keywords internal
 github_info <- function(path = usethis::proj_get(),
                         remote = "origin") {
   remote_url <- get_remote_url(path, remote)
   repo <- extract_repo(remote_url)
   get_repo_data(repo)
+}
+
+#' @keywords internal
+#' @export
+uses_github <- function(path = usethis::proj_get()) {
+  tryCatch(
+    {
+      github_info(path)
+      return(invisible(TRUE))
+    },
+    error = function(e) {
+      structure(FALSE, reason = conditionMessage(e))
+    }
+  )
 }
 
 get_repo_data <- function(repo) {
