@@ -21,10 +21,10 @@
 #'   `edit_travis_config()` to open `~/.travis/config.yml`.
 #'   2. The token should be stored using the following structure
 #'
-#'      ```
+#'      ```yml
 #'      endpoints:
-#'       https://api.travis-ci.<endpoint>/:
-#'         access_token: <token>
+#'        https://api.travis-ci.<endpoint>/:
+#'          access_token: <token>
 #'      ```
 #'      with `<endpoint>` being either 'com' or 'org'.
 #' @template endpoint
@@ -42,7 +42,7 @@ browse_travis_token <- function(endpoint = get_endpoint()) {
     endpoint
   ))
   cli::cli_alert("Call {.fun travis::edit_travis_config} to open
-    {.file ~/.travis/config.yml} or {.fun edit_r_environ} to open
+    {.file ~/.travis/config.yml} or call {.fun travis::edit_r_environ} to open
     {.file ~/.Renviron}, depending on how
     you want to store the API key. See {.code ?travis::browse_travis_token()} for
     details.", wrap = TRUE)
