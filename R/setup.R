@@ -153,7 +153,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   if (private_key_exists) {
     # delete existing private key from Travis
     travis_delete_var(travis_get_var_id(key_name_private,
-      repo = github_repo(path = path), quiet = TRUE
+      repo = github_repo(path = path), quiet = TRUE, endpoint = endpoint
     ),
     repo = github_repo(path = path), endpoint = endpoint
     )
