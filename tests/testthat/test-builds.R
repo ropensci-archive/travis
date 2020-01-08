@@ -52,7 +52,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(2:8, 1)
@@ -71,7 +71,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(2:8, 1)
@@ -110,7 +110,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(9:16, 1)
@@ -132,7 +132,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(9:16, 1)
@@ -154,7 +154,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(9:16, 1)
@@ -176,7 +176,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(9:16, 1)
@@ -242,7 +242,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(16:24, 1)
@@ -265,7 +265,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(1)
+      Sys.sleep(0.5)
 
       set.seed(42)
       id <- sample(16:24, 1)
