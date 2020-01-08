@@ -117,6 +117,7 @@ github_info <- function(path = usethis::proj_get(),
   get_repo_data(repo)
 }
 
+#' @rdname github_info
 #' @keywords internal
 #' @export
 uses_github <- function(path = usethis::proj_get()) {

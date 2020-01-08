@@ -3,6 +3,7 @@
 \name{github_repo}
 \alias{github_repo}
 \alias{github_info}
+\alias{uses_github}
 \title{Github information}
 \usage{
 github_repo(
@@ -12,6 +13,8 @@ github_repo(
 )
 
 github_info(path = usethis::proj_get(), remote = "origin")
+
+uses_github(path = usethis::proj_get())
 }
 \arguments{
 \item{path}{\verb{[string]}\cr
