@@ -21,10 +21,10 @@
 #'   `edit_travis_config()` to open `~/.travis/config.yml`.
 #'   2. The token should be stored using the following structure
 #'
-#'      ```
+#'      ```yml
 #'      endpoints:
-#'       https://api.travis-ci.<endpoint>/:
-#'         access_token: <token>
+#'        https://api.travis-ci.<endpoint>/:
+#'          access_token: <token>
 #'      ```
 #'      with `<endpoint>` being either 'com' or 'org'.
 #' @template endpoint
