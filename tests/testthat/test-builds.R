@@ -154,7 +154,7 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
-      Sys.sleep(0.5)
+      Sys.sleep(1)
 
       set.seed(42)
       id <- sample(9:16, 1)
