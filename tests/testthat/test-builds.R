@@ -4,12 +4,12 @@ withr::with_dir(
   "travis-testthat",
   {
     test_that("Querying builds works (.org)", {
-      builds <- travis_get_builds(repo = repo, endpoint = ".org")
+      builds <- travis_get_builds(endpoint = ".org")
       expect_s3_class(builds, "travis_builds")
     })
 
     test_that("Querying builds works (.com)", {
-      builds <- travis_get_builds(repo = repo, endpoint = ".com")
+      builds <- travis_get_builds(endpoint = ".com")
       expect_s3_class(builds, "travis_builds")
     })
 
@@ -23,8 +23,8 @@ withr::with_dir(
 
       expect_s3_class(
         travis_restart_build(
-          travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
-          endpoint = ".org", repo = repo
+          travis_get_builds(endpoint = ".org")[[id]]$id,
+          endpoint = ".org",
         ),
         "travis_pending"
       )
@@ -40,8 +40,8 @@ withr::with_dir(
 
       expect_s3_class(
         travis_restart_build(
-          travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
-          endpoint = ".com", repo = repo
+          travis_get_builds(endpoint = ".com")[[id]]$id,
+          endpoint = ".com",
         ),
         "travis_pending"
       )
@@ -52,13 +52,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(2:8, 1)
 
       expect_s3_class(
         travis_cancel_build(
-          travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
-          endpoint = ".org", repo = repo
+          travis_get_builds(endpoint = ".org")[[id]]$id,
+          endpoint = ".org",
         ),
         "travis_pending"
       )
@@ -69,13 +71,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(2:8, 1)
 
       expect_s3_class(
         travis_cancel_build(
-          travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
-          endpoint = ".com", repo = repo
+          travis_get_builds(endpoint = ".com")[[id]]$id,
+          endpoint = ".com",
         ),
         "travis_pending"
       )
@@ -84,7 +88,7 @@ withr::with_dir(
     test_that("Querying jobs works (.org)", {
       builds <- travis_get_jobs(
         travis_get_builds(
-          repo = repo, endpoint = ".org"
+          endpoint = ".org"
         )[[1]]$id,
         endpoint = ".org"
       )
@@ -94,7 +98,6 @@ withr::with_dir(
     test_that("Querying jobs works (.com)", {
       builds <- travis_get_jobs(
         travis_get_builds(
-          repo = repo,
           endpoint = ".com"
         )[[1]]$id,
         endpoint = ".com"
@@ -107,13 +110,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(9:16, 1)
 
       expect_s3_class(
         travis_restart_job(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
+            travis_get_builds(endpoint = ".org")[[id]]$id,
             endpoint = ".org"
           )[[1]]$id,
           endpoint = ".org"
@@ -127,13 +132,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(9:16, 1)
 
       expect_s3_class(
         travis_restart_job(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
+            travis_get_builds(endpoint = ".com")[[id]]$id,
             endpoint = ".com"
           )[[1]]$id,
           endpoint = ".com"
@@ -147,13 +154,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(9:16, 1)
 
       expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".org")[[id]]$id,
+            travis_get_builds(endpoint = ".org")[[id]]$id,
             endpoint = ".org"
           )[[1]]$id,
           endpoint = ".org"
@@ -167,13 +176,15 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(9:16, 1)
 
       expect_s3_class(
         travis_cancel_job(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".com")[[id]]$id,
+            travis_get_builds(endpoint = ".com")[[id]]$id,
             endpoint = ".com"
           )[[1]]$id,
           endpoint = ".com"
@@ -231,6 +242,8 @@ withr::with_dir(
         message = "Skipping on Travis PR builds"
       )
 
+      Sys.sleep(1)
+
       set.seed(42)
       id <- sample(16:24, 1)
 
@@ -251,6 +264,8 @@ withr::with_dir(
       skip_if(!Sys.getenv("TRAVIS_PULL_REQUEST") == "false",
         message = "Skipping on Travis PR builds"
       )
+
+      Sys.sleep(1)
 
       set.seed(42)
       id <- sample(16:24, 1)
@@ -274,7 +289,7 @@ withr::with_dir(
       expect_s3_class(
         travis_get_log(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".org")[[17]]$id,
+            travis_get_builds(endpoint = ".org")[[17]]$id,
             endpoint = ".org"
           )[[1]]$id,
           endpoint = ".org"
@@ -287,7 +302,7 @@ withr::with_dir(
       expect_s3_class(
         travis_get_log(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".com")[[17]]$id,
+            travis_get_builds(endpoint = ".com")[[17]]$id,
             endpoint = ".com"
           )[[1]]$id,
           endpoint = ".com"
@@ -302,7 +317,7 @@ withr::with_dir(
       expect_s3_class(
         travis_delete_log(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".org")[[5]]$id,
+            travis_get_builds(endpoint = ".org")[[5]]$id,
             endpoint = ".org"
           )[[3]]$id,
           endpoint = ".org"
@@ -317,7 +332,7 @@ withr::with_dir(
       expect_s3_class(
         travis_delete_log(
           travis_get_jobs(
-            travis_get_builds(repo = repo, endpoint = ".com")[[5]]$id,
+            travis_get_builds(endpoint = ".com")[[5]]$id,
             endpoint = ".com"
           )[[3]]$id,
           endpoint = ".com"

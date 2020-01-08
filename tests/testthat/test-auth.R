@@ -7,22 +7,22 @@ withr::with_dir(
 
       # disable
       capture.output(travis_enable(
-        repo = repo, endpoint = ".org",
+        endpoint = ".org",
         active = FALSE
       ))
-      expect_false(travis_is_enabled(repo = repo, endpoint = ".org"))
+      expect_false(travis_is_enabled(endpoint = ".org"))
 
       capture.output(travis_enable(
-        repo = repo, endpoint = ".com",
+        endpoint = ".com",
         active = FALSE
       ))
       expect_false(travis_is_enabled(endpoint = ".com"))
 
       # enable
-      capture.output(travis_enable(repo = repo, endpoint = ".org"))
-      expect_true(travis_is_enabled(repo = repo, endpoint = ".org"))
+      capture.output(travis_enable(endpoint = ".org"))
+      expect_true(travis_is_enabled(endpoint = ".org"))
 
-      capture.output(travis_enable(repo = repo, endpoint = ".com"))
+      capture.output(travis_enable(endpoint = ".com"))
       expect_true(travis_is_enabled(endpoint = ".com"))
     })
   }
@@ -41,10 +41,10 @@ withr::with_dir(
       Sys.setenv("R_TRAVIS_ORG" = "invalid")
       Sys.setenv("R_TRAVIS_COM" = "invalid")
 
-      expect_error(travis_get_builds(repo = repo, endpoint = ".org"),
+      expect_error(travis_get_builds(endpoint = ".org"),
         regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
       )
-      expect_error(travis_get_builds(repo = repo, endpoint = ".com"),
+      expect_error(travis_get_builds(endpoint = ".com"),
         regexp = "Possibly invalid API key detected. Please double-check and retry." # nolint
       )
 

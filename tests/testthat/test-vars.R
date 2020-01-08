@@ -55,7 +55,7 @@ withr::with_dir(
       expect_s3_class(
         travis_set_var(
           name = "test", value = "test",
-          repo = repo, endpoint = ".org",
+          endpoint = ".org",
           quiet = TRUE
         ),
         "travis_env_var"
@@ -66,7 +66,7 @@ withr::with_dir(
       expect_s3_class(
         travis_set_var(
           name = "test", value = "test",
-          repo = repo, endpoint = ".com",
+          endpoint = ".com",
           quiet = TRUE
         ),
         "travis_env_var"
@@ -77,10 +77,9 @@ withr::with_dir(
       expect_is(
         travis_delete_var(
           travis_get_var_id(
-            name = "test", repo = repo,
+            name = "test",
             endpoint = ".org", quiet = TRUE
           ),
-          repo = repo,
           endpoint = ".org", quiet = TRUE
         ),
         "response"
@@ -91,10 +90,9 @@ withr::with_dir(
       expect_is(
         travis_delete_var(
           travis_get_var_id(
-            name = "test", repo = repo,
+            name = "test",
             endpoint = ".com", quiet = TRUE
           ),
-          repo = repo,
           endpoint = ".com", quiet = TRUE
         ),
         "response"
