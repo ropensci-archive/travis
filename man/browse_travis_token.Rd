@@ -35,10 +35,10 @@ correctly:
 \enumerate{
 \item Copy the token from the browser window which just opened. You can use
 \code{edit_travis_config()} to open \verb{~/.travis/config.yml}.
-\item The token should be stored using the following structure\preformatted{endpoints:
- https://api.travis-ci.<endpoint>/:
-   access_token: <token>
-}
+\item The token should be stored using the following structure\if{html}{\out{<div class="yml">}}\preformatted{endpoints:
+  https://api.travis-ci.<endpoint>/:
+    access_token: <token>
+}\if{html}{\out{</div>}}
 
 with \verb{<endpoint>} being either 'com' or 'org'.
 }

@@ -12,7 +12,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
@@ -43,7 +43,7 @@ withr::with_dir(
       private_key_exists <- travis_get_vars(
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
@@ -69,7 +69,7 @@ withr::with_dir(
         repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
@@ -85,7 +85,7 @@ withr::with_dir(
       # delete private key
       if (private_key_exists) {
         # delete existing private key from Travis
-        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY_ORG",
+        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY",
           quiet = TRUE, endpoint = ".org"
         ),
         endpoint = ".org"
@@ -100,7 +100,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
@@ -125,7 +125,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
@@ -141,7 +141,7 @@ withr::with_dir(
       # delete private key
       if (private_key_exists) {
         # delete existing private key from Travis
-        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY_ORG",
+        travis_delete_var(travis_get_var_id("TRAVIS_DEPLOY_KEY",
           quiet = TRUE, endpoint = ".org"
         ),
         endpoint = ".org"
@@ -166,7 +166,7 @@ withr::with_dir(
         # repo = repo,
         endpoint = ".org"
       ) %>%
-        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY_ORG") %>%
+        purrr::map_lgl(~ .x$name == "TRAVIS_DEPLOY_KEY") %>%
         any()
 
       # delete existing public key from github
