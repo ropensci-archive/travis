@@ -59,6 +59,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   if (is.null(key_name_private)) {
     key_name_private <- "TRAVIS_DEPLOY_KEY"
   }
+  check_private_key_name(key_name_private)
 
   # Clear old keys on Github deploy key ----------------------------------------
 
