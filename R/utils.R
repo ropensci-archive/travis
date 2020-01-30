@@ -89,7 +89,7 @@ check_endpoint <- function() {
         (This message is displayed once per session.)")
     } else {
       cli::cli_text("{.pkg travis}: Env var {.envvar R_TRAVIS}
-        not set by user. Defaulting to '.org' endpoint.
+        not set by user. Defaulting to '.com' endpoint.
         If supplied, the {.arg endpoint} argument in
         any {.fun travis_*} function will take precedence.
         (This message is displayed once per session.)")
