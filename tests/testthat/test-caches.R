@@ -6,7 +6,7 @@ withr::with_dir(
     test_that("retrieving caches works (.org)", {
       expect_s3_class(
         travis_get_caches(
-          repo = "ropenscilabs/tic",
+          repo = "ropensci/tic",
           endpoint = ".org",
           quiet = TRUE
         ),
@@ -17,7 +17,7 @@ withr::with_dir(
     test_that("retrieving caches works (.com)", {
       expect_s3_class(
         travis_get_caches(
-          repo = "ropenscilabs/tic",
+          repo = "ropensci/tic",
           endpoint = ".com",
           quiet = TRUE
         ),
@@ -30,7 +30,7 @@ withr::with_dir(
 
       expect_s3_class(
         travis_delete_caches(
-          repo = "ropenscilabs/tic",
+          repo = "ropensci/tic",
           endpoint = ".org"
         ),
         "travis_caches"
@@ -42,7 +42,7 @@ withr::with_dir(
 
       expect_s3_class(
         travis_delete_caches(
-          repo = "ropenscilabs/tic",
+          repo = "ropensci/tic",
           endpoint = ".com"
         ),
         "travis_caches"

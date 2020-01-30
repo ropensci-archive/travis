@@ -225,12 +225,12 @@ withr::with_dir(
         travis_debug_job(
           travis_get_jobs(
             travis_get_builds(
-              repo = "ropenscilabs/tic",
+              repo = "ropensci/tic",
               endpoint = ".com"
             )[[id]]$id,
             endpoint = ".com"
           )[[1]]$id,
-          endpoint = ".com", repo = "ropenscilabs/tic"
+          endpoint = ".com", repo = "ropensci/tic"
         ),
         "travis_pending"
       )
@@ -274,12 +274,12 @@ withr::with_dir(
         travis_cancel_job(
           travis_get_jobs(
             travis_get_builds(
-              repo = "ropenscilabs/tic",
+              repo = "ropensci/tic",
               endpoint = ".com"
             )[[id]]$id,
             endpoint = ".com"
           )[[1]]$id,
-          endpoint = ".com", repo = "ropenscilabs/tic"
+          endpoint = ".com", repo = "ropensci/tic"
         ),
         "travis_pending"
       )

@@ -8,7 +8,7 @@
 #' Most tests run on repo pat-s/travis-testthat. This repo is cloned before
 #' tests are starting in file `helper.R`.
 #' The "debug" functions need extra permissions and are running on
-#' - ropenscilabs/tic (.com)
+#' - ropensci/tic (.com)
 #' - mlr-org/mlr (.org)
 #' This is because @pat-s has access to both repos for triggering builds and
 #' both repos have "debug builds" enabled via Travis.
