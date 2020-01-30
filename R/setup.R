@@ -40,7 +40,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   auth_github()
   check_endpoint()
-  travis_check_api_key()
+  travis_check_api_key(endpoint = endpoint)
 
   # generate deploy key pair
   key <- openssl::rsa_keygen() # TOOD: num bits?
