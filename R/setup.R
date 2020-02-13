@@ -10,11 +10,7 @@
 #'
 #' @param path `[string]` \cr
 #'   The path to the repository.
-#' @param user `[string]` \cr
-#'   Name of the Github user account.
-#' @param repo `[string]`\cr
-#'   The Travis CI repository to add the private key to, default: `repo`
-#'   (the GitHub repo to which the public deploy key is added).
+#' @template repo
 #' @param key_name_private `[string]`\cr
 #'   The name of the private key of the SSH key pair which will be created.
 #'   If not supplied, `"TRAVIS_DEPLOY_KEY"` will be used.
@@ -27,11 +23,7 @@
 #'
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),
-                              user = github_user()$login,
-                              repo = github_info(
-                                path = path,
-                                remote = remote
-                              )$name,
+                              repo = get_repo_slug(remote),
                               key_name_private = NULL,
                               key_name_public = NULL,
                               endpoint = get_endpoint(),
@@ -68,7 +60,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     cli::cli_alert_info("Querying Github deploy keys from repo.")
   }
   gh_keys <- gh::gh("/repos/:owner/:repo/keys",
-    owner = github_info(path = path, remote = remote)$owner$login, repo = repo
+    owner = get_owner(remote),
+    repo = get_repo(remote)
   )
 
   if (!gh_keys[1] == "") {
@@ -82,7 +75,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     if (any(old_keys == TRUE)) {
       purrr::walk(gh_keys[old_keys], ~
       gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-        owner = github_info(path = path, remote = remote)$owner$login,
+        owner = get_owner(remote),
         repo = repo,
         key_id = .x$id
       ))
@@ -104,7 +97,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
 
   # Travis (private key)
   private_key_exists <- travis_get_vars(
-    repo = github_repo(path = path),
+    repo = repo,
     endpoint = endpoint
   ) %>%
     purrr::map_lgl(~ .x$name == key_name_private) %>%
@@ -136,8 +129,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     key_id <- which(gh_keys_names %>%
       purrr::map_lgl(~ .x == key_name_public))
     gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-      owner = github_info(path = path, remote = remote)$owner$login,
-      repo = repo,
+      owner = get_owner(remote),
+      repo = get_repo(remote),
       key_id = gh_keys[[key_id]]$id
     )
   }
@@ -145,21 +138,23 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # add to GitHub first, because this can fail because of missing org
   # permissions
   github_add_key(
-    pubkey = pub_key, user = user, repo = repo,
+    pubkey = pub_key,
+    user = get_owner(remote),
+    repo = get_repo(remote),
     title = key_name_public
   )
 
   if (private_key_exists) {
     # delete existing private key from Travis
     travis_delete_var(travis_get_var_id(key_name_private,
-      repo = github_repo(path = path), quiet = TRUE, endpoint = endpoint
+      repo = repo, quiet = TRUE, endpoint = endpoint
     ),
-    repo = github_repo(path = path), endpoint = endpoint
+    repo = repo, endpoint = endpoint
     )
   }
 
   travis_set_var(key_name_private, private_key,
-    public = FALSE, repo = github_repo(path = path),
+    public = FALSE, repo = repo,
     endpoint = endpoint
   )
 

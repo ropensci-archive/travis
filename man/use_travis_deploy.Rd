@@ -6,8 +6,7 @@
 \usage{
 use_travis_deploy(
   path = usethis::proj_get(),
-  user = github_user()$login,
-  repo = github_info(path = path, remote = remote)$name,
+  repo = get_repo_slug(remote),
   key_name_private = NULL,
   key_name_public = NULL,
   endpoint = get_endpoint(),
@@ -19,12 +18,8 @@ use_travis_deploy(
 \item{path}{\verb{[string]} \cr
 The path to the repository.}
 
-\item{user}{\verb{[string]} \cr
-Name of the Github user account.}
-
 \item{repo}{\verb{[string]}\cr
-The Travis CI repository to add the private key to, default: \code{repo}
-(the GitHub repo to which the public deploy key is added).}
+The repository slug to use. Must follow the "\code{user/repo}" structure.}
 
 \item{key_name_private}{\verb{[string]}\cr
 The name of the private key of the SSH key pair which will be created.
