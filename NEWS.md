@@ -1,3 +1,15 @@
+# travis 0.3.0.9003
+
+- `use_travis_deploy()` now operates on the repo slug via the `repo` argument
+- `use_travis_deploy()`: Removed argument `user`. This information is now queried internally.
+- `use_travis_deploy()` now queries the correct information when operating on a custom git remote via the `remote` argument
+- `use_travis_deploy()`: Add option to name private and public keys (#129)
+- added some Github helper functions (`get_*()`) to scrape GH info in a more descriptive way
+- remove endpoint suffix from private_key_name, only use `TRAVIS_DEPLOY_KEY`
+- Optimize`use_travis_deploy()`
+- export `github_info()`, add `uses_github()`
+
+
 # travis 0.3.0.9002
 
 - Internal changes only.
