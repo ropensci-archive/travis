@@ -6,7 +6,7 @@
 \usage{
 use_travis_deploy(
   path = usethis::proj_get(),
-  repo = github_info(path = path, remote = remote)$full_name,
+  repo = get_repo_slug(remote),
   key_name_private = NULL,
   key_name_public = NULL,
   endpoint = get_endpoint(),

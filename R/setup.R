@@ -23,10 +23,7 @@
 #'
 #' @export
 use_travis_deploy <- function(path = usethis::proj_get(),
-                              repo = github_info(
-                                path = path,
-                                remote = remote
-                              )$full_name,
+                              repo = get_repo_slug(remote),
                               key_name_private = NULL,
                               key_name_public = NULL,
                               endpoint = get_endpoint(),
@@ -63,11 +60,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     cli::cli_alert_info("Querying Github deploy keys from repo.")
   }
   gh_keys <- gh::gh("/repos/:owner/:repo/keys",
-    owner = github_info(path = path, remote = remote)$owner$login,
-    repo = github_info(
-      path = path,
-      remote = remote
-    )$name
+    owner = get_owner(remote),
+    repo = get_repo(remote)
   )
 
   if (!gh_keys[1] == "") {
@@ -81,7 +75,7 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     if (any(old_keys == TRUE)) {
       purrr::walk(gh_keys[old_keys], ~
       gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-        owner = github_info(path = path, remote = remote)$owner$login,
+        owner = get_owner(remote),
         repo = repo,
         key_id = .x$id
       ))
@@ -135,11 +129,8 @@ use_travis_deploy <- function(path = usethis::proj_get(),
     key_id <- which(gh_keys_names %>%
       purrr::map_lgl(~ .x == key_name_public))
     gh::gh("DELETE /repos/:owner/:repo/keys/:key_id",
-      owner = github_info(path = path, remote = remote)$owner$login,
-      repo = github_info(
-        path = path,
-        remote = remote
-      )$name,
+      owner = get_owner(remote),
+      repo = get_repo(remote),
       key_id = gh_keys[[key_id]]$id
     )
   }
@@ -147,11 +138,9 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # add to GitHub first, because this can fail because of missing org
   # permissions
   github_add_key(
-    pubkey = pub_key, user = github_info(remote = remote)$owner$login,
-    repo = github_info(
-      path = path,
-      remote = remote
-    )$name,
+    pubkey = pub_key,
+    user = get_owner(remote),
+    repo = get_repo(remote),
     title = key_name_public
   )
 
