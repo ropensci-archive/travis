@@ -124,6 +124,10 @@ get_api_token <- function(endpoint) {
   return(api_token)
 }
 
+#' @param string String to check
+#' @keywords internal
+#' @rdname ssh_key_helpers
+#' @export
 check_private_key_name <- function(string) {
   if (grepl("[ ]", string)) {
     stopc("Name contains whitespaces. Please supply a name without whitespaces.")

@@ -1,14 +1,18 @@
+#' SSH key helpers
+#'
+#' @param pubkey The public key of the SSH key pair
+#' @template repo
+#' @param user Personal user account to authenticate with
+#' @param title The title of the key to add
+#' @template remote
+#' @keywords internal
+#' @name ssh_key_helpers
+#' @export
 github_add_key <- function(pubkey,
-                           repo = NULL,
-                           user = NULL,
+                           repo = get_repo(remote),
+                           user = get_user(),
                            title = "travis",
                            remote = "origin") {
-  if (is.null(user)) {
-    user <- github_info(remote = remote)$owner$login
-  }
-  if (is.null(repo)) {
-    repo <- github_info(remote = remote)$name
-  }
 
   if (inherits(pubkey, "key")) {
     pubkey <- as.list(pubkey)$pubkey
@@ -18,37 +22,43 @@ github_add_key <- function(pubkey,
   }
 
   # check if we have enough rights to add a key
-  check_admin_repo(github_info(remote = remote)$owner$login, user, repo)
+  check_admin_repo(owner = get_owner(), user = user, repo = repo)
 
   key_data <- create_key_data(pubkey, title)
 
   # add public key to repo deploy keys on GitHub
   ret <- add_key(key_data,
-    user = user,
+    owner = get_owner(),
     project = repo
   )
 
   cli::cat_rule()
   cli::cli_alert_success("Added a public deploy key to GitHub for repo
-                         {.code {user}/{repo}}.", wrap = TRUE)
+                         {.code {get_owner()}/{repo}}.", wrap = TRUE)
 
   invisible(ret)
 }
 
+#' @param owner The owner of the repository
+#' @param user The name of the user account
+#' @template repo
+#' @keywords internal
+#' @rdname ssh_key_helpers
+#' @export
 check_admin_repo <- function(owner, user, repo) {
   role_in_repo <- get_role_in_repo(owner, user, repo)
   if (role_in_repo != "admin") {
     stopc(
-      "Must have role admin to add deploy key to repo ",
-      repo, ", not ", role_in_repo
+      "Must have role 'admin' to add deploy key to repo ",
+      repo, ", not '", role_in_repo, "'."
     )
   }
 }
 
-add_key <- function(key_data, user, project) {
+add_key <- function(key_data, owner, project) {
 
   resp <- gh::gh("POST /repos/:owner/:repo/keys",
-    owner = user, repo = project,
+    owner = owner, repo = project,
     title = key_data$title,
     key = key_data$key, read_only = key_data$read_only
   )
@@ -56,6 +66,12 @@ add_key <- function(key_data, user, project) {
   invisible(resp)
 }
 
+#' @param owner The owner of the repository
+#' @param user The name of the user account
+#' @template repo
+#' @keywords internal
+#' @rdname ssh_key_helpers
+#' @export
 get_role_in_repo <- function(owner, user, repo) {
 
   req <- gh::gh("/repos/:owner/:repo/collaborators/:username/permission",
