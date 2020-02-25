@@ -139,8 +139,9 @@ use_travis_deploy <- function(path = usethis::proj_get(),
   # permissions
   github_add_key(
     pubkey = pub_key,
-    user = get_owner(remote),
+    user = get_user(),
     repo = get_repo(remote),
+    remote = remote,
     title = key_name_public
   )
 

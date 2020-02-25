@@ -22,13 +22,13 @@ github_add_key <- function(pubkey,
   }
 
   # check if we have enough rights to add a key
-  check_admin_repo(owner = get_owner(), user = user, repo = repo)
+  check_admin_repo(owner = get_owner(remote = remote), user = user, repo = repo)
 
   key_data <- create_key_data(pubkey, title)
 
   # add public key to repo deploy keys on GitHub
   ret <- add_key(key_data,
-    owner = get_owner(),
+    owner = get_owner(remote = remote),
     project = repo
   )
 
