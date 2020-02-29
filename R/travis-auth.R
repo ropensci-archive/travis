@@ -4,18 +4,28 @@
 #'   `browse_travis_token()` opens a browser window for the respective Travis
 #'   endpoint. On this site, you can copy your personal API key and then follow
 #'   the instructions of the console output or the ones shown below.
-#' @section Store API Key:
+#' @section Storing the API Key:
 #'
-#'   The `travis` package supports two ways of storing the Travis API key(s):
+#'   The \pkg{travis} package supports two ways of storing the Travis API key(s):
 #'
 #'   - via env vars `R_TRAVIS_ORG` and `R_TRAVIS_COM`
 #'   - via `~/.travis/config.yml`
 #'
-#'   The latter should already be present if you already used the `travis` CLI
-#'   tool at some point in the past. If not, its up to your preference which
-#'   approach to use.
+#'   The latter should already be present if you already used the Travis CI CLI
+#'   tool at some point in the past. However, for simplicity we recommend to use
+#'   the env var approach.
 #'
-#'   The following instructions should help to set up `~/.travis/config.yml`
+#'   To store the API key as an env var, add the following to `~/.Renviron` and
+#'   restart R. You only need to store API keys for the Travis endpoint you are
+#'   using. You can store both if you want.
+#'
+#'   ```
+#'   R_TRAVIS_COM = <your API key here>
+#'   R_TRAVIS_ORG = <your API key here>
+#'   ```
+#'
+#'   If you still want to use the config file approach, the following
+#'   instructions should help to set up `~/.travis/config.yml`
 #'   correctly:
 #'   1. Copy the token from the browser window which just opened. You can use
 #'   `edit_travis_config()` to open `~/.travis/config.yml`.
@@ -27,6 +37,7 @@
 #'          access_token: <token>
 #'      ```
 #'      with `<endpoint>` being either 'com' or 'org'.
+#'
 #' @template endpoint
 #' @export
 #'
@@ -34,18 +45,22 @@ browse_travis_token <- function(endpoint = get_endpoint()) {
 
   check_endpoint()
 
-  cli::cli_alert("Querying API token...")
-  cli::cli_text("Opening URL {.url
+  cli::cli_alert_info("Querying API token...")
+  cli::cli_alert("Opening URL {.url
     https://travis-ci{endpoint}/account/preferences}.")
   utils::browseURL(sprintf(
     "https://travis-ci%s/account/preferences",
     endpoint
   ))
-  cli::cli_alert("Call {.fun travis::edit_travis_config} to open
-    {.file ~/.travis/config.yml} or call {.fun usethis::edit_r_environ} to open
-    {.file ~/.Renviron}, depending on how
-    you want to store the API key. See {.code ?travis::browse_travis_token()} for
-    details.", wrap = TRUE)
+  cli::cli_alert_info("Call {.fun usethis::edit_r_environ} to open
+    {.file ~/.Renviron} and store the API key as env var {.var R_TRAVIS_COM} (or
+    {.var R_TRAVIS_ORG} if you are using the '.org' endpoint).
+    Example: {.code R_TRAVIS_COM = <key>}
+
+    The API key can alternatively be stored in {.file ~/.travis/config.yml}.
+    This is only suggested if you previously used the Travis CI CLI tool.
+
+    See {.code ?travis::browse_travis_token()} for details.", wrap = TRUE)
   return(invisible(TRUE))
 }
 

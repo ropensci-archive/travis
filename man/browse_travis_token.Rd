@@ -17,20 +17,27 @@ A Travis API Key is needed to interact with the Travis API.
 endpoint. On this site, you can copy your personal API key and then follow
 the instructions of the console output or the ones shown below.
 }
-\section{Store API Key}{
+\section{Storing the API Key}{
 
 
-The \code{travis} package supports two ways of storing the Travis API key(s):
+The \pkg{travis} package supports two ways of storing the Travis API key(s):
 \itemize{
 \item via env vars \code{R_TRAVIS_ORG} and \code{R_TRAVIS_COM}
 \item via \verb{~/.travis/config.yml}
 }
 
-The latter should already be present if you already used the \code{travis} CLI
-tool at some point in the past. If not, its up to your preference which
-approach to use.
+The latter should already be present if you already used the Travis CI CLI
+tool at some point in the past. However, for simplicity we recommend to use
+the env var approach.
 
-The following instructions should help to set up \verb{~/.travis/config.yml}
+To store the API key as an env var, add the following to \verb{~/.Renviron} and
+restart R. You only need to store API keys for the Travis endpoint you are
+using. You can store both if you want.\preformatted{R_TRAVIS_COM = <your API key here>
+R_TRAVIS_ORG = <your API key here>
+}
+
+If you still want to use the config file approach, the following
+instructions should help to set up \verb{~/.travis/config.yml}
 correctly:
 \enumerate{
 \item Copy the token from the browser window which just opened. You can use
