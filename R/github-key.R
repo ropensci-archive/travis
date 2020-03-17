@@ -4,6 +4,9 @@
 #' @template repo
 #' @param user Personal user account to authenticate with
 #' @param title The title of the key to add
+#' @param check_role Whether to check if the current user has the permissions to
+#' add a key to the repo. Setting this to `FALSE` makes it possible to add keys
+#' to other repos than just the one from which the function is called.
 #' @template remote
 #' @keywords internal
 #' @name ssh_key_helpers
@@ -12,7 +15,8 @@ github_add_key <- function(pubkey,
                            repo = get_repo(remote),
                            user = get_user(),
                            title = "travis",
-                           remote = "origin") {
+                           remote = "origin",
+                           check_role = TRUE) {
 
   if (inherits(pubkey, "key")) {
     pubkey <- as.list(pubkey)$pubkey
@@ -21,9 +25,14 @@ github_add_key <- function(pubkey,
     stopc("`pubkey` must be an RSA/EC public key")
   }
 
-  # check if we have enough rights to add a key
-  check_admin_repo(owner = get_owner(remote = remote), user = user, repo = repo)
-
+  if (check_role) {
+    # check if we have enough rights to add a key
+    check_admin_repo(
+      owner = get_owner(remote = remote),
+      user = user,
+      repo = repo
+    )
+  }
   key_data <- create_key_data(pubkey, title)
 
   # add public key to repo deploy keys on GitHub

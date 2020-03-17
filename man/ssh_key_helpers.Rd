@@ -15,7 +15,8 @@ github_add_key(
   repo = get_repo(remote),
   user = get_user(),
   title = "travis",
-  remote = "origin"
+  remote = "origin",
+  check_role = TRUE
 )
 
 check_admin_repo(owner, user, repo)
@@ -40,6 +41,10 @@ The repository slug to use. Must follow the "\code{user/repo}" structure.}
 
 \item{remote}{\verb{[string]}\cr
 The Github remote which should be used. Defaults to "origin".}
+
+\item{check_role}{Whether to check if the current user has the permissions to
+add a key to the repo. Setting this to \code{FALSE} makes it possible to add keys
+to other repos than just the one from which the function is called.}
 
 \item{owner}{The owner of the repository}
 
