@@ -79,7 +79,7 @@ With an existing project that exists on Github, one can
 1. Enable the repository on Travis
 
     ```r
-    travis::enable()
+    travis::travis_enable()
     ```
 
 1. Enable deployment for this repository
