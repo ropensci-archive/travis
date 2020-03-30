@@ -18,14 +18,16 @@ knitr::opts_chunk$set(
 
 The first time any function of {travis} is called, it will check for the existence of a Travis API key (for the respective endpoint).
 This is a one-time procedure and needs to be done for each endpoint `.org` and `.com`.
-Without the API key, no requests to the API of Travis CI can be made.
+**Without the API key, no requests to the API of Travis CI can be made**.
+In addition a `GITHUB_PAT` is needed to make API calls to GitHub.
+If you have not set one within `.Renviron` yet, call `usethis::browse_github_token()` and follow the instructions.
 
-When calling `browse_travis_toke()`, a browser window will open.
+When calling `browse_travis_token()`, a browser window will open.
 After logging in, the API key for the respective endpoint can be copied.
 
 This key can be stored in 
 
-- environment variables `R_TRAVIS_ORG` or `R_TRAVIS_COM`
+- environment variables `R_TRAVIS_ORG` or `R_TRAVIS_COM` (recommended)
 
 - or in file `~/.travis/config.yml` (see `?browse_travis_token()` for help)
 
@@ -36,15 +38,13 @@ The second option is provided because it represents the way an API key is stored
 
 Travis [announced in May 2018](https://blog.travis-ci.com/2018-05-02-open-source-projects-on-travis-ci-com-with-github-apps) to migrate open-source repositories from https://travis-ci.org to https://travis-ci.com.
 Since then, two endpoints (`.org` and `.com`) exist on which users can run their builds.
-To make it easier for the users to specify a default for the endpoint when using the {travis} package rather than having to specify the `endpoint` argument in all functions, one can set the environment variable `R_TRAVIS`
+To make it easier for the users to specify a default for the endpoint when using the {travis} package rather than having to specify the `endpoint` argument in all functions, one can set the environment variable `R_TRAVIS` in `.Renviron` to the desired endpoint.
+If none is set, {travis} will by default use the `.org` endpoint.
 
 ```r
 # example for .com
 R_TRAVIS = ".com"
 ```
-
-in `.Renviron` to the desired endpoint.
-If none is set, {travis} will by default use the `.org` endpoint.
 
 ## Migrating from .org to .com
 
