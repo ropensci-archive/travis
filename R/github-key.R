@@ -43,7 +43,7 @@ github_add_key <- function(pubkey,
 
   cli::cat_rule()
   cli::cli_alert_success("Added a public deploy key to GitHub for repo
-                         {.code {get_owner()}/{repo}}.", wrap = TRUE)
+                         {.code {get_owner(remote)}/{repo}}.", wrap = TRUE)
 
   invisible(ret)
 }
