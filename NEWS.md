@@ -1,3 +1,10 @@
+# travis 0.3.0.9004
+
+- bugfix: Pass arg `remote` to all printing instances. Previously using a different remote than 'origin' errored.
+- Exit early if GitHub PAT is not set instead of just throwing a warning (#144)
+- `github_add_key()` gains argument `check_role` to optionally turn off checking for permissions when adding public keys to repos.
+
+
 # travis 0.3.0.9003
 
 - `use_travis_deploy()` now operates on the repo slug via the `repo` argument
