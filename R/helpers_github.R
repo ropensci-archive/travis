@@ -161,6 +161,69 @@ get_repo_data <- function(repo) {
   return(req)
 }
 
+get_remote_url <- function(path, remote) {
+  r <- git2r::repository(path, discover = TRUE)
+  remote_names <- git2r::remotes(r)
+  if (!length(remote_names)) {
+    stopc("Failed to lookup git remotes")
+  }
+  remote_name <- remote
+  if (!(remote_name %in% remote_names)) {
+    stopc(sprintf(
+      "No remote named '%s' found in remotes: '%s'.",
+      remote_name, remote_names
+    ))
+  }
+  git2r::remote_url(r, remote_name)
+}
+
+extract_repo <- function(url) {
+  # Borrowed from gh:::github_remote_parse
+  re <- "github[^/:]*[/:]([^/]+)/(.*?)(?:\\.git)?$"
+  m <- regexec(re, url)
+  match <- regmatches(url, m)[[1]]
+
+  if (length(match) == 0) {
+    stopc("Unrecognized repo format: ", url)
+  }
+
+  paste0(match[2], "/", match[3])
+}
+
+#' @param key The SSH key pair object
+#' @keywords internal
+#' @name ssh_key_helpers
+#' @export
+get_public_key <- function(key) {
+  as.list(key)$pubkey
+}
+
+#' @param key The SSH key pair object
+#' @keywords internal
+#' @rdname ssh_key_helpers
+#' @export
+encode_private_key <- function(key) {
+  conn <- textConnection(NULL, "w")
+  openssl::write_pem(key, conn, password = NULL)
+  private_key <- textConnectionValue(conn)
+  close(conn)
+
+  private_key <- paste(private_key, collapse = "\n")
+
+  openssl::base64_encode(charToRaw(private_key))
+}
+
+#' @param string String to check
+#' @keywords internal
+#' @rdname ssh_key_helpers
+#' @export
+check_private_key_name <- function(string) {
+  if (grepl("[ ]", string)) {
+    stopc("Name contains whitespaces. Please supply a name without whitespaces.") # nolint
+  }
+  return(invisible(TRUE))
+}
+
 # GH auth helpers --------------------------------------------------------------
 
 #' @title Github API helpers
